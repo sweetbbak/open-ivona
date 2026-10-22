@@ -86,6 +86,16 @@ def main() -> int:
         else:
             print(f"ok   {name} ({r.func.mode}, {r.func.size:#x} bytes){'  soft: ' + '; '.join(r.soft) if r.soft else ''}")
 
+    # Address-comment name adoption: definitions are adopted, macro invocations are not.
+    from dc.cli import addr_comment_names
+    got = addr_comment_names("/* 0x10 arm: f */\nint *foo(int x)\n{\n"
+                             "/* 0x20 val_x, 0x24 x_val */\nCST_VAL_REGISTER_TYPE(x, int)\n")
+    if got != [(0x10, "foo")]:
+        fails += 1
+        print(f"FAIL: address-comment adoption gave {got}")
+    else:
+        print("ok   address comments adopt definitions, not macro invocations")
+
     # Mutations: build the *target* differently; candidates from the clean build must fail in
     # exactly the functions whose code or referenced data changed.
     mutations = [

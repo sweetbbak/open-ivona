@@ -682,18 +682,18 @@ addr	size	mode	name	status	src	score	note
 0003967c	64	arm	tts_set_error_errno	matched	src/libttsivonavoice/tts_error.c	100	
 000396e0	40	arm	tts_set_error_code	matched	src/libttsivonavoice/tts_error.c	100	
 00039720	78	arm	tts_set_error_contextf	matched	src/libttsivonavoice/tts_error.c	100	
-00039798	2c	arm	FUN_00039798	todo			
-000397c4	38	arm	FUN_000397c4	todo			
-000397fc	c	arm	FUN_000397fc	todo			
-00039808	68	arm	FUN_00039808	todo			
-00039870	6c	arm	FUN_00039870	todo			
-000398dc	44	arm	FUN_000398dc	todo			
-00039920	24	arm	FUN_00039920	todo			
-00039944	c	arm	FUN_00039944	todo			
-00039950	14	arm	FUN_00039950	matched	src/libttsivonavoice/calib_arm.c	100	
-00039964	8	arm	FUN_00039964	todo			
-0003996c	398	arm	FUN_0003996c	todo			
-00039d04	484	arm	FUN_00039d04	todo			
+00039798	2c	arm	fetch_result_free	matched	src/libttsivonavoice/fetch.c	100	
+000397c4	38	arm	fetch_write	matched	src/libttsivonavoice/fetch.c	100	
+000397fc	c	arm	fetcher_new	matched	src/libttsivonavoice/fetch.c	100	
+00039808	68	arm	fetcher_delete	matched	src/libttsivonavoice/fetch.c	100	
+00039870	6c	arm	fetcher_reset	matched	src/libttsivonavoice/fetch.c	100	
+000398dc	44	arm	fetcher_set_referer	matched	src/libttsivonavoice/fetch.c	100	
+00039920	24	arm	fetcher_set_base	matched	src/libttsivonavoice/fetch.c	100	
+00039944	c	arm	fetcher_set_callback	matched	src/libttsivonavoice/fetch.c	100	
+00039950	14	arm	fetcher_result	matched	src/libttsivonavoice/fetch.c	100	
+00039964	8	arm	fetcher_messages	matched	src/libttsivonavoice/fetch.c	100	
+0003996c	398	arm	uri_resolve	wip	src/libttsivonavoice/fetch.c	56.1	
+00039d04	484	arm	fetcher_fetch	wip	src/libttsivonavoice/fetch.c	34.1	
 0003a188	4	arm	lang_cache_free	matched	src/libttsivonavoice/tts_api.c	100	
 0003a18c	4	arm	lang_cache_load	matched	src/libttsivonavoice/tts_api.c	100	
 0003a190	c4	arm	tts_attach_addon	matched	src/libttsivonavoice/tts_api.c	100	
@@ -921,10 +921,10 @@ addr	size	mode	name	status	src	score	note
 00049544	90	arm	FUN_00049544	todo			
 000495d4	58	arm	FUN_000495d4	todo			
 0004962c	210	arm	FUN_0004962c	todo			
-0004983c	68	arm	FUN_0004983c	todo			
-000498a4	28	arm	FUN_000498a4	todo			
-000498cc	1c	arm	FUN_000498cc	todo			
-000498e8	88	arm	FUN_000498e8	todo			
+0004983c	68	arm	tts_msg_new	matched	src/libttsivonavoice/tts_msg.c	100	
+000498a4	28	arm	tts_msg_free	matched	src/libttsivonavoice/tts_msg.c	100	
+000498cc	1c	arm	tts_msg_last	matched	src/libttsivonavoice/tts_msg.c	100	
+000498e8	88	arm	tts_msg_join	matched	src/libttsivonavoice/tts_msg.c	100	
 00049970	2d0	arm	FUN_00049970	todo			
 00049c40	28	arm	FUN_00049c40	todo			
 00049c68	44	arm	FUN_00049c68	todo			
@@ -1212,8 +1212,8 @@ addr	size	mode	name	status	src	score	note
 00053768	68	arm	FUN_00053768	todo			
 000537d0	44	arm	FUN_000537d0	todo			
 00053814	f8	arm	FUN_00053814	todo			
-0005390c	4c	arm	FUN_0005390c	todo			
-00053958	10	arm	FUN_00053958	todo			
+0005390c	4c	arm	cst_vnsprintf	todo			
+00053958	10	arm	cst_vasprintf	todo			
 00053968	30	arm	FUN_00053968	todo			
 00053998	30	arm	FUN_00053998	todo			
 000539c8	90	arm	FUN_000539c8	todo			
@@ -1371,55 +1371,55 @@ addr	size	mode	name	status	src	score	note
 00056ad0	78	arm	FUN_00056ad0	todo			
 00056b48	b8	arm	FUN_00056b48	todo			
 00056c00	ac	arm	FUN_00056c00	todo			
-00056cac	58	arm	val_metric	todo			
-00056d04	4	arm	FUN_00056d04	todo			
-00056d08	18	arm	FUN_00056d08	todo			
-00056d20	284	arm	FUN_00056d20	todo			
-00056fa4	50	arm	FUN_00056fa4	todo			
-00056ff4	288	arm	FUN_00056ff4	todo			
-0005727c	8c	arm	FUN_0005727c	todo			
-00057308	84	arm	FUN_00057308	todo			
-0005738c	90	arm	FUN_0005738c	todo			
-0005741c	a0	arm	FUN_0005741c	todo			
-000574bc	c	arm	FUN_000574bc	todo			
-000574c8	20	arm	FUN_000574c8	todo			
-000574e8	40	arm	FUN_000574e8	todo			
-00057528	8	arm	FUN_00057528	todo			
-00057530	8	arm	FUN_00057530	todo			
-00057538	34	arm	FUN_00057538	todo			
-0005756c	18	arm	FUN_0005756c	todo			
-00057584	28	arm	FUN_00057584	todo			
-000575ac	54	arm	FUN_000575ac	todo			
-00057600	28	arm	FUN_00057600	todo			
-00057628	68	arm	FUN_00057628	todo			
-00057690	30	arm	FUN_00057690	todo			
-000576c0	68	arm	FUN_000576c0	todo			
-00057728	38	arm	FUN_00057728	todo			
-00057760	1c	arm	FUN_00057760	todo			
-0005777c	60	arm	FUN_0005777c	todo			
-000577dc	94	arm	FUN_000577dc	todo			
-00057870	30	arm	FUN_00057870	todo			
-000578a0	c	arm	FUN_000578a0	todo			
-000578ac	7c	arm	FUN_000578ac	todo			
-00057928	40	arm	FUN_00057928	todo			
-00057968	24	arm	FUN_00057968	todo			
-0005798c	6c	arm	FUN_0005798c	todo			
-000579f8	74	arm	FUN_000579f8	todo			
-00057a6c	74	arm	FUN_00057a6c	todo			
-00057ae0	20	arm	FUN_00057ae0	todo			
-00057b00	5c	arm	FUN_00057b00	todo			
-00057b5c	28	arm	FUN_00057b5c	todo			
-00057b84	54	arm	FUN_00057b84	todo			
-00057bd8	54	arm	FUN_00057bd8	todo			
-00057c2c	5c	arm	FUN_00057c2c	todo			
-00057c88	80	arm	FUN_00057c88	todo			
-00057d08	80	arm	FUN_00057d08	todo			
-00057d88	c	arm	FUN_00057d88	todo			
-00057d94	14	arm	FUN_00057d94	todo			
-00057da8	50	arm	FUN_00057da8	todo			
-00057df8	8	arm	FUN_00057df8	todo			
-00057e00	48	arm	FUN_00057e00	todo			
-00057e48	44	arm	FUN_00057e48	todo			
+00056cac	58	arm	val_metric	matched	src/libttsivonavoice/metrics.c	100	
+00056d04	4	arm	val_delete_metric	matched	src/libttsivonavoice/metrics.c	100	
+00056d08	18	arm	metric_val	matched	src/libttsivonavoice/metrics.c	100	
+00056d20	284	arm	metrics_internal_synth_time	wip	src/libttsivonavoice/metrics.c	73.2	
+00056fa4	50	arm	utt_take_metrics	matched	src/libttsivonavoice/metrics.c	100	
+00056ff4	288	arm	metrics_new	wip	src/libttsivonavoice/metrics.c	96.9	
+0005727c	8c	arm	metrics_add_int	matched	src/libttsivonavoice/metrics.c	100	
+00057308	84	arm	metrics_set_float	matched	src/libttsivonavoice/metrics.c	100	
+0005738c	90	arm	metrics_max_int	matched	src/libttsivonavoice/metrics.c	100	
+0005741c	a0	arm	metrics_add_time	matched	src/libttsivonavoice/metrics.c	100	
+000574bc	c	arm	strbuf_new	matched	src/libttsivonavoice/strutil.c	100	
+000574c8	20	arm	strbuf_free	matched	src/libttsivonavoice/strutil.c	100	
+000574e8	40	arm	strbuf_init	matched	src/libttsivonavoice/strutil.c	100	
+00057528	8	arm	strbuf_release	matched	src/libttsivonavoice/strutil.c	100	
+00057530	8	arm	strbuf_data	matched	src/libttsivonavoice/strutil.c	100	
+00057538	34	arm	strbuf_reserve	matched	src/libttsivonavoice/strutil.c	100	
+0005756c	18	arm	strbuf_clear	matched	src/libttsivonavoice/strutil.c	100	
+00057584	28	arm	strbuf_resize	matched	src/libttsivonavoice/strutil.c	100	
+000575ac	54	arm	strbuf_append	matched	src/libttsivonavoice/strutil.c	100	
+00057600	28	arm	strbuf_append_str	matched	src/libttsivonavoice/strutil.c	100	
+00057628	68	arm	strbuf_insert	matched	src/libttsivonavoice/strutil.c	100	
+00057690	30	arm	strbuf_insert_str	matched	src/libttsivonavoice/strutil.c	100	
+000576c0	68	arm	strbuf_erase	matched	src/libttsivonavoice/strutil.c	100	
+00057728	38	arm	strbuf_swap	matched	src/libttsivonavoice/strutil.c	100	
+00057760	1c	arm	strbuf_truncate	matched	src/libttsivonavoice/strutil.c	100	
+0005777c	60	arm	strbuf_vappendf_n	matched	src/libttsivonavoice/strutil.c	100	
+000577dc	94	arm	strbuf_appendf	matched	src/libttsivonavoice/strutil.c	100	
+00057870	30	arm	strbuf_appendf_n	matched	src/libttsivonavoice/strutil.c	100	
+000578a0	c	arm	strlist_new	matched	src/libttsivonavoice/strutil.c	100	
+000578ac	7c	arm	strlist_copy	matched	src/libttsivonavoice/strutil.c	100	
+00057928	40	arm	strlist_clear	matched	src/libttsivonavoice/strutil.c	100	
+00057968	24	arm	strlist_free	matched	src/libttsivonavoice/strutil.c	100	
+0005798c	6c	arm	strlist_push	matched	src/libttsivonavoice/strutil.c	100	
+000579f8	74	arm	strlist_push_n	matched	src/libttsivonavoice/strutil.c	100	
+00057a6c	74	arm	strlist_split_ws_into	matched	src/libttsivonavoice/strutil.c	100	
+00057ae0	20	arm	strlist_split_ws	matched	src/libttsivonavoice/strutil.c	100	
+00057b00	5c	arm	strlist_split_into	matched	src/libttsivonavoice/strutil.c	100	
+00057b5c	28	arm	strlist_split	matched	src/libttsivonavoice/strutil.c	100	
+00057b84	54	arm	strlist_contains	matched	src/libttsivonavoice/strutil.c	100	
+00057bd8	54	arm	strlist_contains_nocase	matched	src/libttsivonavoice/strutil.c	100	
+00057c2c	5c	arm	strlist_print	matched	src/libttsivonavoice/strutil.c	100	
+00057c88	80	arm	strlist_join	matched	src/libttsivonavoice/strutil.c	100	
+00057d08	80	arm	strlist_compare	wip	src/libttsivonavoice/strutil.c	87.5	
+00057d88	c	arm	strlist_compare_ptr	matched	src/libttsivonavoice/strutil.c	100	
+00057d94	14	arm	strlist_pop	matched	src/libttsivonavoice/strutil.c	100	
+00057da8	50	arm	strlist_remove	matched	src/libttsivonavoice/strutil.c	100	
+00057df8	8	arm	strlist_free_ptr	matched	src/libttsivonavoice/strutil.c	100	
+00057e00	48	arm	ivona_time_msec	matched	src/libttsivonavoice/strutil.c	100	
+00057e48	44	arm	ivona_time_usec	matched	src/libttsivonavoice/strutil.c	100	
 00057e8c	150	arm	FUN_00057e8c	todo			
 00057fdc	b8	arm	FUN_00057fdc	todo			
 00058094	2e8	arm	FUN_00058094	todo			
@@ -5545,11 +5545,11 @@ addr	size	mode	name	status	src	score	note
 001cba38	c8	arm	curl_global_init	todo			
 001cbb00	c0	arm	FUN_001cbb00	todo			
 001cbbc0	38	arm	curl_global_cleanup	todo			
-001cbbf8	b8	arm	FUN_001cbbf8	todo			
-001cbcb0	3c	arm	FUN_001cbcb0	todo			
-001cbcec	1b0	arm	FUN_001cbcec	todo			
-001cbe9c	c	arm	FUN_001cbe9c	todo			
-001cbea8	30	arm	FUN_001cbea8	todo			
+001cbbf8	b8	arm	curl_easy_init	todo			
+001cbcb0	3c	arm	curl_easy_setopt	todo			
+001cbcec	1b0	arm	curl_easy_perform	todo			
+001cbe9c	c	arm	curl_easy_cleanup	todo			
+001cbea8	30	arm	curl_easy_getinfo	todo			
 001cbed8	1ac	arm	FUN_001cbed8	todo			
 001cc084	a4	arm	FUN_001cc084	todo			
 001cc128	cc	arm	FUN_001cc128	todo			

@@ -82,6 +82,7 @@ void feat_set(cst_features *f, const char *name,const cst_val *v);
 
 unsigned char feat_remove(cst_features *f, const char *name);
 unsigned char feat_present(const cst_features *f, const char *name);
+cst_val *feat_take(cst_features *f, const char *name);
 int feat_length(const cst_features *f);
 
 CST_VAL_USER_TYPE_DCLS(features,cst_features)

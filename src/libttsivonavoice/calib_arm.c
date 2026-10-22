@@ -22,14 +22,6 @@ int FUN_000355dc(struct Handle *h)
     return h->obj->unkc == 0;
 }
 
-struct Slot { int unk0; int unk4; int value; };
-
-/* 0x39950 arm: address of the slot's value, or NULL if the value is unset. */
-int *FUN_00039950(struct Slot *s)
-{
-    return s->value ? &s->value : NULL;
-}
-
 extern void *FUN_00038df8(void *p);
 extern void *FUN_00038dec(void *p);
 

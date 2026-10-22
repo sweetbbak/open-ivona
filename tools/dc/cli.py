@@ -148,14 +148,26 @@ ADDR_COMMENT = re.compile(r"/\*\s*0x([0-9a-fA-F]+)\b[^*]*(?:\*(?!/)[^*]*)*\*/\s*
                           r"(?:[ \t]*\S[^\n]*\n){0,3}?[^\n(;]*?\b([A-Za-z_]\w*)\s*\(")
 
 
+MACRO_NAME = re.compile(r"[A-Z_][A-Z0-9_]*")
+
+
+def addr_comment_names(text: str) -> list[tuple[int, str]]:
+    """(addr, name) for every `/* 0xADDR ...` comment directly above a function definition.
+    ALL_CAPS names are macro invocations (e.g. CST_VAL_REGISTER_TYPE), not definitions: skipped."""
+    out = []
+    for m in ADDR_COMMENT.finditer(text):
+        if not MACRO_NAME.fullmatch(m.group(2)):
+            out.append((int(m.group(1), 16), m.group(2)))
+    return out
+
+
 def adopt_names(b: Binary, src: str) -> None:
     """A `/* 0xADDR ...` comment directly above a function definition is authoritative: the table
     entry at ADDR gets the function's name (so a reset table can always be rebuilt from source)."""
     text = open(path(src)).read()
     by_addr = {f.addr: f for f in b.funcs}
     used = {f.name for f in b.funcs}
-    for m in ADDR_COMMENT.finditer(text):
-        addr, name = int(m.group(1), 16), m.group(2)
+    for addr, name in addr_comment_names(text):
         f = by_addr.get(addr)
         if f is None:
             print(f"{YELLOW}{src}: no function starts at {addr:#x} (for {name}){RESET}")
@@ -343,6 +355,11 @@ def cmd_rename(a):
     if any(f.name == a.new for f in b.funcs if f.name != a.new) or sum(f.name == a.new for f in b.funcs) > 1:
         raise SystemExit(f"{a.new} already used")
     b.save()
+    # Sources are only rewritten for placeholder names; a real name may also be a macro or a
+    # field/local elsewhere (renaming CST_VAL_REGISTER_TYPE once rewrote the macro's users).
+    if not (re.fullmatch(r"(FUN|D|DAT)_[0-9a-fA-F]+", a.old) or a.src):
+        print(f"{YELLOW}tables updated; sources not rewritten (use --src to rewrite {a.old} in src/ and include/){RESET}")
+        return
     pat = re.compile(rf"\b{re.escape(a.old)}\b")
     for d in ("src", "include"):
         for dp, _, fs in os.walk(path(d)):
@@ -469,7 +486,9 @@ def main(argv=None):
     s = sub.add_parser("check"); s.add_argument("--only", action="store_true", help="only the -b binary")
     s.add_argument("-v", "--verbose", action="store_true"); s.set_defaults(fn=cmd_check)
     s = sub.add_parser("status"); s.set_defaults(fn=cmd_status)
-    s = sub.add_parser("rename"); s.add_argument("old"); s.add_argument("new"); s.set_defaults(fn=cmd_rename)
+    s = sub.add_parser("rename"); s.add_argument("old"); s.add_argument("new")
+    s.add_argument("--src", action="store_true", help="also rewrite a non-placeholder name in src/ and include/")
+    s.set_defaults(fn=cmd_rename)
     s = sub.add_parser("data"); s.add_argument("addr"); s.add_argument("name"); s.add_argument("size", nargs="?")
     s.set_defaults(fn=cmd_data)
     s = sub.add_parser("selftest"); s.set_defaults(fn=cmd_selftest)

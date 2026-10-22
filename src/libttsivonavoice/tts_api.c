@@ -11,6 +11,7 @@
 #include "cst_utterance.h"
 #include "tts_internal.h"
 #include "ivona_vector.h"
+#include "tts_metrics.h"
 
 #define TTS_INSTANCE_MAGIC 0x3e1b8f65
 #define TTS_RESOURCE_MAGIC    0x730366b1
@@ -86,32 +87,6 @@ const char *FUN_0004524c(void *buf);
 void FUN_0004520c(void *buf);
 void *FUN_000405ac(void *dl, const char *symbol);
 
-typedef union tts_metric_value {
-    int i;
-    float f;
-} tts_metric_value;
-
-/* a "metric" val: a value or a function computing it from the metrics set */
-typedef struct tts_metric_def {
-    int type;      /* 0: int, 1: float */
-    int kind;      /* 0 or 1 */
-    union {
-        int i;
-        float f;
-        int (*ifn)(const cst_features *metrics);
-        float (*ffn)(const cst_features *metrics);
-    } v;
-    int is_func;
-} tts_metric_def;
-
-typedef struct tts_metric {
-    const char *name;
-    int type;
-    tts_metric_value value;
-    int kind;
-} tts_metric;
-
-const tts_metric_def *val_metric(const cst_val *v);
 
 /* 0x3a188 */
 static void lang_cache_free(void *data)
