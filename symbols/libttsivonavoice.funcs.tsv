@@ -694,15 +694,15 @@ addr	size	mode	name	status	src	score	note
 00039964	8	arm	FUN_00039964	todo			
 0003996c	398	arm	FUN_0003996c	todo			
 00039d04	484	arm	FUN_00039d04	todo			
-0003a188	4	arm	FUN_0003a188	todo			
-0003a18c	4	arm	FUN_0003a18c	todo			
-0003a190	c4	arm	FUN_0003a190	todo			
-0003a254	5c	arm	FUN_0003a254	todo			
+0003a188	4	arm	lang_cache_free	matched	src/libttsivonavoice/tts_api.c	100	
+0003a18c	4	arm	lang_cache_load	matched	src/libttsivonavoice/tts_api.c	100	
+0003a190	c4	arm	tts_attach_addon	matched	src/libttsivonavoice/tts_api.c	100	
+0003a254	5c	arm	resource_destroy	matched	src/libttsivonavoice/tts_api.c	100	
 0003a2b0	2cc	arm	tts_load_certificate	todo			
 0003a57c	60	arm	tts_load_certificate_file	todo			
 0003a5dc	c0	arm	tts_certificate_get_single	todo			
-0003a69c	4	arm	tts_certificate_get	todo			
-0003a6a0	114	arm	tts_create	todo			
+0003a69c	4	arm	tts_certificate_get	matched	src/libttsivonavoice/tts_api.c	100	
+0003a6a0	114	arm	tts_create	matched	src/libttsivonavoice/tts_api.c	100	
 0003a7b4	68	arm	FUN_0003a7b4	todo			
 0003a81c	a4	arm	FUN_0003a81c	todo			
 0003a8c0	b0	arm	FUN_0003a8c0	todo			
@@ -713,8 +713,8 @@ addr	size	mode	name	status	src	score	note
 0003ab64	64	arm	tts_load_addon	todo			
 0003abc8	58	arm	tts_load_addon_file	todo			
 0003ac20	e0	arm	tts_unload_addon	todo			
-0003ad00	144	arm	tts_destroy	todo			
-0003ae44	40	arm	tts_init	todo			
+0003ad00	144	arm	tts_destroy	matched	src/libttsivonavoice/tts_api.c	100	
+0003ae44	40	arm	tts_init	matched	src/libttsivonavoice/tts_api.c	100	
 0003ae84	5c	arm	FUN_0003ae84	todo			
 0003aee0	80	arm	FUN_0003aee0	todo			
 0003af60	1d8	arm	tts_load_language	todo			
@@ -5542,9 +5542,9 @@ addr	size	mode	name	status	src	score	note
 001cb928	54	arm	FUN_001cb928	todo			
 001cb97c	48	arm	FUN_001cb97c	todo			
 001cb9c4	74	arm	FUN_001cb9c4	todo			
-001cba38	c8	arm	FUN_001cba38	todo			
+001cba38	c8	arm	curl_global_init	todo			
 001cbb00	c0	arm	FUN_001cbb00	todo			
-001cbbc0	38	arm	FUN_001cbbc0	todo			
+001cbbc0	38	arm	curl_global_cleanup	todo			
 001cbbf8	b8	arm	FUN_001cbbf8	todo			
 001cbcb0	3c	arm	FUN_001cbcb0	todo			
 001cbcec	1b0	arm	FUN_001cbcec	todo			
@@ -5618,7 +5618,7 @@ addr	size	mode	name	status	src	score	note
 001d0b60	4c	arm	FUN_001d0b60	todo			
 001d0bac	4c	arm	FUN_001d0bac	todo			
 001d0bf8	48	arm	FUN_001d0bf8	todo			
-001d0c40	6d0	arm	FUN_001d0c40	todo			
+001d0c40	6d0	arm	curl_easy_strerror	todo			
 001d1310	d4	arm	FUN_001d1310	todo			
 001d13e4	94	arm	FUN_001d13e4	todo			
 001d1478	d0	arm	FUN_001d1478	todo			

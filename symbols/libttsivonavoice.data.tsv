@@ -61,3 +61,4 @@ addr	size	name	note
 00275804	0	cst_relation_id_names	
 00275f24	10	g_modules	
 0027b094	104	g_tts_error	
+0027b198	4	g_tts_instance_count	
