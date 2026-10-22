@@ -858,19 +858,19 @@ addr	size	mode	name	status	src	score	note
 00046788	444	arm	FUN_00046788	todo			
 00046bcc	78	arm	FUN_00046bcc	todo			
 00046c44	74	arm	FUN_00046c44	todo			
-00046cb8	40	arm	FUN_00046cb8	todo			
-00046cf8	24	arm	FUN_00046cf8	todo			
-00046d1c	18	arm	FUN_00046d1c	todo			
-00046d34	4	arm	pthread_mutex_lock	todo			
-00046d38	4	arm	pthread_mutex_lock_00046d38	todo			
-00046d3c	4	arm	pthread_mutex_unlock	todo			
-00046d40	2c	arm	FUN_00046d40	todo			
-00046d6c	18	arm	FUN_00046d6c	todo			
-00046d84	38	arm	FUN_00046d84	todo			
-00046dbc	8	arm	FUN_00046dbc	todo			
-00046dc4	18	arm	FUN_00046dc4	todo			
-00046ddc	8	arm	FUN_00046ddc	todo			
-00046de4	8	arm	FUN_00046de4	todo			
+00046cb8	40	arm	ivona_time_cmp	wip	src/libttsivonavoice/ivona_sys.c	56.2	
+00046cf8	24	arm	ivona_mutex_new	matched	src/libttsivonavoice/ivona_sys.c	100	
+00046d1c	18	arm	ivona_mutex_free	matched	src/libttsivonavoice/ivona_sys.c	100	
+00046d34	4	arm	ivona_mutex_lock	matched	src/libttsivonavoice/ivona_sys.c	100	
+00046d38	4	arm	ivona_mutex_trylock	matched	src/libttsivonavoice/ivona_sys.c	100	
+00046d3c	4	arm	ivona_mutex_unlock	matched	src/libttsivonavoice/ivona_sys.c	100	
+00046d40	2c	arm	ivona_shm_create	matched	src/libttsivonavoice/ivona_sys.c	100	
+00046d6c	18	arm	ivona_shm_free	matched	src/libttsivonavoice/ivona_sys.c	100	
+00046d84	38	arm	ivona_shm_open	matched	src/libttsivonavoice/ivona_sys.c	100	
+00046dbc	8	arm	ivona_shm_ptr	matched	src/libttsivonavoice/ivona_sys.c	100	
+00046dc4	18	arm	ivona_shm_clear	matched	src/libttsivonavoice/ivona_sys.c	100	
+00046ddc	8	arm	ivona_shm_lock	matched	src/libttsivonavoice/ivona_sys.c	100	
+00046de4	8	arm	ivona_shm_unlock	matched	src/libttsivonavoice/ivona_sys.c	100	
 00046dec	2ac	arm	FUN_00046dec	todo			
 00047098	c	arm	FUN_00047098	todo			
 000470a4	30	arm	FUN_000470a4	todo			
