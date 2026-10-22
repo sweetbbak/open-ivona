@@ -1,0 +1,13 @@
+#!/usr/bin/env bash
+# Run a tool from the sealed NDK r10e GCC 4.8 image with the repo mounted at /work.
+# Usage: bin/agcc [tool] args...   (tool defaults to arm-linux-androideabi-gcc; paths relative to repo root)
+#        bin/agcc sh -c '...'      (batch several commands in one container start)
+set -euo pipefail
+ROOT="$(cd "$(dirname "$0")/.." && pwd)"
+case "${1:-}" in
+    sh|arm-linux-androideabi-*) TOOL="$1"; shift ;;
+    *) TOOL=arm-linux-androideabi-gcc ;;
+esac
+NDK="${DC_NDK:-r10e}"
+exec podman run --rm -i --network=none --userns=keep-id --security-opt label=disable \
+    -v "$ROOT":/work -w /work localhost/ivona-ndk:$NDK "$TOOL" "$@"

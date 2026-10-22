@@ -1,0 +1,9 @@
+.venv/
+build/
+toolchain/dl/
+toolchain/ndk-*/
+target/*.i64
+target/*.id[0-2]
+target/*.nam
+target/*.til
+__pycache__/

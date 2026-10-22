@@ -1,0 +1,10 @@
+default: libtiver
+binaries: [libtiver, libttsivonavoice, libvoice_en_gb_amy]
+# Prebuilt library code that may be statically linked into the targets (verified by dc libmatch)
+libraries:
+  libgcc-thumb: toolchain/ndk-r10e/android-ndk-r10e/toolchains/arm-linux-androideabi-4.8/prebuilt/linux-x86_64/lib/gcc/arm-linux-androideabi/4.8/thumb/libgcc.a
+  libgcc: toolchain/ndk-r10e/android-ndk-r10e/toolchains/arm-linux-androideabi-4.8/prebuilt/linux-x86_64/lib/gcc/arm-linux-androideabi/4.8/libgcc.a
+  gnustl-thumb: toolchain/ndk-r10e/android-ndk-r10e/sources/cxx-stl/gnu-libstdc++/4.8/libs/armeabi/thumb/libgnustl_static.a
+  gnustl: toolchain/ndk-r10e/android-ndk-r10e/sources/cxx-stl/gnu-libstdc++/4.8/libs/armeabi/libgnustl_static.a
+  crtbegin_so: toolchain/ndk-r10e/android-ndk-r10e/platforms/android-9/arch-arm/usr/lib/crtbegin_so.o
+  crtend_so: toolchain/ndk-r10e/android-ndk-r10e/platforms/android-9/arch-arm/usr/lib/crtend_so.o

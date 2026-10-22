@@ -1,0 +1,6 @@
+addr	size	name	note
+0020f60c	0	__exidx_start	named from library relocation
+002716a4	0	_ZTIN9__gnu_cxx24__concurrence_wait_errorE	named from library relocation
+002716f8	0	_ZTVN9__gnu_cxx24__concurrence_wait_errorE	named from library relocation
+00275000	0	__dso_handle	named from library relocation
+00275f24	10	g_modules	

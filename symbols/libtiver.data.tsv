@@ -1,0 +1,16 @@
+addr	size	name	note
+00011bdc	0	__exidx_start	named from library relocation
+000127f4	0	__exidx_end	named from library relocation
+000164f0	c40	g_voice_table	
+00017968	0	_ZTVSt12future_error	named from library relocation
+00017980	0	_ZTISt12future_error	named from library relocation
+000179d0	0	_ZTIN9__gnu_cxx24__concurrence_wait_errorE	named from library relocation
+000179f8	0	_ZTVN9__gnu_cxx24__concurrence_wait_errorE	named from library relocation
+00017c40	0	_ZTINSt8ios_base7failureE	named from library relocation
+00017c4c	0	_ZTISt11regex_error	named from library relocation
+00017c80	0	_ZTVSt12system_error	named from library relocation
+00017cc0	0	_ZTISt12system_error	named from library relocation
+00017cf8	0	_ZTISt14error_category	named from library relocation
+00018000	0	__dso_handle	named from library relocation
+00018020	0	_ZNSs4_Rep20_S_empty_rep_storageE	named from library relocation
+0001cf50	0	__new_handler	named from library relocation

@@ -1,0 +1,15 @@
+# Compiler flags for libttsivonavoice.so: NDK r10e arm-linux-androideabi-4.8 armeabi defaults.
+# Calibrated 2026-10-22: ARM = -marm -O2 WITHOUT -mtune=xscale (xscale suppresses conditional
+# returns like `popeq {r4,pc}`; verified on tts_dict_cleanup, FUN_0003dcf0); -Os/-O1 fail on the
+# loop in FUN_00036a3c. Thumb flags not yet calibrated on this binary.
+toolchain: r10e   # NDK whose GCC 4.8 builds this binary (image localhost/ivona-ndk:<ver>)
+flags:
+  common: [-fpic, -ffunction-sections, -funwind-tables, -fstack-protector, -no-canonical-prefixes,
+           -march=armv5te, -msoft-float, -fomit-frame-pointer, -DNDEBUG,
+           -I/opt/sysroot/usr/include, -Iinclude]
+  thumb: [-mthumb, -mtune=xscale, -Os, -fno-strict-aliasing, -finline-limit=64]
+  arm: [-marm, -O2, -fstrict-aliasing, -funswitch-loops, -finline-limit=300]
+  c: [-std=gnu99]
+  cxx: [-fno-exceptions, -fno-rtti, -I/opt/gnustl/include, -I/opt/gnustl/libs/armeabi/include]
+# Per-translation-unit overrides:  src/libtiver/foo.c: {mode: arm, add: [-O3], remove: [-O2]}
+units: {}

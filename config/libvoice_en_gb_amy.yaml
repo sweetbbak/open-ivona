@@ -1,0 +1,13 @@
+# Compiler flags for libvoice_en_gb_amy.so: NDK r10e arm-linux-androideabi-4.8 armeabi defaults.
+# Not calibrated yet (copied from libtiver). ARM-mode flags are the NDK LOCAL_ARM_MODE=arm defaults.
+toolchain: r10e   # NDK whose GCC 4.8 builds this binary (image localhost/ivona-ndk:<ver>)
+flags:
+  common: [-fpic, -ffunction-sections, -funwind-tables, -fstack-protector, -no-canonical-prefixes,
+           -march=armv5te, -msoft-float, -fomit-frame-pointer, -DNDEBUG,
+           -I/opt/sysroot/usr/include, -Iinclude]
+  thumb: [-mthumb, -mtune=xscale, -Os, -fno-strict-aliasing, -finline-limit=64]
+  arm: [-marm, -mtune=xscale, -O2, -fstrict-aliasing, -funswitch-loops, -finline-limit=300]
+  c: [-std=gnu99]
+  cxx: [-fno-exceptions, -fno-rtti, -I/opt/gnustl/include, -I/opt/gnustl/libs/armeabi/include]
+# Per-translation-unit overrides:  src/libtiver/foo.c: {mode: arm, add: [-O3], remove: [-O2]}
+units: {}

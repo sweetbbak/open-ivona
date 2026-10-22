@@ -1,0 +1,10 @@
+# Sealed compiler image: pinned base + one NDK's arm-linux-androideabi-4.8 + android-9 sysroot.
+# Build with --build-arg NDK=<extracted ndk dir relative to toolchain/>.
+FROM docker.io/library/debian@sha256:ec31d744f83f4a73447ba045aaab9409997efe5cc706eca4890c1be36cc1606a
+ARG NDK
+COPY ${NDK}/toolchains/arm-linux-androideabi-4.8/prebuilt/linux-x86_64/ /opt/gcc/
+COPY ${NDK}/platforms/android-9/arch-arm/ /opt/sysroot/
+COPY ${NDK}/sources/cxx-stl/gnu-libstdc++/4.8/ /opt/gnustl/
+RUN chmod -R a+rX /opt
+ENV PATH=/opt/gcc/bin:/usr/bin:/bin LC_ALL=C TZ=UTC SOURCE_DATE_EPOCH=0
+WORKDIR /work
