@@ -703,16 +703,16 @@ addr	size	mode	name	status	src	score	note
 0003a5dc	c0	arm	tts_certificate_get_single	todo			
 0003a69c	4	arm	tts_certificate_get	matched	src/libttsivonavoice/tts_api.c	100	
 0003a6a0	114	arm	tts_create	matched	src/libttsivonavoice/tts_api.c	100	
-0003a7b4	68	arm	FUN_0003a7b4	todo			
-0003a81c	a4	arm	FUN_0003a81c	todo			
-0003a8c0	b0	arm	FUN_0003a8c0	todo			
-0003a970	e0	arm	FUN_0003a970	todo			
-0003aa50	8	arm	FUN_0003aa50	todo			
-0003aa58	88	arm	FUN_0003aa58	todo			
-0003aae0	84	arm	FUN_0003aae0	todo			
-0003ab64	64	arm	tts_load_addon	todo			
-0003abc8	58	arm	tts_load_addon_file	todo			
-0003ac20	e0	arm	tts_unload_addon	todo			
+0003a7b4	68	arm	tts_add_module	matched	src/libttsivonavoice/tts_api.c	100	
+0003a81c	a4	arm	tts_remove_module	matched	src/libttsivonavoice/tts_api.c	100	
+0003a8c0	b0	arm	tts_add_source	matched	src/libttsivonavoice/tts_api.c	100	
+0003a970	e0	arm	tts_remove_source	matched	src/libttsivonavoice/tts_api.c	100	
+0003aa50	8	arm	tts_source_table	matched	src/libttsivonavoice/tts_api.c	100	
+0003aa58	88	arm	tts_get_certificate	matched	src/libttsivonavoice/tts_api.c	100	
+0003aae0	84	arm	tts_find_license	matched	src/libttsivonavoice/tts_api.c	100	
+0003ab64	64	arm	tts_load_addon	matched	src/libttsivonavoice/tts_api.c	100	
+0003abc8	58	arm	tts_load_addon_file	matched	src/libttsivonavoice/tts_api.c	100	
+0003ac20	e0	arm	tts_unload_addon	matched	src/libttsivonavoice/tts_api.c	100	
 0003ad00	144	arm	tts_destroy	matched	src/libttsivonavoice/tts_api.c	100	
 0003ae44	40	arm	tts_init	matched	src/libttsivonavoice/tts_api.c	100	
 0003ae84	5c	arm	FUN_0003ae84	todo			
