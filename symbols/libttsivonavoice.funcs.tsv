@@ -1300,8 +1300,8 @@ addr	size	mode	name	status	src	score	note
 00055ed0	3c	arm	val_last_n	matched	src/libttsivonavoice/flite/cst_val.c	100	
 00055f0c	64	arm	val_drop_last	matched	src/libttsivonavoice/flite/cst_val.c	100	
 00055f70	38	arm	int_string_val	matched	src/libttsivonavoice/flite/cst_val.c	100	
-00055fa8	2c	arm	FUN_00055fa8	todo			
-00055fd4	30	arm	FUN_00055fd4	todo			
+00055fa8	2c	arm	val_int_n	matched	src/libttsivonavoice/flite/cst_val_const.c	100	
+00055fd4	30	arm	val_string_n	matched	src/libttsivonavoice/flite/cst_val_const.c	100	
 00056004	4	arm	FUN_00056004	todo			
 00056008	4	arm	FUN_00056008	todo			
 0005600c	4	arm	FUN_0005600c	todo			

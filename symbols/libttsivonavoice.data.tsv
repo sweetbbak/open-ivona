@@ -1,7 +1,47 @@
 addr	size	name	note
 0020f60c	0	__exidx_start	named from library relocation
+0021f218	8	val_int_19	
+0021f220	8	val_int_18	
+0021f228	8	val_int_17	
+0021f230	8	val_int_16	
+0021f238	8	val_int_15	
+0021f240	8	val_int_14	
+0021f248	8	val_int_13	
+0021f250	8	val_int_12	
+0021f258	8	val_int_11	
+0021f260	8	val_int_10	
+0021f268	8	val_int_9	
+0021f270	8	val_int_8	
+0021f278	8	val_int_7	
+0021f280	8	val_int_6	
+0021f288	8	val_int_5	
+0021f290	8	val_int_4	
+0021f298	8	val_int_3	
+0021f2a0	8	val_int_2	
+0021f2a8	8	val_int_1	
+0021f2b0	8	val_int_0	
 0021f2fc	4	cst_val_type_valfunc	
 0021f310	4	cst_val_type_features	
+00267004	8	val_string_19	
+0026700c	8	val_string_18	
+00267014	8	val_string_17	
+0026701c	8	val_string_16	
+00267024	8	val_string_15	
+0026702c	8	val_string_14	
+00267034	8	val_string_13	
+0026703c	8	val_string_12	
+00267044	8	val_string_11	
+0026704c	8	val_string_10	
+00267054	8	val_string_9	
+0026705c	8	val_string_8	
+00267064	8	val_string_7	
+0026706c	8	val_string_6	
+00267074	8	val_string_5	
+0026707c	8	val_string_4	
+00267084	8	val_string_3	
+0026708c	8	val_string_2	
+00267094	8	val_string_1	
+0026709c	8	val_string_0	
 002716a4	0	_ZTIN9__gnu_cxx24__concurrence_wait_errorE	named from library relocation
 002716f8	0	_ZTVN9__gnu_cxx24__concurrence_wait_errorE	named from library relocation
 00271ab4	0	cst_val_defs	
