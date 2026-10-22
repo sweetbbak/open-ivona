@@ -48,7 +48,8 @@
 /* WinCE sometimes doesn't have stdio, so this is a wrapper for
    fprintf(stderr, ...) */
 int cst_errmsg(const char *fmt, ...);
-#define cst_dbgmsg cst_errmsg
+/* IVONA: debug messages are compiled out, but their arguments are still evaluated. */
+static inline int cst_dbgmsg(const char *fmt, ...) { (void)fmt; return 0; }
 
 /* Need macros to help set catches */
 

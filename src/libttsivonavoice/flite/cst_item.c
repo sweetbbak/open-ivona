@@ -50,97 +50,48 @@ CST_VAL_REGISTER_TYPE_NODEL(item,cst_item)
 CST_VAL_REGISTER_TYPE(utterance,cst_utterance)
 CST_VAL_REGISTER_FUNCPTR(itemfunc,cst_itemfunc)
 
-/* 0x4dd20 */
-cst_item *new_item_relation(cst_relation *r,cst_item *i)
-{
-    cst_item *ni;
+/*
+ * IVONA: an item's contents record the items sharing them in `contents->relations`, keyed by
+ * the relation's id name. Every daughter points to its parent (u), not only the first one.
+ */
 
-    ni = cst_utt_alloc(r->utterance, cst_item, 1);
-    ni->contents = 0;
-    ni->n = ni->p = ni->u = ni->d = 0;
-    ni->relation = r;
-    item_contents_set(ni,i);
-    return ni;
-}
-
-/* 0x4dc6c */
-void item_contents_set(cst_item *current, cst_item *i)
+/* 0x4db18: drop this item's reference to its contents; free them when no item uses them */
+void item_unref_contents(cst_item *item)
 {
-    cst_item_contents *c = 0;
-    cst_item *nn_item;
-    if (i == 0)
-	c = new_item_contents(current);
-    else
-	c = i->contents;
-    if (c != current->contents)
-    {
-	item_unref_contents(current);
-	current->contents = c;
-	/* If this contents is already in this relation         */
-	/* empty the other reference                            */
-	if (feat_present(current->contents->relations,current->relation->name))
-	{   /* oops this is already in this relation */
-	    nn_item = val_item(feat_val(current->contents->relations,
-					current->relation->name));
-	    feat_set(nn_item->contents->relations,
-		     current->relation->name,
-		     item_val(nn_item));
-	       
-	}
-	/* Add back reference */
-	feat_set(current->contents->relations,
-		 current->relation->name,
-		 item_val(current));
+    if (item && item->contents) {
+        feat_remove(item->contents->relations, cst_relation_id_name(item->relation->id));
+        if (feat_length(item->contents->relations) == 0) {
+            delete_features(item->contents->relations);
+            delete_features(item->contents->features);
+            cst_free(item->contents);
+        }
+        item->contents = NULL;
     }
 }
 
+/* 0x4db90: unlink an item (and delete its daughters) */
 void delete_item(cst_item *item)
 {
     cst_item *ds, *nds;
 
-    if (item->n != NULL) 
-    { 
-	item->n->p = item->p;
-	item->n->u = item->u;  /* in trees if this is first daughter */
+    if (item->n != NULL)
+        item->n->p = item->p;
+    if (item->p != NULL)
+        item->p->n = item->n;
+    else if (item->u != NULL)
+        item->u->d = item->n;  /* first daughter */
+    if (item->relation) {
+        if (item->relation->head == item)
+            item->relation->head = item->n;
+        if (item->relation->tail == item)
+            item->relation->tail = item->p;
     }
-    if (item->p != NULL) item->p->n = item->n;
-    if (item->u != NULL) item->u->d = item->n; /* when first daughter */
-    
-    if (item->relation)
-    {
-	if (item->relation->head == item)
-	    item->relation->head = item->n;
-	if (item->relation->tail == item)
-	    item->relation->tail = item->p;
+    for (ds = item->d; ds; ds = nds) {
+        nds = ds->n;
+        delete_item(ds);
     }
-
-    /* Delete all the daughters of item */
-    for (ds = item->d; ds; ds=nds)
-    {
-	nds = ds->n;
-	delete_item(ds);
-    }
-    
     item_unref_contents(item);
-    cst_utt_free(item->relation->utterance, item);
-}
-
-void item_unref_contents(cst_item *item)
-{
-    /* unreference this item from contents, and delete contents */
-    /* if no one else is referencing it                         */
-
-    if (item && item->contents)
-    {
-	feat_remove(item->contents->relations,item->relation->name);
-	if (feat_length(item->contents->relations) == 0)
-	{
-	    delete_features(item->contents->relations);
-	    delete_features(item->contents->features);
-	    cst_utt_free(item->relation->utterance,item->contents);
-	}
-	item->contents = NULL;
-    }
+    cst_utt_free(item_utt(item), item);
 }
 
 /* 0x4dc24 */
@@ -148,194 +99,240 @@ cst_item_contents *new_item_contents(cst_item *i)
 {
     cst_item_contents *ic;
 
-    ic = cst_utt_alloc(i->relation->utterance,cst_item_contents,1);
+    ic = cst_alloc(cst_item_contents, 1);
     ic->features = new_features_local(i->relation->utterance->ctx);
     ic->relations = new_features_local(i->relation->utterance->ctx);
-
     return ic;
 }
 
-cst_item *item_as(const cst_item *i,const char *rname)
+/* 0x4dc6c: IVONA declares this int but never returns a value (C89 style); the declared return
+ * type is what stops GCC from tail-calling the final feat_set(). */
+int item_contents_set(cst_item *current, cst_item *i)
 {
-    /* return i as relation rname or null */
-    const cst_val *v;
+    cst_item_contents *c;
+    cst_item *nn_item;
+    const char *name;
 
     if (i == NULL)
-	return NULL;
-    else 
-    {
-        v = feat_val(i->contents->relations,rname);
-        if (v != NULL)
-            return val_item(v);
-        else
-            return NULL;
+        c = new_item_contents(current);
+    else
+        c = i->contents;
+    if (c == current->contents)
+        return;
+    name = cst_relation_id_name(current->relation->id);
+    item_unref_contents(current);
+    current->contents = c;
+    /* If this contents is already in this relation, empty the other reference */
+    if (feat_present(current->contents->relations, name)) {
+        nn_item = val_item(feat_val(current->contents->relations, name));
+        feat_set(nn_item->contents->relations, name, item_val(nn_item));
     }
+    /* Add back reference */
+    feat_set(current->contents->relations, name, item_val(current));
 }
 
-/********************************************************************/
-/*    List relation related functions                               */
-/********************************************************************/
+/* 0x4dd20 */
+cst_item *new_item_relation(cst_relation *r, cst_item *i)
+{
+    cst_item *ni;
+
+    ni = cst_utt_alloc(r->utterance, cst_item, 1);
+    ni->contents = 0;
+    ni->n = ni->p = ni->u = ni->d = 0;
+    ni->relation = r;
+    item_contents_set(ni, i);
+    return ni;
+}
+
+/* 0x4dd64: i as seen in relation `id`, or NULL */
+cst_item *item_as(const cst_item *i, int id)
+{
+    const cst_val *v;
+
+    if (i == NULL || id == 0)
+        return NULL;
+    v = feat_val(i->contents->relations, cst_relation_id_name(id));
+    if (v != NULL)
+        return val_item(v);
+    return NULL;
+}
 
 /* 0x4dda8 */
 cst_item *item_next(const cst_item *i)
 {
     if (i == NULL)
-	return NULL;
-    else
-	return i->n;
+        return NULL;
+    return i->n;
+}
+
+/* 0x4ddb4: delete i and the items after it, n items in total */
+void item_delete_n(cst_item *i, int n)
+{
+    cst_item *next;
+    int k;
+
+    for (k = 0; i && k < n; i = next) {
+        next = item_next(i);
+        k++;
+        delete_item(i);
+    }
+}
+
+/* 0x4ddfc: delete the items from i up to (not including) end */
+void item_delete_range(cst_item *i, cst_item *end)
+{
+    cst_item *next;
+
+    if (i == end || i == NULL)
+        return;
+    do {
+        next = item_next(i);
+        delete_item(i);
+        i = next;
+    } while (i != NULL && i != end);
 }
 
 /* 0x4de3c */
 cst_item *item_prev(const cst_item *i)
 {
     if (i == NULL)
-	return NULL;
-    else
-	return i->p;
+        return NULL;
+    return i->p;
 }
 
+/* 0x4de48: the item n steps after i (NULL past the end) */
+cst_item *item_next_n(cst_item *i, int n)
+{
+    if (n == 0 || i == NULL)
+        return i;
+    do {
+        n--;
+        i = i->n;
+    } while (n != 0 && i != NULL);
+    return i;
+}
+
+/* 0x4de7c */
 cst_item *item_append(cst_item *current, cst_item *ni)
 {
-    cst_item *rni = 0;
+    cst_item *rni;
 
-    if (ni && (ni->relation == current->relation))
-    {
-	/* got to delete it first as an item can't be in a relation twice */
-    }
-    else
-	rni = new_item_relation(current->relation,ni);
-
+    if (ni && ni->relation == current->relation)
+        return ni;  /* already in this relation */
+    rni = new_item_relation(current->relation, ni);
     rni->n = current->n;
     if (current->n != NULL)
-	current->n->p = rni;
+        current->n->p = rni;
     rni->p = current;
     current->n = rni;
-
+    rni->u = current->u;
     if (current->relation->tail == current)
-	current->relation->tail = rni;
-
+        current->relation->tail = rni;
     return rni;
 }
 
+/* 0x4dee0 */
 cst_item *item_prepend(cst_item *current, cst_item *ni)
 {
-    cst_item *rni = 0;
+    cst_item *prev = current->p;
+    cst_item *rni;
 
-    if (ni && (ni->relation == current->relation))
-    {
-	/* got to delete it first as an item can't be in a relation twice */
-    }
-    else
-	rni = new_item_relation(current->relation,ni);
-
+    if (ni && ni->relation == current->relation)
+        return ni;  /* already in this relation */
+    rni = new_item_relation(current->relation, ni);
     rni->p = current->p;
     if (current->p != NULL)
-	current->p->n = rni;
+        current->p->n = rni;
     rni->n = current;
     current->p = rni;
-
-    if (current->u)  /* in a tree */
-    {
-	current->u->d = rni;
-	rni->u = current->u;
-	current->u = NULL;
-    }
-
+    if (prev == NULL && current->u)
+        current->u->d = rni;  /* new first daughter */
+    rni->u = current->u;
     if (current->relation->head == current)
-	current->relation->head = rni;
-
+        current->relation->head = rni;
     return rni;
-}
-
-/********************************************************************/
-/*    Tree relation related functions                               */
-/********************************************************************/
-cst_item *item_parent(const cst_item *i)
-{
-    const cst_item *n;
-
-    for (n=i; item_prev(n); n=item_prev(n));
-    if (n == NULL)
-	return NULL;
-    else 
-	return n->u;
 }
 
 /* 0x4df5c */
+cst_item *item_parent(const cst_item *i)
+{
+    if (i == NULL)
+        return NULL;
+    return i->u;
+}
+
+/* 0x4df68 */
 cst_item *item_daughter(const cst_item *i)
 {
     if (i == NULL)
-	return NULL;
-    else 
-	return i->d;
+        return NULL;
+    return i->d;
 }
 
 /* 0x4df74 */
-cst_item *item_nth_daughter(const cst_item *i,int n)
+cst_item *item_nth_daughter(const cst_item *i, int n)
 {
     int d;
     cst_item *p;
 
-    for (d=0,p=item_daughter(i); p && (d < n); p=item_next(p),d++);
+    for (d = 0, p = item_daughter(i); p && (d < n); p = item_next(p), d++)
+        ;
     return p;
 }
-
 
 /* 0x4dfa8 */
 cst_item *item_last_daughter(const cst_item *i)
 {
     cst_item *p;
 
-    for (p=item_daughter(i); item_next(p); p=item_next(p));
+    for (p = item_daughter(i); item_next(p); p = item_next(p))
+        ;
     return p;
 }
 
-cst_item *item_add_daughter(cst_item *i,cst_item *nd)
+/* 0x4dfd8 */
+cst_item *item_add_daughter(cst_item *i, cst_item *nd)
 {
-    cst_item *p,*rnd;
+    cst_item *p, *rnd;
 
     p = item_last_daughter(i);
-
     if (p)
-	rnd=item_append(p,nd);
-    else
-    {   /* first new daughter */
-	if (nd && (nd->relation == i->relation))
-	{
-	    /* got to delete it first as nd can't be in a relation twice */
-	    cst_errmsg("item_add_daughter: already in relation\n");
-	    return 0;
-	}
-	else
-	    rnd = new_item_relation(i->relation,nd);
-
-	rnd->u = i;
-	i->d = rnd;
-    }
-
+        return item_append(p, nd);
+    /* first new daughter */
+    if (nd && nd->relation == i->relation)
+        return p;  /* already in this relation */
+    rnd = new_item_relation(i->relation, nd);
+    rnd->u = i;
+    i->d = rnd;
     return rnd;
 }
 
-/********************************************************************/
-/*    Feature functions                                             */
-/********************************************************************/
-
-/* 0x4e080 */
-int item_feat_present(const cst_item *i,const char *name)
+/* 0x4e034: is i the first of its siblings? */
+int item_is_first(const cst_item *i)
 {
-    return feat_present(item_feats(i),name);
-}
+    const cst_item *u = item_parent(i);
 
-/* 0x4e098 */
-int item_feat_remove(const cst_item *i,const char *name)
-{
-    return feat_remove(item_feats(i),name);
+    if (u)
+        return item_daughter(u) == i;
+    return item_prev(i) == NULL;
 }
 
 /* 0x4e070 */
 cst_features *item_feats(const cst_item *i)
 {
     return (i ? i->contents->features : NULL);
+}
+
+/* 0x4e080 */
+unsigned char item_feat_present(const cst_item *i, const char *name)
+{
+    return feat_present(item_feats(i), name);
+}
+
+/* 0x4e098 */
+unsigned char item_feat_remove(const cst_item *i, const char *name)
+{
+    return feat_remove(item_feats(i), name);
 }
 
 /* 0x4e0b0 */
@@ -360,6 +357,16 @@ float item_feat_float(const cst_item *i,const char *name)
 const char *item_feat_string(const cst_item *i,const char *name)
 {
     return feat_string(item_feats(i),name);
+}
+
+/* 0x4e110: like item_feat_string, but NULL when the feature is absent */
+const char *item_feat_string_opt(const cst_item *i, const char *name)
+{
+    const cst_val *v = item_feat(i, name);
+
+    if (v == NULL)
+        return NULL;
+    return val_string(v);
 }
 
 /* 0x4e128 */

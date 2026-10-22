@@ -66,6 +66,15 @@ Read README.md first. The rules below are what keeps the project deterministic.
   Caution: the locator can swap twin functions whose code differs only in a referenced
   constant, such as `relation_val` and `item_val`. Check those against their neighbours and the
   type-id data names.
+- **IVONA's HRG model.**
+  - Relations are identified by an int id. `cst_relation_id_name(id)` (`0x4e510`, table
+    `cst_relation_id_names`) gives the key used in feature sets. `utt_relation*` and `item_as`
+    take ids.
+  - Utterances have two engine pointers, from `new_utterance(a, b)`, and keep `ctx` at +0x18.
+  - Every daughter item has `u` (parent) set.
+  - `feat_present`, `feat_remove` and their item wrappers return a byte boolean. This shows as
+    missing or extra tail calls.
+  - `cst_dbgmsg` is compiled out but still evaluates its arguments.
 - **IVONA's Flite struct changes.**
   - `cst_relation` is `{name (not copied), utterance, head, tail}`, with no features.
   - `CST_VAL_REGISTER_TYPE*` macros check the type inline and print "VAL: tried to access..."

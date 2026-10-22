@@ -74,10 +74,10 @@ cst_item_contents *new_item_contents(cst_item *i);
 /* Remove this item from this references */
 void delete_item(cst_item *item);
 
-void item_contents_set(cst_item *current, cst_item *i);
+int item_contents_set(cst_item *current, cst_item *i);
 void item_unref_contents(cst_item *i);
 
-cst_item *item_as(const cst_item *i,const char *rname);
+cst_item *item_as(const cst_item *i, int id);
 
 cst_utterance *item_utt(const cst_item *i);
 
@@ -99,8 +99,8 @@ cst_item *item_append_sibling(cst_item *i,cst_item *new_item);
 cst_item *item_prepend_sibling(cst_item *i,cst_item *new_item);
 
 /* Feature accessor/manipulator functions */
-int item_feat_present(const cst_item *i,const char *name);
-int item_feat_remove(const cst_item *i,const char *name);
+unsigned char item_feat_present(const cst_item *i, const char *name);
+unsigned char item_feat_remove(const cst_item *i, const char *name);
 cst_features *item_feats(const cst_item *i);
 const cst_val *item_feat(const cst_item *i,const char *name);
 int item_feat_int(const cst_item *i,const char *name);

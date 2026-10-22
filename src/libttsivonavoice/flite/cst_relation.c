@@ -45,12 +45,12 @@
 
 static const char * const cst_relation_noname = "NoName";
 
-/* 0x4e204: IVONA: the relation keeps the caller's name; no features */
-cst_relation *new_relation(const char *name, cst_utterance *u)
+/* 0x4e204: IVONA: relations are identified by id; no features */
+cst_relation *new_relation(int id, cst_utterance *u)
 {
     cst_relation *r = cst_utt_alloc(u, cst_relation, 1);
 
-    r->name = name;
+    r->id = id;
     r->utterance = u;
     r->head = NULL;
     return r;
@@ -84,9 +84,9 @@ cst_item *relation_tail(cst_relation *r)
 }
 
 /* 0x4e28c */
-const char *relation_name(cst_relation *r)
+int relation_id(cst_relation *r)
 {
-    return (r == NULL ? NULL : r->name);  /* IVONA: NULL instead of cst_relation_noname */
+    return (r == NULL ? 0 : r->id);
 }
 
 /* 0x4e298 */

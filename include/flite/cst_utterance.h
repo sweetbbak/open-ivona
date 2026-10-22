@@ -47,21 +47,25 @@
 #include "cst_relation.h"
 #include "cst_alloc.h"
 
+/* IVONA: two engine pointers (from new_utterance()) and one more slot before ctx. */
 struct cst_utterance_struct {
     cst_features *features;
     cst_features *ffunctions;
     cst_features *relations;
-    cst_alloc_context ctx;
+    void *engine_b;          /* +0x0c: second argument of new_utterance() */
+    void *engine_a;          /* +0x10: first argument of new_utterance() */
+    void *unk_14;
+    cst_alloc_context ctx;   /* +0x18 */
 };
 
 /* Constructor functions */
-cst_utterance *new_utterance();
+cst_utterance *new_utterance(void *engine_a, void *engine_b);
 void delete_utterance(cst_utterance *u);
 
-cst_relation *utt_relation(cst_utterance *u,const char *name);
-cst_relation *utt_relation_create(cst_utterance *u,const char *name);
-int utt_relation_delete(cst_utterance *u,const char *name);
-int utt_relation_present(cst_utterance *u,const char *name);
+cst_relation *utt_relation(cst_utterance *u,int id);
+cst_relation *utt_relation_create(cst_utterance *u,int id);
+int utt_relation_delete(cst_utterance *u,int id);
+int utt_relation_present(cst_utterance *u,int id);
 
 typedef cst_utterance *(*cst_uttfunc)(cst_utterance *i);
 CST_VAL_USER_FUNCPTR_DCLS(uttfunc,cst_uttfunc)

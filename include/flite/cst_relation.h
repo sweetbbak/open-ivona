@@ -46,22 +46,26 @@
 #include "cst_item.h"
 #include "cst_utterance.h"
 
-/* IVONA: no per-relation features; the name is not copied. */
+/* IVONA: relations are identified by a small integer id (see cst_relation_id_name()) and have
+ * no per-relation features. */
 struct cst_relation_struct {
-    const char *name;
+    int id;
     cst_utterance *utterance;
     cst_item *head;
     cst_item *tail;
 };
 
+/* IVONA: name used as the key for relation `id` in feature sets (NULL if unknown). */
+const char *cst_relation_id_name(int id);
+
 /* Constructor functions */
-cst_relation *new_relation(const char *name, cst_utterance *u);
+cst_relation *new_relation(int id, cst_utterance *u);
 
 void delete_relation(cst_relation *r);
 
 cst_item *relation_head(cst_relation *r);
 cst_item *relation_tail(cst_relation *r);
-const char *relation_name(cst_relation *r);
+int relation_id(cst_relation *r);
 
 cst_item *relation_append(cst_relation *r,cst_item *i);
 cst_item *relation_prepend(cst_relation *r,cst_item *i);

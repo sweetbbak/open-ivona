@@ -54,5 +54,6 @@ addr	size	name	note
 00271ab4	0	cst_val_defs	
 00275000	0	__dso_handle	named from library relocation
 00275248	4	cst_log_level	
+00275804	0	cst_relation_id_names	
 00275f24	10	g_modules	
 0027b094	104	g_tts_error	

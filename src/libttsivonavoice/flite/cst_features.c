@@ -80,7 +80,7 @@ void val_delete_features(void *v)
 }
 
 /* 0x51b88 */
-int feat_present(const cst_features *f, const char *name)
+unsigned char feat_present(const cst_features *f, const char *name)
 {
     return (feat_find_featpair(f, name) != NULL);
 }
@@ -121,7 +121,7 @@ cst_val *feat_take(cst_features *f, const char *name)
 }
 
 /* 0x51c54 */
-int feat_remove(cst_features *f, const char *name)
+unsigned char feat_remove(cst_features *f, const char *name)
 {
     cst_val *v = feat_take(f, name);
 
