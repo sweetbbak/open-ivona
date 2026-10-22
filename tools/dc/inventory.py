@@ -26,6 +26,17 @@ def exidx_starts(b: Binary) -> list[int]:
 PADDING = {b"\xc0\x46", b"\x00\x00", b"\x00\xbf", b"\x00\x00\xa0\xe1", b"\x00\x00\x00\x00"}
 
 
+NORETURN = {"exit", "abort", "_exit", "__stack_chk_fail", "longjmp", "siglongjmp", "__assert2",
+            "__cxa_throw", "__cxa_rethrow", "_Unwind_Resume", "__cxa_end_cleanup", "_ZSt9terminatev"}
+
+
+def _calls_noreturn(b: Binary, it, names) -> bool:
+    if it.kind != "insn" or it.mnem not in ("bl", "blx") or it.branch is None:
+        return False
+    dest, _ = b.elf.follow(it.branch)
+    return names.get(dest) in NORETURN
+
+
 def _split_after_terminators(b: Binary, entries: dict[int, tuple[str, str]]) -> None:
     """Split spans at code that follows an unconditional transfer and is not a branch/switch
     target anywhere in .text (gold merges identical .ARM.exidx rows, so leaf functions go
@@ -40,27 +51,40 @@ def _split_after_terminators(b: Binary, entries: dict[int, tuple[str, str]]) -> 
     spans = {a: disassemble(b.elf.read(a, nxt[a] - a), a, entries[a][0], names.get) for a in starts}
     targets = set()
     for items in spans.values():
-        for it in items:
+        for k, it in enumerate(items):
             if it.branch is not None and it.mnem not in ("bl", "blx"):
                 targets.add(it.branch)
             targets.update(it.case_targets)
+            if it.kind == "insn" and it.mnem.startswith("add") and it.ops.startswith("pc, pc,"):
+                # ARM switch: `addls pc, pc, rN, lsl #2` then `b default` and a table of `b case`
+                for nx in items[k + 1:]:
+                    if nx.kind != "insn" or nx.mnem != "b":
+                        break
+                    targets.add(nx.addr)
+            if it.kind == "insn" and it.mnem.startswith("ldr") and it.ops.startswith("pc, [pc,"):
+                # ARM switch: `ldrls pc, [pc, rN, lsl #2]` then a table of absolute addresses
+                for nx in items[k + 1:]:
+                    if nx.kind != "word" and not (nx.kind == "insn" and nx.addr in b.elf.dynrelocs):
+                        break
+                    w = b.elf.u32(nx.addr)
+                    if not (text.addr <= w & ~1 < text.end):
+                        break
+                    targets.add(w & ~1)
     added = 0
     work = [(a, spans[a]) for a in starts if a not in protected]
     while work:
         a, items = work.pop()
         after_term = False
         for k, it in enumerate(items):
-            if it.kind == "insn" and it.terminator:
+            if after_term and it.kind == "insn" and it.raw not in PADDING:
+                if it.addr not in targets and it.addr not in entries:
+                    entries[it.addr] = (entries[a][0], f"FUN_{it.addr:08x}")
+                    added += 1
+                    work.append((it.addr, items[k:]))  # same decoding, now its own span
+                    break
+                after_term = False  # reachable code: keep scanning
+            if it.kind == "insn" and (it.terminator or _calls_noreturn(b, it, names)):
                 after_term = True
-                continue
-            if not after_term or it.kind != "insn" or it.raw in PADDING:
-                continue
-            if it.addr not in targets and it.addr not in entries:
-                entries[it.addr] = (entries[a][0], f"FUN_{it.addr:08x}")
-                added += 1
-                work.append((it.addr, items[k:]))  # same decoding, now its own span
-                break
-            after_term = False  # reachable code: keep scanning
     if added:
         print(f"split {added} functions that follow a return inside an existing span")
 

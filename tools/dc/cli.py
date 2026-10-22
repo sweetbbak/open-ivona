@@ -141,10 +141,38 @@ def cmd_diff(a):
     b.save()
 
 
+ADDR_COMMENT = re.compile(r"/\*\s*0x([0-9a-fA-F]+)\b[^*]*(?:\*(?!/)[^*]*)*\*/\s*\n"
+                          r"(?:[ \t]*\S[^\n]*\n){0,3}?[^\n(;]*?\b([A-Za-z_]\w*)\s*\(")
+
+
+def adopt_names(b: Binary, src: str) -> None:
+    """A `/* 0xADDR ...` comment directly above a function definition is authoritative: the table
+    entry at ADDR gets the function's name (so a reset table can always be rebuilt from source)."""
+    text = open(path(src)).read()
+    by_addr = {f.addr: f for f in b.funcs}
+    used = {f.name for f in b.funcs}
+    for m in ADDR_COMMENT.finditer(text):
+        addr, name = int(m.group(1), 16), m.group(2)
+        f = by_addr.get(addr)
+        if f is None:
+            print(f"{YELLOW}{src}: no function starts at {addr:#x} (for {name}){RESET}")
+            continue
+        if f.name != name:
+            if name in used:
+                print(f"{YELLOW}{src}: {name} already names another function; not renaming {f.name}{RESET}")
+                continue
+            used.discard(f.name)
+            used.add(name)
+            f.name = name
+
+
 def cmd_tu(a):
     """Compile one TU and diff every function it defines that is in the table."""
     b = Binary(a.bin)
     src = os.path.relpath(os.path.abspath(a.src), ROOT)
+    adopt_names(b, src)
+    b.save()
+    b = Binary(a.bin)
     obj = build.obj_path(b, src)
     mode_used = build.tu_mode(b, src)
     if build.compile_units(b, [src])[src] is not None:
