@@ -418,9 +418,7 @@ addr	size	mode	name	status	src	score	note
 0000f6d4	14	thumb	__gnu_thumb1_case_shi	lib	lib:libgcc-thumb:_thumb1_case_shi.o	100	
 0000f6e8	14	thumb	__gnu_thumb1_case_uhi	lib	lib:libgcc-thumb:_thumb1_case_uhi.o	100	
 0000f6fc	18	thumb	__gnu_thumb1_case_si	lib	lib:libgcc-thumb:_thumb1_case_si.o	100	
-0000f714	4	thumb	__udivsi3	todo			
-0000f718	76	thumb	FUN_0000f718	todo			
-0000f78e	6	thumb	FUN_0000f78e	todo			
+0000f714	80	thumb	__udivsi3	lib	lib:libgcc-thumb:_udivsi3.o	100	
 0000f794	14	thumb	__aeabi_uidivmod	lib	lib:libgcc-thumb:_udivsi3.o	100	
 0000f7a8	10	arm	__aeabi_ldiv0	lib	lib:libgcc-thumb:_dvmd_lnx.o	100	
 0000f7b8	20	thumb	__sync_fetch_and_add_4	lib	lib:libgcc-thumb:linux-atomic.o	100	

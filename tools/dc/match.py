@@ -302,6 +302,12 @@ class Matcher:
     def _compare_item(self, f: Func, cand: Candidate, ti: Item, ci: Item, res: Result) -> tuple[bool, str, str]:
         inner = [r for o, r in cand.relocs.items() if ci.addr <= o < ci.addr + ci.size]
         if not inner:
+            # tail of a relocated word that started in the previous item (an ARM instruction
+            # decoded as two Thumb halfwords in hand-written mixed-mode code): checked there
+            over = [r for o, r in cand.relocs.items() if o < ci.addr < o + 4]
+            if over:
+                ok = _mask(ti.raw, ci.addr, over) == _mask(ci.raw, ci.addr, over)
+                return (True, "", "") if ok else (False, "bytes differ", "")
             return (True, "", "") if ti.raw == ci.raw else (False, "bytes differ", "")
         ok, whys, notes = True, [], []
         for r in inner:
@@ -545,7 +551,8 @@ def _mask(raw: bytes, base: int, relocs: list[CandReloc]) -> bytes:
     b = bytearray(raw)
     for r in relocs:
         o = r.offset - base
-        b[o:o + 4] = b"\0\0\0\0"
+        lo, hi = max(o, 0), min(o + 4, len(b))
+        b[lo:hi] = bytes(max(hi - lo, 0))
     return bytes(b)
 
 

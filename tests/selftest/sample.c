@@ -81,3 +81,19 @@ __attribute__((visibility("hidden"), noinline)) int xalias_body(int x)
     return x + 11;
 }
 __attribute__((visibility("hidden"))) int xalias_other(int x) __attribute__((alias("xalias_body")));
+
+/* Hand-written Thumb function ending in ARM code (like libgcc's __udivsi3 division-by-zero
+   path): the ARM `b` is seen as two Thumb halfwords by a Thumb decode. */
+__asm__(".text\n"
+        ".thumb\n"
+        ".align 2\n"
+        ".global thumb_to_arm_stub\n"
+        ".thumb_func\n"
+        ".type thumb_to_arm_stub, %function\n"
+        "thumb_to_arm_stub:\n"
+        "    bx pc\n"
+        "    nop\n"
+        ".arm\n"
+        "    b lookup\n"
+        ".thumb\n"
+        ".size thumb_to_arm_stub, .-thumb_to_arm_stub\n");

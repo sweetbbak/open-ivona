@@ -6264,10 +6264,7 @@ addr	size	mode	name	status	src	score	note
 0020bbc4	184	arm	FUN_0020bbc4	todo			
 0020bd48	cfc	arm	FUN_0020bd48	todo			
 0020ca44	c4	arm	FUN_0020ca44	todo			
-0020cb08	4	thumb	__divsi3	todo			
-0020cb0c	8a	thumb	FUN_0020cb0c	todo			
-0020cb96	2	thumb	FUN_0020cb96	todo			
-0020cb98	c	thumb	FUN_0020cb98	todo			
+0020cb08	9c	thumb	__divsi3	lib	lib:libgcc-thumb:_divsi3.o	100	
 0020cba4	14	thumb	__aeabi_idivmod	lib	lib:libgcc-thumb:_divsi3.o	100	
 0020cbb8	8	arm	__aeabi_drsub	lib	lib:libgcc-thumb:_arm_addsubdf3.o	100	
 0020cbc0	4	arm	__subdf3	todo			
