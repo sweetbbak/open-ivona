@@ -698,7 +698,7 @@ addr	size	mode	name	status	src	score	note
 0003a18c	4	arm	lang_cache_load	matched	src/libttsivonavoice/tts_api.c	100	
 0003a190	c4	arm	tts_attach_addon	matched	src/libttsivonavoice/tts_api.c	100	
 0003a254	5c	arm	resource_destroy	matched	src/libttsivonavoice/tts_api.c	100	
-0003a2b0	2cc	arm	tts_load_certificate	todo			
+0003a2b0	2cc	arm	tts_load_certificate	wip	src/libttsivonavoice/tts_api.c	98.3	
 0003a57c	60	arm	tts_load_certificate_file	matched	src/libttsivonavoice/tts_api.c	100	
 0003a5dc	c0	arm	tts_certificate_get_single	wip	src/libttsivonavoice/tts_api.c	68.8	
 0003a69c	4	arm	tts_certificate_get	matched	src/libttsivonavoice/tts_api.c	100	
@@ -724,7 +724,7 @@ addr	size	mode	name	status	src	score	note
 0003b254	128	arm	tts_metrics_get_all	wip	src/libttsivonavoice/tts_api.c	57.0	
 0003b37c	34	arm	tts_metrics_get_size	matched	src/libttsivonavoice/tts_api.c	100	
 0003b3b0	100	arm	tts_metrics_get	matched	src/libttsivonavoice/tts_api.c	100	
-0003b4b0	508	arm	FUN_0003b4b0	todo			
+0003b4b0	508	arm	tts_voice_param_float	wip	src/libttsivonavoice/tts_api.c	57.3	
 0003b9b8	51c	arm	FUN_0003b9b8	todo			
 0003bed4	c8	arm	FUN_0003bed4	todo			
 0003bf9c	144	arm	FUN_0003bf9c	todo			
