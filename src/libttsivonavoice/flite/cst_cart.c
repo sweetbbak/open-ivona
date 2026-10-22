@@ -127,8 +127,6 @@ const cst_val *cart_interpret(cst_item *item, const cst_cart *tree)
 				val_string(v));
 	else
 	{
-	    cst_errmsg("cart_interpret_question: unknown op type %d\n",
-		       cst_cart_node_op(node,tree));
 	    cst_error();
 	}
 

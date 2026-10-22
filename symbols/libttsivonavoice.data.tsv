@@ -51,6 +51,7 @@ addr	size	name	note
 0026708c	8	val_string_2	
 00267094	8	val_string_1	
 0026709c	8	val_string_0	
+002683e0	0	cst_regex_table	learned from src/libttsivonavoice/flite/cst_cart.c
 002716a4	0	_ZTIN9__gnu_cxx24__concurrence_wait_errorE	named from library relocation
 002716f8	0	_ZTVN9__gnu_cxx24__concurrence_wait_errorE	named from library relocation
 00271ab4	0	cst_val_defs	
