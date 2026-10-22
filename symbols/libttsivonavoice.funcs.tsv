@@ -17,20 +17,20 @@ addr	size	mode	name	status	src	score	note
 00018dec	6c	thumb	_Z14android_syslogiPKcz	todo			
 00018e58	13c	thumb	_ZN9CIvonaTTSC1Ev	todo			
 00018f94	34	thumb	v	todo			
-00018fc8	c	thumb	FUN_00018fc8	todo			
-00018fd4	c	thumb	FUN_00018fd4	todo			
-00018fe0	c	thumb	FUN_00018fe0	todo			
-00018fec	c	thumb	FUN_00018fec	todo			
+00018fc8	c	thumb	_ZNK9__gnu_cxx24__concurrence_lock_error4whatEv	lib	lib:gnustl-thumb:guard.o	100	
+00018fd4	c	thumb	_ZNK9__gnu_cxx26__concurrence_unlock_error4whatEv	lib	lib:gnustl-thumb:guard.o	100	
+00018fe0	c	thumb	_ZNK9__gnu_cxx29__concurrence_broadcast_error4whatEv	lib	lib:gnustl-thumb:guard.o	100	
+00018fec	c	thumb	_ZNK9__gnu_cxx24__concurrence_wait_error4whatEv	lib	lib:gnustl-thumb:guard.o	100	
 00018ff8	1c	thumb	_ZN12_GLOBAL__N_1L4initEv	lib	lib:gnustl-thumb:guard.o	100	
 00019014	18	thumb	_ZN12_GLOBAL__N_1L16init_static_condEv	lib	lib:gnustl-thumb:guard.o	100	
 0001902c	18	thumb	_ZN9__gnu_cxx24__concurrence_wait_errorD1Ev	lib	lib:gnustl-thumb:guard.o	100	
 00019044	18	thumb	_ZN9__gnu_cxx29__concurrence_broadcast_errorD1Ev	lib	lib:gnustl-thumb:guard.o	100	
 0001905c	18	thumb	_ZN9__gnu_cxx26__concurrence_unlock_errorD1Ev	lib	lib:gnustl-thumb:guard.o	100	
 00019074	18	thumb	_ZN9__gnu_cxx24__concurrence_lock_errorD1Ev	lib	lib:gnustl-thumb:guard.o	100	
-0001908c	20	thumb	FUN_0001908c	todo			
-000190ac	20	thumb	FUN_000190ac	todo			
-000190cc	20	thumb	FUN_000190cc	todo			
-000190ec	20	thumb	FUN_000190ec	todo			
+0001908c	20	thumb	_ZN9__gnu_cxx24__concurrence_wait_errorD0Ev	lib	lib:gnustl-thumb:guard.o	100	
+000190ac	20	thumb	_ZN9__gnu_cxx29__concurrence_broadcast_errorD0Ev	lib	lib:gnustl-thumb:guard.o	100	
+000190cc	20	thumb	_ZN9__gnu_cxx26__concurrence_unlock_errorD0Ev	lib	lib:gnustl-thumb:guard.o	100	
+000190ec	20	thumb	_ZN9__gnu_cxx24__concurrence_lock_errorD0Ev	lib	lib:gnustl-thumb:guard.o	100	
 0001910c	28	thumb	_ZN9__gnu_cxx30__throw_concurrence_lock_errorEv	lib	lib:gnustl-thumb:guard.o	100	
 00019134	28	thumb	_ZN9__gnu_cxx32__throw_concurrence_unlock_errorEv	lib	lib:gnustl-thumb:guard.o	100	
 0001915c	28	thumb	_ZN9__gnu_cxx35__throw_concurrence_broadcast_errorEv	lib	lib:gnustl-thumb:guard.o	100	
@@ -103,7 +103,7 @@ addr	size	mode	name	status	src	score	note
 0001a5c4	4	thumb	FUN_0001a5c4	todo			
 0001a5c8	18	thumb	FUN_0001a5c8	todo			
 0001a5e0	2c	thumb	_ZNKSt9type_infoeqERKS_	lib	lib:gnustl-thumb:tinfo.o	100	
-0001a60c	8	thumb	FUN_0001a60c	todo			
+0001a60c	8	thumb	_ZNKSt9type_info10__do_catchEPKS_PPvj	lib	lib:gnustl-thumb:tinfo.o	100	
 0001a614	12c	thumb	_ZN9__gnu_cxx27__verbose_terminate_handlerEv	lib	lib:gnustl-thumb:vterminate.o	100	
 0001a740	9c	thumb	d_make_comp	lib	lib:gnustl-thumb:cp-demangle.o	100	
 0001a7dc	38	thumb	d_make_name	lib	lib:gnustl-thumb:cp-demangle.o	100	
@@ -166,7 +166,7 @@ addr	size	mode	name	status	src	score	note
 00020e94	4a	thumb	restore_non_core_regs	lib	lib:libgcc-thumb:unwind-arm.o	100	
 00020ede	10	thumb	_Unwind_decode_typeinfo_ptr.isra.0	lib	lib:libgcc-thumb:unwind-arm.o	100	
 00020eee	4	thumb	__gnu_unwind_24bit.isra.1	lib	lib:libgcc-thumb:unwind-arm.o	100	
-00020ef2	2	thumb	FUN_00020ef2	todo			
+00020ef2	2	thumb	_Unwind_DebugHook	lib	lib:libgcc-thumb:unwind-arm.o	100	by object order
 00020ef4	3a	thumb	unwind_phase2	lib	lib:libgcc-thumb:unwind-arm.o	100	
 00020f2e	c2	thumb	FUN_00020f2e	todo			
 00020ff0	4	thumb	_Unwind_GetCFA	lib	lib:libgcc-thumb:unwind-arm.o	100	
@@ -174,7 +174,7 @@ addr	size	mode	name	status	src	score	note
 00021042	14	thumb	__gnu_Unwind_ForcedUnwind	lib	lib:libgcc-thumb:unwind-arm.o	100	
 00021056	44	thumb	__gnu_Unwind_Resume	lib	lib:libgcc-thumb:unwind-arm.o	100	
 0002109a	1a	thumb	__gnu_Unwind_Resume_or_Rethrow	lib	lib:libgcc-thumb:unwind-arm.o	100	
-000210b4	2	thumb	_Unwind_Complete	todo			
+000210b4	2	thumb	_Unwind_Complete	lib	lib:libgcc-thumb:unwind-arm.o	100	by object order
 000210b6	10	thumb	_Unwind_DeleteException	lib	lib:libgcc-thumb:unwind-arm.o	100	
 000210c6	34	thumb	_Unwind_VRS_Get	lib	lib:libgcc-thumb:unwind-arm.o	100	
 000210fa	16	thumb	_Unwind_GetGR	lib	lib:libgcc-thumb:unwind-arm.o	100	
@@ -209,7 +209,7 @@ addr	size	mode	name	status	src	score	note
 0002187c	c	arm	FUN_0002187c	todo			
 00021888	32	thumb	next_unwind_byte	lib	lib:libgcc-thumb:pr-support.o	100	
 000218ba	16	thumb	_Unwind_GetGR.constprop.0	lib	lib:libgcc-thumb:pr-support.o	100	
-000218d0	8	thumb	FUN_000218d0	todo			
+000218d0	8	thumb	unwind_UCB_from_context	lib	lib:libgcc-thumb:pr-support.o	100	
 000218d8	290	thumb	__gnu_unwind_execute	lib	lib:libgcc-thumb:pr-support.o	100	
 00021b68	26	thumb	__gnu_unwind_frame	lib	lib:libgcc-thumb:pr-support.o	100	
 00021b8e	a	thumb	_Unwind_GetRegionStart	lib	lib:libgcc-thumb:pr-support.o	100	

@@ -10,152 +10,152 @@ addr	size	mode	name	status	src	score	note
 00004ec0	c	thumb	v	matched	src/libtiver/voice_table.cpp	100	
 00004ecc	84	thumb	h	todo			
 00004f50	6c	thumb	_Z14android_syslogiPKcz	todo			
-00004fbc	4	thumb	FUN_00004fbc	todo			
-00004fc0	8	thumb	FUN_00004fc0	todo			
-00004fc8	4	thumb	FUN_00004fc8	todo			
-00004fcc	8	thumb	FUN_00004fcc	todo			
-00004fd4	8	thumb	FUN_00004fd4	todo			
-00004fdc	4	thumb	FUN_00004fdc	todo			
-00004fe0	c	thumb	FUN_00004fe0	todo			
-00004fec	18	thumb	FUN_00004fec	todo			
+00004fbc	4	thumb	_ZNKSs4dataEv	lib	lib:gnustl-thumb:string-inst.o	100	by object order
+00004fc0	8	thumb	_ZNKSs6lengthEv	lib	lib:gnustl-thumb:string-inst.o	100	by object order
+00004fc8	4	thumb	_ZNKSs7_M_dataEv	lib	lib:gnustl-thumb:string-inst.o	100	by object order
+00004fcc	8	thumb	_ZNSs7_M_dataEPc	lib	lib:gnustl-thumb:string-inst.o	100	by object order
+00004fd4	8	thumb	_ZNKSs6_M_repEv	lib	lib:gnustl-thumb:string-inst.o	100	by object order
+00004fdc	4	thumb	_ZNKSs9_M_ibeginEv	lib	lib:gnustl-thumb:string-inst.o	100	by object order
+00004fe0	c	thumb	_ZNKSs7_M_iendEv	lib	lib:gnustl-thumb:string-inst.o	100	by object order
+00004fec	18	thumb	_ZNKSs8_M_checkEjPKc	lib	lib:gnustl-thumb:string-inst.o	100	by object order
 00005004	20	thumb	_ZNKSs15_M_check_lengthEjjPKc	lib	lib:gnustl-thumb:string-inst.o	100	
-00005024	14	thumb	FUN_00005024	todo			
+00005024	14	thumb	_ZNKSs8_M_limitEjj	lib	lib:gnustl-thumb:string-inst.o	100	by object order
 00005038	1c	thumb	_ZNKSs11_M_disjunctEPKc	lib	lib:gnustl-thumb:string-inst.o	100	
-00005054	14	thumb	FUN_00005054	todo			
-00005068	14	thumb	FUN_00005068	todo			
+00005054	14	thumb	_ZNSs7_M_copyEPcPKcj	lib	lib:gnustl-thumb:string-inst.o	100	by object order
+00005068	14	thumb	_ZNSs7_M_moveEPcPKcj	lib	lib:gnustl-thumb:string-inst.o	100	by object order
 0000507c	18	thumb	_ZNSs9_M_assignEPcjc	lib	lib:gnustl-thumb:string-inst.o	100	
-00005094	14	thumb	FUN_00005094	todo			
-000050a8	14	thumb	FUN_000050a8	todo			
-000050bc	14	thumb	FUN_000050bc	todo			
-000050d0	14	thumb	FUN_000050d0	todo			
-000050e4	4	thumb	FUN_000050e4	todo			
-000050e8	c	thumb	FUN_000050e8	todo			
-000050f4	10	thumb	FUN_000050f4	todo			
-00005104	14	thumb	FUN_00005104	todo			
-00005118	4	thumb	FUN_00005118	todo			
-0000511c	c	thumb	FUN_0000511c	todo			
-00005128	10	thumb	FUN_00005128	todo			
-00005138	8	thumb	FUN_00005138	todo			
-00005140	4	thumb	FUN_00005140	todo			
-00005144	c	thumb	FUN_00005144	todo			
-00005150	10	thumb	FUN_00005150	todo			
-00005160	8	thumb	FUN_00005160	todo			
-00005168	8	thumb	FUN_00005168	todo			
+00005094	14	thumb	_ZNSs13_S_copy_charsEPcN9__gnu_cxx17__normal_iteratorIS_SsEES2_	lib	lib:gnustl-thumb:string-inst.o	100	by object order
+000050a8	14	thumb	_ZNSs13_S_copy_charsEPcN9__gnu_cxx17__normal_iteratorIPKcSsEES4_	lib	lib:gnustl-thumb:string-inst.o	100	by object order
+000050bc	14	thumb	_ZNSs13_S_copy_charsEPcS_S_	lib	lib:gnustl-thumb:string-inst.o	100	by object order
+000050d0	14	thumb	_ZNSs13_S_copy_charsEPcPKcS1_	lib	lib:gnustl-thumb:string-inst.o	100	by object order
+000050e4	4	thumb	_ZNSs10_S_compareEjj	lib	lib:gnustl-thumb:string-inst.o	100	by object order
+000050e8	c	thumb	_ZNSs12_S_empty_repEv	lib	lib:gnustl-thumb:string-inst.o	100	by object order
+000050f4	10	thumb	_ZNSsC2Ev	lib	lib:gnustl-thumb:string-inst.o	100	by object order
+00005104	14	thumb	_ZNSsC2EOSs	lib	lib:gnustl-thumb:string-inst.o	100	by object order
+00005118	4	thumb	_ZNKSs5beginEv	lib	lib:gnustl-thumb:string-inst.o	100	by object order
+0000511c	c	thumb	_ZNKSs3endEv	lib	lib:gnustl-thumb:string-inst.o	100	by object order
+00005128	10	thumb	_ZNKSs6rbeginEv	lib	lib:gnustl-thumb:string-inst.o	100	by object order
+00005138	8	thumb	_ZNKSs4rendEv	lib	lib:gnustl-thumb:string-inst.o	100	by object order
+00005140	4	thumb	_ZNKSs6cbeginEv	lib	lib:gnustl-thumb:string-inst.o	100	by object order
+00005144	c	thumb	_ZNKSs4cendEv	lib	lib:gnustl-thumb:string-inst.o	100	by object order
+00005150	10	thumb	_ZNKSs7crbeginEv	lib	lib:gnustl-thumb:string-inst.o	100	by object order
+00005160	8	thumb	_ZNKSs5crendEv	lib	lib:gnustl-thumb:string-inst.o	100	by object order
+00005168	8	thumb	_ZNKSs4sizeEv	lib	lib:gnustl-thumb:string-inst.o	100	by object order
 00005170	8	thumb	_ZNKSs8max_sizeEv	lib	lib:gnustl-thumb:string-inst.o	100	
-00005178	8	thumb	FUN_00005178	todo			
-00005180	c	thumb	FUN_00005180	todo			
+00005178	8	thumb	_ZNKSs8capacityEv	lib	lib:gnustl-thumb:string-inst.o	100	by object order
+00005180	c	thumb	_ZNKSs5emptyEv	lib	lib:gnustl-thumb:string-inst.o	100	by object order
 0000518c	8	thumb	_ZNKSsixEj	lib	lib:gnustl-thumb:string-inst.o	100	
 00005194	20	thumb	_ZNKSs2atEj	lib	lib:gnustl-thumb:string-inst.o	100	
-000051b4	4	thumb	FUN_000051b4	todo			
+000051b4	4	thumb	_ZNKSs5frontEv	lib	lib:gnustl-thumb:string-inst.o	100	by object order
 000051b8	10	thumb	_ZNKSs4backEv	lib	lib:gnustl-thumb:string-inst.o	100	
 000051c8	44	thumb	_ZNKSs4copyEPcjj	lib	lib:gnustl-thumb:string-inst.o	100	
-0000520c	2c	thumb	FUN_0000520c	todo			
-00005238	c	thumb	FUN_00005238	todo			
-00005244	c	thumb	FUN_00005244	todo			
+0000520c	2c	thumb	_ZNSs4swapERSs	lib	lib:gnustl-thumb:string-inst.o	100	by object order
+00005238	c	thumb	_ZNSsaSEOSs	lib	lib:gnustl-thumb:string-inst.o	100	by object order
+00005244	c	thumb	_ZNSs6assignEOSs	lib	lib:gnustl-thumb:string-inst.o	100	by object order
 00005250	8	thumb	FUN_00005250	todo			
 00005258	70	thumb	_ZNKSs4findEPKcjj	lib	lib:gnustl-thumb:string-inst.o	100	
-000052c8	10	thumb	FUN_000052c8	todo			
-000052d8	1c	thumb	FUN_000052d8	todo			
+000052c8	10	thumb	_ZNKSs4findERKSsj	lib	lib:gnustl-thumb:string-inst.o	100	by object order
+000052d8	1c	thumb	_ZNKSs4findEPKcj	lib	lib:gnustl-thumb:string-inst.o	100	by object order
 000052f4	24	thumb	_ZNKSs4findEcj	lib	lib:gnustl-thumb:string-inst.o	100	
 00005318	48	thumb	_ZNKSs5rfindEPKcjj	lib	lib:gnustl-thumb:string-inst.o	100	
-00005360	10	thumb	FUN_00005360	todo			
-00005370	1c	thumb	FUN_00005370	todo			
+00005360	10	thumb	_ZNKSs5rfindERKSsj	lib	lib:gnustl-thumb:string-inst.o	100	by object order
+00005370	1c	thumb	_ZNKSs5rfindEPKcj	lib	lib:gnustl-thumb:string-inst.o	100	by object order
 0000538c	34	thumb	_ZNKSs5rfindEcj	lib	lib:gnustl-thumb:string-inst.o	100	
 000053c0	44	thumb	_ZNKSs13find_first_ofEPKcjj	lib	lib:gnustl-thumb:string-inst.o	100	
-00005404	10	thumb	FUN_00005404	todo			
-00005414	1c	thumb	FUN_00005414	todo			
-00005430	8	thumb	FUN_00005430	todo			
+00005404	10	thumb	_ZNKSs13find_first_ofERKSsj	lib	lib:gnustl-thumb:string-inst.o	100	by object order
+00005414	1c	thumb	_ZNKSs13find_first_ofEPKcj	lib	lib:gnustl-thumb:string-inst.o	100	by object order
+00005430	8	thumb	_ZNKSs13find_first_ofEcj	lib	lib:gnustl-thumb:string-inst.o	100	by object order
 00005438	58	thumb	_ZNKSs12find_last_ofEPKcjj	lib	lib:gnustl-thumb:string-inst.o	100	
-00005490	10	thumb	FUN_00005490	todo			
-000054a0	1c	thumb	FUN_000054a0	todo			
-000054bc	8	thumb	FUN_000054bc	todo			
+00005490	10	thumb	_ZNKSs12find_last_ofERKSsj	lib	lib:gnustl-thumb:string-inst.o	100	by object order
+000054a0	1c	thumb	_ZNKSs12find_last_ofEPKcj	lib	lib:gnustl-thumb:string-inst.o	100	by object order
+000054bc	8	thumb	_ZNKSs12find_last_ofEcj	lib	lib:gnustl-thumb:string-inst.o	100	by object order
 000054c4	3c	thumb	_ZNKSs17find_first_not_ofEPKcjj	lib	lib:gnustl-thumb:string-inst.o	100	
-00005500	10	thumb	FUN_00005500	todo			
-00005510	1c	thumb	FUN_00005510	todo			
+00005500	10	thumb	_ZNKSs17find_first_not_ofERKSsj	lib	lib:gnustl-thumb:string-inst.o	100	by object order
+00005510	1c	thumb	_ZNKSs17find_first_not_ofEPKcj	lib	lib:gnustl-thumb:string-inst.o	100	by object order
 0000552c	2c	thumb	_ZNKSs17find_first_not_ofEcj	lib	lib:gnustl-thumb:string-inst.o	100	
 00005558	54	thumb	_ZNKSs16find_last_not_ofEPKcjj	lib	lib:gnustl-thumb:string-inst.o	100	
-000055ac	10	thumb	FUN_000055ac	todo			
-000055bc	1c	thumb	FUN_000055bc	todo			
+000055ac	10	thumb	_ZNKSs16find_last_not_ofERKSsj	lib	lib:gnustl-thumb:string-inst.o	100	by object order
+000055bc	1c	thumb	_ZNKSs16find_last_not_ofEPKcj	lib	lib:gnustl-thumb:string-inst.o	100	by object order
 000055d8	34	thumb	_ZNKSs16find_last_not_ofEcj	lib	lib:gnustl-thumb:string-inst.o	100	
-0000560c	28	thumb	FUN_0000560c	todo			
+0000560c	28	thumb	_ZNKSs7compareERKSs	lib	lib:gnustl-thumb:string-inst.o	100	by object order
 00005634	58	thumb	_ZNKSs7compareEjjRKSs	lib	lib:gnustl-thumb:string-inst.o	100	
 0000568c	6c	thumb	_ZNKSs7compareEjjRKSsjj	lib	lib:gnustl-thumb:string-inst.o	100	
 000056f8	2c	thumb	_ZNKSs7compareEPKc	lib	lib:gnustl-thumb:string-inst.o	100	
 00005724	64	thumb	_ZNKSs7compareEjjPKc	lib	lib:gnustl-thumb:string-inst.o	100	
 00005788	48	thumb	_ZNKSs7compareEjjPKcj	lib	lib:gnustl-thumb:string-inst.o	100	
-000057d0	4	thumb	FUN_000057d0	todo			
-000057d4	c	thumb	FUN_000057d4	todo			
-000057e0	8	thumb	FUN_000057e0	todo			
-000057e8	c	thumb	FUN_000057e8	todo			
-000057f4	8	thumb	FUN_000057f4	todo			
-000057fc	8	thumb	FUN_000057fc	todo			
+000057d0	4	thumb	_ZNSs12_Alloc_hiderC2EPcRKSaIcE	lib	lib:gnustl-thumb:string-inst.o	100	by object order
+000057d4	c	thumb	_ZNSs4_Rep12_S_empty_repEv	lib	lib:gnustl-thumb:string-inst.o	100	by object order
+000057e0	8	thumb	_ZNKSs4_Rep12_M_is_leakedEv	lib	lib:gnustl-thumb:string-inst.o	100	by object order
+000057e8	c	thumb	_ZNKSs4_Rep12_M_is_sharedEv	lib	lib:gnustl-thumb:string-inst.o	100	by object order
+000057f4	8	thumb	_ZNSs4_Rep13_M_set_leakedEv	lib	lib:gnustl-thumb:string-inst.o	100	by object order
+000057fc	8	thumb	_ZNSs4_Rep15_M_set_sharableEv	lib	lib:gnustl-thumb:string-inst.o	100	by object order
 00005804	1c	thumb	_ZNSs4_Rep26_M_set_length_and_sharableEj	lib	lib:gnustl-thumb:string-inst.o	100	
-00005820	4	thumb	FUN_00005820	todo			
+00005820	4	thumb	_ZNSs4_Rep10_M_refdataEv	lib	lib:gnustl-thumb:string-inst.o	100	by object order
 00005824	5c	thumb	_ZNSs4_Rep9_S_createEjjRKSaIcE	lib	lib:gnustl-thumb:string-inst.o	100	
 00005880	4c	thumb	_ZNSs12_S_constructEjcRKSaIcE	lib	lib:gnustl-thumb:string-inst.o	100	
-000058cc	14	thumb	FUN_000058cc	todo			
-000058e0	14	thumb	FUN_000058e0	todo			
-000058f4	8	thumb	FUN_000058f4	todo			
+000058cc	14	thumb	_ZNSsC2ERKSaIcE	lib	lib:gnustl-thumb:string-inst.o	100	by object order
+000058e0	14	thumb	_ZNSsC2EjcRKSaIcE	lib	lib:gnustl-thumb:string-inst.o	100	by object order
+000058f4	8	thumb	_ZNSs18_S_construct_aux_2EjcRKSaIcE	lib	lib:gnustl-thumb:string-inst.o	100	by object order
 000058fc	8	thumb	_ZNSs4_Rep10_M_destroyERKSaIcE	lib	lib:gnustl-thumb:string-inst.o	100	
 00005904	18	thumb	_ZNSs4_Rep10_M_disposeERKSaIcE	lib	lib:gnustl-thumb:string-inst.o	100	
-0000591c	24	thumb	FUN_0000591c	todo			
+0000591c	24	thumb	_ZNSsD2Ev	lib	lib:gnustl-thumb:string-inst.o	100	by object order
 00005940	108	thumb	_ZNSs9_M_mutateEjjj	lib	lib:gnustl-thumb:string-inst.o	100	
 00005a48	30	thumb	_ZNSs12_M_leak_hardEv	lib	lib:gnustl-thumb:string-inst.o	100	
-00005a78	14	thumb	FUN_00005a78	todo			
-00005a8c	1c	thumb	FUN_00005a8c	todo			
-00005aa8	20	thumb	FUN_00005aa8	todo			
+00005a78	14	thumb	_ZNSs7_M_leakEv	lib	lib:gnustl-thumb:string-inst.o	100	by object order
+00005a8c	1c	thumb	_ZNSs5beginEv	lib	lib:gnustl-thumb:string-inst.o	100	by object order
+00005aa8	20	thumb	_ZNSs4rendEv	lib	lib:gnustl-thumb:string-inst.o	100	by object order
 00005ac8	20	thumb	_ZNSs3endEv	lib	lib:gnustl-thumb:string-inst.o	100	
 00005ae8	1c	thumb	_ZNSsixEj	lib	lib:gnustl-thumb:string-inst.o	100	
-00005b04	1c	thumb	FUN_00005b04	todo			
+00005b04	1c	thumb	_ZNSs5frontEv	lib	lib:gnustl-thumb:string-inst.o	100	by object order
 00005b20	20	thumb	_ZNSs4backEv	lib	lib:gnustl-thumb:string-inst.o	100	
 00005b40	30	thumb	_ZNSs2atEj	lib	lib:gnustl-thumb:string-inst.o	100	
 00005b70	28	thumb	_ZNSs6rbeginEv	lib	lib:gnustl-thumb:string-inst.o	100	
-00005b98	14	thumb	FUN_00005b98	todo			
-00005bac	34	thumb	FUN_00005bac	todo			
+00005b98	14	thumb	_ZNSs5clearEv	lib	lib:gnustl-thumb:string-inst.o	100	by object order
+00005bac	34	thumb	_ZNSs5eraseEjj	lib	lib:gnustl-thumb:string-inst.o	100	by object order
 00005be0	24	thumb	_ZNSs5eraseEN9__gnu_cxx17__normal_iteratorIPcSsEE	lib	lib:gnustl-thumb:string-inst.o	100	
 00005c04	2c	thumb	_ZNSs5eraseEN9__gnu_cxx17__normal_iteratorIPcSsEES2_	lib	lib:gnustl-thumb:string-inst.o	100	
 00005c30	50	thumb	_ZNSs14_M_replace_auxEjjjc	lib	lib:gnustl-thumb:string-inst.o	100	
-00005c80	1c	thumb	FUN_00005c80	todo			
-00005c9c	1c	thumb	FUN_00005c9c	todo			
+00005c80	1c	thumb	_ZNSs6assignEjc	lib	lib:gnustl-thumb:string-inst.o	100	by object order
+00005c9c	1c	thumb	_ZNSsaSEc	lib	lib:gnustl-thumb:string-inst.o	100	by object order
 00005cb8	54	thumb	FUN_00005cb8	todo			
 00005d0c	34	thumb	_ZNSs7replaceEjjjc	lib	lib:gnustl-thumb:string-inst.o	100	
 00005d40	1c	thumb	_ZNSs7replaceEN9__gnu_cxx17__normal_iteratorIPcSsEES2_jc	lib	lib:gnustl-thumb:string-inst.o	100	
 00005d5c	18	thumb	_ZNSs6insertEN9__gnu_cxx17__normal_iteratorIPcSsEEjc	lib	lib:gnustl-thumb:string-inst.o	100	
 00005d74	30	thumb	_ZNSs15_M_replace_safeEjjPKcj	lib	lib:gnustl-thumb:string-inst.o	100	
 00005da4	a0	thumb	_ZNSs6assignEPKcj	lib	lib:gnustl-thumb:string-inst.o	100	
-00005e44	10	thumb	FUN_00005e44	todo			
+00005e44	10	thumb	_ZNSsaSESt16initializer_listIcE	lib	lib:gnustl-thumb:string-inst.o	100	by object order
 00005e54	2c	thumb	_ZNSs6assignERKSsjj	lib	lib:gnustl-thumb:string-inst.o	100	
-00005e80	18	thumb	FUN_00005e80	todo			
-00005e98	c	thumb	FUN_00005e98	todo			
-00005ea4	18	thumb	FUN_00005ea4	todo			
+00005e80	18	thumb	_ZNSs6assignEPKc	lib	lib:gnustl-thumb:string-inst.o	100	by object order
+00005e98	c	thumb	_ZNSs6assignESt16initializer_listIcE	lib	lib:gnustl-thumb:string-inst.o	100	by object order
+00005ea4	18	thumb	_ZNSsaSEPKc	lib	lib:gnustl-thumb:string-inst.o	100	by object order
 00005ebc	dc	thumb	_ZNSs6insertEjPKcj	lib	lib:gnustl-thumb:string-inst.o	100	
 00005f98	10	thumb	_ZNSs6insertEN9__gnu_cxx17__normal_iteratorIPcSsEESt16initializer_listIcE	lib	lib:gnustl-thumb:string-inst.o	100	
 00005fa8	30	thumb	_ZNSs6insertEjRKSsjj	lib	lib:gnustl-thumb:string-inst.o	100	
-00005fd8	1c	thumb	FUN_00005fd8	todo			
-00005ff4	10	thumb	FUN_00005ff4	todo			
-00006004	24	thumb	FUN_00006004	todo			
-00006028	20	thumb	FUN_00006028	todo			
+00005fd8	1c	thumb	_ZNSs6insertEjPKc	lib	lib:gnustl-thumb:string-inst.o	100	by object order
+00005ff4	10	thumb	_ZNSs6insertEjRKSs	lib	lib:gnustl-thumb:string-inst.o	100	by object order
+00006004	24	thumb	_ZNSs8pop_backEv	lib	lib:gnustl-thumb:string-inst.o	100	by object order
+00006028	20	thumb	_ZNSs4_Rep10_M_refcopyEv	lib	lib:gnustl-thumb:string-inst.o	100	by object order
 00006048	54	thumb	_ZNSs4_Rep8_M_cloneERKSaIcEj	lib	lib:gnustl-thumb:string-inst.o	100	
 0000609c	50	thumb	_ZNSs7reserveEj	lib	lib:gnustl-thumb:string-inst.o	100	
 000060ec	18	thumb	FUN_000060ec	todo			
 00006104	c	thumb	FUN_00006104	todo			
 00006110	7c	thumb	_ZNSs6appendERKSs	lib	lib:gnustl-thumb:string-inst.o	100	
-0000618c	8	thumb	FUN_0000618c	todo			
+0000618c	8	thumb	_ZNSspLERKSs	lib	lib:gnustl-thumb:string-inst.o	100	by object order
 00006194	a0	thumb	_ZNSs6appendERKSsjj	lib	lib:gnustl-thumb:string-inst.o	100	
 00006234	a4	thumb	_ZNSs6appendEPKcj	lib	lib:gnustl-thumb:string-inst.o	100	
-000062d8	c	thumb	FUN_000062d8	todo			
-000062e4	18	thumb	FUN_000062e4	todo			
-000062fc	c	thumb	FUN_000062fc	todo			
-00006308	18	thumb	FUN_00006308	todo			
+000062d8	c	thumb	_ZNSspLESt16initializer_listIcE	lib	lib:gnustl-thumb:string-inst.o	100	by object order
+000062e4	18	thumb	_ZNSs6appendEPKc	lib	lib:gnustl-thumb:string-inst.o	100	by object order
+000062fc	c	thumb	_ZNSs6appendESt16initializer_listIcE	lib	lib:gnustl-thumb:string-inst.o	100	by object order
+00006308	18	thumb	_ZNSspLEPKc	lib	lib:gnustl-thumb:string-inst.o	100	by object order
 00006320	88	thumb	_ZNSs6appendEjc	lib	lib:gnustl-thumb:string-inst.o	100	
 000063a8	38	thumb	_ZNSs6resizeEjc	lib	lib:gnustl-thumb:string-inst.o	100	
-000063e0	c	thumb	FUN_000063e0	todo			
+000063e0	c	thumb	_ZNSs6resizeEj	lib	lib:gnustl-thumb:string-inst.o	100	by object order
 000063ec	4c	thumb	_ZNSs9push_backEc	lib	lib:gnustl-thumb:string-inst.o	100	
 00006438	50	thumb	_ZNSspLEc	lib	lib:gnustl-thumb:string-inst.o	100	
-00006488	30	thumb	FUN_00006488	todo			
-000064b8	3c	thumb	_ZNSsC1ERKSs	todo			
-000064f4	64	thumb	FUN_000064f4	todo			
-00006558	8	thumb	FUN_00006558	todo			
+00006488	30	thumb	_ZNSs4_Rep7_M_grabERKSaIcES2_	lib	lib:gnustl-thumb:string-inst.o	100	by object order
+000064b8	3c	thumb	_ZNSsC1ERKSs	lib	lib:gnustl-thumb:string-inst.o	100	
+000064f4	64	thumb	_ZNSs6assignERKSs	lib	lib:gnustl-thumb:string-inst.o	100	by object order
+00006558	8	thumb	_ZNSsaSERKSs	lib	lib:gnustl-thumb:string-inst.o	100	by object order
 00006560	40	thumb	FUN_00006560	todo			
 000065a0	20	thumb	FUN_000065a0	todo			
 000065c0	36	thumb	FUN_000065c0	todo			
@@ -163,31 +163,31 @@ addr	size	mode	name	status	src	score	note
 00006614	1a	thumb	FUN_00006614	todo			
 0000662e	1a	thumb	FUN_0000662e	todo			
 00006648	54	thumb	_ZNSs12_S_constructIN9__gnu_cxx17__normal_iteratorIPcSsEEEES2_T_S4_RKSaIcESt20forward_iterator_tag	lib	lib:gnustl-thumb:string-inst.o	100	
-0000669c	18	thumb	FUN_0000669c	todo			
-000066b4	78	thumb	FUN_000066b4	todo			
-0000672c	40	thumb	FUN_0000672c	todo			
+0000669c	18	thumb	_ZNSsC2IN9__gnu_cxx17__normal_iteratorIPcSsEEEET_S4_RKSaIcE	lib	lib:gnustl-thumb:string-inst.o	100	by object order
+000066b4	78	thumb	_ZNSs12_S_constructIPcEES0_T_S1_RKSaIcESt20forward_iterator_tag	lib	lib:gnustl-thumb:string-inst.o	100	by object order
+0000672c	40	thumb	_ZNSsC2ERKSsjj	lib	lib:gnustl-thumb:string-inst.o	100	by object order
 0000676c	24	thumb	FUN_0000676c	todo			
-00006790	3c	thumb	FUN_00006790	todo			
-000067cc	18	thumb	FUN_000067cc	todo			
+00006790	3c	thumb	_ZNSsC2ERKSsjjRKSaIcE	lib	lib:gnustl-thumb:string-inst.o	100	by object order
+000067cc	18	thumb	_ZNSsC2IPcEET_S1_RKSaIcE	lib	lib:gnustl-thumb:string-inst.o	100	by object order
 000067e4	78	thumb	_ZNSs12_S_constructIPKcEEPcT_S3_RKSaIcESt20forward_iterator_tag	lib	lib:gnustl-thumb:string-inst.o	100	
 0000685c	18	thumb	_ZNSsC1EPKcjRKSaIcE	lib	lib:gnustl-thumb:string-inst.o	100	
 00006874	110	thumb	_ZNSs7replaceEjjPKcj	lib	lib:gnustl-thumb:string-inst.o	100	
-00006984	18	thumb	FUN_00006984	todo			
+00006984	18	thumb	_ZNSs7replaceEjjRKSs	lib	lib:gnustl-thumb:string-inst.o	100	by object order
 0000699c	38	thumb	_ZNSs7replaceEjjRKSsjj	lib	lib:gnustl-thumb:string-inst.o	100	
-000069d4	24	thumb	FUN_000069d4	todo			
+000069d4	24	thumb	_ZNSs7replaceEjjPKc	lib	lib:gnustl-thumb:string-inst.o	100	by object order
 000069f8	18	thumb	_ZNSs7replaceEN9__gnu_cxx17__normal_iteratorIPcSsEES2_PKcj	lib	lib:gnustl-thumb:string-inst.o	100	
 00006a10	20	thumb	_ZNSs7replaceEN9__gnu_cxx17__normal_iteratorIPcSsEES2_RKSs	lib	lib:gnustl-thumb:string-inst.o	100	
 00006a30	28	thumb	_ZNSs7replaceEN9__gnu_cxx17__normal_iteratorIPcSsEES2_PKc	lib	lib:gnustl-thumb:string-inst.o	100	
-00006a58	1c	thumb	FUN_00006a58	todo			
-00006a74	1c	thumb	FUN_00006a74	todo			
+00006a58	1c	thumb	_ZNSs7replaceEN9__gnu_cxx17__normal_iteratorIPcSsEES2_S1_S1_	lib	lib:gnustl-thumb:string-inst.o	100	by object order
+00006a74	1c	thumb	_ZNSs7replaceEN9__gnu_cxx17__normal_iteratorIPcSsEES2_PKcS4_	lib	lib:gnustl-thumb:string-inst.o	100	by object order
 00006a90	24	thumb	_ZNSs7replaceEN9__gnu_cxx17__normal_iteratorIPcSsEES2_St16initializer_listIcE	lib	lib:gnustl-thumb:string-inst.o	100	
-00006ab4	1c	thumb	FUN_00006ab4	todo			
-00006ad0	1c	thumb	FUN_00006ad0	todo			
+00006ab4	1c	thumb	_ZNSs7replaceEN9__gnu_cxx17__normal_iteratorIPcSsEES2_S2_S2_	lib	lib:gnustl-thumb:string-inst.o	100	by object order
+00006ad0	1c	thumb	_ZNSs7replaceEN9__gnu_cxx17__normal_iteratorIPcSsEES2_NS0_IPKcSsEES5_	lib	lib:gnustl-thumb:string-inst.o	100	by object order
 00006aec	2c	thumb	_ZNSsC1EPKcRKSaIcE	lib	lib:gnustl-thumb:string-inst.o	100	
-00006b18	1c	thumb	FUN_00006b18	todo			
-00006b34	18	thumb	FUN_00006b34	todo			
-00006b4c	c	thumb	FUN_00006b4c	todo			
-00006b58	c	thumb	FUN_00006b58	todo			
+00006b18	1c	thumb	_ZNSsC2ESt16initializer_listIcERKSaIcE	lib	lib:gnustl-thumb:string-inst.o	100	by object order
+00006b34	18	thumb	_ZNSsC2IPKcEET_S2_RKSaIcE	lib	lib:gnustl-thumb:string-inst.o	100	by object order
+00006b4c	c	thumb	_ZN9__gnu_cxxeqIPcSsEEbRKNS_17__normal_iteratorIT_T0_EES7_	lib	lib:gnustl-thumb:string-inst.o	100	by object order
+00006b58	c	thumb	_ZN9__gnu_cxxeqIPKcSsEEbRKNS_17__normal_iteratorIT_T0_EES8_	lib	lib:gnustl-thumb:string-inst.o	100	by object order
 00006b64	30	thumb	_ZL12read_sleb128PKhPl	lib	lib:gnustl-thumb:eh_personality.o	100	
 00006b94	e0	thumb	_ZL28read_encoded_value_with_basehjPKhPj	lib	lib:gnustl-thumb:eh_personality.o	100	
 00006c74	44	thumb	_ZL21base_of_encoded_valuehP15_Unwind_Context	lib	lib:gnustl-thumb:eh_personality.o	100	
@@ -233,8 +233,8 @@ addr	size	mode	name	status	src	score	note
 00007964	c	thumb	FUN_00007964	todo			
 00007970	18	thumb	_ZN9__gnu_cxx26__concurrence_unlock_errorD1Ev	lib	lib:gnustl-thumb:guard.o	100	
 00007988	18	thumb	_ZN9__gnu_cxx24__concurrence_lock_errorD1Ev	lib	lib:gnustl-thumb:guard.o	100	
-000079a0	20	thumb	FUN_000079a0	todo			
-000079c0	20	thumb	FUN_000079c0	todo			
+000079a0	20	thumb	_ZN9__gnu_cxx26__concurrence_unlock_errorD0Ev	lib	lib:gnustl-thumb:guard.o	100	by object order
+000079c0	20	thumb	_ZN9__gnu_cxx24__concurrence_lock_errorD0Ev	lib	lib:gnustl-thumb:guard.o	100	by object order
 000079e0	28	thumb	_ZN9__gnu_cxx30__throw_concurrence_lock_errorEv	lib	lib:gnustl-thumb:guard.o	100	
 00007a08	28	thumb	_ZN9__gnu_cxx32__throw_concurrence_unlock_errorEv	lib	lib:gnustl-thumb:guard.o	100	
 00007a30	9c	thumb	__cxa_allocate_exception	lib	lib:gnustl-thumb:eh_alloc.o	100	
@@ -277,14 +277,14 @@ addr	size	mode	name	status	src	score	note
 00008338	44	thumb	_ZNKSt12future_error4whatEv	lib	lib:gnustl-thumb:future.o	100	
 0000837c	90	thumb	_ZNK12_GLOBAL__N_121future_error_category7messageEi	lib	lib:gnustl-thumb:future.o	100	
 0000840c	60	thumb	_ZSt15future_categoryv	lib	lib:gnustl-thumb:future.o	100	
-0000846c	c	thumb	FUN_0000846c	todo			
-00008478	c	thumb	FUN_00008478	todo			
+0000846c	c	thumb	_ZNK9__gnu_cxx29__concurrence_broadcast_error4whatEv	lib	lib:gnustl-thumb:guard.o	100	by object order
+00008478	c	thumb	_ZNK9__gnu_cxx24__concurrence_wait_error4whatEv	lib	lib:gnustl-thumb:guard.o	100	by object order
 00008484	1c	thumb	_ZN12_GLOBAL__N_1L4initEv	lib	lib:gnustl-thumb:guard.o	100	
 000084a0	18	thumb	_ZN12_GLOBAL__N_1L16init_static_condEv	lib	lib:gnustl-thumb:guard.o	100	
 000084b8	18	thumb	_ZN9__gnu_cxx24__concurrence_wait_errorD1Ev	lib	lib:gnustl-thumb:guard.o	100	
 000084d0	18	thumb	_ZN9__gnu_cxx29__concurrence_broadcast_errorD1Ev	lib	lib:gnustl-thumb:guard.o	100	
-000084e8	20	thumb	FUN_000084e8	todo			
-00008508	20	thumb	FUN_00008508	todo			
+000084e8	20	thumb	_ZN9__gnu_cxx24__concurrence_wait_errorD0Ev	lib	lib:gnustl-thumb:guard.o	100	by object order
+00008508	20	thumb	_ZN9__gnu_cxx29__concurrence_broadcast_errorD0Ev	lib	lib:gnustl-thumb:guard.o	100	by object order
 00008528	28	thumb	_ZN9__gnu_cxx35__throw_concurrence_broadcast_errorEv	lib	lib:gnustl-thumb:guard.o	100	
 00008550	10	thumb	_ZN9__gnu_cxx17__recursive_mutex6unlockEv	lib	lib:gnustl-thumb:guard.o	100	
 00008560	100	thumb	__cxa_guard_acquire	lib	lib:gnustl-thumb:guard.o	100	
@@ -308,7 +308,7 @@ addr	size	mode	name	status	src	score	note
 000089e4	c	thumb	_ZNKSt8bad_cast4whatEv	lib	lib:gnustl-thumb:bad_cast.o	100	
 000089f0	1c	thumb	_ZNSt8bad_castD2Ev	lib	lib:gnustl-thumb:bad_cast.o	100	
 00008a0c	14	thumb	_ZNSt8bad_castD0Ev	lib	lib:gnustl-thumb:bad_cast.o	100	
-00008a20	4	thumb	_ZNKSt11logic_error4whatEv	todo			
+00008a20	4	thumb	_ZNKSt11logic_error4whatEv	lib	lib:gnustl-thumb:stdexcept.o	100	
 00008a24	4	thumb	_ZNKSt13runtime_error4whatEv	lib	lib:gnustl-thumb:stdexcept.o	100	
 00008a28	4c	thumb	_ZNSt11logic_errorD2Ev	todo			
 00008a74	14	thumb	FUN_00008a74	todo			
@@ -317,9 +317,9 @@ addr	size	mode	name	status	src	score	note
 00008ac0	18	thumb	FUN_00008ac0	todo			
 00008ad8	20	thumb	FUN_00008ad8	todo			
 00008af8	18	thumb	_ZNSt12length_errorD1Ev	lib	lib:gnustl-thumb:stdexcept.o	100	
-00008b10	20	thumb	_ZNSt12length_errorD0Ev	todo			
+00008b10	20	thumb	_ZNSt12length_errorD0Ev	lib	lib:gnustl-thumb:stdexcept.o	100	
 00008b30	18	thumb	_ZNSt12out_of_rangeD1Ev	lib	lib:gnustl-thumb:stdexcept.o	100	
-00008b48	20	thumb	_ZNSt12out_of_rangeD0Ev	todo			
+00008b48	20	thumb	_ZNSt12out_of_rangeD0Ev	lib	lib:gnustl-thumb:stdexcept.o	100	
 00008b68	4c	thumb	_ZNSt13runtime_errorD2Ev	todo			
 00008bb4	14	thumb	FUN_00008bb4	todo			
 00008bc8	18	thumb	FUN_00008bc8	todo			
@@ -362,7 +362,7 @@ addr	size	mode	name	status	src	score	note
 00008fb4	1c	thumb	_ZNK12_GLOBAL__N_121system_error_category7messageEi	lib	lib:gnustl-thumb:system_error.o	100	
 00008fd0	1c	thumb	_ZNK12_GLOBAL__N_122generic_error_category7messageEi	lib	lib:gnustl-thumb:system_error.o	100	
 00008fec	10	thumb	_ZNSt14error_categoryC2Ev	todo			
-00008ffc	c	thumb	FUN_00008ffc	todo			
+00008ffc	c	thumb	_ZSt15system_categoryv	lib	lib:gnustl-thumb:system_error.o	100	by object order
 00009008	c	thumb	_ZSt16generic_categoryv	lib	lib:gnustl-thumb:system_error.o	100	
 00009014	18	thumb	_ZNKSt10error_code23default_error_conditionEv	lib	lib:gnustl-thumb:system_error.o	100	
 0000902c	10	thumb	_ZNSt9type_infoD2Ev	todo			
@@ -371,7 +371,7 @@ addr	size	mode	name	status	src	score	note
 00009044	4	thumb	FUN_00009044	todo			
 00009048	18	thumb	FUN_00009048	todo			
 00009060	2c	thumb	_ZNKSt9type_infoeqERKS_	lib	lib:gnustl-thumb:tinfo.o	100	
-0000908c	8	thumb	FUN_0000908c	todo			
+0000908c	8	thumb	_ZNKSt9type_info10__do_catchEPKS_PPvj	lib	lib:gnustl-thumb:tinfo.o	100	by object order
 00009094	12c	thumb	_ZN9__gnu_cxx27__verbose_terminate_handlerEv	lib	lib:gnustl-thumb:vterminate.o	100	
 000091c0	9c	thumb	d_make_comp	lib	lib:gnustl-thumb:cp-demangle.o	100	
 0000925c	38	thumb	d_make_name	lib	lib:gnustl-thumb:cp-demangle.o	100	
@@ -467,7 +467,7 @@ addr	size	mode	name	status	src	score	note
 00010080	18	thumb	__sync_bool_compare_and_swap_4	lib	lib:libgcc-thumb:linux-atomic.o	100	
 00010098	14	thumb	__sync_bool_compare_and_swap_2	lib	lib:libgcc-thumb:linux-atomic.o	100	
 000100ac	14	thumb	__sync_bool_compare_and_swap_1	lib	lib:libgcc-thumb:linux-atomic.o	100	
-000100c0	c	thumb	FUN_000100c0	todo			
+000100c0	c	thumb	__sync_synchronize	lib	lib:libgcc-thumb:linux-atomic.o	100	by object order
 000100cc	20	thumb	__sync_lock_test_and_set_4	lib	lib:libgcc-thumb:linux-atomic.o	100	
 000100ec	40	thumb	__sync_lock_test_and_set_2	lib	lib:libgcc-thumb:linux-atomic.o	100	
 0001012c	3c	thumb	__sync_lock_test_and_set_1	lib	lib:libgcc-thumb:linux-atomic.o	100	
@@ -482,7 +482,7 @@ addr	size	mode	name	status	src	score	note
 00010318	4a	thumb	restore_non_core_regs	lib	lib:libgcc-thumb:unwind-arm.o	100	
 00010362	10	thumb	_Unwind_decode_typeinfo_ptr.isra.0	lib	lib:libgcc-thumb:unwind-arm.o	100	
 00010372	4	thumb	__gnu_unwind_24bit.isra.1	lib	lib:libgcc-thumb:unwind-arm.o	100	
-00010376	2	thumb	FUN_00010376	todo			
+00010376	2	thumb	_Unwind_DebugHook	lib	lib:libgcc-thumb:unwind-arm.o	100	by object order
 00010378	3a	thumb	unwind_phase2	lib	lib:libgcc-thumb:unwind-arm.o	100	
 000103b2	c2	thumb	FUN_000103b2	todo			
 00010474	4	thumb	_Unwind_GetCFA	lib	lib:libgcc-thumb:unwind-arm.o	100	
@@ -490,7 +490,7 @@ addr	size	mode	name	status	src	score	note
 000104c6	14	thumb	__gnu_Unwind_ForcedUnwind	lib	lib:libgcc-thumb:unwind-arm.o	100	
 000104da	44	thumb	__gnu_Unwind_Resume	lib	lib:libgcc-thumb:unwind-arm.o	100	
 0001051e	1a	thumb	__gnu_Unwind_Resume_or_Rethrow	lib	lib:libgcc-thumb:unwind-arm.o	100	
-00010538	2	thumb	_Unwind_Complete	todo			
+00010538	2	thumb	_Unwind_Complete	lib	lib:libgcc-thumb:unwind-arm.o	100	by object order
 0001053a	10	thumb	_Unwind_DeleteException	lib	lib:libgcc-thumb:unwind-arm.o	100	
 0001054a	34	thumb	_Unwind_VRS_Get	lib	lib:libgcc-thumb:unwind-arm.o	100	
 0001057e	16	thumb	_Unwind_GetGR	lib	lib:libgcc-thumb:unwind-arm.o	100	
@@ -525,7 +525,7 @@ addr	size	mode	name	status	src	score	note
 00010d00	c	arm	FUN_00010d00	todo			
 00010d0c	32	thumb	next_unwind_byte	lib	lib:libgcc-thumb:pr-support.o	100	
 00010d3e	16	thumb	_Unwind_GetGR.constprop.0	lib	lib:libgcc-thumb:pr-support.o	100	
-00010d54	8	thumb	FUN_00010d54	todo			
+00010d54	8	thumb	unwind_UCB_from_context	lib	lib:libgcc-thumb:pr-support.o	100	by object order
 00010d5c	290	thumb	__gnu_unwind_execute	lib	lib:libgcc-thumb:pr-support.o	100	
 00010fec	26	thumb	__gnu_unwind_frame	lib	lib:libgcc-thumb:pr-support.o	100	
 00011012	a	thumb	_Unwind_GetRegionStart	lib	lib:libgcc-thumb:pr-support.o	100	

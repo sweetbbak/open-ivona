@@ -159,7 +159,86 @@ def libmatch(stem: str, libs: dict[str, str], verbose: bool = False) -> None:
         by_lib[h[0]] += 1
     if folded:
         print(f"folded {folded} split fragments back into verified library functions")
+    n_nb = _neighbour_pass(b, libs)
+    if n_nb:
+        b.save()
+        print(f"verified {n_nb} more by object order next to verified neighbours")
     print(f"verified {len(verified)} library functions: " + ", ".join(f"{k}={v}" for k, v in sorted(by_lib.items())))
+
+
+def _member_order(obj) -> list[tuple[str, ...]]:
+    """Function symbols of an object in link order (section index, then offset); aliases at one
+    address (C1/C2, D1/D2 constructors and destructors) form one group."""
+    sec_index = {name: i for i, name in enumerate(obj.sections)}
+    groups: dict[tuple, list[str]] = {}
+    for x in obj.syms:
+        if x.type == "STT_FUNC" and x.defined and x.section in sec_index:
+            groups.setdefault((sec_index[x.section], x.value & ~1), []).append(x.name)
+    return [tuple(groups[k]) for k in sorted(groups)]
+
+
+def _neighbour_pass(b: Binary, libs: dict[str, str]) -> int:
+    """Identical-code library functions (e.g. several `what()` returning different strings) are
+    ambiguous by signature. Gold keeps an object's functions together in section order, so the
+    unverified rows right after a verified library function are paired with the following
+    functions of the same object (skipping ones --gc-sections dropped); every pairing must still
+    pass the full matcher."""
+    rows = sorted(b.funcs, key=lambda f: f.addr)
+    taken = {f.name for f in b.funcs}
+    objs: dict[str, tuple] = {}
+    n = 0
+    for i, p in enumerate(rows):
+        if p.status != "lib" or not p.src.startswith("lib:"):
+            continue
+        _, lib, member = p.src.split(":", 2)
+        if lib not in libs:
+            continue
+        if p.src not in objs:
+            obj = match.load_object(ensure_member(libs, lib, member))
+            objs[p.src] = (obj, _member_order(obj))
+        obj, order = objs[p.src]
+        if not any(p.name in g for g in order):
+            continue
+        for step in (1, -1):
+            n += _walk(b, rows, i, step, obj, order, p.src, taken)
+    return n
+
+
+def _walk(b, rows, i, step, obj, order, src, taken) -> int:
+    """Pair the unverified rows next to verified row i (direction `step`) with the object's
+    neighbouring functions; a few unused ones may be skipped (dropped by --gc-sections)."""
+    n = 0
+    k = next(n for n, g in enumerate(order) if rows[i].name in g) + step
+    j = i + step
+    while 0 <= j < len(rows) and rows[j].status == "todo" and 0 <= k < len(order):
+        f = rows[j]
+        span = range(k, min(k + 4, len(order))) if step > 0 else range(k, max(k - 4, -1), -1)
+        for kk in span:
+            group = order[kk]
+            if f.name in group:
+                sym = f.name  # an exported alias name is what other code references
+            elif any(g in taken for g in group):
+                continue
+            else:
+                sym = group[0]
+            cand = match.candidate_from(obj, sym)
+            if cand is None or cand.mode != f.mode or not (0 <= f.size - len(cand.code) <= 8):
+                continue
+            old = f.name
+            f.name = sym
+            b.__dict__.pop("names", None)
+            if match.Matcher(b).compare(f, cand).matched:
+                f.status, f.score, f.src, f.note = "lib", "100", src, "by object order"
+                taken.add(sym)
+                n += 1
+                k = kk + step
+                break
+            f.name = old
+            b.__dict__.pop("names", None)
+        else:
+            break
+        j += step
+    return n
 
 
 def _merged_spans(b: Binary) -> dict[int, Func]:

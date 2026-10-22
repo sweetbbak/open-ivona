@@ -1812,11 +1812,11 @@ addr	size	mode	name	status	src	score	note
 000fb860	110	arm	FUN_000fb860	todo			
 000fb970	6c	arm	restore_non_core_regs	lib	lib:libgcc:unwind-arm.o	100	
 000fb9dc	14	arm	_Unwind_decode_typeinfo_ptr.isra.0	lib	lib:libgcc:unwind-arm.o	100	
-000fb9f0	8	arm	FUN_000fb9f0	todo			
-000fb9f8	4	arm	FUN_000fb9f8	todo			
+000fb9f0	8	arm	__gnu_unwind_24bit.isra.1	lib	lib:libgcc:unwind-arm.o	100	
+000fb9f8	4	arm	_Unwind_DebugHook	lib	lib:libgcc:unwind-arm.o	100	
 000fb9fc	64	arm	unwind_phase2	lib	lib:libgcc:unwind-arm.o	100	
 000fba60	124	arm	unwind_phase2_forced	lib	lib:libgcc:unwind-arm.o	100	
-000fbb84	8	arm	FUN_000fbb84	todo			
+000fbb84	8	arm	_Unwind_GetCFA	lib	lib:libgcc:unwind-arm.o	100	
 000fbb8c	a4	arm	__gnu_Unwind_RaiseException	lib	lib:libgcc:unwind-arm.o	100	
 000fbc30	1c	arm	__gnu_Unwind_ForcedUnwind	lib	lib:libgcc:unwind-arm.o	100	
 000fbc4c	74	arm	__gnu_Unwind_Resume	lib	lib:libgcc:unwind-arm.o	100	
@@ -1850,12 +1850,12 @@ addr	size	mode	name	status	src	score	note
 000fc7bc	24	arm	FUN_000fc7bc	todo			
 000fc7e0	60	arm	next_unwind_byte	lib	lib:libgcc:pr-support.o	100	
 000fc840	28	arm	_Unwind_GetGR.constprop.0	lib	lib:libgcc:pr-support.o	100	
-000fc868	4	arm	FUN_000fc868	todo			
+000fc868	4	arm	unwind_UCB_from_context	lib	lib:libgcc:pr-support.o	100	
 000fc86c	37c	arm	__gnu_unwind_execute	lib	lib:libgcc:pr-support.o	100	
 000fcbe8	40	arm	__gnu_unwind_frame	lib	lib:libgcc:pr-support.o	100	
-000fcc28	10	arm	FUN_000fcc28	todo			
+000fcc28	10	arm	_Unwind_GetRegionStart	lib	lib:libgcc:pr-support.o	100	
 000fcc38	1c	arm	_Unwind_GetLanguageSpecificData	lib	lib:libgcc:pr-support.o	100	
-000fcc54	8	arm	FUN_000fcc54	todo			
-000fcc5c	8	arm	FUN_000fcc5c	todo			
+000fcc54	8	arm	_Unwind_GetDataRelBase	lib	lib:libgcc:pr-support.o	100	
+000fcc5c	8	arm	_Unwind_GetTextRelBase	lib	lib:libgcc:pr-support.o	100	
 000fcc64	498	arm	__divdi3	lib	lib:libgcc:_divdi3.o	100	
 000fd0fc	404	arm	__udivdi3	lib	lib:libgcc:_udivdi3.o	100	
