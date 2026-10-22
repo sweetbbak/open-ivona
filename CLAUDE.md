@@ -31,7 +31,16 @@ Read README.md first. The rules below are what keeps the project deterministic.
     register and operand order compared with a TU-local definition (seen on GetVoiceDataFunc).
 - **`const` matters.** It decides whether data lands in `.data.rel.ro.local`, `.rodata` or `.data`,
   and the matcher checks this.
-- **Library code is not hand-written.** Leave `lib` functions to `./dc libmatch`.
+- **Library code is not hand-written.** Leave `lib` functions to `./dc libmatch` (run it for every
+  binary with `-b`). It also:
+  - folds splitter fragments back into one row when a merged run verifies (Thumb-1 `bl` far
+    jumps, hand-written libgcc assembly);
+  - pairs identical-code functions (`what()`, D0/D1 destructors) by object order next to verified
+    neighbours;
+  - resolves C1/C2 and D1/D2 aliases through `build/libobj/aliases.json`.
+- **Renaming.** `./dc rename` rewrites sources only for placeholder names (`FUN_`/`D_`); pass
+  `--src` to rewrite a real name. Address comments above C++ functions resolve to the mangled
+  symbol of the compiled object (`/* 0x4ecc: ... */` above `h(...)` names the row `h` or `_Z...`).
 - **Thumb-1 output from GCC 4.8 `-Os`:**
   - `adds rX, rY, #0` is a move.
   - `bl __gnu_thumb1_case_*` is a switch.
@@ -86,6 +95,12 @@ Read README.md first. The rules below are what keeps the project deterministic.
   definition makes `./dc tu` rename the table entry at ADDR. That lets the table be rebuilt from
   source after a re-split.
 - **Codegen hints.**
+  - A single exit (`int ret = ...; ... return ret;`) shows as one `mov r0, rN; pop` block that the
+    error paths branch to. Separate `return`s give per-path epilogues.
+  - Argument evaluation order is visible. In `android_syslog`, `va_arg` inside the call is
+    evaluated after `gettid()`.
+  - A local array indexed by a variable, whose elements are also used by constant index, keeps
+    register copies when scalar locals feed it (`r[MIN] = min = get(...)`).
   - If the binary lays the "else"/"different" case out inline, the source usually tests that
     case first, e.g. `if (type1 != type2) {...}` in `val_equal`.
   - A boolean materialized and then reused as NULL usually means the success path is inside the
