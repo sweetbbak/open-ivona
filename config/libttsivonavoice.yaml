@@ -16,5 +16,10 @@ flags:
   cxx: [-fno-exceptions, -fno-rtti, -I/opt/gnustl/include, -I/opt/gnustl/libs/armeabi/include]
 # Per-translation-unit overrides:  src/libtiver/foo.c: {mode: arm, add: [-O3], remove: [-O2]}
 units:
+  # Thumb C++ wrapper TUs at the start of .text: NDK default -fstack-protector (android_syslog
+  # checks __stack_chk_guard), unlike the ARM core.
+  src/libttsivonavoice/ivona_ext.cpp: {mode: thumb, add: [-fstack-protector], remove: [-fno-stack-protector]}
+  src/libttsivonavoice/android_log.cpp: {mode: thumb, add: [-fstack-protector], remove: [-fno-stack-protector]}
+  src/libttsivonavoice/ivona_api.cpp: {mode: thumb, add: [-fstack-protector], remove: [-fno-stack-protector]}
   # -O3: stack slot layout of cst_wave_load_riff_fd only matches at -O3
   src/libttsivonavoice/flite/cst_wave_io.c: {add: [-O3], remove: [-O2]}

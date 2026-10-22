@@ -168,7 +168,7 @@ def symbol_for(ident: str, defined: set[str] | None) -> str | None:
     if defined is None or ident in defined:
         return ident
     tag = f"{len(ident)}{ident}"
-    cands = sorted(s for s in defined if s.startswith("_Z" + tag) or
+    cands = sorted(s for s in defined if s.startswith("_Z" + tag) or s.startswith("_ZL" + tag) or
                    re.search(rf"{tag}(?:[CD][0-3])?E", s))
     return cands[0] if len(cands) == 1 else None
 

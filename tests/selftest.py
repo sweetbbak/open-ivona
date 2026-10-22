@@ -102,9 +102,9 @@ def main() -> int:
 
     # C++ identifiers map to the object's mangled symbol (never to the bare identifier).
     from dc.cli import symbol_for
-    syms = {"_Z16GetVoiceDataFunci", "_ZN9CIvonaTTSC1Ev", "_ZN9CIvonaTTS4initEv", "plain_c"}
-    got = [symbol_for(i, syms) for i in ("GetVoiceDataFunc", "init", "plain_c", "missing")]
-    if got != ["_Z16GetVoiceDataFunci", "_ZN9CIvonaTTS4initEv", "plain_c", None]:
+    syms = {"_Z16GetVoiceDataFunci", "_ZN9CIvonaTTSC1Ev", "_ZN9CIvonaTTS4initEv", "plain_c", "_ZL4statv"}
+    got = [symbol_for(i, syms) for i in ("GetVoiceDataFunc", "init", "plain_c", "missing", "stat")]
+    if got != ["_Z16GetVoiceDataFunci", "_ZN9CIvonaTTS4initEv", "plain_c", None, "_ZL4statv"]:
         fails += 1
         print(f"FAIL: symbol_for gave {got}")
     else:
