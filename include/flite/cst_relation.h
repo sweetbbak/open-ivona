@@ -46,9 +46,9 @@
 #include "cst_item.h"
 #include "cst_utterance.h"
 
+/* IVONA: no per-relation features; the name is not copied. */
 struct cst_relation_struct {
-    char *name;
-    cst_features *features;
+    const char *name;
     cst_utterance *utterance;
     cst_item *head;
     cst_item *tail;

@@ -5,6 +5,7 @@
   dc asm FUNC           annotated target disassembly of FUNC (name or hex address)
   dc diff FUNC [-s SRC] compile SRC (or the function's recorded src) and diff against target
   dc tu SRC             compile SRC once and diff every table function it defines (records src)
+  dc learn SRC          name FUN_/D_ callees and data after what SRC references (from good matches)
   dc check              rebuild every TU and verify all `matched` functions still match
   dc status             print progress and regenerate docs/progress.md
   dc rename OLD NEW     rename a function/data symbol in the tables and all sources
@@ -206,6 +207,49 @@ def cmd_tu(a):
         print(f"{YELLOW}not in the function table (rename targets first?): {', '.join(missing)}{RESET}")
     print(f"{src}: {total}/{len(known)} functions match")
     b.save()
+
+
+def cmd_learn(a):
+    """Name auto-named (FUN_/D_) target functions and data after the symbols a TU references,
+    using every function of the TU that already scores >= --min. Names must be consistent."""
+    from .project import Data
+    b = Binary(a.bin)
+    src = os.path.relpath(os.path.abspath(a.src), ROOT)
+    if build.compile_units(b, [src])[src] is not None:
+        raise SystemExit(1)
+    obj = build.obj_path(b, src)
+    o = match.load_object(obj)
+    by_name = {f.name: f for f in b.funcs}
+    learned: dict[str, set] = {}
+    for n in [x.name for x in o.syms if x.type == "STT_FUNC" and x.defined]:
+        f = by_name.get(n)
+        c = match.candidate_from(o, n)
+        if f is None or c is None:
+            continue
+        probe: dict[str, set] = {}
+        res = match.Matcher(b, learn=probe).compare(f, c)
+        if res.score >= a.min:
+            for k, v in probe.items():
+                learned.setdefault(k, set()).update(v)
+    used = {f.name for f in b.funcs} | {d.name for d in b.data}
+    funcs = {f.addr: f for f in b.funcs}
+    data_addrs = {d.addr for d in b.data}
+    n = 0
+    for name, addrs in sorted(learned.items()):
+        if len(addrs) != 1 or name in used:
+            continue
+        addr = next(iter(addrs))
+        if addr in funcs:
+            if funcs[addr].name.startswith("FUN_"):
+                print(f"function {addr:#x}: {funcs[addr].name} -> {name}")
+                funcs[addr].name = name
+                n += 1
+        elif addr not in data_addrs and b.elf.section_at(addr) and not b.elf.section_at(addr).name.startswith(".text"):
+            print(f"data {addr:#x}: {name}")
+            b.data.append(Data(addr, 0, name, f"learned from {src}"))
+            n += 1
+    b.save()
+    print(f"learned {n} names")
 
 
 def cmd_check(a):
@@ -420,6 +464,8 @@ def main(argv=None):
     s.set_defaults(fn=cmd_diff)
     s = sub.add_parser("tu"); s.add_argument("src"); s.add_argument("-v", "--verbose", action="store_true")
     s.set_defaults(fn=cmd_tu)
+    s = sub.add_parser("learn"); s.add_argument("src"); s.add_argument("--min", type=float, default=0.8)
+    s.set_defaults(fn=cmd_learn)
     s = sub.add_parser("check"); s.add_argument("--only", action="store_true", help="only the -b binary")
     s.add_argument("-v", "--verbose", action="store_true"); s.set_defaults(fn=cmd_check)
     s = sub.add_parser("status"); s.set_defaults(fn=cmd_status)

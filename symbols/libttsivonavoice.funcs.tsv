@@ -978,19 +978,19 @@ addr	size	mode	name	status	src	score	note
 0004d11c	368	arm	FUN_0004d11c	todo			
 0004d484	368	arm	FUN_0004d484	todo			
 0004d7ec	168	arm	FUN_0004d7ec	todo			
-0004d954	58	arm	val_relation	wip	src/libttsivonavoice/flite/cst_item.c	0.0	flite strings(1) 0%
-0004d9ac	18	arm	item_val	wip	src/libttsivonavoice/flite/cst_item.c	83.3	flite order 83%
-0004d9c4	58	arm	val_item	wip	src/libttsivonavoice/flite/cst_item.c	0.0	flite strings(1) 0%
-0004da1c	18	arm	FUN_0004da1c	todo			
-0004da34	58	arm	val_utterance	wip	src/libttsivonavoice/flite/cst_item.c	0.0	flite strings(1) 0%
+0004d954	58	arm	val_relation	matched	src/libttsivonavoice/flite/cst_item.c	100	flite strings(1) 0%
+0004d9ac	18	arm	relation_val	matched	src/libttsivonavoice/flite/cst_item.c	100	
+0004d9c4	58	arm	val_item	matched	src/libttsivonavoice/flite/cst_item.c	100	flite strings(1) 0%
+0004da1c	18	arm	item_val	matched	src/libttsivonavoice/flite/cst_item.c	100	
+0004da34	58	arm	val_utterance	matched	src/libttsivonavoice/flite/cst_item.c	100	flite strings(1) 0%
 0004da8c	4	arm	val_delete_utterance	matched	src/libttsivonavoice/flite/cst_item.c	100	flite order 100%
-0004da90	18	arm	utterance_val	wip	src/libttsivonavoice/flite/cst_item.c	83.3	flite order 83%
-0004daa8	58	arm	val_itemfunc	wip	src/libttsivonavoice/flite/cst_item.c	0.0	flite strings(1) 0%
-0004db00	18	arm	itemfunc_val	wip	src/libttsivonavoice/flite/cst_item.c	83.3	flite order 83%
+0004da90	18	arm	utterance_val	matched	src/libttsivonavoice/flite/cst_item.c	100	flite order 83%
+0004daa8	58	arm	val_itemfunc	matched	src/libttsivonavoice/flite/cst_item.c	100	flite strings(1) 0%
+0004db00	18	arm	itemfunc_val	matched	src/libttsivonavoice/flite/cst_item.c	100	flite order 83%
 0004db18	78	arm	FUN_0004db18	todo			
-0004db90	94	arm	FUN_0004db90	todo			
-0004dc24	48	arm	new_item_contents	wip	src/libttsivonavoice/flite/cst_item.c	77.8	flite calls(3) 78%
-0004dc6c	b4	arm	item_contents_set	wip	src/libttsivonavoice/flite/cst_item.c	31.1	flite (callee of a located function)
+0004db90	94	arm	delete_item	wip	src/libttsivonavoice/flite/cst_item.c	54.8	
+0004dc24	48	arm	new_item_contents	wip	src/libttsivonavoice/flite/cst_item.c	88.9	flite calls(3) 78%
+0004dc6c	b4	arm	item_contents_set	wip	src/libttsivonavoice/flite/cst_item.c	33.3	flite (callee of a located function)
 0004dd20	44	arm	new_item_relation	matched	src/libttsivonavoice/flite/cst_item.c	100	flite order 94%
 0004dd64	44	arm	FUN_0004dd64	todo			
 0004dda8	c	arm	item_next	matched	src/libttsivonavoice/flite/cst_item.c	100	flite order 100%
@@ -1018,17 +1018,17 @@ addr	size	mode	name	status	src	score	note
 0004e148	20	arm	item_set_int	matched	src/libttsivonavoice/flite/cst_item.c	100	flite order 88%
 0004e168	20	arm	item_set_float	matched	src/libttsivonavoice/flite/cst_item.c	100	flite order 88%
 0004e188	20	arm	item_set_string	matched	src/libttsivonavoice/flite/cst_item.c	100	flite order 88%
-0004e1a8	18	arm	item_utt	wip	src/libttsivonavoice/flite/cst_item.c	83.3	flite order 83%
+0004e1a8	18	arm	item_utt	matched	src/libttsivonavoice/flite/cst_item.c	100	flite order 83%
 0004e1c0	44	arm	item_equal	matched	src/libttsivonavoice/flite/cst_item.c	100	flite order 100%
-0004e204	2c	arm	FUN_0004e204	todo			
-0004e230	44	arm	delete_relation	wip	src/libttsivonavoice/flite/cst_relation.c	66.7	flite (callee of a located function)
-0004e274	c	arm	relation_head	wip	src/libttsivonavoice/flite/cst_relation.c	66.7	flite order 67%
-0004e280	c	arm	relation_tail	wip	src/libttsivonavoice/flite/cst_relation.c	66.7	flite order 67%
-0004e28c	c	arm	FUN_0004e28c	todo			
-0004e298	30	arm	relation_append	wip	src/libttsivonavoice/flite/cst_relation.c	66.7	flite order 67%
-0004e2c8	30	arm	relation_prepend	wip	src/libttsivonavoice/flite/cst_relation.c	66.7	flite order 67%
-0004e2f8	58	arm	val_uttfunc	wip	src/libttsivonavoice/flite/cst_utterance.c	0.0	flite strings(1) 0%
-0004e350	18	arm	uttfunc_val	wip	src/libttsivonavoice/flite/cst_utterance.c	83.3	flite order 83%
+0004e204	2c	arm	new_relation	matched	src/libttsivonavoice/flite/cst_relation.c	100	
+0004e230	44	arm	delete_relation	matched	src/libttsivonavoice/flite/cst_relation.c	100	flite (callee of a located function)
+0004e274	c	arm	relation_head	matched	src/libttsivonavoice/flite/cst_relation.c	100	flite order 67%
+0004e280	c	arm	relation_tail	matched	src/libttsivonavoice/flite/cst_relation.c	100	flite order 67%
+0004e28c	c	arm	relation_name	matched	src/libttsivonavoice/flite/cst_relation.c	100	
+0004e298	30	arm	relation_append	matched	src/libttsivonavoice/flite/cst_relation.c	100	flite order 67%
+0004e2c8	30	arm	relation_prepend	matched	src/libttsivonavoice/flite/cst_relation.c	100	flite order 67%
+0004e2f8	58	arm	val_uttfunc	matched	src/libttsivonavoice/flite/cst_utterance.c	100	flite strings(1) 0%
+0004e350	18	arm	uttfunc_val	matched	src/libttsivonavoice/flite/cst_utterance.c	100	flite order 83%
 0004e368	54	arm	FUN_0004e368	todo			
 0004e3bc	58	arm	delete_utterance	matched	src/libttsivonavoice/flite/cst_utterance.c	100	flite calls(4) 91%
 0004e414	4c	arm	FUN_0004e414	todo			
@@ -1039,7 +1039,7 @@ addr	size	mode	name	status	src	score	note
 0004e538	140	arm	FUN_0004e538	todo			
 0004e678	8	arm	FUN_0004e678	todo			
 0004e680	58	arm	FUN_0004e680	todo			
-0004e6d8	18	arm	wave_val	wip	src/libttsivonavoice/flite/cst_wave.c	83.3	flite order 83%
+0004e6d8	18	arm	wave_val	matched	src/libttsivonavoice/flite/cst_wave.c	100	flite order 83%
 0004e6f0	24	arm	new_wave	matched	src/libttsivonavoice/flite/cst_wave.c	100	flite order 100%
 0004e714	20	arm	delete_wave	matched	src/libttsivonavoice/flite/cst_wave.c	100	flite order 100%
 0004e734	4	arm	val_delete_wave	matched	src/libttsivonavoice/flite/cst_wave.c	100	flite order 100%
@@ -1053,7 +1053,7 @@ addr	size	mode	name	status	src	score	note
 0004ee38	5c	arm	cst_wave_save_raw	wip	src/libttsivonavoice/flite/cst_wave_io.c	95.7	flite order 91%
 0004ee94	5c	arm	cst_wave_save_riff	wip	src/libttsivonavoice/flite/cst_wave_io.c	91.3	flite order 91%
 0004eef0	40	arm	cst_wave_save	wip	src/libttsivonavoice/flite/cst_wave_io.c	12.1	flite strings(1) 12%
-0004ef30	c8	arm	cst_wave_load_raw_fd	wip	src/libttsivonavoice/flite/cst_wave_io.c	98.0	flite calls(5) 96%
+0004ef30	c8	arm	cst_wave_load_raw_fd	matched	src/libttsivonavoice/flite/cst_wave_io.c	100	flite calls(5) 96%
 0004eff8	6c	arm	cst_wave_load_raw	wip	src/libttsivonavoice/flite/cst_wave_io.c	96.3	flite order 93%
 0004f064	130	arm	cst_wave_load_riff_fd	wip	src/libttsivonavoice/flite/cst_wave_io.c	0.5	flite strings(1) 1%
 0004f194	534	arm	FUN_0004f194	todo			

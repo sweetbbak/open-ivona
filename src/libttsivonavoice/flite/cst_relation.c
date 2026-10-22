@@ -45,15 +45,14 @@
 
 static const char * const cst_relation_noname = "NoName";
 
+/* 0x4e204: IVONA: the relation keeps the caller's name; no features */
 cst_relation *new_relation(const char *name, cst_utterance *u)
 {
-    cst_relation *r = cst_utt_alloc(u,cst_relation,1);
+    cst_relation *r = cst_utt_alloc(u, cst_relation, 1);
 
-    r->name = cst_strdup(name);
-    r->features = new_features_local(u->ctx);
-    r->head = NULL;
+    r->name = name;
     r->utterance = u;
-
+    r->head = NULL;
     return r;
 }
 
@@ -62,17 +61,13 @@ void delete_relation(cst_relation *r)
 {
     cst_item *p, *np;
 
-    if (r != NULL)
-    {
-	/* This needs to traverse the *all* items */
-	for(p=r->head; p; p=np)
-	{
-	    np = item_next(p);
-	    delete_item(p);  /* this *does* go down daughters too */
-	}
-	delete_features(r->features);
-	cst_free(r->name);
-	cst_utt_free(r->utterance,r);
+    if (r != NULL) {
+        /* This needs to traverse the *all* items */
+        for (p = r->head; p; p = np) {
+            np = item_next(p);
+            delete_item(p);  /* this *does* go down daughters too */
+        }
+        cst_utt_free(r->utterance, r);
     }
 }
 
@@ -88,9 +83,10 @@ cst_item *relation_tail(cst_relation *r)
     return (r == NULL ? NULL : r->tail);
 }
 
+/* 0x4e28c */
 const char *relation_name(cst_relation *r)
 {
-    return (r == NULL ? cst_relation_noname : r->name);
+    return (r == NULL ? NULL : r->name);  /* IVONA: NULL instead of cst_relation_noname */
 }
 
 /* 0x4e298 */

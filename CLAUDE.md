@@ -53,6 +53,23 @@ Read README.md first. The rules below are what keeps the project deterministic.
     EOF/range checks.
   - Accessors (`val_int`, `val_car`, …) `cst_error()` silently. Only `val_<usertype>` accessors
     still print "VAL: tried to access %s in %d type val".
+- **Flite workflow.**
+  1. `./dc flite build`: compiles Flite 1.4 with the engine flags and the IVONA headers.
+  2. `./dc flite locate --apply`: names located functions.
+     See `docs/notes/flite-locate.md` for addresses and scores.
+  3. `./dc flite import <dir/file.c>`: copies the Flite file into `src/libttsivonavoice/flite/`
+     with address comments.
+  4. `./dc tu` that file, then edit the functions that don't match yet (IVONA's changes).
+  5. `./dc learn <file>`: names the FUN_/D_ callees and data (such as `cst_val_type_*`) that
+     well-matching functions reference.
+
+  Caution: the locator can swap twin functions whose code differs only in a referenced
+  constant, such as `relation_val` and `item_val`. Check those against their neighbours and the
+  type-id data names.
+- **IVONA's Flite struct changes.**
+  - `cst_relation` is `{name (not copied), utterance, head, tail}`, with no features.
+  - `CST_VAL_REGISTER_TYPE*` macros check the type inline and print "VAL: tried to access..."
+    (see `include/flite/cst_val_defs.h`).
 - **Function order.** Binary order follows source order within a TU. Functions missing from a
   Flite file were removed by `--gc-sections`.
 - **libcurl is statically linked.** Seen as `curl_global_init` and friends near 0x1cb000.

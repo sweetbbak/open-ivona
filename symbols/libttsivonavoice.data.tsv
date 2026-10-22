@@ -1,5 +1,6 @@
 addr	size	name	note
 0020f60c	0	__exidx_start	named from library relocation
+0021f214	0	cst_endian_loc	learned from src/libttsivonavoice/flite/cst_wave_io.c
 0021f218	8	val_int_19	
 0021f220	8	val_int_18	
 0021f228	8	val_int_17	
@@ -22,6 +23,12 @@ addr	size	name	note
 0021f2b0	8	val_int_0	
 0021f2fc	4	cst_val_type_valfunc	
 0021f310	4	cst_val_type_features	
+0021f314	0	cst_val_type_itemfunc	learned from src/libttsivonavoice/flite/cst_item.c
+0021f338	4	cst_val_type_item	
+0021f33c	0	cst_val_type_relation	learned from src/libttsivonavoice/flite/cst_item.c
+0021f344	0	cst_val_type_uttfunc	learned from src/libttsivonavoice/flite/cst_utterance.c
+0021f34c	0	cst_val_type_wave	learned from src/libttsivonavoice/flite/cst_wave.c
+0021f350	0	cst_val_type_utterance	learned from src/libttsivonavoice/flite/cst_item.c
 00267004	8	val_string_19	
 0026700c	8	val_string_18	
 00267014	8	val_string_17	
