@@ -197,16 +197,11 @@ addr	size	mode	name	status	src	score	note
 00021740	44	arm	__gnu_Unwind_Save_WMMXD	lib	lib:libgcc-thumb:libunwind.o	100	
 00021784	14	arm	__gnu_Unwind_Restore_WMMXC	lib	lib:libgcc-thumb:libunwind.o	100	
 00021798	14	arm	__gnu_Unwind_Save_WMMXC	lib	lib:libgcc-thumb:libunwind.o	100	
-000217ac	24	arm	___Unwind_RaiseException	todo			
-000217d0	8	arm	FUN_000217d0	todo			
-000217d8	20	arm	___Unwind_Resume	todo			
-000217f8	c	arm	FUN_000217f8	todo			
-00021804	20	arm	___Unwind_Resume_or_Rethrow	todo			
-00021824	c	arm	FUN_00021824	todo			
-00021830	20	arm	_Unwind_ForcedUnwind	todo			
-00021850	c	arm	FUN_00021850	todo			
-0002185c	20	arm	_Unwind_Backtrace	todo			
-0002187c	c	arm	FUN_0002187c	todo			
+000217ac	2c	arm	___Unwind_RaiseException	lib	lib:libgcc-thumb:libunwind.o	100	
+000217d8	2c	arm	___Unwind_Resume	lib	lib:libgcc-thumb:libunwind.o	100	
+00021804	2c	arm	___Unwind_Resume_or_Rethrow	lib	lib:libgcc-thumb:libunwind.o	100	
+00021830	2c	arm	_Unwind_ForcedUnwind	lib	lib:libgcc-thumb:libunwind.o	100	
+0002185c	2c	arm	_Unwind_Backtrace	lib	lib:libgcc-thumb:libunwind.o	100	
 00021888	32	thumb	next_unwind_byte	lib	lib:libgcc-thumb:pr-support.o	100	
 000218ba	16	thumb	_Unwind_GetGR.constprop.0	lib	lib:libgcc-thumb:pr-support.o	100	
 000218d0	8	thumb	unwind_UCB_from_context	lib	lib:libgcc-thumb:pr-support.o	100	

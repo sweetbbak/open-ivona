@@ -47,3 +47,19 @@ int calls_xalias_other(int x)
 {
     return xalias_other(x) * 5;
 }
+
+/* Hand-written mixed-mode stub (like libgcc's _Unwind_* wrappers): ARM code that switches to
+   Thumb and makes a Thumb `bl`; the matcher must decode that call as Thumb. */
+__asm__(".text\n"
+        ".arm\n"
+        ".global mixed_stub\n"
+        ".type mixed_stub, %function\n"
+        "mixed_stub:\n"
+        "    push {r4, lr}\n"
+        "    add ip, pc, #1\n"
+        "    bx ip\n"
+        ".thumb\n"
+        "    bl arm_helper\n"
+        "    pop {r4, pc}\n"
+        ".arm\n"
+        ".size mixed_stub, .-mixed_stub\n");

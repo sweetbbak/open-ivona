@@ -253,22 +253,22 @@ addr	size	mode	name	status	src	score	note
 00007d30	30	thumb	_ZSt16__throw_bad_castv	lib	lib:gnustl-thumb:functexcept.o	100	
 00007d60	30	thumb	_ZSt18__throw_bad_typeidv	lib	lib:gnustl-thumb:functexcept.o	100	
 00007d90	5c	thumb	_ZSt19__throw_logic_errorPKc	lib	lib:gnustl-thumb:functexcept.o	100	
-00007dec	5c	thumb	_ZSt20__throw_domain_errorPKc	lib	lib:gnustl-thumb:functexcept.o	100	by object order
-00007e48	5c	thumb	_ZSt24__throw_invalid_argumentPKc	lib	lib:gnustl-thumb:functexcept.o	100	by object order
+00007dec	5c	thumb	_ZSt20__throw_domain_errorPKc	lib	lib:gnustl-thumb:functexcept.o	100	
+00007e48	5c	thumb	_ZSt24__throw_invalid_argumentPKc	lib	lib:gnustl-thumb:functexcept.o	100	
 00007ea4	5c	thumb	_ZSt20__throw_length_errorPKc	lib	lib:gnustl-thumb:functexcept.o	100	
 00007f00	5c	thumb	_ZSt20__throw_out_of_rangePKc	lib	lib:gnustl-thumb:functexcept.o	100	
 00007f5c	5c	thumb	_ZSt21__throw_runtime_errorPKc	lib	lib:gnustl-thumb:functexcept.o	100	
-00007fb8	5c	thumb	_ZSt19__throw_range_errorPKc	lib	lib:gnustl-thumb:functexcept.o	100	by object order
-00008014	5c	thumb	_ZSt22__throw_overflow_errorPKc	lib	lib:gnustl-thumb:functexcept.o	100	by object order
-00008070	5c	thumb	_ZSt23__throw_underflow_errorPKc	lib	lib:gnustl-thumb:functexcept.o	100	by object order
+00007fb8	5c	thumb	_ZSt19__throw_range_errorPKc	lib	lib:gnustl-thumb:functexcept.o	100	
+00008014	5c	thumb	_ZSt22__throw_overflow_errorPKc	lib	lib:gnustl-thumb:functexcept.o	100	
+00008070	5c	thumb	_ZSt23__throw_underflow_errorPKc	lib	lib:gnustl-thumb:functexcept.o	100	
 000080cc	50	thumb	_ZSt19__throw_ios_failurePKc	lib	lib:gnustl-thumb:functexcept.o	100	
 0000811c	78	thumb	_ZSt20__throw_system_errori	lib	lib:gnustl-thumb:functexcept.o	100	
 00008194	7c	thumb	_ZSt20__throw_future_errori	lib	lib:gnustl-thumb:functexcept.o	100	
-00008210	30	thumb	_ZSt25__throw_bad_function_callv	lib	lib:gnustl-thumb:functexcept.o	100	by object order
+00008210	30	thumb	_ZSt25__throw_bad_function_callv	lib	lib:gnustl-thumb:functexcept.o	100	
 00008240	38	thumb	_ZSt19__throw_regex_errorNSt15regex_constants10error_typeE	lib	lib:gnustl-thumb:functexcept.o	100	
-00008278	c	thumb	FUN_00008278	todo			
-00008284	18	thumb	_ZNSt17bad_function_callD1Ev	todo			
-0000829c	20	thumb	FUN_0000829c	todo			
+00008278	c	thumb	_ZNKSt17bad_function_call4whatEv	lib	lib:gnustl-thumb:functional.o	100	
+00008284	18	thumb	_ZNSt17bad_function_callD1Ev	lib	lib:gnustl-thumb:functional.o	100	
+0000829c	20	thumb	_ZNSt17bad_function_callD0Ev	lib	lib:gnustl-thumb:functional.o	100	
 000082bc	c	thumb	_ZNK12_GLOBAL__N_121future_error_category4nameEv	lib	lib:gnustl-thumb:future.o	100	
 000082c8	18	thumb	_ZN12_GLOBAL__N_121future_error_categoryD1Ev	lib	lib:gnustl-thumb:future.o	100	
 000082e0	20	thumb	_ZN12_GLOBAL__N_121future_error_categoryD0Ev	lib	lib:gnustl-thumb:future.o	100	
@@ -312,31 +312,31 @@ addr	size	mode	name	status	src	score	note
 00008a24	4	thumb	_ZNKSt13runtime_error4whatEv	lib	lib:gnustl-thumb:stdexcept.o	100	
 00008a28	4c	thumb	_ZNSt11logic_errorD2Ev	lib	lib:gnustl-thumb:stdexcept.o	100	
 00008a74	14	thumb	_ZNSt11logic_errorD0Ev	lib	lib:gnustl-thumb:stdexcept.o	100	
-00008a88	18	thumb	_ZNSt12domain_errorD1Ev	lib	lib:gnustl-thumb:stdexcept.o	100	by object order
-00008aa0	20	thumb	_ZNSt12domain_errorD0Ev	lib	lib:gnustl-thumb:stdexcept.o	100	by object order
-00008ac0	18	thumb	_ZNSt16invalid_argumentD1Ev	lib	lib:gnustl-thumb:stdexcept.o	100	by object order
-00008ad8	20	thumb	_ZNSt16invalid_argumentD0Ev	lib	lib:gnustl-thumb:stdexcept.o	100	by object order
+00008a88	18	thumb	_ZNSt12domain_errorD1Ev	lib	lib:gnustl-thumb:stdexcept.o	100	
+00008aa0	20	thumb	_ZNSt12domain_errorD0Ev	lib	lib:gnustl-thumb:stdexcept.o	100	
+00008ac0	18	thumb	_ZNSt16invalid_argumentD1Ev	lib	lib:gnustl-thumb:stdexcept.o	100	
+00008ad8	20	thumb	_ZNSt16invalid_argumentD0Ev	lib	lib:gnustl-thumb:stdexcept.o	100	
 00008af8	18	thumb	_ZNSt12length_errorD1Ev	lib	lib:gnustl-thumb:stdexcept.o	100	
 00008b10	20	thumb	_ZNSt12length_errorD0Ev	lib	lib:gnustl-thumb:stdexcept.o	100	
 00008b30	18	thumb	_ZNSt12out_of_rangeD1Ev	lib	lib:gnustl-thumb:stdexcept.o	100	
 00008b48	20	thumb	_ZNSt12out_of_rangeD0Ev	lib	lib:gnustl-thumb:stdexcept.o	100	
 00008b68	4c	thumb	_ZNSt13runtime_errorD2Ev	lib	lib:gnustl-thumb:stdexcept.o	100	
 00008bb4	14	thumb	_ZNSt13runtime_errorD0Ev	lib	lib:gnustl-thumb:stdexcept.o	100	
-00008bc8	18	thumb	_ZNSt11range_errorD1Ev	lib	lib:gnustl-thumb:stdexcept.o	100	by object order
-00008be0	20	thumb	_ZNSt11range_errorD0Ev	lib	lib:gnustl-thumb:stdexcept.o	100	by object order
-00008c00	18	thumb	_ZNSt14overflow_errorD1Ev	lib	lib:gnustl-thumb:stdexcept.o	100	by object order
-00008c18	20	thumb	_ZNSt14overflow_errorD0Ev	lib	lib:gnustl-thumb:stdexcept.o	100	by object order
-00008c38	18	thumb	_ZNSt15underflow_errorD1Ev	lib	lib:gnustl-thumb:stdexcept.o	100	by object order
-00008c50	20	thumb	_ZNSt15underflow_errorD0Ev	lib	lib:gnustl-thumb:stdexcept.o	100	by object order
+00008bc8	18	thumb	_ZNSt11range_errorD1Ev	lib	lib:gnustl-thumb:stdexcept.o	100	
+00008be0	20	thumb	_ZNSt11range_errorD0Ev	lib	lib:gnustl-thumb:stdexcept.o	100	
+00008c00	18	thumb	_ZNSt14overflow_errorD1Ev	lib	lib:gnustl-thumb:stdexcept.o	100	
+00008c18	20	thumb	_ZNSt14overflow_errorD0Ev	lib	lib:gnustl-thumb:stdexcept.o	100	
+00008c38	18	thumb	_ZNSt15underflow_errorD1Ev	lib	lib:gnustl-thumb:stdexcept.o	100	
+00008c50	20	thumb	_ZNSt15underflow_errorD0Ev	lib	lib:gnustl-thumb:stdexcept.o	100	
 00008c70	24	thumb	_ZNSt11logic_errorC2ERKSs	lib	lib:gnustl-thumb:stdexcept.o	100	
-00008c94	18	thumb	_ZNSt12domain_errorC1ERKSs	lib	lib:gnustl-thumb:stdexcept.o	100	by object order
-00008cac	18	thumb	_ZNSt16invalid_argumentC1ERKSs	lib	lib:gnustl-thumb:stdexcept.o	100	by object order
+00008c94	18	thumb	_ZNSt12domain_errorC1ERKSs	lib	lib:gnustl-thumb:stdexcept.o	100	
+00008cac	18	thumb	_ZNSt16invalid_argumentC1ERKSs	lib	lib:gnustl-thumb:stdexcept.o	100	
 00008cc4	18	thumb	_ZNSt12length_errorC1ERKSs	lib	lib:gnustl-thumb:stdexcept.o	100	
 00008cdc	18	thumb	_ZNSt12out_of_rangeC1ERKSs	lib	lib:gnustl-thumb:stdexcept.o	100	
 00008cf4	24	thumb	_ZNSt13runtime_errorC2ERKSs	lib	lib:gnustl-thumb:stdexcept.o	100	
-00008d18	18	thumb	_ZNSt11range_errorC1ERKSs	lib	lib:gnustl-thumb:stdexcept.o	100	by object order
-00008d30	18	thumb	_ZNSt14overflow_errorC1ERKSs	lib	lib:gnustl-thumb:stdexcept.o	100	by object order
-00008d48	18	thumb	_ZNSt15underflow_errorC1ERKSs	lib	lib:gnustl-thumb:stdexcept.o	100	by object order
+00008d18	18	thumb	_ZNSt11range_errorC1ERKSs	lib	lib:gnustl-thumb:stdexcept.o	100	
+00008d30	18	thumb	_ZNSt14overflow_errorC1ERKSs	lib	lib:gnustl-thumb:stdexcept.o	100	
+00008d48	18	thumb	_ZNSt15underflow_errorC1ERKSs	lib	lib:gnustl-thumb:stdexcept.o	100	
 00008d60	4	thumb	_ZNKSt8ios_base7failure4whatEv	lib	lib:gnustl-thumb:ios_failure.o	100	
 00008d64	4c	thumb	_ZNSt8ios_base7failureD1Ev	lib	lib:gnustl-thumb:ios_failure.o	100	
 00008db0	14	thumb	_ZNSt8ios_base7failureD0Ev	lib	lib:gnustl-thumb:ios_failure.o	100	
@@ -511,16 +511,11 @@ addr	size	mode	name	status	src	score	note
 00010bc4	44	arm	__gnu_Unwind_Save_WMMXD	lib	lib:libgcc-thumb:libunwind.o	100	
 00010c08	14	arm	__gnu_Unwind_Restore_WMMXC	lib	lib:libgcc-thumb:libunwind.o	100	
 00010c1c	14	arm	__gnu_Unwind_Save_WMMXC	lib	lib:libgcc-thumb:libunwind.o	100	
-00010c30	24	arm	___Unwind_RaiseException	todo			
-00010c54	8	arm	FUN_00010c54	todo			
-00010c5c	20	arm	___Unwind_Resume	todo			
-00010c7c	c	arm	FUN_00010c7c	todo			
-00010c88	20	arm	___Unwind_Resume_or_Rethrow	todo			
-00010ca8	c	arm	FUN_00010ca8	todo			
-00010cb4	20	arm	_Unwind_ForcedUnwind	todo			
-00010cd4	c	arm	FUN_00010cd4	todo			
-00010ce0	20	arm	_Unwind_Backtrace	todo			
-00010d00	c	arm	FUN_00010d00	todo			
+00010c30	2c	arm	___Unwind_RaiseException	lib	lib:libgcc-thumb:libunwind.o	100	
+00010c5c	2c	arm	___Unwind_Resume	lib	lib:libgcc-thumb:libunwind.o	100	
+00010c88	2c	arm	___Unwind_Resume_or_Rethrow	lib	lib:libgcc-thumb:libunwind.o	100	
+00010cb4	2c	arm	_Unwind_ForcedUnwind	lib	lib:libgcc-thumb:libunwind.o	100	
+00010ce0	2c	arm	_Unwind_Backtrace	lib	lib:libgcc-thumb:libunwind.o	100	
 00010d0c	32	thumb	next_unwind_byte	lib	lib:libgcc-thumb:pr-support.o	100	
 00010d3e	16	thumb	_Unwind_GetGR.constprop.0	lib	lib:libgcc-thumb:pr-support.o	100	
 00010d54	8	thumb	unwind_UCB_from_context	lib	lib:libgcc-thumb:pr-support.o	100	

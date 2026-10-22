@@ -30,6 +30,7 @@ R_TARGET1, R_V4BX = 38, 40
 R_GOT_PREL = 96
 R_THM_JUMP11, R_THM_JUMP8 = 102, 103
 BRANCH_RELOCS = {R_PC24, R_THM_CALL, R_PLT32, R_CALL, R_JUMP24, R_THM_JUMP24, R_THM_JUMP11, R_THM_JUMP8}
+THUMB_BRANCH_RELOCS = {R_THM_CALL, R_THM_JUMP24, R_THM_JUMP11, R_THM_JUMP8}
 WORD_RELOCS = {R_ABS32, R_REL32, R_GOTOFF32, R_BASE_PREL, R_GOT_BREL, R_TARGET1, R_GOT_PREL}
 RELOC_NAMES = {R_PC24: "PC24", R_ABS32: "ABS32", R_REL32: "REL32", R_THM_CALL: "THM_CALL", R_GOTOFF32: "GOTOFF",
                R_BASE_PREL: "GOTPC", R_GOT_BREL: "GOT", R_PLT32: "PLT32", R_CALL: "CALL", R_JUMP24: "JUMP24",
@@ -310,7 +311,14 @@ class Matcher:
             if why:
                 whys.append(why)
         if any(r.type in BRANCH_RELOCS for r in inner):
-            if _branch_kind(ti) != _branch_kind(ci):
+            r = next(r for r in inner if r.type in BRANCH_RELOCS)
+            rmode = "thumb" if r.type in THUMB_BRANCH_RELOCS else "arm"
+            if rmode != f.mode:  # a Thumb call inside an ARM stub (or vice versa): decode both alike
+                tk = disassemble(ti.raw[r.offset - ci.addr:][:4], 0, rmode)[0]
+                ck = disassemble(ci.raw[r.offset - ci.addr:][:4], 0, rmode)[0]
+            else:
+                tk, ck = ti, ci
+            if _branch_kind(tk) != _branch_kind(ck):
                 ok = False
                 whys.append("different branch instruction")
         elif _mask(ti.raw, ci.addr, inner) != _mask(ci.raw, ci.addr, inner):
@@ -325,7 +333,9 @@ class Matcher:
         sym = r.sym
         note = f"{RELOC_NAMES.get(r.type, r.type)} {sym.name}"
         if r.type in BRANCH_RELOCS:
-            t = disassemble(self.elf.read(P, 4), P, f.mode)[0]
+            # decode in the relocation's instruction set: hand-written stubs switch mode mid-function
+            mode = "thumb" if r.type in THUMB_BRANCH_RELOCS else "arm"
+            t = disassemble(self.elf.read(P, 4), P, mode)[0]
             if t.branch is None:
                 return False, "target has no branch here", note
             return (*self._expect(cand, sym, t.branch, res, call=True), note)
