@@ -96,6 +96,16 @@ def main() -> int:
     else:
         print("ok   address comments adopt definitions, not macro invocations")
 
+    # Splitter: entries inside verified functions are fragments and must be dropped.
+    from dc.inventory import inside_verified
+    inside = inside_verified([Func(0x100, 0x40, "thumb", "big", "lib"), Func(0x140, 8, "thumb", "x")])
+    got = [a for a in (0xfe, 0x100, 0x102, 0x13e, 0x140, 0x142) if inside(a)]
+    if got != [0x102, 0x13e]:
+        fails += 1
+        print(f"FAIL: inside_verified gave {[hex(a) for a in got]}")
+    else:
+        print("ok   splitter drops fragments inside verified functions only")
+
     # Mutations: build the *target* differently; candidates from the clean build must fail in
     # exactly the functions whose code or referenced data changed.
     mutations = [

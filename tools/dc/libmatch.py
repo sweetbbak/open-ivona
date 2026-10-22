@@ -8,7 +8,8 @@ import os
 from collections import defaultdict
 
 from . import match
-from .project import Binary, path, ROOT
+from .inventory import exidx_starts
+from .project import Binary, Func, path, ROOT
 
 
 def read_ar(fn: str) -> list[tuple[str, bytes]]:
@@ -48,6 +49,12 @@ def libmatch(stem: str, libs: dict[str, str], verbose: bool = False) -> None:
     by_size = defaultdict(list)  # (mode, span size) -> functions
     for f in b.funcs:
         by_size[(f.mode, f.size)].append(f)
+    # Large Thumb-1 functions use `bl` as a far jump, so the splitter can cut one library
+    # function into fragments. Also offer each exidx-delimited run of unverified rows as one span;
+    # a verified hit folds the fragments back into a single row.
+    merged = _merged_spans(b)
+    for m in merged.values():
+        by_size[(m.mode, m.size)].append(m)
 
     # 1. candidates: (lib, member, symbol) -> Candidate ; signature hits by masked bytes
     hits: dict[int, list[tuple[str, str, str, match.Candidate]]] = defaultdict(list)
@@ -75,6 +82,11 @@ def libmatch(stem: str, libs: dict[str, str], verbose: bool = False) -> None:
     # 2. tentatively name every hit (needed so calls between library functions resolve), then
     #    verify with the full matcher; repeat until no more changes.
     funcs = {f.addr: f for f in b.funcs}
+    merged_hits = {a for a, hs in hits.items() if any(h[3] is not None and len(h[3].code) > funcs[a].size
+                                                      for h in hs) and a in merged}
+    for a in merged_hits:  # compare against the merged span from here on
+        funcs[a] = merged[a]
+        merged[a].name = next(f.name for f in b.funcs if f.addr == a)
     taken = {f.name for f in b.funcs}
     proposal: dict[int, tuple] = {}
     for addr, hs in hits.items():
@@ -123,10 +135,18 @@ def libmatch(stem: str, libs: dict[str, str], verbose: bool = False) -> None:
         res = match.Matcher(b).compare(funcs[a], h[3])
         if res.matched:
             verified[a] = h
+    folded = 0
     for a, h in proposal.items():
         f = funcs[a]
         if a in verified:
             lib, member, sym, cand, obj = verified[a]
+            if a in merged_hits:  # fold the fragments into the table row at a
+                row = next(r for r in b.funcs if r.addr == a)
+                inner = [r for r in b.funcs if a < r.addr < a + f.size]
+                b.funcs = [r for r in b.funcs if not (a < r.addr < a + f.size)]
+                row.size, row.name = f.size, f.name
+                f = row
+                folded += len(inner)
             f.status, f.score, f.src, f.note = "lib", "100", f"lib:{lib}:{member}", ""
             _save_member(lib, member, obj)
         else:
@@ -137,7 +157,32 @@ def libmatch(stem: str, libs: dict[str, str], verbose: bool = False) -> None:
     by_lib = defaultdict(int)
     for a, h in verified.items():
         by_lib[h[0]] += 1
+    if folded:
+        print(f"folded {folded} split fragments back into verified library functions")
     print(f"verified {len(verified)} library functions: " + ", ".join(f"{k}={v}" for k, v in sorted(by_lib.items())))
+
+
+def _merged_spans(b: Binary) -> dict[int, Func]:
+    """exidx start -> pseudo-function covering every unverified row up to the next exidx start or
+    verified row, when that run has more than one row."""
+    ex = sorted(set(exidx_starts(b)))
+    rows = sorted(b.funcs, key=lambda f: f.addr)
+    idx = {f.addr: i for i, f in enumerate(rows)}
+    out = {}
+    for k, a in enumerate(ex):
+        if a not in idx or rows[idx[a]].status != "todo":
+            continue
+        limit = ex[k + 1] if k + 1 < len(ex) else None
+        i = idx[a]
+        j = i + 1
+        while j < len(rows) and rows[j].status == "todo" and rows[j].mode == rows[i].mode \
+                and (limit is None or rows[j].addr < limit):
+            j += 1
+        if j - i < 2:
+            continue
+        end = rows[j - 1].addr + rows[j - 1].size
+        out[a] = Func(a, end - a, rows[i].mode, rows[i].name, "todo")
+    return out
 
 
 def member_path(lib: str, member: str) -> str:

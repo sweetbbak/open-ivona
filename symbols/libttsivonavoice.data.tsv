@@ -62,6 +62,7 @@ addr	size	name	note
 002716c8	0	_ZTVN9__gnu_cxx26__concurrence_unlock_errorE	named from library relocation
 002716e0	0	_ZTVN9__gnu_cxx29__concurrence_broadcast_errorE	named from library relocation
 002716f8	0	_ZTVN9__gnu_cxx24__concurrence_wait_errorE	named from library relocation
+00271838	0	_ZTISt9type_info	named from library relocation
 00271ab4	0	cst_val_defs	
 00275000	0	__dso_handle	named from library relocation
 00275248	4	cst_log_level	

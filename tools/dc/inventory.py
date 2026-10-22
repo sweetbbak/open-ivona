@@ -2,6 +2,7 @@
 .ARM.exidx and direct-call targets. Existing names/status/src are preserved."""
 from __future__ import annotations
 
+import bisect
 import json
 import struct
 
@@ -21,6 +22,18 @@ def exidx_starts(b: Binary) -> list[int]:
             off -= 0x80000000
         out.append((s.addr + i + off) & 0xFFFFFFFF)
     return out
+
+
+def inside_verified(funcs):
+    """Predicate: address lies strictly inside a verified (lib/matched) function. Such entries are
+    fragments of it (e.g. Thumb-1 far-jump `bl` targets folded back by `dc libmatch`)."""
+    spans = sorted((f.addr, f.addr + f.size) for f in funcs if f.status in ("lib", "matched"))
+    starts = [v[0] for v in spans]
+
+    def inside(a: int) -> bool:
+        k = bisect.bisect_right(starts, a) - 1
+        return k >= 0 and spans[k][0] < a < spans[k][1]
+    return inside
 
 
 PADDING = {b"\xc0\x46", b"\x00\x00", b"\x00\xbf", b"\x00\x00\xa0\xe1", b"\x00\x00\x00\x00"}
@@ -240,6 +253,11 @@ def split(stem: str, ghidra_json: str | None = None) -> None:
         seen[nm] = a
         entries[a] = (mode, nm)
 
+    inside = inside_verified(b.funcs)
+    for a in list(entries):
+        if inside(a):
+            del entries[a]
+
     old = {f.addr: f for f in b.funcs}
     starts = sorted(entries)
     funcs = []
@@ -256,7 +274,7 @@ def split(stem: str, ghidra_json: str | None = None) -> None:
         if b.elf.is_veneer(a) and f.status == "todo":
             f.status, f.note = "lib", "linker veneer"
         funcs.append(f)
-    dropped = set(old) - set(entries)
+    dropped = {a for a in set(old) - set(entries) if not inside(a)}
     for a in dropped:
         print(f"warn: previously known function {old[a].name} at {a:#x} no longer an entry (kept)")
         funcs.append(old[a])
