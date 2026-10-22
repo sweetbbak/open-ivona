@@ -832,11 +832,11 @@ addr	size	mode	name	status	src	score	note
 000456f4	1a4	arm	res_cache_acquire	matched	src/libttsivonavoice/res_cache.c	100	
 00045898	118	arm	res_cache_release	wip	src/libttsivonavoice/res_cache.c	15.7	
 000459b0	44	arm	res_cache_release_all	matched	src/libttsivonavoice/res_cache.c	100	
-000459f4	fc	arm	FUN_000459f4	todo			
-00045af0	54	arm	FUN_00045af0	todo			
-00045b44	8c	arm	FUN_00045b44	todo			
-00045bd0	74	arm	FUN_00045bd0	todo			
-00045c44	44	arm	FUN_00045c44	todo			
+000459f4	fc	arm	ivona_sem_open	matched	src/libttsivonavoice/ivona_sem.c	100	
+00045af0	54	arm	ivona_sem_close	matched	src/libttsivonavoice/ivona_sem.c	100	
+00045b44	8c	arm	ivona_sem_wait	matched	src/libttsivonavoice/ivona_sem.c	100	
+00045bd0	74	arm	ivona_sem_post	matched	src/libttsivonavoice/ivona_sem.c	100	
+00045c44	44	arm	ivona_sem_unlink	matched	src/libttsivonavoice/ivona_sem.c	100	
 00045c88	15c	arm	FUN_00045c88	todo			
 00045de4	c	arm	FUN_00045de4	todo			
 00045df0	8	arm	FUN_00045df0	todo			
