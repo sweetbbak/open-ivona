@@ -54,7 +54,13 @@ addr	size	name	note
 00267094	8	val_string_1	
 0026709c	8	val_string_0	
 002683e0	0	cst_regex_table	learned from src/libttsivonavoice/flite/cst_cart.c
+00271680	0	_ZTIN9__gnu_cxx24__concurrence_lock_errorE	named from library relocation
+0027168c	0	_ZTIN9__gnu_cxx26__concurrence_unlock_errorE	named from library relocation
+00271698	0	_ZTIN9__gnu_cxx29__concurrence_broadcast_errorE	named from library relocation
 002716a4	0	_ZTIN9__gnu_cxx24__concurrence_wait_errorE	named from library relocation
+002716b0	0	_ZTVN9__gnu_cxx24__concurrence_lock_errorE	named from library relocation
+002716c8	0	_ZTVN9__gnu_cxx26__concurrence_unlock_errorE	named from library relocation
+002716e0	0	_ZTVN9__gnu_cxx29__concurrence_broadcast_errorE	named from library relocation
 002716f8	0	_ZTVN9__gnu_cxx24__concurrence_wait_errorE	named from library relocation
 00271ab4	0	cst_val_defs	
 00275000	0	__dso_handle	named from library relocation

@@ -1,5 +1,5 @@
 addr	size	mode	name	status	src	score	note
-00004da0	20	thumb	_ZNSs4_Rep10_M_disposeERKSaIcE.part.11	todo			
+00004da0	20	thumb	_ZNSs4_Rep10_M_disposeERKSaIcE.part.11	lib	lib:gnustl-thumb:string-inst.o	100	
 00004dc0	10	arm	__on_dlclose	lib	lib:crtbegin_so:crtbegin_so.o	100	
 00004dd0	3c	thumb	_GLOBAL__sub_I_eh_globals.cc	lib	lib:gnustl-thumb:eh_globals.o	100	
 00004e0c	10	thumb	_GLOBAL__sub_I_eh_alloc.cc	lib	lib:gnustl-thumb:eh_alloc.o	100	
@@ -96,11 +96,11 @@ addr	size	mode	name	status	src	score	note
 000058cc	14	thumb	FUN_000058cc	todo			
 000058e0	14	thumb	FUN_000058e0	todo			
 000058f4	8	thumb	FUN_000058f4	todo			
-000058fc	8	thumb	_ZNSs4_Rep10_M_destroyERKSaIcE	todo			
-00005904	18	thumb	_ZNSs4_Rep10_M_disposeERKSaIcE	todo			
+000058fc	8	thumb	_ZNSs4_Rep10_M_destroyERKSaIcE	lib	lib:gnustl-thumb:string-inst.o	100	
+00005904	18	thumb	_ZNSs4_Rep10_M_disposeERKSaIcE	lib	lib:gnustl-thumb:string-inst.o	100	
 0000591c	24	thumb	FUN_0000591c	todo			
 00005940	108	thumb	_ZNSs9_M_mutateEjjj	lib	lib:gnustl-thumb:string-inst.o	100	
-00005a48	30	thumb	_ZNSs12_M_leak_hardEv	todo			
+00005a48	30	thumb	_ZNSs12_M_leak_hardEv	lib	lib:gnustl-thumb:string-inst.o	100	
 00005a78	14	thumb	FUN_00005a78	todo			
 00005a8c	1c	thumb	FUN_00005a8c	todo			
 00005aa8	20	thumb	FUN_00005aa8	todo			
@@ -136,7 +136,7 @@ addr	size	mode	name	status	src	score	note
 00006004	24	thumb	FUN_00006004	todo			
 00006028	20	thumb	FUN_00006028	todo			
 00006048	54	thumb	_ZNSs4_Rep8_M_cloneERKSaIcEj	lib	lib:gnustl-thumb:string-inst.o	100	
-0000609c	50	thumb	_ZNSs7reserveEj	todo			
+0000609c	50	thumb	_ZNSs7reserveEj	lib	lib:gnustl-thumb:string-inst.o	100	
 000060ec	18	thumb	FUN_000060ec	todo			
 00006104	c	thumb	FUN_00006104	todo			
 00006110	7c	thumb	_ZNSs6appendERKSs	lib	lib:gnustl-thumb:string-inst.o	100	
@@ -150,8 +150,8 @@ addr	size	mode	name	status	src	score	note
 00006320	88	thumb	_ZNSs6appendEjc	lib	lib:gnustl-thumb:string-inst.o	100	
 000063a8	38	thumb	_ZNSs6resizeEjc	lib	lib:gnustl-thumb:string-inst.o	100	
 000063e0	c	thumb	FUN_000063e0	todo			
-000063ec	4c	thumb	FUN_000063ec	todo			
-00006438	50	thumb	FUN_00006438	todo			
+000063ec	4c	thumb	_ZNSs9push_backEc	lib	lib:gnustl-thumb:string-inst.o	100	
+00006438	50	thumb	_ZNSspLEc	lib	lib:gnustl-thumb:string-inst.o	100	
 00006488	30	thumb	FUN_00006488	todo			
 000064b8	3c	thumb	FUN_000064b8	todo			
 000064f4	64	thumb	FUN_000064f4	todo			
@@ -169,8 +169,8 @@ addr	size	mode	name	status	src	score	note
 0000676c	24	thumb	FUN_0000676c	todo			
 00006790	3c	thumb	FUN_00006790	todo			
 000067cc	18	thumb	FUN_000067cc	todo			
-000067e4	78	thumb	FUN_000067e4	todo			
-0000685c	18	thumb	_ZNSsC1EPKcjRKSaIcE	todo			
+000067e4	78	thumb	_ZNSs12_S_constructIPKcEEPcT_S3_RKSaIcESt20forward_iterator_tag	todo			
+0000685c	18	thumb	_ZNSsC1EPKcjRKSaIcE	lib	lib:gnustl-thumb:string-inst.o	100	
 00006874	110	thumb	_ZNSs7replaceEjjPKcj	lib	lib:gnustl-thumb:string-inst.o	100	
 00006984	18	thumb	FUN_00006984	todo			
 0000699c	38	thumb	_ZNSs7replaceEjjRKSsjj	lib	lib:gnustl-thumb:string-inst.o	100	
@@ -183,7 +183,7 @@ addr	size	mode	name	status	src	score	note
 00006a90	24	thumb	_ZNSs7replaceEN9__gnu_cxx17__normal_iteratorIPcSsEES2_St16initializer_listIcE	lib	lib:gnustl-thumb:string-inst.o	100	
 00006ab4	1c	thumb	FUN_00006ab4	todo			
 00006ad0	1c	thumb	FUN_00006ad0	todo			
-00006aec	2c	thumb	_ZNSsC1EPKcRKSaIcE	todo			
+00006aec	2c	thumb	_ZNSsC1EPKcRKSaIcE	lib	lib:gnustl-thumb:string-inst.o	100	
 00006b18	1c	thumb	FUN_00006b18	todo			
 00006b34	18	thumb	FUN_00006b34	todo			
 00006b4c	c	thumb	FUN_00006b4c	todo			
@@ -201,42 +201,42 @@ addr	size	mode	name	status	src	score	note
 00007314	3c	thumb	_ZN10__cxxabiv1L24__is_gxx_exception_classEPc	lib	lib:gnustl-thumb:eh_call.o	100	
 00007350	20	thumb	__cxa_call_terminate	lib	lib:gnustl-thumb:eh_call.o	100	
 00007370	120	thumb	__cxa_call_unexpected	lib	lib:gnustl-thumb:eh_call.o	100	
-00007490	1c	thumb	_ZN17__eh_globals_initD1Ev	todo			
+00007490	1c	thumb	_ZN17__eh_globals_initD1Ev	lib	lib:gnustl-thumb:eh_globals.o	100	
 000074ac	28	thumb	_ZL15eh_globals_dtorPv	lib	lib:gnustl-thumb:eh_globals.o	100	
 000074d4	30	thumb	__cxa_get_globals_fast	lib	lib:gnustl-thumb:eh_globals.o	100	
 00007504	5c	thumb	__cxa_get_globals	lib	lib:gnustl-thumb:eh_globals.o	100	
 00007560	28	thumb	_ZL23__gxx_exception_cleanup19_Unwind_Reason_CodeP21_Unwind_Control_Block	lib	lib:gnustl-thumb:eh_throw.o	100	
 00007588	80	thumb	__cxa_throw	lib	lib:gnustl-thumb:eh_throw.o	100	
 00007608	74	thumb	__cxa_rethrow	lib	lib:gnustl-thumb:eh_throw.o	100	
-0000767c	10	thumb	_ZNSt9exceptionD1Ev	todo			
-0000768c	1c	thumb	_ZNSt13bad_exceptionD2Ev	todo			
-000076a8	10	thumb	_ZN10__cxxabiv115__forced_unwindD1Ev	todo			
-000076b8	10	thumb	_ZN10__cxxabiv119__foreign_exceptionD1Ev	todo			
-000076c8	c	thumb	_ZNKSt9exception4whatEv	todo			
-000076d4	c	thumb	_ZNKSt13bad_exception4whatEv	todo			
-000076e0	14	thumb	_ZNSt9exceptionD0Ev	todo			
-000076f4	14	thumb	_ZNSt13bad_exceptionD0Ev	todo			
-00007708	14	thumb	_ZN10__cxxabiv115__forced_unwindD0Ev	todo			
-0000771c	14	thumb	_ZN10__cxxabiv119__foreign_exceptionD0Ev	todo			
-00007730	c	thumb	_ZdlPv	todo			
+0000767c	10	thumb	_ZNSt9exceptionD1Ev	lib	lib:gnustl-thumb:eh_exception.o	100	
+0000768c	1c	thumb	_ZNSt13bad_exceptionD2Ev	lib	lib:gnustl-thumb:eh_exception.o	100	
+000076a8	10	thumb	_ZN10__cxxabiv115__forced_unwindD1Ev	lib	lib:gnustl-thumb:eh_exception.o	100	
+000076b8	10	thumb	_ZN10__cxxabiv119__foreign_exceptionD1Ev	lib	lib:gnustl-thumb:eh_exception.o	100	
+000076c8	c	thumb	_ZNKSt9exception4whatEv	lib	lib:gnustl-thumb:eh_exception.o	100	
+000076d4	c	thumb	_ZNKSt13bad_exception4whatEv	lib	lib:gnustl-thumb:eh_exception.o	100	
+000076e0	14	thumb	_ZNSt9exceptionD0Ev	lib	lib:gnustl-thumb:eh_exception.o	100	
+000076f4	14	thumb	_ZNSt13bad_exceptionD0Ev	lib	lib:gnustl-thumb:eh_exception.o	100	
+00007708	14	thumb	_ZN10__cxxabiv115__forced_unwindD0Ev	lib	lib:gnustl-thumb:eh_exception.o	100	
+0000771c	14	thumb	_ZN10__cxxabiv119__foreign_exceptionD0Ev	lib	lib:gnustl-thumb:eh_exception.o	100	
+00007730	c	thumb	_ZdlPv	lib	lib:gnustl-thumb:del_op.o	100	
 0000773c	c	thumb	__cxa_end_cleanup	lib	lib:gnustl-thumb:eh_arm.o	100	
 00007748	c0	thumb	__cxa_type_match	lib	lib:gnustl-thumb:eh_arm.o	100	
 00007808	60	thumb	__cxa_begin_cleanup	lib	lib:gnustl-thumb:eh_arm.o	100	
 00007868	70	thumb	__gnu_end_cleanup	lib	lib:gnustl-thumb:eh_arm.o	100	
 000078d8	28	thumb	_ZN10__cxxabiv111__terminateEPFvvE	lib	lib:gnustl-thumb:eh_terminate.o	100	
-00007900	14	thumb	_ZSt9terminatev	todo			
-00007914	8	thumb	_ZN10__cxxabiv112__unexpectedEPFvvE	todo			
-0000791c	14	thumb	_ZSt10unexpectedv	todo			
-00007930	14	thumb	_ZSt13set_terminatePFvvE	todo			
-00007944	14	thumb	_ZSt14set_unexpectedPFvvE	todo			
+00007900	14	thumb	_ZSt9terminatev	lib	lib:gnustl-thumb:eh_terminate.o	100	
+00007914	8	thumb	_ZN10__cxxabiv112__unexpectedEPFvvE	lib	lib:gnustl-thumb:eh_terminate.o	100	
+0000791c	14	thumb	_ZSt10unexpectedv	lib	lib:gnustl-thumb:eh_terminate.o	100	
+00007930	14	thumb	_ZSt13set_terminatePFvvE	lib	lib:gnustl-thumb:eh_terminate.o	100	
+00007944	14	thumb	_ZSt14set_unexpectedPFvvE	lib	lib:gnustl-thumb:eh_terminate.o	100	
 00007958	c	thumb	FUN_00007958	todo			
 00007964	c	thumb	FUN_00007964	todo			
-00007970	18	thumb	FUN_00007970	todo			
-00007988	18	thumb	FUN_00007988	todo			
+00007970	18	thumb	_ZN9__gnu_cxx26__concurrence_unlock_errorD1Ev	todo			
+00007988	18	thumb	_ZN9__gnu_cxx24__concurrence_lock_errorD1Ev	todo			
 000079a0	20	thumb	FUN_000079a0	todo			
 000079c0	20	thumb	FUN_000079c0	todo			
-000079e0	28	thumb	_ZN9__gnu_cxx30__throw_concurrence_lock_errorEv	todo			
-00007a08	28	thumb	_ZN9__gnu_cxx32__throw_concurrence_unlock_errorEv	todo			
+000079e0	28	thumb	_ZN9__gnu_cxx30__throw_concurrence_lock_errorEv	lib	lib:gnustl-thumb:guard.o	100	
+00007a08	28	thumb	_ZN9__gnu_cxx32__throw_concurrence_unlock_errorEv	lib	lib:gnustl-thumb:guard.o	100	
 00007a30	9c	thumb	__cxa_allocate_exception	lib	lib:gnustl-thumb:eh_alloc.o	100	
 00007acc	70	thumb	__cxa_free_exception	lib	lib:gnustl-thumb:eh_alloc.o	100	
 00007b3c	94	thumb	__cxa_allocate_dependent_exception	lib	lib:gnustl-thumb:eh_alloc.o	100	
@@ -245,9 +245,9 @@ addr	size	mode	name	status	src	score	note
 00007c54	10	thumb	_ZSt15set_new_handlerPFvvE	lib	lib:gnustl-thumb:new_handler.o	100	
 00007c64	18	thumb	__cxa_pure_virtual	lib	lib:gnustl-thumb:pure.o	100	
 00007c7c	18	thumb	__cxa_deleted_virtual	lib	lib:gnustl-thumb:pure.o	100	
-00007c94	c	thumb	_ZNKSt9bad_alloc4whatEv	todo			
-00007ca0	1c	thumb	_ZNSt9bad_allocD2Ev	todo			
-00007cbc	14	thumb	_ZNSt9bad_allocD0Ev	todo			
+00007c94	c	thumb	_ZNKSt9bad_alloc4whatEv	lib	lib:gnustl-thumb:bad_alloc.o	100	
+00007ca0	1c	thumb	_ZNSt9bad_allocD2Ev	lib	lib:gnustl-thumb:bad_alloc.o	100	
+00007cbc	14	thumb	_ZNSt9bad_allocD0Ev	lib	lib:gnustl-thumb:bad_alloc.o	100	
 00007cd0	30	thumb	FUN_00007cd0	todo			
 00007d00	30	thumb	FUN_00007d00	todo			
 00007d30	30	thumb	FUN_00007d30	todo			
@@ -255,8 +255,8 @@ addr	size	mode	name	status	src	score	note
 00007d90	5c	thumb	FUN_00007d90	todo			
 00007dec	5c	thumb	FUN_00007dec	todo			
 00007e48	5c	thumb	FUN_00007e48	todo			
-00007ea4	5c	thumb	_ZSt20__throw_length_errorPKc	todo			
-00007f00	5c	thumb	_ZSt20__throw_out_of_rangePKc	todo			
+00007ea4	5c	thumb	_ZSt20__throw_length_errorPKc	lib	lib:gnustl-thumb:functexcept.o	100	
+00007f00	5c	thumb	_ZSt20__throw_out_of_rangePKc	lib	lib:gnustl-thumb:functexcept.o	100	
 00007f5c	5c	thumb	FUN_00007f5c	todo			
 00007fb8	5c	thumb	FUN_00007fb8	todo			
 00008014	5c	thumb	FUN_00008014	todo			
@@ -269,11 +269,11 @@ addr	size	mode	name	status	src	score	note
 00008278	c	thumb	FUN_00008278	todo			
 00008284	18	thumb	FUN_00008284	todo			
 0000829c	20	thumb	FUN_0000829c	todo			
-000082bc	c	thumb	_ZNK12_GLOBAL__N_121future_error_category4nameEv	todo			
-000082c8	18	thumb	_ZN12_GLOBAL__N_121future_error_categoryD1Ev	todo			
-000082e0	20	thumb	_ZN12_GLOBAL__N_121future_error_categoryD0Ev	todo			
-00008300	18	thumb	_ZNSt12future_errorD1Ev	todo			
-00008318	20	thumb	FUN_00008318	todo			
+000082bc	c	thumb	_ZNK12_GLOBAL__N_121future_error_category4nameEv	lib	lib:gnustl-thumb:future.o	100	
+000082c8	18	thumb	_ZN12_GLOBAL__N_121future_error_categoryD1Ev	lib	lib:gnustl-thumb:future.o	100	
+000082e0	20	thumb	_ZN12_GLOBAL__N_121future_error_categoryD0Ev	lib	lib:gnustl-thumb:future.o	100	
+00008300	18	thumb	_ZNSt12future_errorD1Ev	lib	lib:gnustl-thumb:future.o	100	
+00008318	20	thumb	_ZNSt12future_errorD0Ev	todo			
 00008338	44	thumb	_ZNKSt12future_error4whatEv	lib	lib:gnustl-thumb:future.o	100	
 0000837c	90	thumb	_ZNK12_GLOBAL__N_121future_error_category7messageEi	lib	lib:gnustl-thumb:future.o	100	
 0000840c	60	thumb	_ZSt15future_categoryv	lib	lib:gnustl-thumb:future.o	100	
@@ -281,46 +281,46 @@ addr	size	mode	name	status	src	score	note
 00008478	c	thumb	FUN_00008478	todo			
 00008484	1c	thumb	_ZN12_GLOBAL__N_1L4initEv	lib	lib:gnustl-thumb:guard.o	100	
 000084a0	18	thumb	_ZN12_GLOBAL__N_1L16init_static_condEv	lib	lib:gnustl-thumb:guard.o	100	
-000084b8	18	thumb	_ZN9__gnu_cxx24__concurrence_wait_errorD1Ev	todo			
-000084d0	18	thumb	FUN_000084d0	todo			
+000084b8	18	thumb	_ZN9__gnu_cxx24__concurrence_wait_errorD1Ev	lib	lib:gnustl-thumb:guard.o	100	
+000084d0	18	thumb	_ZN9__gnu_cxx29__concurrence_broadcast_errorD1Ev	todo			
 000084e8	20	thumb	FUN_000084e8	todo			
 00008508	20	thumb	FUN_00008508	todo			
-00008528	28	thumb	_ZN9__gnu_cxx35__throw_concurrence_broadcast_errorEv	todo			
-00008550	10	thumb	_ZN9__gnu_cxx17__recursive_mutex6unlockEv	todo			
+00008528	28	thumb	_ZN9__gnu_cxx35__throw_concurrence_broadcast_errorEv	lib	lib:gnustl-thumb:guard.o	100	
+00008550	10	thumb	_ZN9__gnu_cxx17__recursive_mutex6unlockEv	lib	lib:gnustl-thumb:guard.o	100	
 00008560	100	thumb	__cxa_guard_acquire	lib	lib:gnustl-thumb:guard.o	100	
 00008660	98	thumb	__cxa_guard_abort	lib	lib:gnustl-thumb:guard.o	100	
 000086f8	9c	thumb	__cxa_guard_release	lib	lib:gnustl-thumb:guard.o	100	
-00008794	c	thumb	_ZNKSt10bad_typeid4whatEv	todo			
-000087a0	1c	thumb	_ZNSt10bad_typeidD2Ev	todo			
-000087bc	14	thumb	_ZNSt10bad_typeidD0Ev	todo			
-000087d0	1c	thumb	_ZN10__cxxabiv120__si_class_type_infoD1Ev	todo			
-000087ec	14	thumb	_ZN10__cxxabiv120__si_class_type_infoD0Ev	todo			
+00008794	c	thumb	_ZNKSt10bad_typeid4whatEv	lib	lib:gnustl-thumb:bad_typeid.o	100	
+000087a0	1c	thumb	_ZNSt10bad_typeidD2Ev	lib	lib:gnustl-thumb:bad_typeid.o	100	
+000087bc	14	thumb	_ZNSt10bad_typeidD0Ev	lib	lib:gnustl-thumb:bad_typeid.o	100	
+000087d0	1c	thumb	_ZN10__cxxabiv120__si_class_type_infoD1Ev	lib	lib:gnustl-thumb:si_class_type_info.o	100	
+000087ec	14	thumb	_ZN10__cxxabiv120__si_class_type_infoD0Ev	lib	lib:gnustl-thumb:si_class_type_info.o	100	
 00008800	38	thumb	_ZNK10__cxxabiv120__si_class_type_info20__do_find_public_srcEiPKvPKNS_17__class_type_infoES2_	lib	lib:gnustl-thumb:si_class_type_info.o	100	
 00008838	94	thumb	_ZNK10__cxxabiv120__si_class_type_info12__do_dyncastEiNS_17__class_type_info10__sub_kindEPKS1_PKvS4_S6_RNS1_16__dyncast_resultE	lib	lib:gnustl-thumb:si_class_type_info.o	100	
 000088cc	24	thumb	_ZNK10__cxxabiv120__si_class_type_info11__do_upcastEPKNS_17__class_type_infoEPKvRNS1_15__upcast_resultE	lib	lib:gnustl-thumb:si_class_type_info.o	100	
 000088f0	34	thumb	_ZNK10__cxxabiv117__class_type_info11__do_upcastEPKS0_PPv	lib	lib:gnustl-thumb:class_type_info.o	100	
 00008924	10	thumb	_ZNK10__cxxabiv117__class_type_info20__do_find_public_srcEiPKvPKS0_S2_	lib	lib:gnustl-thumb:class_type_info.o	100	
-00008934	1c	thumb	_ZN10__cxxabiv117__class_type_infoD1Ev	todo			
-00008950	14	thumb	_ZN10__cxxabiv117__class_type_infoD0Ev	todo			
+00008934	1c	thumb	_ZN10__cxxabiv117__class_type_infoD1Ev	lib	lib:gnustl-thumb:class_type_info.o	100	
+00008950	14	thumb	_ZN10__cxxabiv117__class_type_infoD0Ev	lib	lib:gnustl-thumb:class_type_info.o	100	
 00008964	1c	thumb	_ZNK10__cxxabiv117__class_type_info11__do_upcastEPKS0_PKvRNS0_15__upcast_resultE	lib	lib:gnustl-thumb:class_type_info.o	100	
 00008980	28	thumb	_ZNK10__cxxabiv117__class_type_info10__do_catchEPKSt9type_infoPPvj	lib	lib:gnustl-thumb:class_type_info.o	100	
 000089a8	3c	thumb	_ZNK10__cxxabiv117__class_type_info12__do_dyncastEiNS0_10__sub_kindEPKS0_PKvS3_S5_RNS0_16__dyncast_resultE	lib	lib:gnustl-thumb:class_type_info.o	100	
-000089e4	c	thumb	_ZNKSt8bad_cast4whatEv	todo			
-000089f0	1c	thumb	_ZNSt8bad_castD2Ev	todo			
-00008a0c	14	thumb	_ZNSt8bad_castD0Ev	todo			
+000089e4	c	thumb	_ZNKSt8bad_cast4whatEv	lib	lib:gnustl-thumb:bad_cast.o	100	
+000089f0	1c	thumb	_ZNSt8bad_castD2Ev	lib	lib:gnustl-thumb:bad_cast.o	100	
+00008a0c	14	thumb	_ZNSt8bad_castD0Ev	lib	lib:gnustl-thumb:bad_cast.o	100	
 00008a20	4	thumb	FUN_00008a20	todo			
-00008a24	4	thumb	FUN_00008a24	todo			
-00008a28	4c	thumb	FUN_00008a28	todo			
+00008a24	4	thumb	_ZNKSt13runtime_error4whatEv	todo			
+00008a28	4c	thumb	_ZNSt11logic_errorD2Ev	todo			
 00008a74	14	thumb	FUN_00008a74	todo			
 00008a88	18	thumb	FUN_00008a88	todo			
 00008aa0	20	thumb	FUN_00008aa0	todo			
 00008ac0	18	thumb	FUN_00008ac0	todo			
 00008ad8	20	thumb	FUN_00008ad8	todo			
-00008af8	18	thumb	FUN_00008af8	todo			
+00008af8	18	thumb	_ZNSt12length_errorD1Ev	todo			
 00008b10	20	thumb	FUN_00008b10	todo			
-00008b30	18	thumb	FUN_00008b30	todo			
+00008b30	18	thumb	_ZNSt12out_of_rangeD1Ev	todo			
 00008b48	20	thumb	FUN_00008b48	todo			
-00008b68	4c	thumb	FUN_00008b68	todo			
+00008b68	4c	thumb	_ZNSt13runtime_errorD2Ev	todo			
 00008bb4	14	thumb	FUN_00008bb4	todo			
 00008bc8	18	thumb	FUN_00008bc8	todo			
 00008be0	20	thumb	FUN_00008be0	todo			
@@ -332,42 +332,42 @@ addr	size	mode	name	status	src	score	note
 00008c84	10	thumb	FUN_00008c84	todo			
 00008c94	18	thumb	FUN_00008c94	todo			
 00008cac	18	thumb	FUN_00008cac	todo			
-00008cc4	18	thumb	FUN_00008cc4	todo			
-00008cdc	18	thumb	FUN_00008cdc	todo			
+00008cc4	18	thumb	_ZNSt12length_errorC1ERKSs	todo			
+00008cdc	18	thumb	_ZNSt12out_of_rangeC1ERKSs	todo			
 00008cf4	14	thumb	_ZNSt13runtime_errorC2ERKSs	todo			
 00008d08	10	thumb	FUN_00008d08	todo			
 00008d18	18	thumb	FUN_00008d18	todo			
 00008d30	18	thumb	FUN_00008d30	todo			
 00008d48	18	thumb	FUN_00008d48	todo			
-00008d60	4	thumb	FUN_00008d60	todo			
-00008d64	4c	thumb	_ZNSt8ios_base7failureD1Ev	todo			
-00008db0	14	thumb	FUN_00008db0	todo			
+00008d60	4	thumb	_ZNKSt8ios_base7failure4whatEv	todo			
+00008d64	4c	thumb	_ZNSt8ios_base7failureD1Ev	lib	lib:gnustl-thumb:ios_failure.o	100	
+00008db0	14	thumb	_ZNSt8ios_base7failureD0Ev	todo			
 00008dc4	14	thumb	_ZNSt8ios_base7failureC1ERKSs	todo			
 00008dd8	1c	thumb	FUN_00008dd8	todo			
-00008df4	18	thumb	_ZNSt11regex_errorD1Ev	todo			
-00008e0c	20	thumb	FUN_00008e0c	todo			
+00008df4	18	thumb	_ZNSt11regex_errorD1Ev	lib	lib:gnustl-thumb:regex.o	100	
+00008e0c	20	thumb	_ZNSt11regex_errorD0Ev	todo			
 00008e2c	56	thumb	_ZNSt11regex_errorC1ENSt15regex_constants10error_typeE	todo			
 00008e82	1a	thumb	FUN_00008e82	todo			
-00008e9c	c	thumb	_ZNK12_GLOBAL__N_122generic_error_category4nameEv	todo			
-00008ea8	c	thumb	_ZNK12_GLOBAL__N_121system_error_category4nameEv	todo			
-00008eb4	10	thumb	FUN_00008eb4	todo			
+00008e9c	c	thumb	_ZNK12_GLOBAL__N_122generic_error_category4nameEv	lib	lib:gnustl-thumb:system_error.o	100	
+00008ea8	c	thumb	_ZNK12_GLOBAL__N_121system_error_category4nameEv	lib	lib:gnustl-thumb:system_error.o	100	
+00008eb4	10	thumb	_ZNSt14error_categoryD2Ev	todo			
 00008ec4	8	thumb	_ZNKSt14error_category23default_error_conditionEi	lib	lib:gnustl-thumb:system_error.o	100	
 00008ecc	30	thumb	_ZNKSt14error_category10equivalentEiRKSt15error_condition	lib	lib:gnustl-thumb:system_error.o	100	
 00008efc	18	thumb	_ZNKSt14error_category10equivalentERKSt10error_codei	lib	lib:gnustl-thumb:system_error.o	100	
 00008f14	10	thumb	_ZN12_GLOBAL__N_121system_error_categoryD1Ev	todo			
 00008f24	10	thumb	_ZN12_GLOBAL__N_122generic_error_categoryD1Ev	todo			
-00008f34	18	thumb	FUN_00008f34	todo			
+00008f34	18	thumb	_ZNSt14error_categoryD0Ev	todo			
 00008f4c	18	thumb	_ZN12_GLOBAL__N_121system_error_categoryD0Ev	todo			
 00008f64	18	thumb	_ZN12_GLOBAL__N_122generic_error_categoryD0Ev	todo			
-00008f7c	18	thumb	_ZNSt12system_errorD1Ev	todo			
-00008f94	20	thumb	FUN_00008f94	todo			
-00008fb4	1c	thumb	_ZNK12_GLOBAL__N_121system_error_category7messageEi	todo			
-00008fd0	1c	thumb	_ZNK12_GLOBAL__N_122generic_error_category7messageEi	todo			
+00008f7c	18	thumb	_ZNSt12system_errorD1Ev	lib	lib:gnustl-thumb:system_error.o	100	
+00008f94	20	thumb	_ZNSt12system_errorD0Ev	todo			
+00008fb4	1c	thumb	_ZNK12_GLOBAL__N_121system_error_category7messageEi	lib	lib:gnustl-thumb:system_error.o	100	
+00008fd0	1c	thumb	_ZNK12_GLOBAL__N_122generic_error_category7messageEi	lib	lib:gnustl-thumb:system_error.o	100	
 00008fec	10	thumb	_ZNSt14error_categoryC2Ev	todo			
 00008ffc	c	thumb	FUN_00008ffc	todo			
-00009008	c	thumb	_ZSt16generic_categoryv	todo			
+00009008	c	thumb	_ZSt16generic_categoryv	lib	lib:gnustl-thumb:system_error.o	100	
 00009014	18	thumb	_ZNKSt10error_code23default_error_conditionEv	lib	lib:gnustl-thumb:system_error.o	100	
-0000902c	10	thumb	FUN_0000902c	todo			
+0000902c	10	thumb	_ZNSt9type_infoD2Ev	todo			
 0000903c	4	thumb	FUN_0000903c	todo			
 00009040	4	thumb	FUN_00009040	todo			
 00009044	4	thumb	FUN_00009044	todo			
@@ -624,7 +624,7 @@ addr	size	mode	name	status	src	score	note
 0000f718	76	thumb	FUN_0000f718	todo			
 0000f78e	6	thumb	FUN_0000f78e	todo			
 0000f794	14	thumb	__aeabi_uidivmod	lib	lib:libgcc-thumb:_udivsi3.o	100	
-0000f7a8	10	arm	__aeabi_ldiv0	todo			
+0000f7a8	10	arm	__aeabi_ldiv0	lib	lib:libgcc-thumb:_dvmd_lnx.o	100	
 0000f7b8	20	thumb	__sync_fetch_and_add_4	lib	lib:libgcc-thumb:linux-atomic.o	100	
 0000f7d8	20	thumb	__sync_fetch_and_sub_4	lib	lib:libgcc-thumb:linux-atomic.o	100	
 0000f7f8	20	thumb	__sync_fetch_and_or_4	lib	lib:libgcc-thumb:linux-atomic.o	100	
@@ -698,17 +698,17 @@ addr	size	mode	name	status	src	score	note
 000105c8	18	thumb	_Unwind_SetGR	lib	lib:libgcc-thumb:unwind-arm.o	100	
 000105e0	70	thumb	__gnu_Unwind_Backtrace	lib	lib:libgcc-thumb:unwind-arm.o	100	
 00010650	280	thumb	__gnu_unwind_pr_common	lib	lib:libgcc-thumb:unwind-arm.o	100	
-000108d0	a	thumb	__aeabi_unwind_cpp_pr0	todo			
-000108da	a	thumb	__aeabi_unwind_cpp_pr1	todo			
-000108e4	a	thumb	__aeabi_unwind_cpp_pr2	todo			
+000108d0	a	thumb	__aeabi_unwind_cpp_pr0	lib	lib:libgcc-thumb:unwind-arm.o	100	
+000108da	a	thumb	__aeabi_unwind_cpp_pr1	lib	lib:libgcc-thumb:unwind-arm.o	100	
+000108e4	a	thumb	__aeabi_unwind_cpp_pr2	lib	lib:libgcc-thumb:unwind-arm.o	100	
 000108ee	24e	thumb	_Unwind_VRS_Pop	todo			
-00010b3c	14	arm	__restore_core_regs	todo			
-00010b50	8	arm	__gnu_Unwind_Restore_VFP	todo			
-00010b58	8	arm	__gnu_Unwind_Save_VFP	todo			
-00010b60	8	arm	__gnu_Unwind_Restore_VFP_D	todo			
-00010b68	8	arm	__gnu_Unwind_Save_VFP_D	todo			
-00010b70	8	arm	__gnu_Unwind_Restore_VFP_D_16_to_31	todo			
-00010b78	8	arm	__gnu_Unwind_Save_VFP_D_16_to_31	todo			
+00010b3c	14	arm	__restore_core_regs	lib	lib:libgcc-thumb:libunwind.o	100	
+00010b50	8	arm	__gnu_Unwind_Restore_VFP	lib	lib:libgcc-thumb:libunwind.o	100	
+00010b58	8	arm	__gnu_Unwind_Save_VFP	lib	lib:libgcc-thumb:libunwind.o	100	
+00010b60	8	arm	__gnu_Unwind_Restore_VFP_D	lib	lib:libgcc-thumb:libunwind.o	100	
+00010b68	8	arm	__gnu_Unwind_Save_VFP_D	lib	lib:libgcc-thumb:libunwind.o	100	
+00010b70	8	arm	__gnu_Unwind_Restore_VFP_D_16_to_31	lib	lib:libgcc-thumb:libunwind.o	100	
+00010b78	8	arm	__gnu_Unwind_Save_VFP_D_16_to_31	lib	lib:libgcc-thumb:libunwind.o	100	
 00010b80	44	arm	__gnu_Unwind_Restore_WMMXD	lib	lib:libgcc-thumb:libunwind.o	100	
 00010bc4	44	arm	__gnu_Unwind_Save_WMMXD	lib	lib:libgcc-thumb:libunwind.o	100	
 00010c08	14	arm	__gnu_Unwind_Restore_WMMXC	lib	lib:libgcc-thumb:libunwind.o	100	
@@ -728,10 +728,10 @@ addr	size	mode	name	status	src	score	note
 00010d54	8	thumb	FUN_00010d54	todo			
 00010d5c	290	thumb	__gnu_unwind_execute	lib	lib:libgcc-thumb:pr-support.o	100	
 00010fec	26	thumb	__gnu_unwind_frame	lib	lib:libgcc-thumb:pr-support.o	100	
-00011012	a	thumb	_Unwind_GetRegionStart	todo			
+00011012	a	thumb	_Unwind_GetRegionStart	lib	lib:libgcc-thumb:pr-support.o	100	
 0001101c	14	thumb	_Unwind_GetLanguageSpecificData	lib	lib:libgcc-thumb:pr-support.o	100	
-00011030	6	thumb	_Unwind_GetDataRelBase	todo			
-00011036	6	thumb	_Unwind_GetTextRelBase	todo			
+00011030	6	thumb	_Unwind_GetDataRelBase	lib	lib:libgcc-thumb:pr-support.o	100	
+00011036	6	thumb	_Unwind_GetTextRelBase	lib	lib:libgcc-thumb:pr-support.o	100	
 0001103c	4	thumb	__strcmp_thumb_veneer	lib			linker veneer
 00011040	c	arm	__strcmp_arm_veneer	lib			linker veneer
 0001104c	4	thumb	__stat_thumb_veneer	lib			linker veneer

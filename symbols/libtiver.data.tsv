@@ -2,10 +2,18 @@ addr	size	name	note
 00011bdc	0	__exidx_start	named from library relocation
 000127f4	0	__exidx_end	named from library relocation
 000164f0	c40	g_voice_table	
+000178d0	0	_ZTIN9__gnu_cxx24__concurrence_lock_errorE	named from library relocation
+000178dc	0	_ZTIN9__gnu_cxx26__concurrence_unlock_errorE	named from library relocation
+000178e8	0	_ZTVN9__gnu_cxx24__concurrence_lock_errorE	named from library relocation
+00017900	0	_ZTVN9__gnu_cxx26__concurrence_unlock_errorE	named from library relocation
 00017968	0	_ZTVSt12future_error	named from library relocation
 00017980	0	_ZTISt12future_error	named from library relocation
+000179c4	0	_ZTIN9__gnu_cxx29__concurrence_broadcast_errorE	named from library relocation
 000179d0	0	_ZTIN9__gnu_cxx24__concurrence_wait_errorE	named from library relocation
+000179e0	0	_ZTVN9__gnu_cxx29__concurrence_broadcast_errorE	named from library relocation
 000179f8	0	_ZTVN9__gnu_cxx24__concurrence_wait_errorE	named from library relocation
+00017b84	0	_ZTISt12out_of_range	named from library relocation
+00017ba8	0	_ZTISt12length_error	named from library relocation
 00017c40	0	_ZTINSt8ios_base7failureE	named from library relocation
 00017c4c	0	_ZTISt11regex_error	named from library relocation
 00017c80	0	_ZTVSt12system_error	named from library relocation

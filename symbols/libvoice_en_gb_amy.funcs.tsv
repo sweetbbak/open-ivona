@@ -1803,7 +1803,7 @@ addr	size	mode	name	status	src	score	note
 000fb5d0	5c	arm	FUN_000fb5d0	todo			
 000fb62c	54	arm	FUN_000fb62c	todo			
 000fb680	44	arm	__aeabi_ldivmod	lib	lib:libgcc-thumb:_aeabi_ldivmod.o	100	
-000fb6c4	10	arm	__aeabi_ldiv0	todo			
+000fb6c4	10	arm	__aeabi_ldiv0	lib	lib:libgcc-thumb:_dvmd_lnx.o	100	
 000fb6d4	3c	arm	__gnu_ldivmod_helper	lib	lib:libgcc:bpabi.o	100	
 000fb710	3c	arm	__gnu_uldivmod_helper	lib	lib:libgcc:bpabi.o	100	
 000fb74c	18	arm	selfrel_offset31	lib	lib:libgcc:unwind-arm.o	100	
@@ -1828,17 +1828,17 @@ addr	size	mode	name	status	src	score	note
 000fbde4	2c	arm	_Unwind_SetGR	lib	lib:libgcc:unwind-arm.o	100	
 000fbe10	c4	arm	__gnu_Unwind_Backtrace	lib	lib:libgcc:unwind-arm.o	100	
 000fbed4	3f4	arm	__gnu_unwind_pr_common	lib	lib:libgcc:unwind-arm.o	100	
-000fc2c8	8	arm	__aeabi_unwind_cpp_pr0	todo			
-000fc2d0	8	arm	__aeabi_unwind_cpp_pr1	todo			
-000fc2d8	8	arm	__aeabi_unwind_cpp_pr2	todo			
+000fc2c8	8	arm	__aeabi_unwind_cpp_pr0	lib	lib:libgcc:unwind-arm.o	100	
+000fc2d0	8	arm	__aeabi_unwind_cpp_pr1	lib	lib:libgcc:unwind-arm.o	100	
+000fc2d8	8	arm	__aeabi_unwind_cpp_pr2	lib	lib:libgcc:unwind-arm.o	100	
 000fc2e0	358	arm	_Unwind_VRS_Pop	lib	lib:libgcc:unwind-arm.o	100	
-000fc638	14	arm	restore_core_regs	todo			
-000fc64c	8	arm	__gnu_Unwind_Restore_VFP	todo			
-000fc654	8	arm	__gnu_Unwind_Save_VFP	todo			
-000fc65c	8	arm	__gnu_Unwind_Restore_VFP_D	todo			
-000fc664	8	arm	__gnu_Unwind_Save_VFP_D	todo			
-000fc66c	8	arm	__gnu_Unwind_Restore_VFP_D_16_to_31	todo			
-000fc674	8	arm	__gnu_Unwind_Save_VFP_D_16_to_31	todo			
+000fc638	14	arm	restore_core_regs	lib	lib:libgcc-thumb:libunwind.o	100	
+000fc64c	8	arm	__gnu_Unwind_Restore_VFP	lib	lib:libgcc-thumb:libunwind.o	100	
+000fc654	8	arm	__gnu_Unwind_Save_VFP	lib	lib:libgcc-thumb:libunwind.o	100	
+000fc65c	8	arm	__gnu_Unwind_Restore_VFP_D	lib	lib:libgcc-thumb:libunwind.o	100	
+000fc664	8	arm	__gnu_Unwind_Save_VFP_D	lib	lib:libgcc-thumb:libunwind.o	100	
+000fc66c	8	arm	__gnu_Unwind_Restore_VFP_D_16_to_31	lib	lib:libgcc-thumb:libunwind.o	100	
+000fc674	8	arm	__gnu_Unwind_Save_VFP_D_16_to_31	lib	lib:libgcc-thumb:libunwind.o	100	
 000fc67c	44	arm	__gnu_Unwind_Restore_WMMXD	lib	lib:libgcc-thumb:libunwind.o	100	
 000fc6c0	44	arm	__gnu_Unwind_Save_WMMXD	lib	lib:libgcc-thumb:libunwind.o	100	
 000fc704	14	arm	__gnu_Unwind_Restore_WMMXC	lib	lib:libgcc-thumb:libunwind.o	100	

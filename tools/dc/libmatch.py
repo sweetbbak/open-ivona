@@ -79,12 +79,17 @@ def libmatch(stem: str, libs: dict[str, str], verbose: bool = False) -> None:
     proposal: dict[int, tuple] = {}
     for addr, hs in hits.items():
         names = {h[2] for h in hs}
-        if len(names) != 1:
-            if verbose:
-                print(f"ambiguous {addr:#x}: {sorted(names)}")
-            continue
-        h = hs[0]
         f = funcs[addr]
+        if len(names) != 1:
+            # identical code under several names (e.g. destructors): the target's own (exported)
+            # name decides; otherwise the hit stays ambiguous
+            if f.name in names:
+                hs = [h for h in hs if h[2] == f.name]
+            else:
+                if verbose:
+                    print(f"ambiguous {addr:#x}: {sorted(names)}")
+                continue
+        h = hs[0]
         if f.status in ("matched",) or (h[2] in taken and f.name != h[2]):
             continue
         proposal[addr] = h
