@@ -15,4 +15,6 @@ flags:
   c: [-std=gnu99]
   cxx: [-fno-exceptions, -fno-rtti, -I/opt/gnustl/include, -I/opt/gnustl/libs/armeabi/include]
 # Per-translation-unit overrides:  src/libtiver/foo.c: {mode: arm, add: [-O3], remove: [-O2]}
-units: {}
+units:
+  # -O3: stack slot layout of cst_wave_load_riff_fd only matches at -O3
+  src/libttsivonavoice/flite/cst_wave_io.c: {add: [-O3], remove: [-O2]}

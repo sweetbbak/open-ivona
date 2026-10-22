@@ -1043,21 +1043,21 @@ addr	size	mode	name	status	src	score	note
 0004e6f0	24	arm	new_wave	matched	src/libttsivonavoice/flite/cst_wave.c	100	flite order 100%
 0004e714	20	arm	delete_wave	matched	src/libttsivonavoice/flite/cst_wave.c	100	flite order 100%
 0004e734	4	arm	val_delete_wave	matched	src/libttsivonavoice/flite/cst_wave.c	100	flite order 100%
-0004e738	70	arm	cst_wave_resize	wip	src/libttsivonavoice/flite/cst_wave.c	84.4	flite (callee of a located function)
+0004e738	70	arm	cst_wave_resize	matched	src/libttsivonavoice/flite/cst_wave.c	100	flite (callee of a located function)
 0004e7a8	40	arm	FUN_0004e7a8	todo			
-0004e7e8	11c	arm	cst_wave_resample	wip	src/libttsivonavoice/flite/cst_wave_io.c	88.5	flite order 81%
+0004e7e8	11c	arm	cst_wave_resample	matched	src/libttsivonavoice/flite/cst_wave_io.c	100	flite order 81%
 0004e904	50	arm	copy_wave	matched	src/libttsivonavoice/flite/cst_wave.c	100	flite calls(2) 95%
-0004e954	74	arm	concat_wave	wip	src/libttsivonavoice/flite/cst_wave.c	67.5	flite order 68%
+0004e954	74	arm	concat_wave	matched	src/libttsivonavoice/flite/cst_wave.c	100	flite order 68%
 0004e9c8	44	arm	FUN_0004e9c8	todo			
-0004ea0c	42c	arm	cst_wave_save_raw_fd	wip	src/libttsivonavoice/flite/cst_wave_io.c	0.4	flite (callee of a located function)
-0004ee38	5c	arm	cst_wave_save_raw	wip	src/libttsivonavoice/flite/cst_wave_io.c	95.7	flite order 91%
-0004ee94	5c	arm	cst_wave_save_riff	wip	src/libttsivonavoice/flite/cst_wave_io.c	91.3	flite order 91%
-0004eef0	40	arm	cst_wave_save	wip	src/libttsivonavoice/flite/cst_wave_io.c	12.1	flite strings(1) 12%
+0004ea0c	42c	arm	cst_wave_save_riff_fd	wip	src/libttsivonavoice/flite/cst_wave_io.c	69.1	flite (callee of a located function)
+0004ee38	5c	arm	cst_wave_save_raw	matched	src/libttsivonavoice/flite/cst_wave_io.c	100	flite order 91%
+0004ee94	5c	arm	cst_wave_save_riff	matched	src/libttsivonavoice/flite/cst_wave_io.c	100	flite order 91%
+0004eef0	40	arm	cst_wave_save	matched	src/libttsivonavoice/flite/cst_wave_io.c	100	flite strings(1) 12%
 0004ef30	c8	arm	cst_wave_load_raw_fd	matched	src/libttsivonavoice/flite/cst_wave_io.c	100	flite calls(5) 96%
-0004eff8	6c	arm	cst_wave_load_raw	wip	src/libttsivonavoice/flite/cst_wave_io.c	96.3	flite order 93%
-0004f064	130	arm	cst_wave_load_riff_fd	wip	src/libttsivonavoice/flite/cst_wave_io.c	0.5	flite strings(1) 1%
-0004f194	534	arm	FUN_0004f194	todo			
-0004f6c8	5c	arm	cst_wave_load_riff	wip	src/libttsivonavoice/flite/cst_wave_io.c	91.3	flite order 91%
+0004eff8	6c	arm	cst_wave_load_raw	matched	src/libttsivonavoice/flite/cst_wave_io.c	100	flite order 93%
+0004f064	130	arm	riff_chunk_skippable	matched	src/libttsivonavoice/flite/cst_wave_io.c	100	flite strings(1) 1%
+0004f194	534	arm	cst_wave_load_riff_fd	matched	src/libttsivonavoice/flite/cst_wave_io.c	100	
+0004f6c8	5c	arm	cst_wave_load_riff	matched	src/libttsivonavoice/flite/cst_wave_io.c	100	flite order 91%
 0004f724	70	arm	cst_rateconv_in	matched	src/libttsivonavoice/flite/rateconv.c	100	flite order 100%
 0004f794	4a8	arm	cst_rateconv_out	matched	src/libttsivonavoice/flite/rateconv.c	100	flite strings(1) 100%
 0004fc3c	2c	arm	cst_rateconv_leadout	matched	src/libttsivonavoice/flite/rateconv.c	100	flite order 100%

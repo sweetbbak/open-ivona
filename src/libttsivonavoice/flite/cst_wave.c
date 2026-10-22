@@ -1,4 +1,5 @@
-/* Imported from CMU Flite 1.4 src/speech/cst_wave.c by `dc flite import`; functions with an address comment
+/* IVONA: error messages removed (checks still exit via cst_error()).
+ * Imported from CMU Flite 1.4 src/speech/cst_wave.c by `dc flite import`; functions with an address comment
  * are present in the engine (unmodified ones match as-is, others carry IVONA's changes). */
 /*************************************************************************/
 /*                                                                       */
@@ -73,7 +74,6 @@ void cst_wave_resize(cst_wave *w,int samples, int num_channels)
 
     if (!w)
     {
-	cst_errmsg("cst_wave_resize: null wave given to resize\n");
 	cst_error();
     }
     ns = cst_alloc(short,samples*num_channels);
@@ -117,14 +117,10 @@ cst_wave *concat_wave(cst_wave *dest, const cst_wave *src)
 
     if (dest->num_channels != src->num_channels)
     {
-	cst_errmsg("concat_wave: channel count mismatch (%d != %d)\n",
-		   dest->num_channels, src->num_channels);
 	cst_error();
     }
     if (dest->sample_rate != src->sample_rate)
     {
-	cst_errmsg("concat_wave: sample rate mismatch (%d != %d)\n",
-		   dest->sample_rate, src->sample_rate);
 	cst_error();
     }
 

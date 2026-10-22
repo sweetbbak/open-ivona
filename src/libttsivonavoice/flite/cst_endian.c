@@ -7,5 +7,5 @@ void swap_bytes_short(short *b, int n)
     int i;
 
     for (i = 0; i < n; i++)
-        b[i] = SWAPSHORT(b[i]);
+        b[i] = SWAPSHORT_U(b[i]);
 }

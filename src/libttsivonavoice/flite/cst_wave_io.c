@@ -62,8 +62,6 @@ void cst_wave_resample(cst_wave *w, int sample_rate)
     up = sample_rate / 1000;
 
     if (up < 1 || down < 1) {
-	cst_errmsg("cst_wave_resample: invalid input/output sample rates (%d, %d)\n",
-		   up * 1000, down * 1000);
 	cst_error();
     }
 
@@ -102,20 +100,10 @@ void cst_wave_resample(cst_wave *w, int sample_rate)
 /* 0x4eef0 */
 int cst_wave_save(cst_wave *w,const char *filename,const char *type)
 {
+    /* IVONA: only RIFF is supported */
     if (cst_streq(type,"riff"))
 	return cst_wave_save_riff(w,filename);
-/*    else if (cst_streq(type,"aiff"))
-	return cst_wave_save_aiff(w,filename);
-    else if (cst_streq(type,"snd"))
-    return cst_wave_save_snd(w,filename); */
-    else if (cst_streq(type,"raw"))
-	return cst_wave_save_raw(w,filename);
-    else
-    {
-	cst_errmsg("cst_wave_save: unsupported wavetype \"%s\"\n",
-		   type);
-	return -1;
-    }
+    return -1;
 }
 
 /* 0x4ee38 */
@@ -126,18 +114,16 @@ int cst_wave_save_raw(cst_wave *w, const char *filename)
 
     if ((fd = cst_fopen(filename,CST_OPEN_WRITE|CST_OPEN_BINARY)) == NULL)
     {
-	cst_errmsg("cst_wave_save: can't open file \"%s\"\n",
-		   filename);
+	cst_errmsg("can't create file \"%s\"\n", filename);
 	return -1;
     }
 
-    rv = cst_wave_save_raw_fd(w, fd);
+    rv = cst_wave_save_riff_fd(w, fd);  /* IVONA: "raw" files are written as RIFF too */
     cst_fclose(fd);
 
     return rv;
 }
 
-/* 0x4ea0c */
 int cst_wave_save_raw_fd(cst_wave *w, cst_file fd)
 {
     if (cst_fwrite(fd, cst_wave_samples(w),
@@ -228,8 +214,7 @@ int cst_wave_save_riff(cst_wave *w,const char *filename)
 
     if ((fd = cst_fopen(filename,CST_OPEN_WRITE|CST_OPEN_BINARY)) == NULL)
     {
-	cst_errmsg("cst_wave_save: can't open file \"%s\"\n",
-		   filename);
+	cst_errmsg("can't create file \"%s\"\n", filename);
 	return -1;
     }
 
@@ -239,6 +224,7 @@ int cst_wave_save_riff(cst_wave *w,const char *filename)
     return rv;
 }
 
+/* 0x4ea0c */
 int cst_wave_save_riff_fd(cst_wave *w, cst_file fd)
 {
     char *info;
@@ -325,8 +311,7 @@ int cst_wave_load_raw(cst_wave *w,const char *filename,
 
     if ((fd = cst_fopen(filename,CST_OPEN_READ|CST_OPEN_BINARY)) == NULL)
     {
-	cst_errmsg("cst_wave_load: can't open file \"%s\"\n",
-		   filename);
+	cst_errmsg("can't open file \"%s\"\n", filename);
 	return -1;
     }
 
@@ -366,8 +351,7 @@ int cst_wave_load_riff(cst_wave *w,const char *filename)
 
     if ((fd = cst_fopen(filename,CST_OPEN_READ|CST_OPEN_BINARY)) == NULL)
     {
-	cst_errmsg("cst_wave_load: can't open file \"%s\"\n",
-		   filename);
+	cst_errmsg("can't open file \"%s\"\n", filename);
 	return -1;
     }
 
@@ -378,117 +362,96 @@ int cst_wave_load_riff(cst_wave *w,const char *filename)
     return r;
 }
 
-int cst_wave_load_riff_header(cst_wave_header *header,cst_file fd)
+/* 0x4f064: IVONA: RIFF chunks that are skipped while looking for "data" */
+int riff_chunk_skippable(const char *info)
+{
+    return strncmp(info, "fact", 4) == 0 || strncmp(info, "LIST", 4) == 0
+        || strncmp(info, "CSET", 4) == 0 || strncmp(info, "INFO", 4) == 0
+        || strncmp(info, "JUNK", 4) == 0 || strncmp(info, "cue ", 4) == 0
+        || strncmp(info, "labl", 4) == 0 || strncmp(info, "note", 4) == 0
+        || strncmp(info, "ltxt", 4) == 0;
+}
+
+/* 0x4f/* 0x4f194: IVONA: header parsed inline; 16-bit PCM mono only.
+ */
+int cst_wave_load_riff_fd(cst_wave *w,cst_file fd)
 {
     char info[4];
     short d_short;
-    int d_int;
+    int d_int, d;
+    int hsize;
+    int data_length;
+    int samples;
 
     if (cst_fread(fd,info,1,4) != 4)
-	return CST_WRONG_FORMAT;
+        return CST_WRONG_FORMAT;
     else if (strncmp(info,"RIFF",4) != 0)
-	return CST_WRONG_FORMAT;
-	
+        return CST_WRONG_FORMAT;
     cst_fread(fd,&d_int,4,1);
-    if (CST_BIG_ENDIAN) d_int = SWAPINT(d_int);
-    header->num_bytes = d_int;
-    
-    if ((cst_fread(fd,info,1,4) != 4) ||
-	(strncmp(info,"WAVE",4) != 0))
-	return CST_ERROR_FORMAT;
+    if (CST_BIG_ENDIAN) d_int = SWAPINT(d_int);   /* num_bytes, unused */
 
-    if ((cst_fread(fd,info,1,4) != 4) ||
-	(strncmp(info,"fmt ",4) != 0))
-	return CST_ERROR_FORMAT;
+    if ((cst_fread(fd,info,1,4) != 4) || (strncmp(info,"WAVE",4) != 0))
+        return CST_ERROR_FORMAT;
+    if ((cst_fread(fd,info,1,4) != 4) || (strncmp(info,"fmt ",4) != 0))
+        return CST_ERROR_FORMAT;
 
     cst_fread(fd,&d_int,4,1);
     if (CST_BIG_ENDIAN) d_int = SWAPINT(d_int);
-    header->hsize = d_int;
+    hsize = d_int;
     cst_fread(fd,&d_short,2,1);
-    if (CST_BIG_ENDIAN) d_short = SWAPSHORT(d_short);
-
+    if (CST_BIG_ENDIAN) d_short = SWAPSHORT_U(d_short);
     if (d_short != RIFF_FORMAT_PCM)
     {
-	cst_errmsg("cst_load_wave_riff: unsupported sample format\n");
-	return CST_ERROR_FORMAT;
+        cst_errmsg("load_wave: unsupported sample format\n");
+        return CST_ERROR_FORMAT;
     }
     cst_fread(fd,&d_short,2,1);
-    if (CST_BIG_ENDIAN) d_short = SWAPSHORT(d_short);
-
-    header->num_channels = d_short;
-
+    if (CST_BIG_ENDIAN) d_short = SWAPSHORT_U(d_short);
+    if (d_short != 1)
+    {
+        cst_errmsg("load_wave: can onlly support mono\n");
+        return CST_ERROR_FORMAT;
+    }
     cst_fread(fd,&d_int,4,1);
     if (CST_BIG_ENDIAN) d_int = SWAPINT(d_int);
-    header->sample_rate = d_int;
+    cst_wave_set_sample_rate(w,d_int);
     cst_fread(fd,&d_int,4,1);              /* avg bytes per second */
     cst_fread(fd,&d_short,2,1);            /* block align */
     cst_fread(fd,&d_short,2,1);            /* bits per sample */
 
-    return CST_OK_FORMAT;
-}
+    cst_fseek(fd,cst_ftell(fd)+(hsize-16),CST_SEEK_ABSOLUTE); /* skip rest of header */
 
-/* 0x4f064 */
-int cst_wave_load_riff_fd(cst_wave *w,cst_file fd)
-{
-    cst_wave_header hdr;
-    int rv;
-    char info[4];
-    int d_int, d;
-    int data_length;
-    int samples;
-
-    rv = cst_wave_load_riff_header(&hdr,fd);
-    if (rv != CST_OK_FORMAT)
-	return rv;
-	
-    cst_fseek(fd,cst_ftell(fd)+(hdr.hsize-16),CST_SEEK_ABSOLUTE); /* skip rest of header */
-
-    /* Note there's a bunch of potential random headers */
     while (1)
     {
-	if (cst_fread(fd,info,1,4) != 4)
-	    return CST_ERROR_FORMAT;
-	if (strncmp(info,"data",4) == 0)
-	{
-	    cst_fread(fd,&d_int,4,1);
-	    if (CST_BIG_ENDIAN) d_int = SWAPINT(d_int);
-	    samples = d_int/sizeof(short);
-	    break;
-	}
-	else if (strncmp(info,"fact",4) == 0)
-	{   
-	    cst_fread(fd,&d_int,4,1);
-	    if (CST_BIG_ENDIAN) d_int = SWAPINT(d_int);
-	    cst_fseek(fd,cst_ftell(fd)+d_int,CST_SEEK_ABSOLUTE);
-	}
-	else if (strncmp(info,"clm ",4) == 0)
-	{   /* another random chunk type -- resample puts this one in */
-	    cst_fread(fd,&d_int,4,1);
-	    if (CST_BIG_ENDIAN) d_int = SWAPINT(d_int);
-	    cst_fseek(fd,cst_ftell(fd)+d_int,CST_SEEK_ABSOLUTE);
-	}
-	else 
-	{
-	    cst_errmsg("cst_wave_load_riff: unsupported chunk type \"%*s\"\n",
-		       4,info);
-	    return CST_ERROR_FORMAT;
-	}
+        if (cst_fread(fd,info,1,4) != 4)
+            return CST_ERROR_FORMAT;
+        if (strncmp(info,"data",4) == 0)
+        {
+            cst_fread(fd,&d_int,4,1);
+            if (CST_BIG_ENDIAN) d_int = SWAPINT(d_int);
+            samples = d_int/sizeof(short);
+            break;
+        }
+        else if (riff_chunk_skippable(info))
+        {
+            cst_fread(fd,&d_int,4,1);
+            if (CST_BIG_ENDIAN) d_int = SWAPINT(d_int);
+            cst_fseek(fd,cst_ftell(fd)+d_int,CST_SEEK_ABSOLUTE);
+        }
+        else
+        {
+            cst_errmsg("load_wave: unsupported chunk type \"%*s\"\n", 4,info);
+            return CST_ERROR_FORMAT;
+        }
     }
 
-    /* Now read the data itself */
-    cst_wave_set_sample_rate(w,hdr.sample_rate);     /* sample rate */
     data_length = samples;
-    cst_wave_resize(w,samples/hdr.num_channels,hdr.num_channels);
-
+    cst_wave_resize(w,samples,1);
     if ((d = cst_fread(fd,w->samples,sizeof(short),data_length)) != data_length)
-    {
-	cst_errmsg("cst_wave_load_riff: %d missing samples, resized accordingly\n",
-		   data_length-d);
-	w->num_samples = d;
-    }
+        w->num_samples = d;
 
     if (CST_BIG_ENDIAN)
-	swap_bytes_short(w->samples,w->num_samples);
+        swap_bytes_short(w->samples,w->num_samples);
 
     return CST_OK_FORMAT;
 }

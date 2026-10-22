@@ -59,8 +59,10 @@ extern const int cst_endian_loc;
         (((unsigned long)x) & 0xff00) << 8 | \
 	(((unsigned long)x) & 0xff0000) >> 8 | \
         (((unsigned long)x) & 0xff000000) >> 24)
-/* IVONA: swaps in unsigned int arithmetic (affects ARM operand order) */
-#define SWAPSHORT(x) ((short)((((unsigned int)(unsigned short)(x)) << 8) | \
+#define SWAPSHORT(x) ((((unsigned short)x) & 0xff) << 8 | \
+        (((unsigned short)x) & 0xff00) >> 8)
+/* IVONA's own code swaps in unsigned int arithmetic (different ARM operand order) */
+#define SWAPSHORT_U(x) ((short)((((unsigned int)(unsigned short)(x)) << 8) | \
         (((unsigned int)(unsigned short)(x)) >> 8)))
 
 void swap_bytes_short(short * b,int n);
