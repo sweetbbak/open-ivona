@@ -70,6 +70,9 @@ int get_param_int(const cst_features *f, const char *name,int def);
 float get_param_float(const cst_features *f, const char *name, float def);
 const char *get_param_string(const cst_features *f, const char *name, const char *def);
 const cst_val *get_param_val(const cst_features *f, const char *name, cst_val *def);
+/* IVONA */
+cst_features *feat_features(const cst_features *f, const char *name);
+cst_features *get_param_features(const cst_features *f, const char *name, cst_features *def);
 
 /* Setting functions */
 void feat_set_int(cst_features *f, const char *name, int v);

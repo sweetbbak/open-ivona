@@ -8,6 +8,7 @@
 #include <pthread.h>
 #include "cst_alloc.h"
 #include "cst_features.h"
+#include "cst_utterance.h"
 #include "tts_internal.h"
 #include "ivona_vector.h"
 
@@ -84,6 +85,33 @@ void FUN_000452dc(void *buf);
 const char *FUN_0004524c(void *buf);
 void FUN_0004520c(void *buf);
 void *FUN_000405ac(void *dl, const char *symbol);
+
+typedef union tts_metric_value {
+    int i;
+    float f;
+} tts_metric_value;
+
+/* a "metric" val: a value or a function computing it from the metrics set */
+typedef struct tts_metric_def {
+    int type;      /* 0: int, 1: float */
+    int kind;      /* 0 or 1 */
+    union {
+        int i;
+        float f;
+        int (*ifn)(const cst_features *metrics);
+        float (*ffn)(const cst_features *metrics);
+    } v;
+    int is_func;
+} tts_metric_def;
+
+typedef struct tts_metric {
+    const char *name;
+    int type;
+    tts_metric_value value;
+    int kind;
+} tts_metric;
+
+const tts_metric_def *val_metric(const cst_val *v);
 
 /* 0x3a188 */
 static void lang_cache_free(void *data)
@@ -564,5 +592,108 @@ int tts_unload_all_languages(tts_instance *tts)
         if (rv != 1)
             return rv;
     }
+    return 1;
+}
+
+/* 0x3b1ec */
+cst_features *tts_streamer_get_metrics(tts_streamer *st)
+{
+    struct { char pad[0xc]; cst_utterance *utt; char pad2[0x34]; cst_features *metrics; } *d;
+
+    if (st == NULL) {
+        tts_set_error(TTS_STATUS_INVALID_ARGUMENT);
+        return NULL;
+    }
+    d = st->data;
+    if (d == NULL)
+        return NULL;
+    if (d->metrics)
+        return d->metrics;
+    if (d->utt == NULL)
+        return NULL;
+    return get_param_features(d->utt->features, "core_metrics", NULL);
+}
+
+/* fill one output record from a metric definition */
+#define METRIC_FILL(out, m, metrics) do {                                           \
+        switch ((m)->type) {                                                        \
+        case 0:                                                                     \
+            (out)->type = 0;                                                        \
+            if ((m)->is_func)                                                       \
+                (out)->value.i = (m)->v.ifn(metrics);                               \
+            else                                                                    \
+                (out)->value.i = (m)->v.i;                                          \
+            break;                                                                  \
+        case 1:                                                                     \
+            (out)->type = 1;                                                        \
+            if ((m)->is_func)                                                       \
+                (out)->value.f = (m)->v.ffn(metrics);                               \
+            else                                                                    \
+                (out)->value.f = (m)->v.f;                                          \
+            break;                                                                  \
+        }                                                                           \
+        switch ((m)->kind) {                                                        \
+        case 0:                                                                     \
+            (out)->kind = 0;                                                        \
+            break;                                                                  \
+        case 1:                                                                     \
+            (out)->kind = 1;                                                        \
+            break;                                                                  \
+        }                                                                           \
+    } while (0)
+
+/* 0x3b254 */
+int tts_metrics_get_all(const cst_features *metrics, tts_metric *out, unsigned int max)
+{
+    const cst_featvalpair *p;
+    const tts_metric_def *m;
+    unsigned int n;
+
+    if (metrics == NULL)
+        return 0;
+    if (out == NULL) {
+        tts_set_error(TTS_STATUS_INVALID_ARGUMENT);
+        return 0;
+    }
+    p = metrics->head;
+    if (p == NULL || max == 0)
+        return 0;
+    for (n = 0; p && n < max; p = p->next, n++) {
+        m = val_metric(p->val);
+        out[n].name = p->name;
+        METRIC_FILL(&out[n], m, metrics);
+    }
+    return n;
+}
+
+/* 0x3b37c */
+int tts_metrics_get_size(const cst_features *metrics)
+{
+    const cst_featvalpair *p;
+    int n;
+
+    if (metrics == NULL)
+        return 0;
+    for (n = 0, p = metrics->head; p; p = p->next)
+        n++;
+    return n;
+}
+
+/* 0x3b3b0 */
+int tts_metrics_get(const cst_features *metrics, tts_metric *out, const char *name)
+{
+    const tts_metric_def *m;
+
+    if (metrics == NULL)
+        return 0;
+    if (name == NULL || out == NULL) {
+        tts_set_error(TTS_STATUS_INVALID_ARGUMENT);
+        return 0;
+    }
+    if (!feat_present(metrics, name))
+        return 0;
+    m = val_metric(feat_val(metrics, name));
+    out->name = name;
+    METRIC_FILL(out, m, metrics);
     return 1;
 }

@@ -720,10 +720,10 @@ addr	size	mode	name	status	src	score	note
 0003af60	1d8	arm	tts_load_language	wip	src/libttsivonavoice/tts_api.c	82.2	
 0003b138	48	arm	tts_unload_language	matched	src/libttsivonavoice/tts_api.c	100	
 0003b180	6c	arm	tts_unload_all_languages	wip	src/libttsivonavoice/tts_api.c	73.3	
-0003b1ec	68	arm	tts_streamer_get_metrics	todo			
-0003b254	128	arm	tts_metrics_get_all	todo			
-0003b37c	34	arm	tts_metrics_get_size	todo			
-0003b3b0	100	arm	tts_metrics_get	todo			
+0003b1ec	68	arm	tts_streamer_get_metrics	wip	src/libttsivonavoice/tts_api.c	42.3	
+0003b254	128	arm	tts_metrics_get_all	wip	src/libttsivonavoice/tts_api.c	57.0	
+0003b37c	34	arm	tts_metrics_get_size	matched	src/libttsivonavoice/tts_api.c	100	
+0003b3b0	100	arm	tts_metrics_get	matched	src/libttsivonavoice/tts_api.c	100	
 0003b4b0	508	arm	FUN_0003b4b0	todo			
 0003b9b8	51c	arm	FUN_0003b9b8	todo			
 0003bed4	c8	arm	FUN_0003bed4	todo			
@@ -1371,7 +1371,7 @@ addr	size	mode	name	status	src	score	note
 00056ad0	78	arm	FUN_00056ad0	todo			
 00056b48	b8	arm	FUN_00056b48	todo			
 00056c00	ac	arm	FUN_00056c00	todo			
-00056cac	58	arm	FUN_00056cac	todo			
+00056cac	58	arm	val_metric	todo			
 00056d04	4	arm	FUN_00056d04	todo			
 00056d08	18	arm	FUN_00056d08	todo			
 00056d20	284	arm	FUN_00056d20	todo			
