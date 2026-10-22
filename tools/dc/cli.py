@@ -11,6 +11,8 @@
   dc data ADDR NAME [SIZE]   name a data address (used to verify GOT/GOTOFF/PC-relative refs)
   dc dump ADDR N FIELDS emit C initializers for N structs (fields: s,p,i,u,h,H,b,B,f)
   dc libmatch           find + verify statically linked NDK library functions (libgcc, gnustl, crt)
+  dc flite build|locate|all [--apply]   compile Flite 1.4 and locate it in the engine
+  dc flite import hrg/cst_item.c ...      copy Flite sources in with address comments
   dc selftest           link sample code with gold and verify the matcher end to end
 
 Global option: -b/--bin STEM (default from config/project.yaml).
@@ -379,6 +381,22 @@ def cmd_libmatch(a):
     libmatch(a.bin, project_cfg()["libraries"], a.verbose)
 
 
+def cmd_flite(a):
+    from . import flite
+    b = Binary(a.bin)
+    if a.action in ("build", "all"):
+        res = flite.build_all(b)
+        bad = {k: v for k, v in res.items() if v}
+        print(f"compiled {len(res) - len(bad)}/{len(res)} Flite files")
+        for k, v in bad.items():
+            print(f"{YELLOW}{k}: {v.strip().splitlines()[0] if v.strip() else 'failed'}{RESET}")
+    if a.action in ("locate", "all"):
+        flite.locate(a.bin, apply=a.apply, verbose=a.verbose)
+    if a.action == "import":
+        for rel in a.files:
+            flite.import_file(a.bin, rel)
+
+
 def cmd_selftest(a):
     sys.path.insert(0, path("tests"))
     import selftest
@@ -409,6 +427,10 @@ def main(argv=None):
     s = sub.add_parser("data"); s.add_argument("addr"); s.add_argument("name"); s.add_argument("size", nargs="?")
     s.set_defaults(fn=cmd_data)
     s = sub.add_parser("selftest"); s.set_defaults(fn=cmd_selftest)
+    s = sub.add_parser("flite"); s.add_argument("action", choices=["build", "locate", "all", "import"])
+    s.add_argument("files", nargs="*", help="Flite source files (relative to src/) for `import`")
+    s.add_argument("--apply", action="store_true", help="name located functions in the table")
+    s.add_argument("-v", "--verbose", action="store_true"); s.set_defaults(fn=cmd_flite)
     s = sub.add_parser("libmatch"); s.add_argument("-v", "--verbose", action="store_true")
     s.set_defaults(fn=cmd_libmatch)
     s = sub.add_parser("dump"); s.add_argument("addr"); s.add_argument("count", type=int)
