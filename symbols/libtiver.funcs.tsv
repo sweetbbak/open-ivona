@@ -137,7 +137,8 @@ addr	size	mode	name	status	src	score	note
 00006028	20	thumb	FUN_00006028	todo			
 00006048	54	thumb	_ZNSs4_Rep8_M_cloneERKSaIcEj	lib	lib:gnustl-thumb:string-inst.o	100	
 0000609c	50	thumb	_ZNSs7reserveEj	todo			
-000060ec	24	thumb	FUN_000060ec	todo			
+000060ec	18	thumb	FUN_000060ec	todo			
+00006104	c	thumb	FUN_00006104	todo			
 00006110	7c	thumb	_ZNSs6appendERKSs	lib	lib:gnustl-thumb:string-inst.o	100	
 0000618c	8	thumb	FUN_0000618c	todo			
 00006194	a0	thumb	_ZNSs6appendERKSsjj	lib	lib:gnustl-thumb:string-inst.o	100	
@@ -149,7 +150,8 @@ addr	size	mode	name	status	src	score	note
 00006320	88	thumb	_ZNSs6appendEjc	lib	lib:gnustl-thumb:string-inst.o	100	
 000063a8	38	thumb	_ZNSs6resizeEjc	lib	lib:gnustl-thumb:string-inst.o	100	
 000063e0	c	thumb	FUN_000063e0	todo			
-000063ec	9c	thumb	FUN_000063ec	todo			
+000063ec	4c	thumb	FUN_000063ec	todo			
+00006438	50	thumb	FUN_00006438	todo			
 00006488	30	thumb	FUN_00006488	todo			
 000064b8	3c	thumb	FUN_000064b8	todo			
 000064f4	64	thumb	FUN_000064f4	todo			
@@ -344,7 +346,8 @@ addr	size	mode	name	status	src	score	note
 00008dd8	1c	thumb	FUN_00008dd8	todo			
 00008df4	18	thumb	_ZNSt11regex_errorD1Ev	todo			
 00008e0c	20	thumb	FUN_00008e0c	todo			
-00008e2c	70	thumb	_ZNSt11regex_errorC1ENSt15regex_constants10error_typeE	todo			
+00008e2c	56	thumb	_ZNSt11regex_errorC1ENSt15regex_constants10error_typeE	todo			
+00008e82	1a	thumb	FUN_00008e82	todo			
 00008e9c	c	thumb	_ZNK12_GLOBAL__N_122generic_error_category4nameEv	todo			
 00008ea8	c	thumb	_ZNK12_GLOBAL__N_121system_error_category4nameEv	todo			
 00008eb4	10	thumb	FUN_00008eb4	todo			
@@ -409,38 +412,76 @@ addr	size	mode	name	status	src	score	note
 0000b502	2	thumb	FUN_0000b502	todo			
 0000b504	22	thumb	FUN_0000b504	todo			
 0000b526	34	thumb	FUN_0000b526	todo			
-0000b55a	71a	thumb	FUN_0000b55a	todo			
+0000b55a	72	thumb	FUN_0000b55a	todo			
+0000b5cc	6c	thumb	FUN_0000b5cc	todo			
+0000b638	70	thumb	FUN_0000b638	todo			
+0000b6a8	6c	thumb	FUN_0000b6a8	todo			
+0000b714	7c	thumb	FUN_0000b714	todo			
+0000b790	6c	thumb	FUN_0000b790	todo			
+0000b7fc	6c	thumb	FUN_0000b7fc	todo			
+0000b868	6c	thumb	FUN_0000b868	todo			
+0000b8d4	6c	thumb	FUN_0000b8d4	todo			
+0000b940	6c	thumb	FUN_0000b940	todo			
+0000b9ac	6c	thumb	FUN_0000b9ac	todo			
+0000ba18	6c	thumb	FUN_0000ba18	todo			
+0000ba84	92	thumb	FUN_0000ba84	todo			
+0000bb16	70	thumb	FUN_0000bb16	todo			
+0000bb86	6c	thumb	FUN_0000bb86	todo			
+0000bbf2	72	thumb	FUN_0000bbf2	todo			
+0000bc64	10	thumb	FUN_0000bc64	todo			
 0000bc74	58	thumb	FUN_0000bc74	todo			
 0000bccc	3e	thumb	FUN_0000bccc	todo			
 0000bd0a	7e	thumb	FUN_0000bd0a	todo			
 0000bd88	14	thumb	FUN_0000bd88	todo			
 0000bd9c	46	thumb	FUN_0000bd9c	todo			
 0000bde2	1a	thumb	FUN_0000bde2	todo			
-0000bdfc	1a4	thumb	FUN_0000bdfc	todo			
+0000bdfc	7e	thumb	FUN_0000bdfc	todo			
+0000be7a	36	thumb	FUN_0000be7a	todo			
+0000beb0	5c	thumb	FUN_0000beb0	todo			
+0000bf0c	7a	thumb	FUN_0000bf0c	todo			
+0000bf86	1a	thumb	FUN_0000bf86	todo			
 0000bfa0	3a	thumb	FUN_0000bfa0	todo			
 0000bfda	1e	thumb	FUN_0000bfda	todo			
 0000bff8	a	thumb	FUN_0000bff8	todo			
 0000c002	2a	thumb	FUN_0000c002	todo			
 0000c02c	a	thumb	FUN_0000c02c	todo			
 0000c036	10	thumb	FUN_0000c036	todo			
-0000c046	130	thumb	FUN_0000c046	todo			
+0000c046	80	thumb	FUN_0000c046	todo			
+0000c0c6	7a	thumb	FUN_0000c0c6	todo			
+0000c140	36	thumb	FUN_0000c140	todo			
 0000c176	16	thumb	FUN_0000c176	todo			
-0000c18c	132	thumb	FUN_0000c18c	todo			
-0000c2be	196	thumb	FUN_0000c2be	todo			
+0000c18c	82	thumb	FUN_0000c18c	todo			
+0000c20e	6c	thumb	FUN_0000c20e	todo			
+0000c27a	44	thumb	FUN_0000c27a	todo			
+0000c2be	9c	thumb	FUN_0000c2be	todo			
+0000c35a	6e	thumb	FUN_0000c35a	todo			
+0000c3c8	6c	thumb	FUN_0000c3c8	todo			
+0000c434	20	thumb	FUN_0000c434	todo			
 0000c454	26	thumb	FUN_0000c454	todo			
 0000c47a	3a	thumb	FUN_0000c47a	todo			
-0000c4b4	74	thumb	FUN_0000c4b4	todo			
+0000c4b4	68	thumb	FUN_0000c4b4	todo			
+0000c51c	c	thumb	FUN_0000c51c	todo			
 0000c528	2a	thumb	FUN_0000c528	todo			
 0000c552	10	thumb	FUN_0000c552	todo			
-0000c562	196	thumb	FUN_0000c562	todo			
-0000c6f8	c6	thumb	FUN_0000c6f8	todo			
+0000c562	6a	thumb	FUN_0000c562	todo			
+0000c5cc	70	thumb	FUN_0000c5cc	todo			
+0000c63c	3c	thumb	FUN_0000c63c	todo			
+0000c678	6e	thumb	FUN_0000c678	todo			
+0000c6e6	12	thumb	FUN_0000c6e6	todo			
+0000c6f8	96	thumb	FUN_0000c6f8	todo			
+0000c78e	30	thumb	FUN_0000c78e	todo			
 0000c7be	10	thumb	FUN_0000c7be	todo			
 0000c7ce	3c	thumb	FUN_0000c7ce	todo			
 0000c80a	b4	thumb	FUN_0000c80a	todo			
-0000c8be	b8	thumb	FUN_0000c8be	todo			
+0000c8be	ac	thumb	FUN_0000c8be	todo			
+0000c96a	c	thumb	FUN_0000c96a	todo			
 0000c976	c2	thumb	FUN_0000c976	todo			
 0000ca38	ba	thumb	FUN_0000ca38	todo			
-0000caf2	228	thumb	FUN_0000caf2	todo			
+0000caf2	7c	thumb	FUN_0000caf2	todo			
+0000cb6e	6a	thumb	FUN_0000cb6e	todo			
+0000cbd8	6a	thumb	FUN_0000cbd8	todo			
+0000cc42	6a	thumb	FUN_0000cc42	todo			
+0000ccac	6e	thumb	FUN_0000ccac	todo			
 0000cd1a	12	thumb	FUN_0000cd1a	todo			
 0000cd2c	18	thumb	FUN_0000cd2c	todo			
 0000cd44	10	thumb	FUN_0000cd44	todo			
@@ -512,7 +553,8 @@ addr	size	mode	name	status	src	score	note
 0000d902	28	thumb	FUN_0000d902	todo			
 0000d92a	28	thumb	FUN_0000d92a	todo			
 0000d952	28	thumb	FUN_0000d952	todo			
-0000d97a	182	thumb	FUN_0000d97a	todo			
+0000d97a	8e	thumb	FUN_0000d97a	todo			
+0000da08	f4	thumb	FUN_0000da08	todo			
 0000dafc	28	thumb	FUN_0000dafc	todo			
 0000db24	28	thumb	FUN_0000db24	todo			
 0000db4c	28	thumb	FUN_0000db4c	todo			
@@ -579,7 +621,8 @@ addr	size	mode	name	status	src	score	note
 0000f6e8	14	thumb	__gnu_thumb1_case_uhi	lib	lib:libgcc-thumb:_thumb1_case_uhi.o	100	
 0000f6fc	18	thumb	__gnu_thumb1_case_si	lib	lib:libgcc-thumb:_thumb1_case_si.o	100	
 0000f714	4	thumb	__udivsi3	todo			
-0000f718	7c	thumb	FUN_0000f718	todo			
+0000f718	76	thumb	FUN_0000f718	todo			
+0000f78e	6	thumb	FUN_0000f78e	todo			
 0000f794	14	thumb	__aeabi_uidivmod	lib	lib:libgcc-thumb:_udivsi3.o	100	
 0000f7a8	10	arm	__aeabi_ldiv0	todo			
 0000f7b8	20	thumb	__sync_fetch_and_add_4	lib	lib:libgcc-thumb:linux-atomic.o	100	

@@ -28,39 +28,39 @@ PADDING = {b"\xc0\x46", b"\x00\x00", b"\x00\xbf", b"\x00\x00\xa0\xe1", b"\x00\x0
 
 def _split_after_terminators(b: Binary, entries: dict[int, tuple[str, str]]) -> None:
     """Split spans at code that follows an unconditional transfer and is not a branch/switch
-    target of the span (gold merges identical .ARM.exidx rows, so leaf functions go missing)."""
+    target anywhere in .text (gold merges identical .ARM.exidx rows, so leaf functions go
+    missing). Verified (lib/matched) functions are never split. Splitting does not change how
+    code decodes, so targets are collected once and only the new tail spans are rescanned."""
     text = b.elf.text
     names = {v & ~1: n for n, (v, s, t) in b.elf.dynsyms.items() if t == "STT_FUNC"}
     names.update(b.elf.plt)
+    protected = {f.addr for f in b.funcs if f.status in ("lib", "matched")}
+    starts = sorted(entries)
+    nxt = {a: (starts[i + 1] if i + 1 < len(starts) else text.end) for i, a in enumerate(starts)}
+    spans = {a: disassemble(b.elf.read(a, nxt[a] - a), a, entries[a][0], names.get) for a in starts}
+    targets = set()
+    for items in spans.values():
+        for it in items:
+            if it.branch is not None and it.mnem not in ("bl", "blx"):
+                targets.add(it.branch)
+            targets.update(it.case_targets)
     added = 0
-    work = sorted(entries)
+    work = [(a, spans[a]) for a in starts if a not in protected]
     while work:
-        starts = sorted(entries)
-        nxt = {a: (starts[i + 1] if i + 1 < len(starts) else text.end) for i, a in enumerate(starts)}
-        new = []
-        for a in work:
-            mode = entries[a][0]
-            items = disassemble(b.elf.read(a, nxt[a] - a), a, mode, names.get)
-            targets = set()
-            for it in items:
-                if it.branch is not None and it.mnem not in ("bl", "blx"):
-                    targets.add(it.branch)
-                targets.update(it.case_targets)
-            after_term = False
-            for it in items:
-                if it.kind == "insn" and it.terminator:
-                    after_term = True
-                    continue
-                if not after_term:
-                    continue
-                if it.kind != "insn" or it.raw in PADDING:
-                    continue
-                if it.addr not in targets and it.addr not in entries:
-                    new.append(it.addr)
-                    entries[it.addr] = (mode, f"FUN_{it.addr:08x}")
+        a, items = work.pop()
+        after_term = False
+        for k, it in enumerate(items):
+            if it.kind == "insn" and it.terminator:
+                after_term = True
+                continue
+            if not after_term or it.kind != "insn" or it.raw in PADDING:
+                continue
+            if it.addr not in targets and it.addr not in entries:
+                entries[it.addr] = (entries[a][0], f"FUN_{it.addr:08x}")
+                added += 1
+                work.append((it.addr, items[k:]))  # same decoding, now its own span
                 break
-        added += len(new)
-        work = new
+            after_term = False  # reachable code: keep scanning
     if added:
         print(f"split {added} functions that follow a return inside an existing span")
 
@@ -134,6 +134,8 @@ def split(stem: str, ghidra_json: str | None = None) -> None:
         gfuncs = json.load(fh)
 
     entries: dict[int, tuple[str, str]] = {}  # addr -> (mode, suggested name)
+    for f in b.funcs:  # known entries are kept (they may come from earlier passes or by hand)
+        entries[f.addr] = (f.mode, f.name)
     for g in gfuncs:
         a = g["entry"]
         if text.addr <= a < text.end:
