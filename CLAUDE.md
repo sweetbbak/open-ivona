@@ -49,10 +49,21 @@ Read README.md first. The rules below are what keeps the project deterministic.
   - `cst_safe_alloc(count, size)` replaces the size-only allocator.
   - `cst_error()` is `exit(-1)`.
   - `SWAPSHORT` works in unsigned int.
+  - `typedef unsigned char cst_string;`. It shows in `cst_downcase`'s ctype lookups having no
+    EOF/range checks.
+  - Accessors (`val_int`, `val_car`, …) `cst_error()` silently. Only `val_<usertype>` accessors
+    still print "VAL: tried to access %s in %d type val".
 - **Function order.** Binary order follows source order within a TU. Functions missing from a
   Flite file were removed by `--gc-sections`.
 - **libcurl is statically linked.** Seen as `curl_global_init` and friends near 0x1cb000.
+- **Function names come from address comments.** A `/* 0xADDR ...` comment directly above a
+  definition makes `./dc tu` rename the table entry at ADDR. That lets the table be rebuilt from
+  source after a re-split.
 - **Codegen hints.**
+  - If the binary lays the "else"/"different" case out inline, the source usually tests that
+    case first, e.g. `if (type1 != type2) {...}` in `val_equal`.
+  - A boolean materialized and then reused as NULL usually means the success path is inside the
+    `if` and `return NULL` comes after it (seen in `cst_memdup`).
   - In an if/else chain, block layout follows source order (seen in `feat_print`).
   - A call result consumed after another load means it was a separate statement
     (seen in `feat_copy_into`).

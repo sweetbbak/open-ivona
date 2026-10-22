@@ -3,7 +3,7 @@
 #include <android/log.h>
 #include "cst_error.h"
 
-static int cst_log_level = 2;  /* 0x275248; set but never read in this build */
+static int cst_log_level = 2;  /* .data at 0x275248; set but never read in this build */
 
 /* 0x519f8 */
 int cst_errmsg(const char *fmt, ...)

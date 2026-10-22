@@ -1150,33 +1150,33 @@ addr	size	mode	name	status	src	score	note
 00051e5c	28	arm	feat_set_features	matched	src/libttsivonavoice/flite/cst_features.c	100	
 00051e84	50	arm	feat_copy_into	matched	src/libttsivonavoice/flite/cst_features.c	100	
 00051ed4	110	arm	feat_print	matched	src/libttsivonavoice/flite/cst_features.c	100	
-00051fe4	d0	arm	FUN_00051fe4	todo			
-000520b4	18	arm	FUN_000520b4	todo			
-000520cc	18	arm	FUN_000520cc	todo			
-000520e4	44	arm	FUN_000520e4	todo			
-00052128	4	arm	fgetc	todo			
-0005212c	4	arm	ftell	todo			
-00052130	20	arm	FUN_00052130	todo			
-00052150	30	arm	cst_fprintf	todo			
-00052180	30	arm	FUN_00052180	todo			
-000521b0	4	arm	fclose	todo			
-000521b4	c8	arm	FUN_000521b4	todo			
-0005227c	c	arm	FUN_0005227c	todo			
-00052288	44	arm	FUN_00052288	todo			
-000522cc	1f4	arm	FUN_000522cc	todo			
-000524c0	38	arm	FUN_000524c0	todo			
-000524f8	64	arm	FUN_000524f8	todo			
-0005255c	30	arm	FUN_0005255c	todo			
+00051fe4	d0	arm	cst_fopen	matched	src/libttsivonavoice/flite/cst_file_stdio.c	100	
+000520b4	18	arm	cst_fwrite	matched	src/libttsivonavoice/flite/cst_file_stdio.c	100	
+000520cc	18	arm	cst_fread	matched	src/libttsivonavoice/flite/cst_file_stdio.c	100	
+000520e4	44	arm	cst_filesize	matched	src/libttsivonavoice/flite/cst_file_stdio.c	100	
+00052128	4	arm	cst_fgetc	matched	src/libttsivonavoice/flite/cst_file_stdio.c	100	
+0005212c	4	arm	cst_ftell	matched	src/libttsivonavoice/flite/cst_file_stdio.c	100	
+00052130	20	arm	cst_fseek	matched	src/libttsivonavoice/flite/cst_file_stdio.c	100	
+00052150	30	arm	cst_fprintf	matched	src/libttsivonavoice/flite/cst_file_stdio.c	100	
+00052180	30	arm	cst_sprintf	matched	src/libttsivonavoice/flite/cst_file_stdio.c	100	
+000521b0	4	arm	cst_fclose	matched	src/libttsivonavoice/flite/cst_file_stdio.c	100	
+000521b4	c8	arm	cst_mmap_file_range	matched	src/libttsivonavoice/flite/cst_mmap_posix.c	100	
+0005227c	c	arm	cst_mmap_file	matched	src/libttsivonavoice/flite/cst_mmap_posix.c	100	
+00052288	44	arm	cst_munmap_file	matched	src/libttsivonavoice/flite/cst_mmap_posix.c	100	
+000522cc	1f4	arm	cst_read_whole_file	wip	src/libttsivonavoice/flite/cst_mmap_posix.c	42.4	
+000524c0	38	arm	cst_free_whole_file	matched	src/libttsivonavoice/flite/cst_mmap_posix.c	100	
+000524f8	64	arm	cst_read_part_file	matched	src/libttsivonavoice/flite/cst_mmap_posix.c	100	
+0005255c	30	arm	cst_free_part_file	matched	src/libttsivonavoice/flite/cst_mmap_posix.c	100	
 0005258c	10	arm	FUN_0005258c	todo			
-0005259c	8	arm	FUN_0005259c	todo			
-000525a4	8	arm	cst_atof	todo			
-000525ac	28	arm	FUN_000525ac	todo			
-000525d4	3c	arm	FUN_000525d4	todo			
-00052610	20	arm	cst_strdup	todo			
-00052630	48	arm	FUN_00052630	todo			
-00052678	38	arm	FUN_00052678	todo			
-000526b0	44	arm	FUN_000526b0	todo			
-000526f4	74	arm	FUN_000526f4	todo			
+0005259c	8	arm	cst_strrchr	matched	src/libttsivonavoice/flite/cst_string.c	100	
+000525a4	8	arm	cst_atof	matched	src/libttsivonavoice/flite/cst_string.c	100	
+000525ac	28	arm	cst_strchr	matched	src/libttsivonavoice/flite/cst_string.c	100	
+000525d4	3c	arm	cst_memdup	matched	src/libttsivonavoice/flite/cst_string.c	100	
+00052610	20	arm	cst_strdup	matched	src/libttsivonavoice/flite/cst_string.c	100	
+00052630	48	arm	cst_substr	matched	src/libttsivonavoice/flite/cst_string.c	100	
+00052678	38	arm	cst_strncpy	matched	src/libttsivonavoice/flite/cst_string.c	100	
+000526b0	44	arm	cst_string_before	matched	src/libttsivonavoice/flite/cst_string.c	100	
+000526f4	74	arm	cst_downcase	matched	src/libttsivonavoice/flite/cst_string.c	100	
 00052768	94	arm	FUN_00052768	todo			
 000527fc	28	arm	FUN_000527fc	todo			
 00052824	40	arm	FUN_00052824	todo			

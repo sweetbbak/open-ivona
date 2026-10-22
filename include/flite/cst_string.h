@@ -48,8 +48,9 @@
 #define islower(a) iswlower((wint_t)(a))
 #endif
 
-/* typedef unsigned char cst_string; */
-typedef char cst_string;
+/* IVONA: cst_string is unsigned (ctype lookups in cst_downcase need no EOF/range checks) */
+typedef unsigned char cst_string;
+/* typedef char cst_string; */
 
 double cst_atof(const char *str);
 
