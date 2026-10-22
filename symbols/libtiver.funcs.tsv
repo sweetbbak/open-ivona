@@ -248,26 +248,26 @@ addr	size	mode	name	status	src	score	note
 00007c94	c	thumb	_ZNKSt9bad_alloc4whatEv	lib	lib:gnustl-thumb:bad_alloc.o	100	
 00007ca0	1c	thumb	_ZNSt9bad_allocD2Ev	lib	lib:gnustl-thumb:bad_alloc.o	100	
 00007cbc	14	thumb	_ZNSt9bad_allocD0Ev	lib	lib:gnustl-thumb:bad_alloc.o	100	
-00007cd0	30	thumb	_ZSt21__throw_bad_exceptionv	lib	lib:gnustl-thumb:functexcept.o	100	by object order
-00007d00	30	thumb	_ZSt17__throw_bad_allocv	lib	lib:gnustl-thumb:functexcept.o	100	by object order
-00007d30	30	thumb	_ZSt16__throw_bad_castv	lib	lib:gnustl-thumb:functexcept.o	100	by object order
-00007d60	30	thumb	_ZSt18__throw_bad_typeidv	lib	lib:gnustl-thumb:functexcept.o	100	by object order
+00007cd0	30	thumb	_ZSt21__throw_bad_exceptionv	lib	lib:gnustl-thumb:functexcept.o	100	
+00007d00	30	thumb	_ZSt17__throw_bad_allocv	lib	lib:gnustl-thumb:functexcept.o	100	
+00007d30	30	thumb	_ZSt16__throw_bad_castv	lib	lib:gnustl-thumb:functexcept.o	100	
+00007d60	30	thumb	_ZSt18__throw_bad_typeidv	lib	lib:gnustl-thumb:functexcept.o	100	
 00007d90	5c	thumb	_ZSt19__throw_logic_errorPKc	lib	lib:gnustl-thumb:functexcept.o	100	
-00007dec	5c	thumb	FUN_00007dec	todo			
-00007e48	5c	thumb	FUN_00007e48	todo			
+00007dec	5c	thumb	_ZSt20__throw_domain_errorPKc	lib	lib:gnustl-thumb:functexcept.o	100	by object order
+00007e48	5c	thumb	_ZSt24__throw_invalid_argumentPKc	lib	lib:gnustl-thumb:functexcept.o	100	by object order
 00007ea4	5c	thumb	_ZSt20__throw_length_errorPKc	lib	lib:gnustl-thumb:functexcept.o	100	
 00007f00	5c	thumb	_ZSt20__throw_out_of_rangePKc	lib	lib:gnustl-thumb:functexcept.o	100	
-00007f5c	5c	thumb	_ZSt21__throw_runtime_errorPKc	lib	lib:gnustl-thumb:functexcept.o	100	by object order
-00007fb8	5c	thumb	FUN_00007fb8	todo			
-00008014	5c	thumb	FUN_00008014	todo			
-00008070	5c	thumb	FUN_00008070	todo			
+00007f5c	5c	thumb	_ZSt21__throw_runtime_errorPKc	lib	lib:gnustl-thumb:functexcept.o	100	
+00007fb8	5c	thumb	_ZSt19__throw_range_errorPKc	lib	lib:gnustl-thumb:functexcept.o	100	by object order
+00008014	5c	thumb	_ZSt22__throw_overflow_errorPKc	lib	lib:gnustl-thumb:functexcept.o	100	by object order
+00008070	5c	thumb	_ZSt23__throw_underflow_errorPKc	lib	lib:gnustl-thumb:functexcept.o	100	by object order
 000080cc	50	thumb	_ZSt19__throw_ios_failurePKc	lib	lib:gnustl-thumb:functexcept.o	100	
 0000811c	78	thumb	_ZSt20__throw_system_errori	lib	lib:gnustl-thumb:functexcept.o	100	
 00008194	7c	thumb	_ZSt20__throw_future_errori	lib	lib:gnustl-thumb:functexcept.o	100	
-00008210	30	thumb	FUN_00008210	todo			
+00008210	30	thumb	_ZSt25__throw_bad_function_callv	lib	lib:gnustl-thumb:functexcept.o	100	by object order
 00008240	38	thumb	_ZSt19__throw_regex_errorNSt15regex_constants10error_typeE	lib	lib:gnustl-thumb:functexcept.o	100	
 00008278	c	thumb	FUN_00008278	todo			
-00008284	18	thumb	FUN_00008284	todo			
+00008284	18	thumb	_ZNSt17bad_function_callD1Ev	todo			
 0000829c	20	thumb	FUN_0000829c	todo			
 000082bc	c	thumb	_ZNK12_GLOBAL__N_121future_error_category4nameEv	lib	lib:gnustl-thumb:future.o	100	
 000082c8	18	thumb	_ZN12_GLOBAL__N_121future_error_categoryD1Ev	lib	lib:gnustl-thumb:future.o	100	
@@ -312,31 +312,31 @@ addr	size	mode	name	status	src	score	note
 00008a24	4	thumb	_ZNKSt13runtime_error4whatEv	lib	lib:gnustl-thumb:stdexcept.o	100	
 00008a28	4c	thumb	_ZNSt11logic_errorD2Ev	lib	lib:gnustl-thumb:stdexcept.o	100	
 00008a74	14	thumb	_ZNSt11logic_errorD0Ev	lib	lib:gnustl-thumb:stdexcept.o	100	
-00008a88	18	thumb	FUN_00008a88	todo			
-00008aa0	20	thumb	FUN_00008aa0	todo			
-00008ac0	18	thumb	FUN_00008ac0	todo			
-00008ad8	20	thumb	FUN_00008ad8	todo			
+00008a88	18	thumb	_ZNSt12domain_errorD1Ev	lib	lib:gnustl-thumb:stdexcept.o	100	by object order
+00008aa0	20	thumb	_ZNSt12domain_errorD0Ev	lib	lib:gnustl-thumb:stdexcept.o	100	by object order
+00008ac0	18	thumb	_ZNSt16invalid_argumentD1Ev	lib	lib:gnustl-thumb:stdexcept.o	100	by object order
+00008ad8	20	thumb	_ZNSt16invalid_argumentD0Ev	lib	lib:gnustl-thumb:stdexcept.o	100	by object order
 00008af8	18	thumb	_ZNSt12length_errorD1Ev	lib	lib:gnustl-thumb:stdexcept.o	100	
 00008b10	20	thumb	_ZNSt12length_errorD0Ev	lib	lib:gnustl-thumb:stdexcept.o	100	
 00008b30	18	thumb	_ZNSt12out_of_rangeD1Ev	lib	lib:gnustl-thumb:stdexcept.o	100	
 00008b48	20	thumb	_ZNSt12out_of_rangeD0Ev	lib	lib:gnustl-thumb:stdexcept.o	100	
 00008b68	4c	thumb	_ZNSt13runtime_errorD2Ev	lib	lib:gnustl-thumb:stdexcept.o	100	
 00008bb4	14	thumb	_ZNSt13runtime_errorD0Ev	lib	lib:gnustl-thumb:stdexcept.o	100	
-00008bc8	18	thumb	FUN_00008bc8	todo			
-00008be0	20	thumb	FUN_00008be0	todo			
-00008c00	18	thumb	FUN_00008c00	todo			
-00008c18	20	thumb	FUN_00008c18	todo			
-00008c38	18	thumb	FUN_00008c38	todo			
-00008c50	20	thumb	FUN_00008c50	todo			
+00008bc8	18	thumb	_ZNSt11range_errorD1Ev	lib	lib:gnustl-thumb:stdexcept.o	100	by object order
+00008be0	20	thumb	_ZNSt11range_errorD0Ev	lib	lib:gnustl-thumb:stdexcept.o	100	by object order
+00008c00	18	thumb	_ZNSt14overflow_errorD1Ev	lib	lib:gnustl-thumb:stdexcept.o	100	by object order
+00008c18	20	thumb	_ZNSt14overflow_errorD0Ev	lib	lib:gnustl-thumb:stdexcept.o	100	by object order
+00008c38	18	thumb	_ZNSt15underflow_errorD1Ev	lib	lib:gnustl-thumb:stdexcept.o	100	by object order
+00008c50	20	thumb	_ZNSt15underflow_errorD0Ev	lib	lib:gnustl-thumb:stdexcept.o	100	by object order
 00008c70	24	thumb	_ZNSt11logic_errorC2ERKSs	lib	lib:gnustl-thumb:stdexcept.o	100	
-00008c94	18	thumb	FUN_00008c94	todo			
-00008cac	18	thumb	FUN_00008cac	todo			
+00008c94	18	thumb	_ZNSt12domain_errorC1ERKSs	lib	lib:gnustl-thumb:stdexcept.o	100	by object order
+00008cac	18	thumb	_ZNSt16invalid_argumentC1ERKSs	lib	lib:gnustl-thumb:stdexcept.o	100	by object order
 00008cc4	18	thumb	_ZNSt12length_errorC1ERKSs	lib	lib:gnustl-thumb:stdexcept.o	100	
 00008cdc	18	thumb	_ZNSt12out_of_rangeC1ERKSs	lib	lib:gnustl-thumb:stdexcept.o	100	
 00008cf4	24	thumb	_ZNSt13runtime_errorC2ERKSs	lib	lib:gnustl-thumb:stdexcept.o	100	
-00008d18	18	thumb	FUN_00008d18	todo			
-00008d30	18	thumb	FUN_00008d30	todo			
-00008d48	18	thumb	FUN_00008d48	todo			
+00008d18	18	thumb	_ZNSt11range_errorC1ERKSs	lib	lib:gnustl-thumb:stdexcept.o	100	by object order
+00008d30	18	thumb	_ZNSt14overflow_errorC1ERKSs	lib	lib:gnustl-thumb:stdexcept.o	100	by object order
+00008d48	18	thumb	_ZNSt15underflow_errorC1ERKSs	lib	lib:gnustl-thumb:stdexcept.o	100	by object order
 00008d60	4	thumb	_ZNKSt8ios_base7failure4whatEv	lib	lib:gnustl-thumb:ios_failure.o	100	
 00008d64	4c	thumb	_ZNSt8ios_base7failureD1Ev	lib	lib:gnustl-thumb:ios_failure.o	100	
 00008db0	14	thumb	_ZNSt8ios_base7failureD0Ev	lib	lib:gnustl-thumb:ios_failure.o	100	

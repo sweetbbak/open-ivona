@@ -122,19 +122,7 @@ def libmatch(stem: str, libs: dict[str, str], verbose: bool = False) -> None:
     learned: dict[str, set[int]] = {}
     for a, h in proposal.items():
         match.Matcher(b, learn=learned).compare(funcs[a], h[3])
-    data_names = {d.name for d in b.data}
-    n_learned = 0
-    for name, addrs in learned.items():
-        if len(addrs) != 1 or name in taken or name in data_names:
-            continue
-        addr = addrs.pop()
-        if addr in funcs and funcs[addr].name.startswith("FUN_") and funcs[addr].status == "todo":
-            funcs[addr].name = name
-            n_learned += 1
-        elif addr not in funcs and b.elf.section_at(addr) and not b.elf.section_at(addr).name.startswith(".text"):
-            from .project import Data
-            b.data.append(Data(addr, 0, name, "named from library relocation"))
-            n_learned += 1
+    n_learned = _apply_learned(b, learned, taken)
     b.__dict__.pop("names", None)
     print(f"learned {n_learned} names from library relocations")
 
@@ -172,6 +160,29 @@ def libmatch(stem: str, libs: dict[str, str], verbose: bool = False) -> None:
         b.save()
         print(f"verified {n_nb} more by object order next to verified neighbours")
     print(f"verified {len(verified)} library functions: " + ", ".join(f"{k}={v}" for k, v in sorted(by_lib.items())))
+
+
+def _apply_learned(b: Binary, learned: dict[str, set[int]], taken: set[str]) -> int:
+    """Give auto-named (FUN_/data) target addresses the library names their references imply,
+    when a name points at exactly one address."""
+    funcs = {f.addr: f for f in b.funcs}
+    data_names = {d.name for d in b.data}
+    n = 0
+    for name, addrs in learned.items():
+        if len(addrs) != 1 or name in taken or name in data_names:
+            continue
+        addr = next(iter(addrs))
+        if addr in funcs and funcs[addr].name.startswith("FUN_") and funcs[addr].status == "todo":
+            funcs[addr].name = name
+            taken.add(name)
+            n += 1
+        elif addr not in funcs and b.elf.section_at(addr) and not b.elf.section_at(addr).name.startswith(".text"):
+            from .project import Data
+            b.data.append(Data(addr, 0, name, "named from library relocation"))
+            data_names.add(name)
+            n += 1
+    b.__dict__.pop("names", None)
+    return n
 
 
 def _member_order(obj) -> list[tuple[str, ...]]:
@@ -235,6 +246,9 @@ def _walk(b, rows, i, step, obj, order, src, taken) -> int:
             old = f.name
             f.name = sym
             b.__dict__.pop("names", None)
+            learned: dict[str, set[int]] = {}
+            if match.Matcher(b, learn=learned).compare(f, cand).matched and learned:
+                _apply_learned(b, learned, taken)  # callees/data named by this pairing
             if match.Matcher(b).compare(f, cand).matched:
                 f.status, f.score, f.src, f.note = "lib", "100", src, "by object order"
                 taken.add(sym)
