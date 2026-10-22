@@ -217,6 +217,9 @@ class Matcher:
                     if nx.mnem == "add" and "pc" in nx.ops and nx.ops.startswith(reg + ","):
                         anchors[it.pool_ref] = nx.addr
                         break
+                    if nx.mnem.startswith("ldr") and nx.ops.endswith(f"[pc, {reg}]"):
+                        anchors[it.pool_ref] = nx.addr  # ldr rX, [pc, reg]: load from pc-relative address
+                        break
                     if nx.ops.startswith(reg + ",") and nx.mnem not in ("str", "strh", "strb", "cmp", "tst"):
                         break  # register overwritten before any `add reg, pc`
         got = self.elf.section(".got")

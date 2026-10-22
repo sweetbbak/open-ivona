@@ -608,14 +608,14 @@ addr	size	mode	name	status	src	score	note
 00039218	194	arm	tts_dict_insert	todo			
 000393ac	e4	arm	tts_dict_remove	todo			
 00039490	20	arm	tts_dict_cleanup	matched	src/libttsivonavoice/calib_arm.c	100	
-000394b0	10	arm	tts_vendor_tag	todo			
-000394c0	10	arm	tts_errno	todo			
-000394d0	11c	arm	tts_errmsg	todo			
-000395ec	1c	arm	FUN_000395ec	todo			
-00039608	74	arm	FUN_00039608	todo			
-0003967c	64	arm	FUN_0003967c	todo			
-000396e0	40	arm	FUN_000396e0	todo			
-00039720	78	arm	FUN_00039720	todo			
+000394b0	10	arm	tts_vendor_tag	matched	src/libttsivonavoice/tts_error.c	100	
+000394c0	10	arm	tts_errno	matched	src/libttsivonavoice/tts_error.c	100	
+000394d0	11c	arm	tts_errmsg	matched	src/libttsivonavoice/tts_error.c	100	
+000395ec	1c	arm	tts_set_error	matched	src/libttsivonavoice/tts_error.c	100	
+00039608	74	arm	tts_set_errorf	matched	src/libttsivonavoice/tts_error.c	100	
+0003967c	64	arm	tts_set_error_errno	matched	src/libttsivonavoice/tts_error.c	100	
+000396e0	40	arm	tts_set_error_code	matched	src/libttsivonavoice/tts_error.c	100	
+00039720	78	arm	tts_set_error_contextf	matched	src/libttsivonavoice/tts_error.c	100	
 00039798	2c	arm	FUN_00039798	todo			
 000397c4	38	arm	FUN_000397c4	todo			
 000397fc	c	arm	FUN_000397fc	todo			
