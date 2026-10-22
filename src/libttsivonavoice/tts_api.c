@@ -12,6 +12,7 @@
 #include "tts_internal.h"
 #include "ivona_vector.h"
 #include "tts_metrics.h"
+#include "tts_cert.h"
 
 #define TTS_INSTANCE_MAGIC 0x3e1b8f65
 #define TTS_RESOURCE_MAGIC    0x730366b1
@@ -74,23 +75,6 @@ int FUN_00048084(void *license, void *key);
 void FUN_00042a50(void *p);
 void FUN_00047cec(void *p);
 
-/* parsed certificate (layout partly known) */
-typedef struct tts_cert_data {
-    char unk_0[0x10];
-    long long issued;             /* +0x10 */
-    int unk_18;
-    int license_id;               /* +0x1c: -1 when the certificate carries no license */
-    int id;                       /* +0x20 */
-    int unk_24;
-    int unk_28;
-    unsigned int key;             /* +0x2c: obfuscates voice parameter values */
-} tts_cert_data;
-tts_cert_data *FUN_00042ab0(const char *text);
-int FUN_00043a6c(tts_cert_data *cert);
-void *FUN_00047d80(int key);
-int FUN_00043c64(tts_cert_data *a, tts_cert_data *b);
-void FUN_00043e84(void *merged, tts_cert_data *c);
-void *FUN_000439ac(tts_cert_data *c);
 int tts_unload_all_languages(tts_instance *tts);
 void FUN_000f435c(int x);
 void FUN_000e3070(void);
@@ -783,96 +767,5 @@ int tts_metrics_get(const cst_features *metrics, tts_metric *out, const char *na
     m = val_metric(feat_val(metrics, name));
     out->name = name;
     METRIC_FILL(out, m, metrics);
-    return 1;
-}
-
-/* the voice's feature set (voice_feats -> engine voice -> features) */
-#define VOICE_FEATURES(v) (**(cst_features ***)(v)->voice_feats)
-
-#define PARAM_KEY_MAGIC 0xe6aa80c7
-
-enum { PARAM_MIN, PARAM_MAX, PARAM_DEF };
-static const int param_which_slot[3] = { PARAM_MIN, PARAM_DEF, PARAM_MAX };
-
-/* index of which in ("min", "def", "max"), or -1 */
-static inline int param_which(const char *which)
-{
-    if (strcmp("min", which) == 0)
-        return 0;
-    if (strcmp("def", which) == 0)
-        return 1;
-    if (strcmp("max", which) == 0)
-        return 2;
-    return -1;
-}
-
-/* 0x3b4b0: "set"/"get" of a float voice parameter (amplify, duration_stretch, pitch_stretch).
- * Applications see values as 1..99 across [min, max], XOR-scrambled with the certificate key;
- * with which = "min"/"def"/"max" that point of the range is used instead. */
-int tts_voice_param_float(tts_voice *v, const char *op, const char *name, const char *which, int *value)
-{
-    float val;
-    float r[3];
-    float min, def, max;
-    const tts_cert_data *cert;
-    cst_features *f;
-    float k;
-    unsigned int x;
-    int i, n;
-
-    if (strcmp(name, "amplify") == 0) {
-        r[PARAM_MIN] = min = get_param_float(VOICE_FEATURES(v), "param_amplify_min", 0.0f);
-        r[PARAM_DEF] = def = get_param_float(VOICE_FEATURES(v), "param_amplify_def", 1.0f);
-        r[PARAM_MAX] = max = get_param_float(VOICE_FEATURES(v), "param_amplify_max", 1.6f);
-    } else if (strcmp(name, "duration_stretch") == 0) {
-        r[PARAM_MIN] = min = get_param_float(VOICE_FEATURES(v), "param_dur_min", 0.25f);
-        r[PARAM_DEF] = def = get_param_float(VOICE_FEATURES(v), "param_dur_def", 1.0f);
-        r[PARAM_MAX] = max = get_param_float(VOICE_FEATURES(v), "param_dur_max", 1.5f);
-    } else if (strcmp(name, "pitch_stretch") == 0) {
-        r[PARAM_MIN] = min = get_param_float(VOICE_FEATURES(v), "param_pitch_min", 0.5f);
-        r[PARAM_DEF] = def = get_param_float(VOICE_FEATURES(v), "param_pitch_def", 1.0f);
-        r[PARAM_MAX] = max = get_param_float(VOICE_FEATURES(v), "param_pitch_max", 2.0f);
-    } else {
-        tts_set_errorf(TTS_STATUS_INTERNAL_ERROR, "Invalid float param");
-        return 0;
-    }
-
-    if (strcmp(op, "set") == 0) {
-        if (which) {
-            f = VOICE_FEATURES(v);
-            i = param_which(which);
-            val = def;
-            if (i >= 0)
-                val = r[param_which_slot[i]];
-            feat_set_float(f, name, val);
-            return 1;
-        }
-        cert = tts_get_certificate(v->tts);
-        x = *value - 1;
-        x = (x ^ PARAM_KEY_MAGIC ^ (cert ? cert->key : 0)) % 99;
-        val = x * (max - min) / 98.0f + min;
-        if (*value >= 1 && *value <= 99 && val >= min && val <= max) {
-            feat_set_float(VOICE_FEATURES(v), name, val);
-            return 1;
-        }
-        tts_set_error(TTS_STATUS_RANGE_ERROR);
-        return 0;
-    }
-    if (strcmp(op, "get") == 0) {
-        cert = tts_get_certificate(v->tts);
-        if (which) {
-            i = param_which(which);
-            val = def;
-            if (i >= 0)
-                val = r[param_which_slot[i]];
-        } else
-            val = get_param_float(VOICE_FEATURES(v), name, def);
-        k = (val - min) * 98.0f / (max - min) + 1.0f;
-        n = (int)k;
-        if (!(k - n >= 0.5f))
-            n--;
-        *value = ((n ^ PARAM_KEY_MAGIC) ^ (cert ? cert->key : 0)) % 99 + 1;
-        return 1;
-    }
     return 1;
 }

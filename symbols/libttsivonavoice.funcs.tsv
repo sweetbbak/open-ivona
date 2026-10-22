@@ -724,10 +724,10 @@ addr	size	mode	name	status	src	score	note
 0003b254	128	arm	tts_metrics_get_all	wip	src/libttsivonavoice/tts_api.c	57.0	
 0003b37c	34	arm	tts_metrics_get_size	matched	src/libttsivonavoice/tts_api.c	100	
 0003b3b0	100	arm	tts_metrics_get	matched	src/libttsivonavoice/tts_api.c	100	
-0003b4b0	508	arm	tts_voice_param_float	wip	src/libttsivonavoice/tts_api.c	57.3	
+0003b4b0	508	arm	tts_voice_param_float	wip	src/libttsivonavoice/voice_param.c	57.3	
 0003b9b8	51c	arm	FUN_0003b9b8	todo			
-0003bed4	c8	arm	FUN_0003bed4	todo			
-0003bf9c	144	arm	FUN_0003bf9c	todo			
+0003bed4	c8	arm	voice_param_bool_plain	matched	src/libttsivonavoice/voice_param.c	100	
+0003bf9c	144	arm	voice_param_bool	wip	src/libttsivonavoice/voice_param.c	52.8	
 0003c0e0	2d0	arm	FUN_0003c0e0	todo			
 0003c3b0	280	arm	FUN_0003c3b0	todo			
 0003c630	2c0	arm	FUN_0003c630	todo			
@@ -742,7 +742,7 @@ addr	size	mode	name	status	src	score	note
 0003d458	148	arm	FUN_0003d458	todo			
 0003d5a0	a8	arm	FUN_0003d5a0	todo			
 0003d648	224	arm	FUN_0003d648	todo			
-0003d86c	134	arm	tts_voice_param	todo			
+0003d86c	134	arm	tts_voice_param	wip	src/libttsivonavoice/voice_param.c	51.8	
 0003d9a0	f8	arm	FUN_0003d9a0	todo			
 0003da98	124	arm	FUN_0003da98	todo			
 0003dbbc	4	arm	FUN_0003dbbc	todo			
