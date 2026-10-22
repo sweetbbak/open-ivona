@@ -9,7 +9,7 @@ toolchain: r10e   # NDK whose GCC 4.8 builds this binary (image localhost/ivona-
 flags:
   common: [-fpic, -ffunction-sections, -funwind-tables, -fno-stack-protector, -fsigned-char, -no-canonical-prefixes,
            -march=armv5te, -msoft-float, -fomit-frame-pointer, -DNDEBUG,
-           -I/opt/sysroot/usr/include, -Iinclude]
+           -I/opt/sysroot/usr/include, -Iinclude, -Iinclude/flite]
   thumb: [-mthumb, -mtune=xscale, -Os, -fno-strict-aliasing, -finline-limit=64]
   arm: [-marm, -O2, -fstrict-aliasing, -funswitch-loops, -finline-limit=300]
   c: [-std=gnu99]

@@ -1468,32 +1468,32 @@ addr	size	mode	name	status	src	score	note
 0005a180	1c	arm	FUN_0005a180	todo			
 0005a19c	f4	arm	FUN_0005a19c	todo			
 0005a290	1bc	arm	FUN_0005a290	todo			
-0005a44c	58	arm	FUN_0005a44c	todo			
-0005a4a4	18	arm	FUN_0005a4a4	todo			
-0005a4bc	44	arm	FUN_0005a4bc	todo			
-0005a500	2c	arm	FUN_0005a500	todo			
-0005a52c	78	arm	FUN_0005a52c	todo			
-0005a5a4	24	arm	FUN_0005a5a4	todo			
-0005a5c8	80	arm	FUN_0005a5c8	todo			
-0005a648	54	arm	FUN_0005a648	todo			
-0005a69c	88	arm	FUN_0005a69c	todo			
-0005a724	44	arm	FUN_0005a724	todo			
-0005a768	94	arm	FUN_0005a768	todo			
-0005a7fc	c	arm	FUN_0005a7fc	todo			
-0005a808	34	arm	FUN_0005a808	todo			
-0005a83c	4	arm	FUN_0005a83c	todo			
-0005a840	10	arm	FUN_0005a840	todo			
-0005a850	c	arm	FUN_0005a850	todo			
-0005a85c	60	arm	FUN_0005a85c	todo			
-0005a8bc	68	arm	FUN_0005a8bc	todo			
-0005a924	98	arm	FUN_0005a924	todo			
-0005a9bc	18	arm	FUN_0005a9bc	todo			
-0005a9d4	8	arm	FUN_0005a9d4	todo			
-0005a9dc	4c	arm	FUN_0005a9dc	todo			
-0005aa28	10	arm	FUN_0005aa28	todo			
-0005aa38	58	arm	FUN_0005aa38	todo			
-0005aa90	10	arm	FUN_0005aa90	todo			
-0005aaa0	b4	arm	FUN_0005aaa0	todo			
+0005a44c	58	arm	val_vector	matched	src/libttsivonavoice/vector.c	100	
+0005a4a4	18	arm	vector_val	matched	src/libttsivonavoice/vector.c	100	
+0005a4bc	44	arm	vector_new	matched	src/libttsivonavoice/vector.c	100	
+0005a500	2c	arm	vector_reserve	matched	src/libttsivonavoice/vector.c	100	
+0005a52c	78	arm	vector_append_vector	matched	src/libttsivonavoice/vector.c	100	
+0005a5a4	24	arm	vector_copy	matched	src/libttsivonavoice/vector.c	100	
+0005a5c8	80	arm	vector_insert	matched	src/libttsivonavoice/vector.c	100	
+0005a648	54	arm	vector_push	matched	src/libttsivonavoice/vector.c	100	
+0005a69c	88	arm	vector_swap	matched	src/libttsivonavoice/vector.c	100	
+0005a724	44	arm	vector_reverse	matched	src/libttsivonavoice/vector.c	100	
+0005a768	94	arm	vector_erase	wip	src/libttsivonavoice/vector.c	94.6	
+0005a7fc	c	arm	vector_clear	matched	src/libttsivonavoice/vector.c	100	
+0005a808	34	arm	vector_free	matched	src/libttsivonavoice/vector.c	100	
+0005a83c	4	arm	val_delete_vector	matched	src/libttsivonavoice/vector.c	100	
+0005a840	10	arm	vector_pop	matched	src/libttsivonavoice/vector.c	100	
+0005a850	c	arm	vector_pop_front	matched	src/libttsivonavoice/vector.c	100	
+0005a85c	60	arm	vector_find	matched	src/libttsivonavoice/vector.c	100	
+0005a8bc	68	arm	vector_bsearch	matched	src/libttsivonavoice/vector.c	100	
+0005a924	98	arm	vector_lower_bound	wip	src/libttsivonavoice/vector.c	76.7	
+0005a9bc	18	arm	vector_sort	matched	src/libttsivonavoice/vector.c	100	
+0005a9d4	8	arm	vector_size	matched	src/libttsivonavoice/vector.c	100	
+0005a9dc	4c	arm	vector_set	matched	src/libttsivonavoice/vector.c	100	
+0005aa28	10	arm	vector_at	matched	src/libttsivonavoice/vector.c	100	
+0005aa38	58	arm	vector_remove_ptr	matched	src/libttsivonavoice/vector.c	100	
+0005aa90	10	arm	vector_get	matched	src/libttsivonavoice/vector.c	100	
+0005aaa0	b4	arm	vector_equal	wip	src/libttsivonavoice/vector.c	95.6	
 0005ab54	5c	arm	FUN_0005ab54	todo			
 0005abb0	8	arm	FUN_0005abb0	todo			
 0005abb8	c0	arm	FUN_0005abb8	todo			
