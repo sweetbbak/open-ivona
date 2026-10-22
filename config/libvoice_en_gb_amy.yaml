@@ -1,5 +1,6 @@
 # Compiler flags for libvoice_en_gb_amy.so: NDK r10e arm-linux-androideabi-4.8 armeabi defaults.
 # Not calibrated yet (copied from libtiver). ARM-mode flags are the NDK LOCAL_ARM_MODE=arm defaults.
+default_mode: arm  # mode for TUs whose functions are not known yet
 toolchain: r10e   # NDK whose GCC 4.8 builds this binary (image localhost/ivona-ndk:<ver>)
 flags:
   common: [-fpic, -ffunction-sections, -funwind-tables, -fstack-protector, -no-canonical-prefixes,

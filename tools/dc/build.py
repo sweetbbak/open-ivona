@@ -15,7 +15,7 @@ def tu_mode(b: Binary, src: str) -> str:
     modes = {f.mode for f in b.funcs if f.src == src}
     if len(modes) > 1:
         raise SystemExit(f"{src}: functions of mixed modes {modes}; set units.{src}.mode in config")
-    return modes.pop() if modes else "thumb"
+    return modes.pop() if modes else b.cfg.get("default_mode", "thumb")
 
 
 def tu_flags(b: Binary, src: str) -> list[str]:
@@ -25,6 +25,8 @@ def tu_flags(b: Binary, src: str) -> list[str]:
     cxx = src.endswith((".cpp", ".cc"))
     out = list(fl["common"]) + list(fl[mode]) + list(fl["cxx" if cxx else "c"])
     out += list(fl.get(mode + "_" + ("cxx" if cxx else "c"), []))
+    if "/flite/" in src:
+        out.append("-Iinclude/flite")
     for r in unit.get("remove", []):
         out = [x for x in out if x != r]
     out += unit.get("add", [])

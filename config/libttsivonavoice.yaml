@@ -4,6 +4,7 @@
 # loop in FUN_00036a3c. Engine core: -fno-stack-protector (no canaries even with 256-byte buffers;
 # only the thumb android_syslog wrapper uses __stack_chk_guard) and -fsigned-char (ldrsb on char
 # tests, tts_errmsg). Thumb flags not yet calibrated on this binary.
+default_mode: arm  # mode for TUs whose functions are not known yet
 toolchain: r10e   # NDK whose GCC 4.8 builds this binary (image localhost/ivona-ndk:<ver>)
 flags:
   common: [-fpic, -ffunction-sections, -funwind-tables, -fno-stack-protector, -fsigned-char, -no-canonical-prefixes,

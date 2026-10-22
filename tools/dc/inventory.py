@@ -65,6 +65,57 @@ def _split_after_terminators(b: Binary, entries: dict[int, tuple[str, str]]) -> 
         print(f"split {added} functions that follow a return inside an existing span")
 
 
+def _add_pcrel_code_pointers(b: Binary, entries: dict[int, tuple[str, str]]) -> None:
+    """Static functions whose address is taken (callbacks) are materialised PC-relatively:
+    `ldr rX, =f-(.LPIC+8); add rX, pc, rX`. Add those targets as entries (bit0 = Thumb)."""
+    text = b.elf.text
+    pc_bias = {"arm": 8, "thumb": 4}
+    added = 0
+    for _ in range(3):
+        starts = sorted(entries)
+        new = {}
+        for i, a in enumerate(starts):
+            end = starts[i + 1] if i + 1 < len(starts) else text.end
+            mode = entries[a][0]
+            items = disassemble(b.elf.read(a, end - a), a, mode)
+            words = {it.addr: it for it in items if it.kind == "word"}
+            for k, it in enumerate(items):
+                if it.pool_ref is None or it.pool_ref not in words:
+                    continue
+                reg = it.insn.reg_name(it.insn.operands[0].reg)
+                for nx in items[k + 1:k + 10]:
+                    if nx.kind != "insn":
+                        continue
+                    if nx.mnem == "add" and nx.ops.replace(" ", "") in (f"{reg},pc", f"{reg},pc,{reg}"):
+                        w = int.from_bytes(words[it.pool_ref].raw, "little")
+                        v = (w + nx.addr + pc_bias[mode]) & 0xFFFFFFFF
+                        t = v & ~1
+                        if text.addr <= t < text.end and t not in entries and t not in new \
+                                and (v & 1 or t % 4 == 0) and t != a:
+                            new[t] = ("thumb" if v & 1 else "arm", f"FUN_{t:08x}")
+                        break
+                    if nx.ops.startswith(reg + ",") and nx.mnem not in ("str", "strh", "strb", "cmp", "tst"):
+                        break
+        if not new:
+            break
+        entries.update(new)
+        added += len(new)
+    if added:
+        print(f"added {added} functions referenced through PC-relative code pointers")
+
+
+def _looks_like_arm_entry(b: Binary, a: int) -> bool:
+    """Heuristic for tail-call targets: ARM code that starts with a prologue or directly
+    follows an unconditional return/branch."""
+    if a & 3 or not (b.elf.text.addr < a < b.elf.text.end):
+        return False
+    w = b.elf.u32(a)
+    if (w & 0xFFFF0000) == 0xE92D0000 or w == 0xE1A0C00D:  # push/stmfd sp!,{..} ; mov ip, sp
+        return True
+    prev = b.elf.u32(a - 4)
+    return prev in (0xE12FFF1E,) or (prev & 0xFFFF8000) == 0xE8BD8000 or (prev & 0xFF000000) == 0xEA000000
+
+
 def guess_mode(b: Binary, a: int) -> str:
     if a & 2:
         return "thumb"
@@ -131,10 +182,13 @@ def split(stem: str, ghidra_json: str | None = None) -> None:
             end = starts[i + 1] if i + 1 < len(starts) else text.end
             mode = entries[a][0]
             for it in disassemble(b.elf.read(a, end - a), a, mode):
-                if it.mnem in ("bl", "blx") and it.branch is not None and text.addr <= it.branch < text.end \
+                tail_call = (mode == "arm" and it.mnem == "b" and it.branch is not None
+                             and not (a <= it.branch < end) and _looks_like_arm_entry(b, it.branch))
+                if (it.mnem in ("bl", "blx") or tail_call) and it.branch is not None \
+                        and text.addr <= it.branch < text.end \
                         and not (it.mnem == "bl" and mode == "arm" and it.branch & 3):
                     if it.branch not in entries and it.branch not in new:
-                        tmode = mode if it.mnem == "bl" else ("arm" if mode == "thumb" else "thumb")
+                        tmode = ("arm" if mode == "thumb" else "thumb") if it.mnem == "blx" else mode
                         new[it.branch] = (tmode, f"FUN_{it.branch:08x}")
         if not new:
             break
@@ -145,6 +199,7 @@ def split(stem: str, ghidra_json: str | None = None) -> None:
 
 
     _split_after_terminators(b, entries)
+    _add_pcrel_code_pointers(b, entries)
 
     # Linker stubs (gold thumb->ARM PLT veneers) and unique names
     seen: dict[str, int] = {}
@@ -168,8 +223,8 @@ def split(stem: str, ghidra_json: str | None = None) -> None:
         f = old.get(a)
         if f:
             f.size, f.mode = end - a, mode
-            if f.status == "todo":
-                f.name = nm
+            if f.status == "todo" and f.name.startswith("FUN_") and not nm.startswith("FUN_"):
+                f.name = nm  # only upgrade auto names; never drop learned/hand-given names
         else:
             f = Func(a, end - a, mode, nm, "todo")
         if b.elf.is_veneer(a) and f.status == "todo":

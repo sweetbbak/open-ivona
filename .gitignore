@@ -7,3 +7,5 @@ target/*.id[0-2]
 target/*.nam
 target/*.til
 __pycache__/
+external/dl/
+external/flite-*/

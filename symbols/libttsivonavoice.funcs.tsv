@@ -371,7 +371,8 @@ addr	size	mode	name	status	src	score	note
 00021b8e	a	thumb	_Unwind_GetRegionStart	todo			
 00021b98	14	thumb	_Unwind_GetLanguageSpecificData	lib	lib:libgcc-thumb:pr-support.o	100	
 00021bac	6	thumb	_Unwind_GetDataRelBase	todo			
-00021bb2	a	thumb	_Unwind_GetTextRelBase	todo			
+00021bb2	6	thumb	_Unwind_GetTextRelBase	todo			
+00021bb8	4	arm	FUN_00021bb8	todo			
 00021bbc	4	thumb	FUN_00021bbc	todo			
 00021bc0	24	arm	FUN_00021bc0	todo			
 00021be4	58	arm	FUN_00021be4	todo			
@@ -389,13 +390,15 @@ addr	size	mode	name	status	src	score	note
 0002243c	f0	arm	FUN_0002243c	todo			
 0002252c	290	arm	FUN_0002252c	todo			
 000227bc	a0	arm	FUN_000227bc	todo			
-0002285c	180	arm	FUN_0002285c	todo			
+0002285c	178	arm	FUN_0002285c	todo			
+000229d4	8	arm	FUN_000229d4	todo			
 000229dc	12c	arm	FUN_000229dc	todo			
 00022b08	24	arm	FUN_00022b08	todo			
 00022b2c	5a0	arm	FUN_00022b2c	todo			
 000230cc	4c	arm	FUN_000230cc	todo			
 00023118	8	arm	FUN_00023118	todo			
-00023120	1cc	arm	FUN_00023120	todo			
+00023120	1c4	arm	FUN_00023120	todo			
+000232e4	8	arm	FUN_000232e4	todo			
 000232ec	70	arm	FUN_000232ec	todo			
 0002335c	44	arm	FUN_0002335c	todo			
 000233a0	28	arm	FUN_000233a0	todo			
@@ -416,7 +419,9 @@ addr	size	mode	name	status	src	score	note
 00023cac	24	arm	FUN_00023cac	todo			
 00023cd0	8	arm	FUN_00023cd0	todo			
 00023cd8	630	arm	FUN_00023cd8	todo			
-00024308	5f8	arm	FUN_00024308	todo			
+00024308	598	arm	FUN_00024308	todo			
+000248a0	8	arm	FUN_000248a0	todo			
+000248a8	58	arm	FUN_000248a8	todo			
 00024900	1c	arm	FUN_00024900	todo			
 0002491c	33c	arm	FUN_0002491c	todo			
 00024c58	6f4	arm	FUN_00024c58	todo			
@@ -427,7 +432,9 @@ addr	size	mode	name	status	src	score	note
 000254e4	8	arm	FUN_000254e4	todo			
 000254ec	24	arm	FUN_000254ec	todo			
 00025510	8	arm	FUN_00025510	todo			
-00025518	248	arm	FUN_00025518	todo			
+00025518	238	arm	FUN_00025518	todo			
+00025750	8	arm	FUN_00025750	todo			
+00025758	8	arm	FUN_00025758	todo			
 00025760	50	arm	FUN_00025760	todo			
 000257b0	a4	arm	FUN_000257b0	todo			
 00025854	3c4	arm	FUN_00025854	todo			
@@ -448,7 +455,8 @@ addr	size	mode	name	status	src	score	note
 00027834	2c	arm	FUN_00027834	todo			
 00027860	30	arm	FUN_00027860	todo			
 00027890	90	arm	FUN_00027890	todo			
-00027920	b14	arm	FUN_00027920	todo			
+00027920	b0c	arm	FUN_00027920	todo			
+0002842c	8	arm	FUN_0002842c	todo			
 00028434	2c	arm	FUN_00028434	todo			
 00028460	1b4	arm	FUN_00028460	todo			
 00028614	598	arm	FUN_00028614	todo			
@@ -476,10 +484,13 @@ addr	size	mode	name	status	src	score	note
 0002a618	2fc	arm	FUN_0002a618	todo			
 0002a914	2d0	arm	FUN_0002a914	todo			
 0002abe4	c	arm	FUN_0002abe4	todo			
-0002abf0	60	arm	FUN_0002abf0	todo			
+0002abf0	54	arm	FUN_0002abf0	todo			
+0002ac44	4	arm	FUN_0002ac44	todo			
+0002ac48	8	arm	FUN_0002ac48	todo			
 0002ac50	40	arm	FUN_0002ac50	todo			
 0002ac90	f0	arm	FUN_0002ac90	todo			
-0002ad80	364	arm	FUN_0002ad80	todo			
+0002ad80	c4	arm	FUN_0002ad80	todo			
+0002ae44	2a0	arm	FUN_0002ae44	todo			
 0002b0e4	2ec	arm	FUN_0002b0e4	todo			
 0002b3d0	1bc	arm	FUN_0002b3d0	todo			
 0002b58c	3f0	arm	FUN_0002b58c	todo			
@@ -598,7 +609,8 @@ addr	size	mode	name	status	src	score	note
 00037bf0	1e0	arm	FUN_00037bf0	todo			
 00037dd0	2b4	arm	tts_dict_save	todo			
 00038084	268	arm	FUN_00038084	todo			
-000382ec	894	arm	FUN_000382ec	todo			
+000382ec	830	arm	FUN_000382ec	todo			
+00038b1c	64	arm	FUN_00038b1c	todo			
 00038b80	208	arm	tts_dict_load	todo			
 00038d88	64	arm	FUN_00038d88	todo			
 00038dec	c	arm	FUN_00038dec	todo			
@@ -627,7 +639,9 @@ addr	size	mode	name	status	src	score	note
 00039950	14	arm	FUN_00039950	matched	src/libttsivonavoice/calib_arm.c	100	
 00039964	8	arm	FUN_00039964	todo			
 0003996c	398	arm	FUN_0003996c	todo			
-00039d04	48c	arm	FUN_00039d04	todo			
+00039d04	484	arm	FUN_00039d04	todo			
+0003a188	4	arm	FUN_0003a188	todo			
+0003a18c	4	arm	FUN_0003a18c	todo			
 0003a190	c4	arm	FUN_0003a190	todo			
 0003a254	5c	arm	FUN_0003a254	todo			
 0003a2b0	2cc	arm	tts_load_certificate	todo			
@@ -717,7 +731,8 @@ addr	size	mode	name	status	src	score	note
 00041ae8	1fc	arm	FUN_00041ae8	todo			
 00041ce4	10	arm	FUN_00041ce4	todo			
 00041cf4	c0	arm	FUN_00041cf4	todo			
-00041db4	130	arm	FUN_00041db4	todo			
+00041db4	128	arm	FUN_00041db4	todo			
+00041edc	8	arm	FUN_00041edc	todo			
 00041ee4	9c	arm	FUN_00041ee4	todo			
 00041f80	200	arm	FUN_00041f80	todo			
 00042180	204	arm	FUN_00042180	todo			
@@ -729,7 +744,10 @@ addr	size	mode	name	status	src	score	note
 00043a6c	78	arm	FUN_00043a6c	todo			
 00043ae4	180	arm	FUN_00043ae4	todo			
 00043c64	220	arm	FUN_00043c64	todo			
-00043e84	430	arm	FUN_00043e84	todo			
+00043e84	33c	arm	FUN_00043e84	todo			
+000441c0	20	arm	FUN_000441c0	todo			
+000441e0	c8	arm	FUN_000441e0	todo			
+000442a8	c	arm	FUN_000442a8	todo			
 000442b4	10	arm	FUN_000442b4	todo			
 000442c4	2c	arm	FUN_000442c4	todo			
 000442f0	10	arm	FUN_000442f0	todo			
@@ -900,7 +918,8 @@ addr	size	mode	name	status	src	score	note
 0004ca74	358	arm	FUN_0004ca74	todo			
 0004cdcc	350	arm	FUN_0004cdcc	todo			
 0004d11c	368	arm	FUN_0004d11c	todo			
-0004d484	4d0	arm	FUN_0004d484	todo			
+0004d484	368	arm	FUN_0004d484	todo			
+0004d7ec	168	arm	FUN_0004d7ec	todo			
 0004d954	58	arm	FUN_0004d954	todo			
 0004d9ac	18	arm	FUN_0004d9ac	todo			
 0004d9c4	58	arm	FUN_0004d9c4	todo			
@@ -976,7 +995,8 @@ addr	size	mode	name	status	src	score	note
 0004f724	70	arm	FUN_0004f724	todo			
 0004f794	4a8	arm	FUN_0004f794	todo			
 0004fc3c	2c	arm	FUN_0004fc3c	todo			
-0004fc68	3dc	arm	FUN_0004fc68	todo			
+0004fc68	3b0	arm	FUN_0004fc68	todo			
+00050018	2c	arm	FUN_00050018	todo			
 00050044	58	arm	FUN_00050044	todo			
 0005009c	18	arm	FUN_0005009c	todo			
 000500b4	c	arm	FUN_000500b4	todo			
@@ -998,8 +1018,10 @@ addr	size	mode	name	status	src	score	note
 00050abc	3c	arm	FUN_00050abc	todo			
 00050af8	38	arm	FUN_00050af8	todo			
 00050b30	38	arm	FUN_00050b30	todo			
-00050b68	84	arm	FUN_00050b68	todo			
-00050bec	9c	arm	FUN_00050bec	todo			
+00050b68	70	arm	FUN_00050b68	todo			
+00050bd8	14	arm	FUN_00050bd8	todo			
+00050bec	70	arm	FUN_00050bec	todo			
+00050c5c	2c	arm	FUN_00050c5c	todo			
 00050c88	18	arm	FUN_00050c88	todo			
 00050ca0	8	arm	FUN_00050ca0	todo			
 00050ca8	40	arm	FUN_00050ca8	todo			
@@ -1024,41 +1046,41 @@ addr	size	mode	name	status	src	score	note
 00051690	68	arm	FUN_00051690	todo			
 000516f8	7c	arm	FUN_000516f8	todo			
 00051774	19c	arm	FUN_00051774	todo			
-00051910	44	arm	FUN_00051910	todo			
-00051954	4	arm	FUN_00051954	todo			
-00051958	6c	arm	FUN_00051958	todo			
-000519c4	c	arm	FUN_000519c4	todo			
-000519d0	28	arm	FUN_000519d0	todo			
-000519f8	40	arm	FUN_000519f8	todo			
-00051a38	14	arm	FUN_00051a38	todo			
-00051a4c	58	arm	FUN_00051a4c	todo			
-00051aa4	18	arm	FUN_00051aa4	todo			
-00051abc	48	arm	FUN_00051abc	todo			
-00051b04	20	arm	FUN_00051b04	todo			
-00051b24	20	arm	FUN_00051b24	todo			
-00051b44	40	arm	FUN_00051b44	todo			
-00051b84	4	arm	FUN_00051b84	todo			
-00051b88	14	arm	FUN_00051b88	todo			
-00051b9c	34	arm	FUN_00051b9c	todo			
-00051bd0	84	arm	FUN_00051bd0	todo			
-00051c54	1c	arm	FUN_00051c54	todo			
-00051c70	14	arm	FUN_00051c70	todo			
-00051c84	10	arm	FUN_00051c84	todo			
-00051c94	10	arm	FUN_00051c94	todo			
-00051ca4	10	arm	FUN_00051ca4	todo			
-00051cb4	10	arm	FUN_00051cb4	todo			
-00051cc4	24	arm	FUN_00051cc4	todo			
-00051ce8	24	arm	FUN_00051ce8	todo			
-00051d0c	24	arm	FUN_00051d0c	todo			
-00051d30	24	arm	FUN_00051d30	todo			
-00051d54	18	arm	FUN_00051d54	todo			
-00051d6c	78	arm	FUN_00051d6c	todo			
-00051de4	28	arm	FUN_00051de4	todo			
-00051e0c	28	arm	FUN_00051e0c	todo			
-00051e34	28	arm	FUN_00051e34	todo			
-00051e5c	28	arm	FUN_00051e5c	todo			
-00051e84	50	arm	FUN_00051e84	todo			
-00051ed4	110	arm	FUN_00051ed4	todo			
+00051910	44	arm	cst_safe_alloc	wip	src/libttsivonavoice/flite/cst_alloc.c	88.2	
+00051954	4	arm	cst_safe_calloc	matched	src/libttsivonavoice/flite/cst_alloc.c	100	
+00051958	6c	arm	cst_safe_realloc	wip	src/libttsivonavoice/flite/cst_alloc.c	92.6	
+000519c4	c	arm	cst_free	matched	src/libttsivonavoice/flite/cst_alloc.c	100	
+000519d0	28	arm	swap_bytes_short	matched	src/libttsivonavoice/flite/cst_endian.c	100	
+000519f8	40	arm	cst_errmsg	matched	src/libttsivonavoice/flite/cst_error.c	100	
+00051a38	14	arm	cst_set_log_level	matched	src/libttsivonavoice/flite/cst_error.c	100	
+00051a4c	58	arm	val_features	matched	src/libttsivonavoice/flite/cst_features.c	100	
+00051aa4	18	arm	features_val	matched	src/libttsivonavoice/flite/cst_features.c	100	
+00051abc	48	arm	feat_find_featpair	matched	src/libttsivonavoice/flite/cst_features.c	100	
+00051b04	20	arm	new_features	matched	src/libttsivonavoice/flite/cst_features.c	100	
+00051b24	20	arm	new_features_local	matched	src/libttsivonavoice/flite/cst_features.c	100	
+00051b44	40	arm	delete_features	matched	src/libttsivonavoice/flite/cst_features.c	100	
+00051b84	4	arm	val_delete_features	matched	src/libttsivonavoice/flite/cst_features.c	100	
+00051b88	14	arm	feat_present	matched	src/libttsivonavoice/flite/cst_features.c	100	
+00051b9c	34	arm	feat_length	matched	src/libttsivonavoice/flite/cst_features.c	100	
+00051bd0	84	arm	feat_take	matched	src/libttsivonavoice/flite/cst_features.c	100	
+00051c54	1c	arm	feat_remove	matched	src/libttsivonavoice/flite/cst_features.c	100	
+00051c70	14	arm	feat_val	matched	src/libttsivonavoice/flite/cst_features.c	100	
+00051c84	10	arm	feat_int	matched	src/libttsivonavoice/flite/cst_features.c	100	
+00051c94	10	arm	feat_float	matched	src/libttsivonavoice/flite/cst_features.c	100	
+00051ca4	10	arm	feat_string	matched	src/libttsivonavoice/flite/cst_features.c	100	
+00051cb4	10	arm	feat_features	matched	src/libttsivonavoice/flite/cst_features.c	100	
+00051cc4	24	arm	get_param_int	matched	src/libttsivonavoice/flite/cst_features.c	100	
+00051ce8	24	arm	get_param_float	matched	src/libttsivonavoice/flite/cst_features.c	100	
+00051d0c	24	arm	get_param_string	matched	src/libttsivonavoice/flite/cst_features.c	100	
+00051d30	24	arm	get_param_features	matched	src/libttsivonavoice/flite/cst_features.c	100	
+00051d54	18	arm	get_param_val	matched	src/libttsivonavoice/flite/cst_features.c	100	
+00051d6c	78	arm	feat_set	matched	src/libttsivonavoice/flite/cst_features.c	100	
+00051de4	28	arm	feat_set_int	matched	src/libttsivonavoice/flite/cst_features.c	100	
+00051e0c	28	arm	feat_set_float	matched	src/libttsivonavoice/flite/cst_features.c	100	
+00051e34	28	arm	feat_set_string	matched	src/libttsivonavoice/flite/cst_features.c	100	
+00051e5c	28	arm	feat_set_features	matched	src/libttsivonavoice/flite/cst_features.c	100	
+00051e84	50	arm	feat_copy_into	matched	src/libttsivonavoice/flite/cst_features.c	100	
+00051ed4	110	arm	feat_print	matched	src/libttsivonavoice/flite/cst_features.c	100	
 00051fe4	d0	arm	FUN_00051fe4	todo			
 000520b4	18	arm	FUN_000520b4	todo			
 000520cc	18	arm	FUN_000520cc	todo			
@@ -1066,7 +1088,7 @@ addr	size	mode	name	status	src	score	note
 00052128	4	arm	fgetc	todo			
 0005212c	4	arm	ftell	todo			
 00052130	20	arm	FUN_00052130	todo			
-00052150	30	arm	FUN_00052150	todo			
+00052150	30	arm	cst_fprintf	todo			
 00052180	30	arm	FUN_00052180	todo			
 000521b0	4	arm	fclose	todo			
 000521b4	c8	arm	FUN_000521b4	todo			
@@ -1139,7 +1161,15 @@ addr	size	mode	name	status	src	score	note
 00054228	44	arm	FUN_00054228	todo			
 0005426c	30	arm	FUN_0005426c	todo			
 0005429c	2c	arm	FUN_0005429c	todo			
-000542c8	94	arm	FUN_000542c8	todo			
+000542c8	44	arm	FUN_000542c8	todo			
+0005430c	c	arm	FUN_0005430c	todo			
+00054318	10	arm	FUN_00054318	todo			
+00054328	c	arm	FUN_00054328	todo			
+00054334	4	arm	FUN_00054334	todo			
+00054338	4	arm	FUN_00054338	todo			
+0005433c	8	arm	FUN_0005433c	todo			
+00054344	4	arm	FUN_00054344	todo			
+00054348	14	arm	FUN_00054348	todo			
 0005435c	1b0	arm	FUN_0005435c	todo			
 0005450c	1e4	arm	FUN_0005450c	todo			
 000546f0	20c	arm	FUN_000546f0	todo			
@@ -1154,15 +1184,17 @@ addr	size	mode	name	status	src	score	note
 00054e80	14	arm	FUN_00054e80	todo			
 00054e94	470	arm	FUN_00054e94	todo			
 00055304	58	arm	FUN_00055304	todo			
-0005535c	24	arm	FUN_0005535c	todo			
-00055380	24	arm	FUN_00055380	todo			
-000553a4	34	arm	FUN_000553a4	todo			
-000553d8	60	arm	FUN_000553d8	todo			
-00055438	50	arm	FUN_00055438	todo			
-00055488	54	arm	FUN_00055488	todo			
-000554dc	28	arm	FUN_000554dc	todo			
+0005535c	24	arm	int_val	todo			
+00055380	24	arm	float_val	todo			
+000553a4	34	arm	string_val	todo			
+000553d8	24	arm	FUN_000553d8	todo			
+000553fc	24	arm	val_new_typed	todo			
+00055420	18	arm	FUN_00055420	todo			
+00055438	50	arm	val_int	todo			
+00055488	54	arm	val_float	todo			
+000554dc	28	arm	val_string	todo			
 00055504	34	arm	FUN_00055504	todo			
-00055538	10	arm	FUN_00055538	todo			
+00055538	10	arm	cst_val_consp	todo			
 00055548	2c	arm	FUN_00055548	todo			
 00055574	2c	arm	FUN_00055574	todo			
 000555a0	2c	arm	FUN_000555a0	todo			
@@ -1176,11 +1208,11 @@ addr	size	mode	name	status	src	score	note
 00055a24	4c	arm	FUN_00055a24	todo			
 00055a70	54	arm	FUN_00055a70	todo			
 00055ac4	48	arm	FUN_00055ac4	todo			
-00055b0c	30	arm	FUN_00055b0c	todo			
-00055b3c	70	arm	FUN_00055b3c	todo			
-00055bac	44	arm	FUN_00055bac	todo			
+00055b0c	30	arm	val_inc_refcount	todo			
+00055b3c	70	arm	cons_val	todo			
+00055bac	44	arm	copy_val	todo			
 00055bf0	58	arm	FUN_00055bf0	todo			
-00055c48	9c	arm	FUN_00055c48	todo			
+00055c48	9c	arm	delete_val	todo			
 00055ce4	38	arm	FUN_00055ce4	todo			
 00055d1c	44	arm	FUN_00055d1c	todo			
 00055d60	44	arm	FUN_00055d60	todo			
@@ -1228,7 +1260,8 @@ addr	size	mode	name	status	src	score	note
 000562b0	74	arm	FUN_000562b0	todo			
 00056324	8	arm	FUN_00056324	todo			
 0005632c	8	arm	FUN_0005632c	todo			
-00056334	8	arm	FUN_00056334	todo			
+00056334	4	arm	FUN_00056334	todo			
+00056338	4	arm	FUN_00056338	todo			
 0005633c	8	arm	FUN_0005633c	todo			
 00056344	8	arm	FUN_00056344	todo			
 0005634c	60	arm	FUN_0005634c	todo			
@@ -1238,7 +1271,9 @@ addr	size	mode	name	status	src	score	note
 00056430	4	arm	FUN_00056430	todo			
 00056434	18	arm	FUN_00056434	todo			
 0005644c	60	arm	FUN_0005644c	todo			
-000564ac	68	arm	FUN_000564ac	todo			
+000564ac	54	arm	FUN_000564ac	todo			
+00056500	4	arm	FUN_00056500	todo			
+00056504	10	arm	FUN_00056504	todo			
 00056514	74	arm	FUN_00056514	todo			
 00056588	78	arm	FUN_00056588	todo			
 00056600	3c	arm	FUN_00056600	todo			
@@ -1289,7 +1324,8 @@ addr	size	mode	name	status	src	score	note
 000579f8	74	arm	FUN_000579f8	todo			
 00057a6c	74	arm	FUN_00057a6c	todo			
 00057ae0	20	arm	FUN_00057ae0	todo			
-00057b00	84	arm	FUN_00057b00	todo			
+00057b00	5c	arm	FUN_00057b00	todo			
+00057b5c	28	arm	FUN_00057b5c	todo			
 00057b84	54	arm	FUN_00057b84	todo			
 00057bd8	54	arm	FUN_00057bd8	todo			
 00057c2c	5c	arm	FUN_00057c2c	todo			
@@ -1400,7 +1436,8 @@ addr	size	mode	name	status	src	score	note
 0005da14	4a8	arm	FUN_0005da14	todo			
 0005debc	8	arm	FUN_0005debc	todo			
 0005dec4	84	arm	FUN_0005dec4	todo			
-0005df48	34	arm	FUN_0005df48	todo			
+0005df48	24	arm	FUN_0005df48	todo			
+0005df6c	10	arm	FUN_0005df6c	todo			
 0005df7c	58	arm	FUN_0005df7c	todo			
 0005dfd4	18	arm	FUN_0005dfd4	todo			
 0005dfec	178	arm	FUN_0005dfec	todo			
@@ -1425,7 +1462,8 @@ addr	size	mode	name	status	src	score	note
 0005f6dc	2c	arm	FUN_0005f6dc	todo			
 0005f708	464	arm	FUN_0005f708	todo			
 0005fb6c	30	arm	FUN_0005fb6c	todo			
-0005fb9c	a8	arm	FUN_0005fb9c	todo			
+0005fb9c	24	arm	FUN_0005fb9c	todo			
+0005fbc0	84	arm	FUN_0005fbc0	todo			
 0005fc44	48	arm	FUN_0005fc44	todo			
 0005fc8c	68	arm	FUN_0005fc8c	todo			
 0005fcf4	64	arm	FUN_0005fcf4	todo			
@@ -1515,7 +1553,8 @@ addr	size	mode	name	status	src	score	note
 00066580	20	arm	FUN_00066580	todo			
 000665a0	d8	arm	FUN_000665a0	todo			
 00066678	80	arm	FUN_00066678	todo			
-000666f8	204	arm	FUN_000666f8	todo			
+000666f8	58	arm	FUN_000666f8	todo			
+00066750	1ac	arm	FUN_00066750	todo			
 000668fc	10	arm	FUN_000668fc	todo			
 0006690c	14	arm	FUN_0006690c	todo			
 00066920	14	arm	FUN_00066920	todo			
@@ -1537,7 +1576,8 @@ addr	size	mode	name	status	src	score	note
 00067e5c	138	arm	FUN_00067e5c	todo			
 00067f94	58	arm	FUN_00067f94	todo			
 00067fec	18	arm	FUN_00067fec	todo			
-00068004	1cc	arm	FUN_00068004	todo			
+00068004	1bc	arm	FUN_00068004	todo			
+000681c0	10	arm	FUN_000681c0	todo			
 000681d0	328	arm	FUN_000681d0	todo			
 000684f8	154	arm	FUN_000684f8	todo			
 0006864c	134	arm	FUN_0006864c	todo			
@@ -1583,7 +1623,8 @@ addr	size	mode	name	status	src	score	note
 0006dc94	188	arm	FUN_0006dc94	todo			
 0006de1c	3c	arm	FUN_0006de1c	todo			
 0006de58	c8	arm	FUN_0006de58	todo			
-0006df20	280	arm	FUN_0006df20	todo			
+0006df20	6c	arm	FUN_0006df20	todo			
+0006df8c	214	arm	FUN_0006df8c	todo			
 0006e1a0	c	arm	FUN_0006e1a0	todo			
 0006e1ac	38	arm	FUN_0006e1ac	todo			
 0006e1e4	2a4	arm	FUN_0006e1e4	todo			
@@ -1630,7 +1671,8 @@ addr	size	mode	name	status	src	score	note
 00071794	1c8	arm	FUN_00071794	todo			
 0007195c	1ac	arm	FUN_0007195c	todo			
 00071b08	84	arm	FUN_00071b08	todo			
-00071b8c	294	arm	FUN_00071b8c	todo			
+00071b8c	288	arm	FUN_00071b8c	todo			
+00071e14	c	arm	FUN_00071e14	todo			
 00071e20	1a4	arm	FUN_00071e20	todo			
 00071fc4	14	arm	FUN_00071fc4	todo			
 00071fd8	fc	arm	FUN_00071fd8	todo			
@@ -3319,7 +3361,8 @@ addr	size	mode	name	status	src	score	note
 00157544	100	arm	FUN_00157544	todo			
 00157644	1fc	arm	FUN_00157644	todo			
 00157840	13c	arm	FUN_00157840	todo			
-0015797c	1a0	arm	FUN_0015797c	todo			
+0015797c	160	arm	FUN_0015797c	todo			
+00157adc	40	arm	FUN_00157adc	todo			
 00157b1c	dc	arm	FUN_00157b1c	todo			
 00157bf8	68	arm	FUN_00157bf8	todo			
 00157c60	50	arm	FUN_00157c60	todo			
@@ -4065,7 +4108,8 @@ addr	size	mode	name	status	src	score	note
 00187d2c	50	arm	FUN_00187d2c	todo			
 00187d7c	68	arm	FUN_00187d7c	todo			
 00187de4	68	arm	FUN_00187de4	todo			
-00187e4c	90	arm	FUN_00187e4c	todo			
+00187e4c	68	arm	FUN_00187e4c	todo			
+00187eb4	28	arm	FUN_00187eb4	todo			
 00187edc	4c	arm	FUN_00187edc	todo			
 00187f28	134	arm	FUN_00187f28	todo			
 0018805c	a94	arm	FUN_0018805c	todo			
@@ -4429,9 +4473,13 @@ addr	size	mode	name	status	src	score	note
 0019d580	4fc	arm	FUN_0019d580	todo			
 0019da7c	58	arm	FUN_0019da7c	todo			
 0019dad4	674	arm	FUN_0019dad4	todo			
-0019e148	238	arm	FUN_0019e148	todo			
+0019e148	1f4	arm	FUN_0019e148	todo			
+0019e33c	44	arm	FUN_0019e33c	todo			
 0019e380	54	arm	FUN_0019e380	todo			
-0019e3d4	288	arm	FUN_0019e3d4	todo			
+0019e3d4	f8	arm	FUN_0019e3d4	todo			
+0019e4cc	60	arm	FUN_0019e4cc	todo			
+0019e52c	7c	arm	FUN_0019e52c	todo			
+0019e5a8	b4	arm	FUN_0019e5a8	todo			
 0019e65c	60	arm	FUN_0019e65c	todo			
 0019e6bc	d4	arm	FUN_0019e6bc	todo			
 0019e790	9c	arm	FUN_0019e790	todo			
@@ -4439,7 +4487,8 @@ addr	size	mode	name	status	src	score	note
 0019e938	30	arm	FUN_0019e938	todo			
 0019e968	28	arm	FUN_0019e968	todo			
 0019e990	16c	arm	FUN_0019e990	todo			
-0019eafc	168	arm	FUN_0019eafc	todo			
+0019eafc	128	arm	FUN_0019eafc	todo			
+0019ec24	40	arm	FUN_0019ec24	todo			
 0019ec64	38	arm	FUN_0019ec64	todo			
 0019ec9c	40	arm	FUN_0019ec9c	todo			
 0019ecdc	4c	arm	FUN_0019ecdc	todo			
@@ -4790,7 +4839,8 @@ addr	size	mode	name	status	src	score	note
 001cbe9c	c	arm	FUN_001cbe9c	todo			
 001cbea8	30	arm	FUN_001cbea8	todo			
 001cbed8	37c	arm	FUN_001cbed8	todo			
-001cc254	a4	arm	FUN_001cc254	todo			
+001cc254	8c	arm	FUN_001cc254	todo			
+001cc2e0	18	arm	FUN_001cc2e0	todo			
 001cc2f8	6c	arm	FUN_001cc2f8	todo			
 001cc364	a0	arm	FUN_001cc364	todo			
 001cc404	e0	arm	FUN_001cc404	todo			
@@ -4810,7 +4860,8 @@ addr	size	mode	name	status	src	score	note
 001cd7c4	48	arm	FUN_001cd7c4	todo			
 001cd80c	1c	arm	FUN_001cd80c	todo			
 001cd828	18	arm	FUN_001cd828	todo			
-001cd840	1c	arm	FUN_001cd840	todo			
+001cd840	18	arm	FUN_001cd840	todo			
+001cd858	4	arm	FUN_001cd858	todo			
 001cd85c	20	arm	FUN_001cd85c	todo			
 001cd87c	264	arm	FUN_001cd87c	todo			
 001cdae0	2c	arm	FUN_001cdae0	todo			
@@ -4878,7 +4929,8 @@ addr	size	mode	name	status	src	score	note
 001d1ffc	8	arm	FUN_001d1ffc	todo			
 001d2004	c	arm	FUN_001d2004	todo			
 001d2010	c	arm	FUN_001d2010	todo			
-001d201c	48	arm	FUN_001d201c	todo			
+001d201c	44	arm	FUN_001d201c	todo			
+001d2060	4	arm	FUN_001d2060	todo			
 001d2064	4c	arm	FUN_001d2064	todo			
 001d20b0	5c	arm	FUN_001d20b0	todo			
 001d210c	3c	arm	FUN_001d210c	todo			
@@ -4978,7 +5030,8 @@ addr	size	mode	name	status	src	score	note
 001d945c	290	arm	FUN_001d945c	todo			
 001d96ec	1d4	arm	FUN_001d96ec	todo			
 001d98c0	dc	arm	FUN_001d98c0	todo			
-001d999c	74	arm	FUN_001d999c	todo			
+001d999c	70	arm	FUN_001d999c	todo			
+001d9a0c	4	arm	FUN_001d9a0c	todo			
 001d9a10	34c	arm	FUN_001d9a10	todo			
 001d9d5c	258	arm	FUN_001d9d5c	todo			
 001d9fb4	58	arm	FUN_001d9fb4	todo			
@@ -4994,7 +5047,9 @@ addr	size	mode	name	status	src	score	note
 001dc5f8	94	arm	FUN_001dc5f8	todo			
 001dc68c	c8	arm	FUN_001dc68c	todo			
 001dc754	8	arm	FUN_001dc754	todo			
-001dc75c	bc	arm	FUN_001dc75c	todo			
+001dc75c	6c	arm	FUN_001dc75c	todo			
+001dc7c8	24	arm	FUN_001dc7c8	todo			
+001dc7ec	2c	arm	FUN_001dc7ec	todo			
 001dc818	40	arm	FUN_001dc818	todo			
 001dc858	40	arm	FUN_001dc858	todo			
 001dc898	dc	arm	FUN_001dc898	todo			
@@ -5011,8 +5066,10 @@ addr	size	mode	name	status	src	score	note
 001dfad8	28	arm	FUN_001dfad8	todo			
 001dfb00	2a0	arm	FUN_001dfb00	todo			
 001dfda0	188	arm	FUN_001dfda0	todo			
-001dff28	f8	arm	FUN_001dff28	todo			
-001e0020	e8	arm	FUN_001e0020	todo			
+001dff28	c4	arm	FUN_001dff28	todo			
+001dffec	34	arm	FUN_001dffec	todo			
+001e0020	cc	arm	FUN_001e0020	todo			
+001e00ec	1c	arm	FUN_001e00ec	todo			
 001e0108	30	arm	FUN_001e0108	todo			
 001e0138	17cc	arm	FUN_001e0138	todo			
 001e1904	5c	arm	FUN_001e1904	todo			
@@ -5030,7 +5087,8 @@ addr	size	mode	name	status	src	score	note
 001e2ac0	1f0	arm	FUN_001e2ac0	todo			
 001e2cb0	148	arm	FUN_001e2cb0	todo			
 001e2df8	78	arm	FUN_001e2df8	todo			
-001e2e70	119c	arm	FUN_001e2e70	todo			
+001e2e70	10f4	arm	FUN_001e2e70	todo			
+001e3f64	a8	arm	FUN_001e3f64	todo			
 001e400c	24	arm	FUN_001e400c	todo			
 001e4030	1bc	arm	FUN_001e4030	todo			
 001e41ec	8	arm	FUN_001e41ec	todo			
@@ -5138,8 +5196,10 @@ addr	size	mode	name	status	src	score	note
 001ea88c	30	arm	FUN_001ea88c	todo			
 001ea8bc	50	arm	FUN_001ea8bc	todo			
 001ea90c	34	arm	FUN_001ea90c	todo			
-001ea940	10c	arm	FUN_001ea940	todo			
-001eaa4c	850	arm	FUN_001eaa4c	todo			
+001ea940	50	arm	FUN_001ea940	todo			
+001ea990	bc	arm	FUN_001ea990	todo			
+001eaa4c	b8	arm	FUN_001eaa4c	todo			
+001eab04	798	arm	FUN_001eab04	todo			
 001eb29c	198	arm	FUN_001eb29c	todo			
 001eb434	390	arm	FUN_001eb434	todo			
 001eb7c4	268	arm	FUN_001eb7c4	todo			
@@ -5183,7 +5243,8 @@ addr	size	mode	name	status	src	score	note
 001ee800	58	arm	FUN_001ee800	todo			
 001ee858	58	arm	FUN_001ee858	todo			
 001ee8b0	f8	arm	FUN_001ee8b0	todo			
-001ee9a8	c78	arm	FUN_001ee9a8	todo			
+001ee9a8	864	arm	FUN_001ee9a8	todo			
+001ef20c	414	arm	FUN_001ef20c	todo			
 001ef620	10	arm	FUN_001ef620	todo			
 001ef630	14	arm	FUN_001ef630	todo			
 001ef644	c8	arm	FUN_001ef644	todo			
@@ -5221,7 +5282,8 @@ addr	size	mode	name	status	src	score	note
 001f19ec	7c	arm	FUN_001f19ec	todo			
 001f1a68	a0	arm	FUN_001f1a68	todo			
 001f1b08	8c	arm	FUN_001f1b08	todo			
-001f1b94	1c4	arm	FUN_001f1b94	todo			
+001f1b94	94	arm	FUN_001f1b94	todo			
+001f1c28	130	arm	FUN_001f1c28	todo			
 001f1d58	38	arm	FUN_001f1d58	todo			
 001f1d90	7c	arm	FUN_001f1d90	todo			
 001f1e0c	90	arm	FUN_001f1e0c	todo			
@@ -5245,7 +5307,8 @@ addr	size	mode	name	status	src	score	note
 001f26e4	9c	arm	FUN_001f26e4	todo			
 001f2780	9c	arm	FUN_001f2780	todo			
 001f281c	ac	arm	FUN_001f281c	todo			
-001f28c8	144	arm	FUN_001f28c8	todo			
+001f28c8	84	arm	FUN_001f28c8	todo			
+001f294c	c0	arm	FUN_001f294c	todo			
 001f2a0c	94	arm	FUN_001f2a0c	todo			
 001f2aa0	8c	arm	FUN_001f2aa0	todo			
 001f2b2c	a4	arm	FUN_001f2b2c	todo			
@@ -5434,7 +5497,8 @@ addr	size	mode	name	status	src	score	note
 001fe7d4	44	arm	FUN_001fe7d4	todo			
 001fe818	24c	arm	FUN_001fe818	todo			
 001fea64	5c	arm	FUN_001fea64	todo			
-001feac0	310	arm	FUN_001feac0	todo			
+001feac0	2f8	arm	FUN_001feac0	todo			
+001fedb8	18	arm	FUN_001fedb8	todo			
 001fedd0	270	arm	FUN_001fedd0	todo			
 001ff040	33c	arm	FUN_001ff040	todo			
 001ff37c	24	arm	FUN_001ff37c	todo			
@@ -5555,7 +5619,8 @@ addr	size	mode	name	status	src	score	note
 0020cefc	14	arm	__aeabi_ul2d	todo			
 0020cf10	60	arm	__floatdidf	todo			
 0020cf70	1e0	arm	__muldf3	todo			
-0020d150	8c	arm	FUN_0020d150	todo			
+0020d150	80	arm	FUN_0020d150	todo			
+0020d1d0	c	arm	FUN_0020d1d0	todo			
 0020d1dc	194	arm	__divdf3	todo			
 0020d370	70	arm	FUN_0020d370	todo			
 0020d3e0	8	arm	__gedf2	todo			
@@ -5578,7 +5643,8 @@ addr	size	mode	name	status	src	score	note
 0020d800	20	arm	__floatsisf	todo			
 0020d820	10	arm	__aeabi_ul2f	todo			
 0020d830	7c	arm	__aeabi_l2f	todo			
-0020d8ac	198	arm	__mulsf3	todo			
+0020d8ac	18c	arm	__mulsf3	todo			
+0020da38	c	arm	FUN_0020da38	todo			
 0020da44	160	arm	__divsf3	todo			
 0020dba4	8	arm	__gesf2	todo			
 0020dbac	8	arm	__lesf2	todo			

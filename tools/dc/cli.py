@@ -4,6 +4,7 @@
   dc ls [status...]     list functions (filter by status)
   dc asm FUNC           annotated target disassembly of FUNC (name or hex address)
   dc diff FUNC [-s SRC] compile SRC (or the function's recorded src) and diff against target
+  dc tu SRC             compile SRC once and diff every table function it defines (records src)
   dc check              rebuild every TU and verify all `matched` functions still match
   dc status             print progress and regenerate docs/progress.md
   dc rename OLD NEW     rename a function/data symbol in the tables and all sources
@@ -137,6 +138,43 @@ def cmd_diff(a):
         f.status = "wip" if f.status == "todo" else "nonmatching"
         if f.status == "nonmatching":
             print(f"{RED}REGRESSION: {f.name} was matched{RESET}")
+    b.save()
+
+
+def cmd_tu(a):
+    """Compile one TU and diff every function it defines that is in the table."""
+    b = Binary(a.bin)
+    src = os.path.relpath(os.path.abspath(a.src), ROOT)
+    obj = build.obj_path(b, src)
+    mode_used = build.tu_mode(b, src)
+    if build.compile_units(b, [src])[src] is not None:
+        raise SystemExit(1)
+    o = match.load_object(obj)
+    names = {x.name for x in o.syms if x.type == "STT_FUNC" and x.defined}
+    by_name = {f.name: f for f in b.funcs}
+    known = [by_name[n] for n in sorted(names, key=lambda n: by_name[n].addr if n in by_name else 0) if n in by_name]
+    missing = sorted(n for n in names if n not in by_name)
+    for f in known:
+        f.src = src
+    if build.tu_mode(b, src) != mode_used:  # mode is inferred from the TU's target functions
+        if build.compile_units(b, [src])[src] is not None:
+            raise SystemExit(1)
+    total = 0
+    for f in known:
+        res = match.run(b, f, obj)
+        if a.verbose or not res.matched:
+            print_result(res, verbose=a.verbose)
+        else:
+            print_result(res, verbose=False)
+        f.score = "100" if res.matched else f"{100 * res.score:.1f}"
+        if res.matched:
+            f.status = "matched"
+            total += 1
+        elif f.status in ("todo", "matched"):
+            f.status = "wip" if f.status == "todo" else "nonmatching"
+    if missing:
+        print(f"{YELLOW}not in the function table (rename targets first?): {', '.join(missing)}{RESET}")
+    print(f"{src}: {total}/{len(known)} functions match")
     b.save()
 
 
@@ -334,6 +372,8 @@ def main(argv=None):
     s.add_argument("-q", "--quiet", action="store_true"); s.add_argument("-n", "--no-save", action="store_true")
     s.add_argument("-X", "--extra", help="extra compiler flags for an experiment (implies -n)")
     s.set_defaults(fn=cmd_diff)
+    s = sub.add_parser("tu"); s.add_argument("src"); s.add_argument("-v", "--verbose", action="store_true")
+    s.set_defaults(fn=cmd_tu)
     s = sub.add_parser("check"); s.add_argument("--only", action="store_true", help="only the -b binary")
     s.add_argument("-v", "--verbose", action="store_true"); s.set_defaults(fn=cmd_check)
     s = sub.add_parser("status"); s.set_defaults(fn=cmd_status)
