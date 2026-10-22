@@ -100,6 +100,16 @@ def main() -> int:
     else:
         print("ok   address comments adopt definitions, not macro invocations")
 
+    # C++ identifiers map to the object's mangled symbol (never to the bare identifier).
+    from dc.cli import symbol_for
+    syms = {"_Z16GetVoiceDataFunci", "_ZN9CIvonaTTSC1Ev", "_ZN9CIvonaTTS4initEv", "plain_c"}
+    got = [symbol_for(i, syms) for i in ("GetVoiceDataFunc", "init", "plain_c", "missing")]
+    if got != ["_Z16GetVoiceDataFunci", "_ZN9CIvonaTTS4initEv", "plain_c", None]:
+        fails += 1
+        print(f"FAIL: symbol_for gave {got}")
+    else:
+        print("ok   address comments map C++ identifiers to mangled symbols")
+
     # Splitter: entries inside verified functions are fragments and must be dropped.
     from dc.inventory import inside_verified
     inside = inside_verified([Func(0x100, 0x40, "thumb", "big", "lib"), Func(0x140, 8, "thumb", "x")])

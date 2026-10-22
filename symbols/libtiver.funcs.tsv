@@ -8,8 +8,8 @@ addr	size	mode	name	status	src	score	note
 00004e80	20	arm	atexit	lib	lib:crtbegin_so:crtbegin_so.o	100	
 00004ea0	20	thumb	_Z16GetVoiceDataFunci	matched	src/libtiver/voice_table.cpp	100	
 00004ec0	c	thumb	v	matched	src/libtiver/voice_table.cpp	100	
-00004ecc	84	thumb	h	todo			
-00004f50	6c	thumb	_Z14android_syslogiPKcz	todo			
+00004ecc	84	thumb	h	wip	src/libtiver/voice_table.cpp	61.9	
+00004f50	6c	thumb	_Z14android_syslogiPKcz	matched	src/libtiver/android_log.cpp	100	
 00004fbc	4	thumb	_ZNKSs4dataEv	lib	lib:gnustl-thumb:string-inst.o	100	
 00004fc0	8	thumb	_ZNKSs6lengthEv	lib	lib:gnustl-thumb:string-inst.o	100	
 00004fc8	4	thumb	_ZNKSs7_M_dataEv	lib	lib:gnustl-thumb:string-inst.o	100	

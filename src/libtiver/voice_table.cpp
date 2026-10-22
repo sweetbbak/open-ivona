@@ -5,6 +5,9 @@
  * get_voice callback enumerates VoiceData records by index until it returns NULL.
  */
 #include <stddef.h>
+#include <string.h>
+#include <sys/stat.h>
+#include <string>
 
 /* One registered voice (0x38 bytes). */
 struct VoiceData {
@@ -17,7 +20,7 @@ struct VoiceData {
     int unk_18;                /* always -1 */
     int unk_1c;                /* always -1 */
     const char *vox_file;      /* unit database file name */
-    int unk_24;                /* 0x82 / 0x7c: unknown, varies by language */
+    unsigned int unk_24;       /* 122..136; h() compares the vox file's size with it */
     const char *lexicon;       /* default user lexicon file */
     const char *unk_2c;        /* always "" */
     const char *gender;        /* "Female" / "Male" */
@@ -110,4 +113,28 @@ static VoiceRegistry g_registry = {
 extern "C" VoiceRegistry *v(void)
 {
     return &g_registry;
+}
+
+/* 0x4ecc: checks an installed voice: 0 when <dir><vox_file> of the voice with this package has
+ * the size recorded in the table, 1 otherwise, -1 for bad arguments. An unknown package falls
+ * through to the terminating entry (sic). */
+extern "C" int h(const char *package, const char *dir)
+{
+    const VoiceData *d;
+    struct stat st;
+    int ret = -1;
+
+    if (package != NULL && dir != NULL) {
+        for (d = g_voice_table; d->language; d++)
+            if (strcmp(package, d->package) == 0)
+                break;
+        std::string path;
+        path = dir;
+        path += d->vox_file;
+        if (stat(path.c_str(), &st) == 0)
+            ret = st.st_size != d->unk_24;
+        else
+            ret = 1;
+    }
+    return ret;
 }

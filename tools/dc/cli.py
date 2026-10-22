@@ -161,13 +161,31 @@ def addr_comment_names(text: str) -> list[tuple[int, str]]:
     return out
 
 
-def adopt_names(b: Binary, src: str) -> None:
+def symbol_for(ident: str, defined: set[str] | None) -> str | None:
+    """The object symbol a source identifier defines: itself (C, extern "C") or a C++ mangled
+    name whose last name component is it (_Z<len><ident>... or ...<len><ident>[C1/D1...]E...).
+    None when ambiguous or absent."""
+    if defined is None or ident in defined:
+        return ident
+    tag = f"{len(ident)}{ident}"
+    cands = sorted(s for s in defined if s.startswith("_Z" + tag) or
+                   re.search(rf"{tag}(?:[CD][0-3])?E", s))
+    return cands[0] if len(cands) == 1 else None
+
+
+def adopt_names(b: Binary, src: str, defined: set[str] | None = None) -> None:
     """A `/* 0xADDR ...` comment directly above a function definition is authoritative: the table
-    entry at ADDR gets the function's name (so a reset table can always be rebuilt from source)."""
+    entry at ADDR gets the function's name (so a reset table can always be rebuilt from source).
+    `defined` (the compiled object's function symbols) maps C++ identifiers to mangled names."""
     text = open(path(src)).read()
     by_addr = {f.addr: f for f in b.funcs}
     used = {f.name for f in b.funcs}
-    for addr, name in addr_comment_names(text):
+    for addr, ident in addr_comment_names(text):
+        name = symbol_for(ident, defined)
+        if name is None:
+            if not by_addr.get(addr) or by_addr[addr].name not in (defined or ()):
+                print(f"{YELLOW}{src}: cannot tell which symbol {ident} at {addr:#x} is{RESET}")
+            continue
         f = by_addr.get(addr)
         if f is None:
             print(f"{YELLOW}{src}: no function starts at {addr:#x} (for {name}){RESET}")
@@ -185,15 +203,15 @@ def cmd_tu(a):
     """Compile one TU and diff every function it defines that is in the table."""
     b = Binary(a.bin)
     src = os.path.relpath(os.path.abspath(a.src), ROOT)
-    adopt_names(b, src)
-    b.save()
-    b = Binary(a.bin)
     obj = build.obj_path(b, src)
     mode_used = build.tu_mode(b, src)
     if build.compile_units(b, [src])[src] is not None:
         raise SystemExit(1)
     o = match.load_object(obj)
     names = {x.name for x in o.syms if x.type == "STT_FUNC" and x.defined}
+    adopt_names(b, src, names)
+    b.save()
+    b = Binary(a.bin)
     by_name = {f.name: f for f in b.funcs}
     known = [by_name[n] for n in sorted(names, key=lambda n: by_name[n].addr if n in by_name else 0) if n in by_name]
     missing = sorted(n for n in names if n not in by_name)
