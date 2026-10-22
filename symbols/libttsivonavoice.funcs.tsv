@@ -826,12 +826,12 @@ addr	size	mode	name	status	src	score	note
 00045480	94	arm	FUN_00045480	todo			
 00045514	138	arm	FUN_00045514	todo			
 0004564c	4	arm	fopen	todo			
-00045650	2c	arm	FUN_00045650	todo			
-0004567c	50	arm	FUN_0004567c	todo			
-000456cc	28	arm	FUN_000456cc	todo			
-000456f4	1a4	arm	FUN_000456f4	todo			
-00045898	118	arm	FUN_00045898	todo			
-000459b0	44	arm	FUN_000459b0	todo			
+00045650	2c	arm	res_entry_destroy	matched	src/libttsivonavoice/res_cache.c	100	
+0004567c	50	arm	res_cache_new	matched	src/libttsivonavoice/res_cache.c	100	
+000456cc	28	arm	res_cache_free	matched	src/libttsivonavoice/res_cache.c	100	
+000456f4	1a4	arm	res_cache_acquire	matched	src/libttsivonavoice/res_cache.c	100	
+00045898	118	arm	res_cache_release	wip	src/libttsivonavoice/res_cache.c	15.7	
+000459b0	44	arm	res_cache_release_all	matched	src/libttsivonavoice/res_cache.c	100	
 000459f4	fc	arm	FUN_000459f4	todo			
 00045af0	54	arm	FUN_00045af0	todo			
 00045b44	8c	arm	FUN_00045b44	todo			
