@@ -24,8 +24,10 @@ addr	size	name	note
 0021f2fc	4	cst_val_type_valfunc	
 0021f310	4	cst_val_type_features	
 0021f314	0	cst_val_type_itemfunc	learned from src/libttsivonavoice/flite/cst_item.c
+0021f334	0	cst_val_type_cart	learned from src/libttsivonavoice/flite/cst_cart.c
 0021f338	4	cst_val_type_item	
 0021f33c	0	cst_val_type_relation	learned from src/libttsivonavoice/flite/cst_item.c
+0021f340	0	cst_val_type_ffunc	learned from src/libttsivonavoice/flite/cst_ffeature.c
 0021f344	0	cst_val_type_uttfunc	learned from src/libttsivonavoice/flite/cst_utterance.c
 0021f34c	0	cst_val_type_wave	learned from src/libttsivonavoice/flite/cst_wave.c
 0021f350	0	cst_val_type_utterance	learned from src/libttsivonavoice/flite/cst_item.c
