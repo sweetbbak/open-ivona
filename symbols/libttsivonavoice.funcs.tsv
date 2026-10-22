@@ -699,15 +699,15 @@ addr	size	mode	name	status	src	score	note
 0003a190	c4	arm	tts_attach_addon	matched	src/libttsivonavoice/tts_api.c	100	
 0003a254	5c	arm	resource_destroy	matched	src/libttsivonavoice/tts_api.c	100	
 0003a2b0	2cc	arm	tts_load_certificate	todo			
-0003a57c	60	arm	tts_load_certificate_file	todo			
-0003a5dc	c0	arm	tts_certificate_get_single	todo			
+0003a57c	60	arm	tts_load_certificate_file	matched	src/libttsivonavoice/tts_api.c	100	
+0003a5dc	c0	arm	tts_certificate_get_single	wip	src/libttsivonavoice/tts_api.c	68.8	
 0003a69c	4	arm	tts_certificate_get	matched	src/libttsivonavoice/tts_api.c	100	
 0003a6a0	114	arm	tts_create	matched	src/libttsivonavoice/tts_api.c	100	
 0003a7b4	68	arm	tts_add_module	matched	src/libttsivonavoice/tts_api.c	100	
 0003a81c	a4	arm	tts_remove_module	matched	src/libttsivonavoice/tts_api.c	100	
-0003a8c0	b0	arm	tts_add_source	matched	src/libttsivonavoice/tts_api.c	100	
-0003a970	e0	arm	tts_remove_source	matched	src/libttsivonavoice/tts_api.c	100	
-0003aa50	8	arm	tts_source_table	matched	src/libttsivonavoice/tts_api.c	100	
+0003a8c0	b0	arm	tts_add_language	matched	src/libttsivonavoice/tts_api.c	100	
+0003a970	e0	arm	tts_remove_language	matched	src/libttsivonavoice/tts_api.c	100	
+0003aa50	8	arm	tts_language_table	matched	src/libttsivonavoice/tts_api.c	100	
 0003aa58	88	arm	tts_get_certificate	matched	src/libttsivonavoice/tts_api.c	100	
 0003aae0	84	arm	tts_find_license	matched	src/libttsivonavoice/tts_api.c	100	
 0003ab64	64	arm	tts_load_addon	matched	src/libttsivonavoice/tts_api.c	100	
@@ -715,11 +715,11 @@ addr	size	mode	name	status	src	score	note
 0003ac20	e0	arm	tts_unload_addon	matched	src/libttsivonavoice/tts_api.c	100	
 0003ad00	144	arm	tts_destroy	matched	src/libttsivonavoice/tts_api.c	100	
 0003ae44	40	arm	tts_init	matched	src/libttsivonavoice/tts_api.c	100	
-0003ae84	5c	arm	FUN_0003ae84	todo			
-0003aee0	80	arm	FUN_0003aee0	todo			
-0003af60	1d8	arm	tts_load_language	todo			
-0003b138	48	arm	tts_unload_language	todo			
-0003b180	6c	arm	FUN_0003b180	todo			
+0003ae84	5c	arm	lang_load_part	matched	src/libttsivonavoice/tts_api.c	100	
+0003aee0	80	arm	lang_desc_free	matched	src/libttsivonavoice/tts_api.c	100	
+0003af60	1d8	arm	tts_load_language	wip	src/libttsivonavoice/tts_api.c	82.2	
+0003b138	48	arm	tts_unload_language	matched	src/libttsivonavoice/tts_api.c	100	
+0003b180	6c	arm	tts_unload_all_languages	wip	src/libttsivonavoice/tts_api.c	73.3	
 0003b1ec	68	arm	tts_streamer_get_metrics	todo			
 0003b254	128	arm	tts_metrics_get_all	todo			
 0003b37c	34	arm	tts_metrics_get_size	todo			

@@ -2,10 +2,12 @@
  * IVONA public API: instance lifecycle, certificates, addons and languages (part of the TU that
  * starts after tts_error.c). Field names of tts_instance are provisional.
  */
+#include <dlfcn.h>
 #include <stddef.h>
 #include <string.h>
 #include <pthread.h>
 #include "cst_alloc.h"
+#include "cst_features.h"
 #include "tts_internal.h"
 #include "ivona_vector.h"
 
@@ -22,6 +24,15 @@ pthread_mutex_t *ivona_mutex_new(void);
 int ivona_mutex_trylock(pthread_mutex_t *m);
 int ivona_mutex_unlock(pthread_mutex_t *m);
 
+/* language_data exported by a language library (copied per loaded language) */
+typedef struct tts_lang_desc {
+    void *unk_0;
+    void *unk_4;
+    ivona_vector *parts;              /* +0x08: loaded data files (cache data pointers) */
+    void (*part_init)(void *part);    /* +0x0c */
+    void (*part_fini)(void *part);    /* +0x10 */
+} tts_lang_desc;
+
 struct tts_instance_struct {
     int magic;                    /* TTS_INSTANCE_MAGIC */
     ivona_vector *resources;      /* +0x04: of tts_resource * */
@@ -29,12 +40,18 @@ struct tts_instance_struct {
     ivona_vector *modules;        /* +0x0c */
     pthread_mutex_t *modules_lock;/* +0x10 */
     res_cache *lang_cache;        /* +0x14 */
-    ivona_vector *sources;        /* +0x18: objects whose +4 points to a 20-byte record */
-    void *source_table;           /* +0x1c: flat copy of those records (count + 1 entries) */
+    ivona_vector *languages;      /* +0x18: of tts_language * */
+    tts_lang_desc *lang_table;    /* +0x1c: copies of every language descriptor (+1 spare) */
     pthread_mutex_t *lock_20;     /* +0x20 */
     ivona_vector *addons_list;      /* +0x24 */
     pthread_mutex_t *addons_lock; /* +0x28 */
 };
+
+typedef struct tts_language {
+    void *dl;                     /* dlopen() handle */
+    tts_lang_desc *desc;
+    tts_instance *tts;
+} tts_language;
 
 typedef struct tts_resource {     /* a loaded certificate */
     int magic;                    /* TTS_RESOURCE_MAGIC */
@@ -54,12 +71,19 @@ void *FUN_00036fc4(const char *path);
 int FUN_00048084(void *license, void *key);
 void FUN_00042a50(void *p);
 void FUN_00047cec(void *p);
-void FUN_0003b180(tts_instance *tts);
+int tts_unload_all_languages(tts_instance *tts);
 void FUN_000f435c(int x);
 void FUN_000e3070(void);
 void curl_global_cleanup(void);
 void ivona_mutex_free(pthread_mutex_t *m);
 void res_cache_free(res_cache *c);
+void *res_cache_acquire(res_cache *c, const char *path, void *arg);
+void res_cache_release_all(res_cache *c, ivona_vector *list);
+void *FUN_00045178(const char *path);
+void FUN_000452dc(void *buf);
+const char *FUN_0004524c(void *buf);
+void FUN_0004520c(void *buf);
+void *FUN_000405ac(void *dl, const char *symbol);
 
 /* 0x3a188 */
 static void lang_cache_free(void *data)
@@ -112,6 +136,56 @@ static void resource_destroy(void *elem, size_t size)
     cst_free(a);
 }
 
+/* 0x3a57c */
+const tts_certificate *tts_load_certificate_file(tts_instance *tts, const char *cert_path)
+{
+    const tts_certificate *cert;
+    void *buf;
+
+    if (tts == NULL || cert_path == NULL) {
+        tts_set_error(TTS_STATUS_INVALID_ARGUMENT);
+        return NULL;
+    }
+    buf = FUN_00045178(cert_path);
+    if (buf == NULL)
+        return NULL;
+    FUN_000452dc(buf);
+    cert = tts_load_certificate(tts, FUN_0004524c(buf));
+    FUN_0004520c(buf);
+    return cert;
+}
+
+/* 0x3a5dc: attribute of a certificate, or of an instance's current certificate */
+const char *tts_certificate_get_single(const tts_certificate *cert, const char *attr)
+{
+    const tts_instance *tts = (const tts_instance *)cert;
+    void *c;
+    const char *v;
+
+    if (cert == NULL || attr == NULL)
+        goto invalid;
+    if (tts->magic == TTS_INSTANCE_MAGIC) {
+        c = tts->certificate;
+        if (c == NULL) {
+            if (vector_size(tts->resources) == 0) {
+                tts_set_errorf(TTS_STATUS_CERTIFICATE_LIMIT, "No certificates loaded");
+                return NULL;
+            }
+            c = (*(tts_resource **)vector_at(tts->resources, 0))->cert;
+        }
+    } else if (tts->magic == TTS_RESOURCE_MAGIC)
+        c = ((const tts_resource *)cert)->cert;
+    else
+        goto invalid;
+    v = get_param_string(*(cst_features **)c, attr, NULL);
+    if (v == NULL)
+        goto invalid;
+    return v;
+invalid:
+    tts_set_error(TTS_STATUS_INVALID_ARGUMENT);
+    return NULL;
+}
+
 /* 0x3a69c */
 const char *tts_certificate_get(const tts_instance *tts, const char *attr)
 {
@@ -136,9 +210,9 @@ tts_instance *tts_create(void)
     tts->modules = vector_new(sizeof(void *), NULL, NULL);
     tts->modules_lock = ivona_mutex_new();
     tts->lang_cache = res_cache_new(lang_cache_load, lang_cache_free);
-    tts->sources = vector_new(sizeof(void *), NULL, NULL);
+    tts->languages = vector_new(sizeof(void *), NULL, NULL);
     tts->lock_20 = ivona_mutex_new();
-    tts->source_table = NULL;
+    tts->lang_table = NULL;
     tts->addons_lock = ivona_mutex_new();
     tts->addons_list = vector_new(sizeof(void *), NULL, NULL);
     g_tts_instance_count++;
@@ -177,55 +251,55 @@ void tts_remove_module(tts_instance *tts, void *module)
 }
 
 /* 0x3a8c0 */
-void tts_add_source(tts_instance *tts, void *src)
+void tts_add_language(tts_instance *tts, tts_language *lang)
 {
     ivona_vector *v;
     char *table, *p;
     size_t i;
 
-    if (src == NULL)
+    if (lang == NULL)
         return;
     ivona_mutex_trylock(tts->lock_20);
-    vector_push(tts->sources, &src);
-    if (tts->source_table)
-        cst_free(tts->source_table);
-    v = tts->sources;
+    vector_push(tts->languages, &lang);
+    if (tts->lang_table)
+        cst_free(tts->lang_table);
+    v = tts->languages;
     table = p = cst_safe_alloc(vector_size(v) + 1, 0x14);
     for (i = 0; i < vector_size(v); i++, p += 0x14)
         memcpy(p, ((void **)*(void ***)vector_at(v, i))[1], 0x14);
-    tts->source_table = table;
+    tts->lang_table = (tts_lang_desc *)table;
     ivona_mutex_unlock(tts->lock_20);
 }
 
 /* 0x3a970 */
-void tts_remove_source(tts_instance *tts, void *src)
+void tts_remove_language(tts_instance *tts, tts_language *lang)
 {
     ivona_vector *v;
     char *table, *p;
     size_t i;
 
-    if (src == NULL)
+    if (lang == NULL)
         return;
     ivona_mutex_trylock(tts->lock_20);
-    for (i = 0; i < vector_size(tts->sources); i++)
-        if (*(void **)vector_at(tts->sources, i) == src) {
-            vector_erase(tts->sources, i, 1);
+    for (i = 0; i < vector_size(tts->languages); i++)
+        if (*(void **)vector_at(tts->languages, i) == lang) {
+            vector_erase(tts->languages, i, 1);
             break;
         }
-    if (tts->source_table)
-        cst_free(tts->source_table);
-    v = tts->sources;
+    if (tts->lang_table)
+        cst_free(tts->lang_table);
+    v = tts->languages;
     table = p = cst_safe_alloc(vector_size(v) + 1, 0x14);
     for (i = 0; i < vector_size(v); i++, p += 0x14)
         memcpy(p, ((void **)*(void ***)vector_at(v, i))[1], 0x14);
-    tts->source_table = table;
+    tts->lang_table = (tts_lang_desc *)table;
     ivona_mutex_unlock(tts->lock_20);
 }
 
 /* 0x3aa50 */
-void *tts_source_table(tts_instance *tts)
+tts_lang_desc *tts_language_table(tts_instance *tts)
 {
-    return tts->source_table;
+    return tts->lang_table;
 }
 
 /* 0x3aa58: the explicitly selected certificate, else the first loaded one */
@@ -342,13 +416,13 @@ int tts_destroy(tts_instance *tts)
     while (--i >= 0)
         tts_unload_addon(tts, *(void **)vector_at(tts->addons_list, i));
     vector_free(tts->addons_list);
-    FUN_0003b180(tts);
+    tts_unload_all_languages(tts);
     FUN_00042a50(tts->certificate);
     vector_free(tts->resources);
     vector_free(tts->modules);
-    vector_free(tts->sources);
+    vector_free(tts->languages);
     ivona_mutex_free(tts->lock_20);
-    cst_free(tts->source_table);
+    cst_free(tts->lang_table);
     res_cache_free(tts->lang_cache);
     ivona_mutex_free(tts->addons_lock);
     ivona_mutex_free(tts->modules_lock);
@@ -378,4 +452,117 @@ tts_instance *tts_init(const char *certificate_text)
         return NULL;
     }
     return tts;
+}
+
+/* 0x3ae84: load one data file of a language through the instance's cache */
+int lang_load_part(tts_lang_desc *desc, tts_instance *tts, const char *path)
+{
+    void *part = res_cache_acquire(tts->lang_cache, path, desc->unk_4);
+
+    if (part != NULL) {
+        if (desc->part_init)
+            desc->part_init((char *)part + 0x10);
+        vector_push(desc->parts, &part);
+    }
+    return part != NULL;
+}
+
+/* 0x3aee0 */
+void lang_desc_free(tts_lang_desc *desc, tts_instance *tts)
+{
+    void **p;
+
+    if (desc->parts) {
+        if (desc->part_fini)
+            for (p = desc->parts->data; p != (void **)desc->parts->data + desc->parts->count; p++)
+                desc->part_fini((char *)*p + 0x10);
+        res_cache_release_all(tts->lang_cache, desc->parts);
+        vector_free(desc->parts);
+    }
+    cst_free(desc);
+}
+
+/* 0x3af60: load a language library and its data files (NULL-terminated list) */
+tts_language *tts_load_language(tts_instance *tts, const char *lib_path, const char **files)
+{
+    tts_language *lang;
+    tts_lang_desc *desc;
+    const char *version;
+    void *dl;
+
+    if (tts == NULL || lib_path == NULL || files == NULL || files[0] == NULL) {
+        tts_set_error(TTS_STATUS_INVALID_ARGUMENT);
+        return NULL;
+    }
+    dl = dlopen(lib_path, 0);
+    if (dl == NULL) {
+        tts_set_errorf(TTS_STATUS_SYSTEM_ERROR, "%s", dlerror());
+        return NULL;
+    }
+    version = FUN_000405ac(dl, "engine_version");
+    if (strcmp(version, "1.6.101.3") != 0) {
+        tts_set_errorf(TTS_STATUS_LOAD_LANGUGE_ERROR, "Language library version mismatch: got %s, required %s",
+                       version, "1.6.101.3");
+        dlclose(dl);
+        return NULL;
+    }
+    desc = FUN_000405ac(dl, "language_data");
+    if (desc == NULL) {
+        tts_set_errorf(TTS_STATUS_LOAD_LANGUGE_ERROR, "The library does not have language data");
+        dlclose(dl);
+        return NULL;
+    }
+    lang = cst_alloc(tts_language, 1);
+    lang->desc = cst_alloc(tts_lang_desc, 1);
+    *lang->desc = *desc;
+    lang->desc->parts = vector_new(sizeof(void *), NULL, NULL);
+    lang->dl = dl;
+    lang->tts = tts;
+    for (; *files; files++)
+        if (!lang_load_part(lang->desc, lang->tts, *files))
+            goto fail;
+    tts_add_language(tts, lang);
+    return lang;
+fail:
+    lang_desc_free(lang->desc, lang->tts);
+    dlclose(lang->dl);
+    cst_free(lang);
+    return NULL;
+}
+
+/* 0x3b138 */
+int tts_unload_language(tts_language *lang)
+{
+    if (lang == NULL) {
+        tts_set_error(TTS_STATUS_INVALID_ARGUMENT);
+        return 0;
+    }
+    tts_remove_language(lang->tts, lang);
+    lang_desc_free(lang->desc, lang->tts);
+    dlclose(lang->dl);
+    cst_free(lang);
+    return 1;
+}
+
+/* 0x3b180 */
+int tts_unload_all_languages(tts_instance *tts)
+{
+    ivona_vector *v;
+    tts_language *last;
+    int rv;
+
+    if (tts == NULL) {
+        tts_set_error(TTS_STATUS_INVALID_ARGUMENT);
+        return 0;
+    }
+    while (vector_size(tts->languages) != 0) {
+        v = tts->languages;
+        last = NULL;
+        if (v->count)
+            last = *(tts_language **)vector_at(v, v->count - 1);
+        rv = tts_unload_language(last);
+        if (rv != 1)
+            return rv;
+    }
+    return 1;
 }
