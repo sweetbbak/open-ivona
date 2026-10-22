@@ -368,6 +368,13 @@ class Matcher:
         if sym.type == "STT_SECTION":
             return self._expect_section(cand, sym.section, s_t, res)
         want = self.names.addr_of(sym.name)
+        if want is None and sym.defined and sym.type in ("STT_FUNC", "STT_OBJECT"):
+            # an alias at the same place (C1/C2, D1/D2 ...) is the same symbol
+            for al in cand.syms:
+                if al is not sym and al.defined and al.section == sym.section and al.value == sym.value \
+                        and al.type == sym.type and self.names.addr_of(al.name) is not None:
+                    want = self.names.addr_of(al.name)
+                    break
         if want is not None:
             if want == s_t:
                 return True, ""

@@ -97,11 +97,11 @@ addr	size	mode	name	status	src	score	note
 0001a56c	10	thumb	__aeabi_atexit	lib	lib:gnustl-thumb:atexit_arm.o	100	
 0001a57c	18	thumb	__cxa_pure_virtual	lib	lib:gnustl-thumb:pure.o	100	
 0001a594	18	thumb	__cxa_deleted_virtual	lib	lib:gnustl-thumb:pure.o	100	
-0001a5ac	10	thumb	_ZNSt9type_infoD2Ev	todo			
-0001a5bc	4	thumb	FUN_0001a5bc	todo			
-0001a5c0	4	thumb	FUN_0001a5c0	todo			
-0001a5c4	4	thumb	FUN_0001a5c4	todo			
-0001a5c8	18	thumb	FUN_0001a5c8	todo			
+0001a5ac	10	thumb	_ZNSt9type_infoD2Ev	lib	lib:gnustl-thumb:tinfo.o	100	
+0001a5bc	4	thumb	_ZNKSt9type_info14__is_pointer_pEv	lib	lib:gnustl-thumb:tinfo.o	100	by object order
+0001a5c0	4	thumb	_ZNKSt9type_info15__is_function_pEv	lib	lib:gnustl-thumb:tinfo.o	100	by object order
+0001a5c4	4	thumb	_ZNKSt9type_info11__do_upcastEPKN10__cxxabiv117__class_type_infoEPPv	lib	lib:gnustl-thumb:tinfo.o	100	by object order
+0001a5c8	18	thumb	_ZNSt9type_infoD0Ev	lib	lib:gnustl-thumb:tinfo.o	100	by object order
 0001a5e0	2c	thumb	_ZNKSt9type_infoeqERKS_	lib	lib:gnustl-thumb:tinfo.o	100	
 0001a60c	8	thumb	_ZNKSt9type_info10__do_catchEPKS_PPvj	lib	lib:gnustl-thumb:tinfo.o	100	
 0001a614	12c	thumb	_ZN9__gnu_cxx27__verbose_terminate_handlerEv	lib	lib:gnustl-thumb:vterminate.o	100	
@@ -6282,12 +6282,8 @@ addr	size	mode	name	status	src	score	note
 0020cebc	40	arm	__extendsfdf2	lib	lib:libgcc-thumb:_arm_addsubdf3.o	100	
 0020cefc	14	arm	__aeabi_ul2d	todo			
 0020cf10	60	arm	__floatdidf	lib	lib:libgcc-thumb:_arm_addsubdf3.o	100	
-0020cf70	1e0	arm	__muldf3	todo			
-0020d150	80	arm	FUN_0020d150	todo			
-0020d1d0	c	arm	FUN_0020d1d0	todo			
-0020d1dc	18c	arm	__divdf3	todo			
-0020d368	8	arm	FUN_0020d368	todo			
-0020d370	70	arm	FUN_0020d370	todo			
+0020cf70	26c	arm	__muldf3	lib	lib:libgcc-thumb:_arm_muldivdf3.o	100	
+0020d1dc	204	arm	__divdf3	lib	lib:libgcc-thumb:_arm_muldivdf3.o	100	
 0020d3e0	8	arm	__gedf2	todo			
 0020d3e8	8	arm	__ledf2	todo			
 0020d3f0	88	arm	__eqdf2	lib	lib:libgcc-thumb:_arm_cmpdf2.o	100	
@@ -6308,8 +6304,7 @@ addr	size	mode	name	status	src	score	note
 0020d800	20	arm	__floatsisf	lib	lib:libgcc-thumb:_arm_addsubsf3.o	100	
 0020d820	10	arm	__aeabi_ul2f	todo			
 0020d830	7c	arm	__aeabi_l2f	lib	lib:libgcc-thumb:_arm_addsubsf3.o	100	
-0020d8ac	18c	arm	__mulsf3	todo			
-0020da38	c	arm	FUN_0020da38	todo			
+0020d8ac	198	arm	__mulsf3	lib	lib:libgcc-thumb:_arm_muldivsf3.o	100	
 0020da44	160	arm	__divsf3	lib	lib:libgcc-thumb:_arm_muldivsf3.o	100	
 0020dba4	8	arm	__gesf2	todo			
 0020dbac	8	arm	__lesf2	todo			

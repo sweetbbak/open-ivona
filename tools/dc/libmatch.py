@@ -49,12 +49,13 @@ def libmatch(stem: str, libs: dict[str, str], verbose: bool = False) -> None:
     by_size = defaultdict(list)  # (mode, span size) -> functions
     for f in b.funcs:
         by_size[(f.mode, f.size)].append(f)
-    # Large Thumb-1 functions use `bl` as a far jump, so the splitter can cut one library
-    # function into fragments. Also offer each exidx-delimited run of unverified rows as one span;
-    # a verified hit folds the fragments back into a single row.
+    # The splitter can cut one library function into fragments (Thumb-1 `bl` far jumps, branches
+    # inside hand-written assembly). Also offer runs of unverified rows as one span; a verified hit
+    # folds the fragments back into a single row.
     merged = _merged_spans(b)
-    for m in merged.values():
-        by_size[(m.mode, m.size)].append(m)
+    for spans in merged.values():
+        for m in spans:
+            by_size[(m.mode, m.size)].append(m)
 
     # 1. candidates: (lib, member, symbol) -> Candidate ; signature hits by masked bytes
     hits: dict[int, list[tuple[str, str, str, match.Candidate]]] = defaultdict(list)
@@ -76,17 +77,23 @@ def libmatch(stem: str, libs: dict[str, str], verbose: bool = False) -> None:
                 for f in (f for pad in range(0, 9, 2) for f in by_size.get((cand.mode, n + pad), ())):
                     t = b.elf.read(f.addr, n)
                     if _masked(t, cand.relocs) == sig:
-                        hits[f.addr].append((lib, member, sym, cand, obj))
+                        hits[f.addr].append((lib, member, sym, cand, obj, f))
     print(f"{n_syms} library functions scanned, {len(hits)} target functions with a signature hit")
 
     # 2. tentatively name every hit (needed so calls between library functions resolve), then
     #    verify with the full matcher; repeat until no more changes.
     funcs = {f.addr: f for f in b.funcs}
-    merged_hits = {a for a, hs in hits.items() if any(h[3] is not None and len(h[3].code) > funcs[a].size
-                                                      for h in hs) and a in merged}
-    for a in merged_hits:  # compare against the merged span from here on
-        funcs[a] = merged[a]
-        merged[a].name = next(f.name for f in b.funcs if f.addr == a)
+    merged_hits = set()
+    for a, hs in list(hits.items()):
+        pseudo = [h for h in hs if h[5] is not funcs[a]]
+        if not pseudo or any(h[5] is funcs[a] for h in hs):
+            hits[a] = [h for h in hs if h[5] is funcs[a]]  # the row itself matched: no folding
+            continue
+        span = min((h[5] for h in pseudo), key=lambda m: m.size)  # smallest span that hit
+        hits[a] = [h for h in pseudo if h[5] is span]
+        span.name = funcs[a].name
+        funcs[a] = span  # compare against the merged span from here on
+        merged_hits.add(a)
     taken = {f.name for f in b.funcs}
     proposal: dict[int, tuple] = {}
     for addr, hs in hits.items():
@@ -139,7 +146,7 @@ def libmatch(stem: str, libs: dict[str, str], verbose: bool = False) -> None:
     for a, h in proposal.items():
         f = funcs[a]
         if a in verified:
-            lib, member, sym, cand, obj = verified[a]
+            lib, member, sym, cand, obj = verified[a][:5]
             if a in merged_hits:  # fold the fragments into the table row at a
                 row = next(r for r in b.funcs if r.addr == a)
                 inner = [r for r in b.funcs if a < r.addr < a + f.size]
@@ -241,26 +248,24 @@ def _walk(b, rows, i, step, obj, order, src, taken) -> int:
     return n
 
 
-def _merged_spans(b: Binary) -> dict[int, Func]:
-    """exidx start -> pseudo-function covering every unverified row up to the next exidx start or
-    verified row, when that run has more than one row."""
-    ex = sorted(set(exidx_starts(b)))
+def _merged_spans(b: Binary) -> dict[int, list[Func]]:
+    """Start address -> pseudo-functions covering 2, 3, ... consecutive unverified rows of one
+    mode. Runs start at an exidx start or a named (exported) row and stop before the next one."""
+    ex = set(exidx_starts(b))
     rows = sorted(b.funcs, key=lambda f: f.addr)
-    idx = {f.addr: i for i, f in enumerate(rows)}
     out = {}
-    for k, a in enumerate(ex):
-        if a not in idx or rows[idx[a]].status != "todo":
+    for i, f in enumerate(rows):
+        if f.status != "todo" or not (f.addr in ex or not f.name.startswith("FUN_")):
             continue
-        limit = ex[k + 1] if k + 1 < len(ex) else None
-        i = idx[a]
+        spans = []
         j = i + 1
-        while j < len(rows) and rows[j].status == "todo" and rows[j].mode == rows[i].mode \
-                and (limit is None or rows[j].addr < limit):
+        while j < len(rows) and rows[j].status == "todo" and rows[j].mode == f.mode \
+                and rows[j].addr not in ex and rows[j].name.startswith("FUN_") and j - i < 400:
+            end = rows[j].addr + rows[j].size
+            spans.append(Func(f.addr, end - f.addr, f.mode, f.name, "todo"))
             j += 1
-        if j - i < 2:
-            continue
-        end = rows[j - 1].addr + rows[j - 1].size
-        out[a] = Func(a, end - a, rows[i].mode, rows[i].name, "todo")
+        if spans:
+            out[f.addr] = spans
     return out
 
 
