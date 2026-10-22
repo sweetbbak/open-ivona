@@ -45,6 +45,7 @@ def _masked(code: bytes, relocs) -> bytes:
 
 
 def libmatch(stem: str, libs: dict[str, str], verbose: bool = False) -> None:
+    load_aliases(libs)
     b = Binary(stem)
     by_size = defaultdict(list)  # (mode, span size) -> functions
     for f in b.funcs:
@@ -267,6 +268,45 @@ def _merged_spans(b: Binary) -> dict[int, list[Func]]:
         if spans:
             out[f.addr] = spans
     return out
+
+
+def aliases_of(parsed) -> dict[str, set]:
+    """Global symbols of one object that share an address, as name -> other names."""
+    at = defaultdict(list)
+    for x in parsed.syms:
+        if x.defined and x.type in ("STT_FUNC", "STT_OBJECT") and x.bind != "STB_LOCAL":
+            at[(x.section, x.value)].append(x.name)
+    out = {}
+    for names in at.values():
+        for nm in names:
+            if len(names) > 1:
+                out[nm] = {n for n in names if n != nm}
+    return out
+
+
+def load_aliases(libs: dict[str, str]) -> None:
+    """Fill match.ALIASES from every archive (cached in build/libobj/aliases.json)."""
+    import json
+    cache = path("build", "libobj", "aliases.json")
+    key = sorted(libs.items())
+    if os.path.exists(cache):
+        with open(cache) as fh:
+            data = json.load(fh)
+        if data.get("libs") == key:
+            match.ALIASES.update({k: tuple(v) for k, v in data["aliases"].items()})
+            return
+    out: dict[str, set] = defaultdict(set)
+    for lib, fn in libs.items():
+        if not os.path.exists(path(fn)):
+            continue
+        for member, obj in read_ar(path(fn)):
+            for nm, als in aliases_of(match.load_object(f"{lib}:{member}", obj)).items():
+                out[nm].update(als)
+    aliases = {k: sorted(v) for k, v in out.items() if v}
+    os.makedirs(os.path.dirname(cache), exist_ok=True)
+    with open(cache, "w") as fh:
+        json.dump({"libs": key, "aliases": aliases}, fh)
+    match.ALIASES.update({k: tuple(v) for k, v in aliases.items()})
 
 
 def member_path(lib: str, member: str) -> str:

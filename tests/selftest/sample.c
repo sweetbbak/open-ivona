@@ -73,3 +73,11 @@ int apply(int which, int a, int b)
 {
     return k_ops[which & 1](a, b);
 }
+
+/* Cross-TU alias: sample_arm.c calls both names; the table keeps one name per address, so one
+   call resolves only through the alias map (libraries' C1/C2 constructors are like this). */
+__attribute__((visibility("hidden"), noinline)) int xalias_body(int x)
+{
+    return x + 11;
+}
+__attribute__((visibility("hidden"))) int xalias_other(int x) __attribute__((alias("xalias_body")));

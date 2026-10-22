@@ -98,10 +98,10 @@ addr	size	mode	name	status	src	score	note
 0001a57c	18	thumb	__cxa_pure_virtual	lib	lib:gnustl-thumb:pure.o	100	
 0001a594	18	thumb	__cxa_deleted_virtual	lib	lib:gnustl-thumb:pure.o	100	
 0001a5ac	10	thumb	_ZNSt9type_infoD2Ev	lib	lib:gnustl-thumb:tinfo.o	100	
-0001a5bc	4	thumb	_ZNKSt9type_info14__is_pointer_pEv	lib	lib:gnustl-thumb:tinfo.o	100	by object order
-0001a5c0	4	thumb	_ZNKSt9type_info15__is_function_pEv	lib	lib:gnustl-thumb:tinfo.o	100	by object order
-0001a5c4	4	thumb	_ZNKSt9type_info11__do_upcastEPKN10__cxxabiv117__class_type_infoEPPv	lib	lib:gnustl-thumb:tinfo.o	100	by object order
-0001a5c8	18	thumb	_ZNSt9type_infoD0Ev	lib	lib:gnustl-thumb:tinfo.o	100	by object order
+0001a5bc	4	thumb	_ZNKSt9type_info14__is_pointer_pEv	lib	lib:gnustl-thumb:tinfo.o	100	
+0001a5c0	4	thumb	_ZNKSt9type_info15__is_function_pEv	lib	lib:gnustl-thumb:tinfo.o	100	
+0001a5c4	4	thumb	_ZNKSt9type_info11__do_upcastEPKN10__cxxabiv117__class_type_infoEPPv	lib	lib:gnustl-thumb:tinfo.o	100	
+0001a5c8	18	thumb	_ZNSt9type_infoD0Ev	lib	lib:gnustl-thumb:tinfo.o	100	
 0001a5e0	2c	thumb	_ZNKSt9type_infoeqERKS_	lib	lib:gnustl-thumb:tinfo.o	100	
 0001a60c	8	thumb	_ZNKSt9type_info10__do_catchEPKS_PPvj	lib	lib:gnustl-thumb:tinfo.o	100	
 0001a614	12c	thumb	_ZN9__gnu_cxx27__verbose_terminate_handlerEv	lib	lib:gnustl-thumb:vterminate.o	100	

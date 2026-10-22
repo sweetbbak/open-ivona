@@ -72,8 +72,12 @@ def _run(so: str, objs: dict[str, str]) -> dict[str, match.Result]:
 
 def main() -> int:
     from dc.cli import print_result
+    from dc.libmatch import aliases_of
     fails = 0
     so, objs = _build([], "base")
+    match.ALIASES.clear()  # only the self-test objects' aliases (as libmatch does for archives)
+    for o in objs.values():
+        match.ALIASES.update({k: tuple(v) for k, v in aliases_of(match.load_object(o)).items()})
     res = _run(so, objs)
     if len(res) < 9:
         print(f"FAIL: only {len(res)} functions found in the self-test .so")

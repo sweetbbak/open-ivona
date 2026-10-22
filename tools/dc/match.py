@@ -119,6 +119,11 @@ class ObjFile:
         return [x.name for x in self.syms if x.type == "STT_FUNC" and x.defined]
 
 
+# Symbol name -> other names defined at the same address in the same library object (C1/C2, D1/D2
+# ...). Filled by libmatch.load_aliases() from the NDK archives; used for undefined references.
+ALIASES: dict[str, tuple[str, ...]] = {}
+
+
 def load_object(obj_path: str, data: bytes | None = None) -> ObjFile:
     """Parse a relocatable object once (symbols, allocated sections and their relocations)."""
     import io
@@ -368,6 +373,12 @@ class Matcher:
         if sym.type == "STT_SECTION":
             return self._expect_section(cand, sym.section, s_t, res)
         want = self.names.addr_of(sym.name)
+        if want is None and not sym.defined:
+            # defined elsewhere as an alias of a name the target table knows (library C1/C2 ...)
+            for al in ALIASES.get(sym.name, ()):
+                if self.names.addr_of(al) is not None:
+                    want = self.names.addr_of(al)
+                    break
         if want is None and sym.defined and sym.type in ("STT_FUNC", "STT_OBJECT"):
             # an alias at the same place (C1/C2, D1/D2 ...) is the same symbol
             for al in cand.syms:

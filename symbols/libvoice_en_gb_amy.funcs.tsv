@@ -1749,7 +1749,7 @@ addr	size	mode	name	status	src	score	note
 000fa2a4	c4	arm	FUN_000fa2a4	todo			
 000fa368	8	arm	FUN_000fa368	todo			
 000fa370	8	arm	FUN_000fa370	todo			
-000fa378	a8	arm	__aeabi_uidiv	todo			
+000fa378	a8	arm	__aeabi_uidiv	lib	lib:libgcc:_udivsi3.o	100	
 000fa420	20	arm	__aeabi_uidivmod	lib	lib:libgcc:_udivsi3.o	100	
 000fa440	8	arm	FUN_000fa440	todo			
 000fa448	d4	arm	FUN_000fa448	todo			

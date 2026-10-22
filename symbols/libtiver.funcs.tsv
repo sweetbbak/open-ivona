@@ -166,7 +166,7 @@ addr	size	mode	name	status	src	score	note
 0000669c	18	thumb	_ZNSsC2IN9__gnu_cxx17__normal_iteratorIPcSsEEEET_S4_RKSaIcE	lib	lib:gnustl-thumb:string-inst.o	100	
 000066b4	78	thumb	_ZNSs12_S_constructIPcEES0_T_S1_RKSaIcESt20forward_iterator_tag	lib	lib:gnustl-thumb:string-inst.o	100	
 0000672c	40	thumb	_ZNSsC2ERKSsjj	lib	lib:gnustl-thumb:string-inst.o	100	
-0000676c	24	thumb	_ZNKSs6substrEjj	lib	lib:gnustl-thumb:string-inst.o	100	by object order
+0000676c	24	thumb	_ZNKSs6substrEjj	lib	lib:gnustl-thumb:string-inst.o	100	
 00006790	3c	thumb	_ZNSsC2ERKSsjjRKSaIcE	lib	lib:gnustl-thumb:string-inst.o	100	
 000067cc	18	thumb	_ZNSsC2IPcEET_S1_RKSaIcE	lib	lib:gnustl-thumb:string-inst.o	100	
 000067e4	78	thumb	_ZNSs12_S_constructIPKcEEPcT_S3_RKSaIcESt20forward_iterator_tag	lib	lib:gnustl-thumb:string-inst.o	100	
@@ -248,16 +248,16 @@ addr	size	mode	name	status	src	score	note
 00007c94	c	thumb	_ZNKSt9bad_alloc4whatEv	lib	lib:gnustl-thumb:bad_alloc.o	100	
 00007ca0	1c	thumb	_ZNSt9bad_allocD2Ev	lib	lib:gnustl-thumb:bad_alloc.o	100	
 00007cbc	14	thumb	_ZNSt9bad_allocD0Ev	lib	lib:gnustl-thumb:bad_alloc.o	100	
-00007cd0	30	thumb	FUN_00007cd0	todo			
-00007d00	30	thumb	FUN_00007d00	todo			
-00007d30	30	thumb	FUN_00007d30	todo			
-00007d60	30	thumb	FUN_00007d60	todo			
-00007d90	5c	thumb	_ZSt19__throw_logic_errorPKc	todo			
+00007cd0	30	thumb	_ZSt21__throw_bad_exceptionv	lib	lib:gnustl-thumb:functexcept.o	100	by object order
+00007d00	30	thumb	_ZSt17__throw_bad_allocv	lib	lib:gnustl-thumb:functexcept.o	100	by object order
+00007d30	30	thumb	_ZSt16__throw_bad_castv	lib	lib:gnustl-thumb:functexcept.o	100	by object order
+00007d60	30	thumb	_ZSt18__throw_bad_typeidv	lib	lib:gnustl-thumb:functexcept.o	100	by object order
+00007d90	5c	thumb	_ZSt19__throw_logic_errorPKc	lib	lib:gnustl-thumb:functexcept.o	100	
 00007dec	5c	thumb	FUN_00007dec	todo			
 00007e48	5c	thumb	FUN_00007e48	todo			
 00007ea4	5c	thumb	_ZSt20__throw_length_errorPKc	lib	lib:gnustl-thumb:functexcept.o	100	
 00007f00	5c	thumb	_ZSt20__throw_out_of_rangePKc	lib	lib:gnustl-thumb:functexcept.o	100	
-00007f5c	5c	thumb	FUN_00007f5c	todo			
+00007f5c	5c	thumb	_ZSt21__throw_runtime_errorPKc	lib	lib:gnustl-thumb:functexcept.o	100	by object order
 00007fb8	5c	thumb	FUN_00007fb8	todo			
 00008014	5c	thumb	FUN_00008014	todo			
 00008070	5c	thumb	FUN_00008070	todo			
@@ -311,7 +311,7 @@ addr	size	mode	name	status	src	score	note
 00008a20	4	thumb	_ZNKSt11logic_error4whatEv	lib	lib:gnustl-thumb:stdexcept.o	100	
 00008a24	4	thumb	_ZNKSt13runtime_error4whatEv	lib	lib:gnustl-thumb:stdexcept.o	100	
 00008a28	4c	thumb	_ZNSt11logic_errorD2Ev	lib	lib:gnustl-thumb:stdexcept.o	100	
-00008a74	14	thumb	_ZNSt11logic_errorD0Ev	lib	lib:gnustl-thumb:stdexcept.o	100	by object order
+00008a74	14	thumb	_ZNSt11logic_errorD0Ev	lib	lib:gnustl-thumb:stdexcept.o	100	
 00008a88	18	thumb	FUN_00008a88	todo			
 00008aa0	20	thumb	FUN_00008aa0	todo			
 00008ac0	18	thumb	FUN_00008ac0	todo			
@@ -321,7 +321,7 @@ addr	size	mode	name	status	src	score	note
 00008b30	18	thumb	_ZNSt12out_of_rangeD1Ev	lib	lib:gnustl-thumb:stdexcept.o	100	
 00008b48	20	thumb	_ZNSt12out_of_rangeD0Ev	lib	lib:gnustl-thumb:stdexcept.o	100	
 00008b68	4c	thumb	_ZNSt13runtime_errorD2Ev	lib	lib:gnustl-thumb:stdexcept.o	100	
-00008bb4	14	thumb	_ZNSt13runtime_errorD0Ev	lib	lib:gnustl-thumb:stdexcept.o	100	by object order
+00008bb4	14	thumb	_ZNSt13runtime_errorD0Ev	lib	lib:gnustl-thumb:stdexcept.o	100	
 00008bc8	18	thumb	FUN_00008bc8	todo			
 00008be0	20	thumb	FUN_00008be0	todo			
 00008c00	18	thumb	FUN_00008c00	todo			
@@ -364,10 +364,10 @@ addr	size	mode	name	status	src	score	note
 00009008	c	thumb	_ZSt16generic_categoryv	lib	lib:gnustl-thumb:system_error.o	100	
 00009014	18	thumb	_ZNKSt10error_code23default_error_conditionEv	lib	lib:gnustl-thumb:system_error.o	100	
 0000902c	10	thumb	_ZNSt9type_infoD2Ev	lib	lib:gnustl-thumb:tinfo.o	100	
-0000903c	4	thumb	_ZNKSt9type_info14__is_pointer_pEv	lib	lib:gnustl-thumb:tinfo.o	100	by object order
-00009040	4	thumb	_ZNKSt9type_info15__is_function_pEv	lib	lib:gnustl-thumb:tinfo.o	100	by object order
-00009044	4	thumb	_ZNKSt9type_info11__do_upcastEPKN10__cxxabiv117__class_type_infoEPPv	lib	lib:gnustl-thumb:tinfo.o	100	by object order
-00009048	18	thumb	_ZNSt9type_infoD0Ev	lib	lib:gnustl-thumb:tinfo.o	100	by object order
+0000903c	4	thumb	_ZNKSt9type_info14__is_pointer_pEv	lib	lib:gnustl-thumb:tinfo.o	100	
+00009040	4	thumb	_ZNKSt9type_info15__is_function_pEv	lib	lib:gnustl-thumb:tinfo.o	100	
+00009044	4	thumb	_ZNKSt9type_info11__do_upcastEPKN10__cxxabiv117__class_type_infoEPPv	lib	lib:gnustl-thumb:tinfo.o	100	
+00009048	18	thumb	_ZNSt9type_infoD0Ev	lib	lib:gnustl-thumb:tinfo.o	100	
 00009060	2c	thumb	_ZNKSt9type_infoeqERKS_	lib	lib:gnustl-thumb:tinfo.o	100	
 0000908c	8	thumb	_ZNKSt9type_info10__do_catchEPKS_PPvj	lib	lib:gnustl-thumb:tinfo.o	100	
 00009094	12c	thumb	_ZN9__gnu_cxx27__verbose_terminate_handlerEv	lib	lib:gnustl-thumb:vterminate.o	100	

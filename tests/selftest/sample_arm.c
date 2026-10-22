@@ -34,3 +34,16 @@ int calls_alias_other(int x)
 {
     return alias_other(x) + 2;
 }
+
+extern int xalias_body(int x) __attribute__((visibility("hidden")));
+extern int xalias_other(int x) __attribute__((visibility("hidden")));
+
+int calls_xalias_body(int x)
+{
+    return xalias_body(x) * 3;
+}
+
+int calls_xalias_other(int x)
+{
+    return xalias_other(x) * 5;
+}

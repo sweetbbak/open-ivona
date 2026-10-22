@@ -267,8 +267,9 @@ def cmd_learn(a):
 def cmd_check(a):
     """Rebuild every TU and re-verify every function that has a source (C/C++ or library member).
     Also requires all functions of a TU to agree on where each of its data sections landed."""
-    from .libmatch import ensure_member
+    from .libmatch import ensure_member, load_aliases
     libs = project_cfg().get("libraries", {})
+    load_aliases(libs)
     bins = [a.bin] if a.only else all_bins()
     bad = 0
     for stem in bins:
