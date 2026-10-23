@@ -1162,12 +1162,12 @@ addr	size	mode	name	status	src	score	note
 000568a4	38	arm	FUN_000568a4	todo			
 000568dc	5c	arm	FUN_000568dc	todo			
 00056938	28	arm	FUN_00056938	todo			
-00056960	b4	arm	FUN_00056960	todo			
-00056a14	40	arm	hash_new	todo			
-00056a54	7c	arm	hash_free	todo			
-00056ad0	78	arm	hash_get	todo			
-00056b48	b8	arm	hash_put	todo			
-00056c00	ac	arm	hash_remove	todo			
+00056960	b4	arm	murmur_hash2	matched	src/libttsivonavoice/hash.c	100	
+00056a14	40	arm	hash_new	matched	src/libttsivonavoice/hash.c	100	
+00056a54	7c	arm	hash_free	wip	src/libttsivonavoice/hash.c	93.5	
+00056ad0	78	arm	hash_get	wip	src/libttsivonavoice/hash.c	96.7	
+00056b48	b8	arm	hash_put	wip	src/libttsivonavoice/hash.c	87.0	
+00056c00	ac	arm	hash_remove	wip	src/libttsivonavoice/hash.c	97.7	
 00056cac	58	arm	val_metric	matched	src/libttsivonavoice/metrics.c	100	
 00056d04	4	arm	val_delete_metric	matched	src/libttsivonavoice/metrics.c	100	
 00056d08	18	arm	metric_val	matched	src/libttsivonavoice/metrics.c	100	
