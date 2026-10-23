@@ -6,7 +6,9 @@
 #include "cst_alloc.h"
 #include "cst_val.h"
 #include "cst_val_defs.h"
+#include "cst_file.h"
 #include "cst_wave.h"
+#include "tts_voxdb.h"
 
 typedef struct unit_selector unit_selector;
 void unit_selector_free(unit_selector *s);
@@ -30,6 +32,28 @@ typedef struct wavesynth {
 } wavesynth;
 
 CST_VAL_USER_TYPE_DCLS(wavesynth, wavesynth)
+
+/* 0x62174 arm: writes a unit's context as a full-context label. */
+void vox_unit_print(cst_file f, const vox_unit *u)
+{
+    cst_fprintf(f, "%f  ", u->dur);
+    cst_fprintf(f, "%s^%s-%s+%s=%s@%d_%d/", u->phones[0]->name, u->phones[1]->name,
+                u->phones[2]->name, u->phones[3]->name, u->phones[4]->name, u->f18, u->f19);
+    cst_fprintf(f, "A:%d_%d_%d/", u->f1a, u->f1b, u->f1c);
+    cst_fprintf(f, "B:%d-%d-%d@%d-%d&%d-%d#%d-%d$%d-%d!%d-%d;%d-%d|%s/", u->f1d, u->f1e,
+                u->f1f[0], u->f1f[1], u->f1f[2], u->f1f[3], u->f1f[4], u->f1f[5], u->f1f[6],
+                0, 0, u->f1f[7], u->f1f[8], 0, 0, u->ph30->name);
+    cst_fprintf(f, "C:%d+%d+%d/", u->f34, u->f35, u->f36);
+    cst_fprintf(f, "D:%s_%d/", u->ph38->name, u->f3c);
+    cst_fprintf(f, "E:%s+%d@%d+%d&%d+%d#%d+%d/", u->ph40->name, u->f44, u->f45, u->f46,
+                0, 0, 0, 0);
+    cst_fprintf(f, "F:%s_%d/", u->ph48->name, u->f4c);
+    cst_fprintf(f, "G:%d_%d/", u->f4d[0], u->f4d[1]);
+    cst_fprintf(f, "H:%d=%d@%d=%d|%s/", u->f4d[2], u->f4d[3], u->f4d[4], u->f4d[5],
+                u->ph54->name);
+    cst_fprintf(f, "I:%d_%d/", u->f58, u->f59);
+    cst_fprintf(f, "J:%d+%d-%d/", 0, 0, 0);
+}
 
 /* 0x628e4 arm: speaking style by name (0: generic). */
 int speaking_style_id(const char *name)
