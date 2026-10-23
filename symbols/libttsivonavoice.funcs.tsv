@@ -1359,7 +1359,7 @@ addr	size	mode	name	status	src	score	note
 0005f36c	4	arm	val_delete_diphonedb	matched	src/libttsivonavoice/voxdb.c	100	
 0005f370	36c	arm	voice_load_diphonedb	wip	src/libttsivonavoice/voxdb.c	25.2	
 0005f6dc	2c	arm	diphonedb_unit_flag	matched	src/libttsivonavoice/voxdb.c	100	
-0005f708	464	arm	FUN_0005f708	todo			
+0005f708	464	arm	vox_decoder_read_unit	wip	src/libttsivonavoice/voxdb.c	13.3	
 0005fb6c	30	arm	utt_diphonedb_extra	matched	src/libttsivonavoice/voxdb.c	100	
 0005fb9c	24	arm	select_cand_cmp_cost	matched	src/libttsivonavoice/voxdb.c	100	
 0005fbc0	24	arm	select_cand_cmp_8	todo			
@@ -1433,13 +1433,13 @@ addr	size	mode	name	status	src	score	note
 00063f5c	154	arm	FUN_00063f5c	todo			
 000640b0	58	arm	val_track	todo			flite strings(1) 0%
 00064108	18	arm	track_val	todo			flite order 83%
-00064120	20	arm	FUN_00064120	todo			
+00064120	20	arm	new_track	todo			
 00064140	54	arm	FUN_00064140	todo			
 00064194	4	arm	val_delete_track	todo			
-00064198	8c	arm	FUN_00064198	todo			
-00064224	24	arm	FUN_00064224	todo			
-00064248	18	arm	FUN_00064248	todo			
-00064260	20	arm	FUN_00064260	todo			
+00064198	8c	arm	track_resize	todo			
+00064224	24	arm	track_frame_alloc	todo			
+00064248	18	arm	track_frame_start	todo			
+00064260	20	arm	track_frame_len	todo			
 00064280	98	arm	FUN_00064280	todo			
 00064318	bc	arm	FUN_00064318	todo			
 000643d4	48	arm	FUN_000643d4	todo			

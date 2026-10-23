@@ -86,7 +86,7 @@ typedef struct vox_db {
     void (*close)(vox_decoder *d);      /* +0x4c */
     void *decode;               /* +0x50 */
     void *decode2;              /* +0x54 */
-    int unk_58;
+    int pad_samples;            /* +0x58 */
     const unsigned char *sec2;  /* +0x5c */
     unsigned int sec2_size;     /* +0x60 */
     int sec12;                  /* +0x64 */
@@ -180,6 +180,27 @@ typedef struct unit_selector {
 float acoustic_stub_1(const void *a, const void *b, int x);
 
 int ivona_is_dir(const char *path);
+int ivona_time_usec(void);
+float metrics_add_time(cst_features *metrics, const char *name, int usec);
+
+/* decoded unit audio: frames of samples (IVONA's "track") */
+typedef struct track {
+    int flag;
+    int sample_rate;            /* +0x04 */
+    int unk_8;
+    unsigned int *ends;         /* +0x0c: cumulative sample counts */
+    short **frames;             /* +0x10 */
+} track;
+
+track *new_track(void);
+void track_resize(track *t, int n);
+void track_frame_alloc(track *t, int i, int len);
+int track_frame_start(const track *t, int i);
+int track_frame_len(const track *t, int i);
+
+typedef track *(*vox_decode_fn)(vox_decoder *d, const unsigned char *data, unsigned int size);
+typedef int (*vox_decode2_fn)(vox_decoder *d, const unsigned char *data, unsigned int size,
+                              int n_packets, short *out, int n_samples);
 cst_val *FUN_00067fec(const unsigned char **tables);
 cst_val *dynamic_voxdbs_val(const dynamic_voxdbs *v);
 dynamic_voxdbs *dynamic_voxdbs_new(diphonedb *a);
@@ -695,13 +716,109 @@ fail:
 }
 
 /* 0x5f6dc arm */
-int diphonedb_unit_flag(const dynamic_voxdbs *dv, int x)
+int diphonedb_unit_flag(const vox_decoder *dec, int x)
 {
-    const unsigned int *u = (const unsigned int *)dv->a->units;
+    const unsigned int *u = (const unsigned int *)dec->db->sec11;
 
     if (u == NULL || *u == 0)
         return 0;
     return x == 3;
+}
+
+/* 0x5f708 arm: reads and decodes unit i; m (optional) collects read and decode times. */
+track *vox_decoder_read_unit(vox_decoder *dec, unsigned int i, cst_features *m)
+{
+    const vox_db *db = dec->db;
+    const unsigned int *ext;
+    const unsigned char *buf, *data, *p;
+    unsigned char *fbuf, *dbuf = NULL;
+    unsigned int off, size, hdr, data_off, data_size;
+    int n, n_samples, n_packets, t0, t1, rt, r, k;
+    short *out;
+    track *w;
+
+    if (i >= db->sec1_size / 8)
+        return NULL;
+    ext = (const unsigned int *)db->sec1;
+    off = ext[2 * i];
+    size = ext[2 * i + 1];
+    if (off == 0 && size == 0)
+        return NULL;
+    if (dec->fp) {
+        fbuf = cst_safe_calloc(size, 1);
+        t0 = m ? ivona_time_usec() : 0;
+        cst_fseek(dec->fp, off, CST_SEEK_ABSOLUTE);
+        if (cst_fread(dec->fp, fbuf, 1, size) != (long)size) {
+            cst_free(fbuf);
+            return NULL;
+        }
+        buf = fbuf;
+    } else {
+        buf = db->data + off;
+        t0 = 0;
+    }
+    if (m)
+        metrics_add_time(m, "diphonedb_read_time", ivona_time_usec() - t0);
+    if (db->decode2 == NULL) {
+        if (m) {
+            t1 = ivona_time_usec();
+            w = ((vox_decode_fn)db->decode)(dec, buf, size);
+            metrics_add_time(m, "diphonedb_decode_time", ivona_time_usec() - t1);
+        } else
+            w = ((vox_decode_fn)db->decode)(dec, buf, size);
+    } else {
+        t1 = m ? ivona_time_usec() : 0;
+        w = NULL;
+        if (size >= 2 && (n = buf[0] | buf[1] << 8, hdr = (n + 6) * 2, size >= hdr)) {
+            p = buf + 2;
+            n_samples = p[hdr - 14] | p[hdr - 13] << 8;
+            n_packets = p[hdr - 12] | p[hdr - 11] << 8;
+            data_off = p[hdr - 10] | p[hdr - 9] << 8 | p[hdr - 8] << 16 | p[hdr - 7] << 24;
+            data_size = p[hdr - 6] | p[hdr - 5] << 8 | p[hdr - 4] << 16 | p[hdr - 3] << 24;
+            out = cst_safe_alloc(n_samples + db->pad_samples, sizeof(short));
+            rt = m ? ivona_time_usec() : 0;
+            if (dec->fp) {
+                dbuf = cst_safe_alloc(data_size, 1);
+                cst_fseek(dec->fp, data_off, CST_SEEK_ABSOLUTE);
+                if (cst_fread(dec->fp, dbuf, 1, data_size) != (long)data_size) {
+                    cst_errmsg("**Error: voxdb read\n");
+                    goto cleanup;
+                }
+                data = dbuf;
+            } else
+                data = db->data + data_off;
+            if (m) {
+                rt = ivona_time_usec() - rt;
+                metrics_add_time(m, "diphonedb_read_time", rt);
+            }
+            r = ((vox_decode2_fn)db->decode2)(dec, data, data_size, n_packets, out, n_samples);
+            if (r == 0) {
+                w = new_track();
+                track_resize(w, n);
+                for (k = 0; k < n; k++) {
+                    w->ends[k] = p[0] | p[1] << 8;
+                    p += 2;
+                    track_frame_alloc(w, k, track_frame_len(w, k));
+                    memcpy(w->frames[k], out + track_frame_start(w, k),
+                           track_frame_len(w, k) * sizeof(short));
+                }
+            }
+cleanup:
+            if (dec->fp)
+                cst_free(dbuf);
+            cst_free(out);
+            if (m)
+                metrics_add_time(m, "diphonedb_decode_time", ivona_time_usec() - t1 - rt);
+        }
+    }
+    if (w) {
+        w->sample_rate = db->sample_rate;
+        if (diphonedb_unit_flag(dec, w->unk_8))
+            w->flag = 1;
+    }
+    if (dec->fp)
+        cst_free((void *)buf);
+    return w;
 }
 
 /* 0x5fb6c arm */
