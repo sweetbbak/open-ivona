@@ -186,7 +186,11 @@ def symbol_for(ident: str, defined: set[str] | None) -> str | None:
 def adopt_names(b: Binary, src: str, defined: set[str] | None = None) -> None:
     """A `/* 0xADDR ...` comment directly above a function definition is authoritative: the table
     entry at ADDR gets the function's name (so a reset table can always be rebuilt from source).
-    `defined` (the compiled object's function symbols) maps C++ identifiers to mangled names."""
+    `defined` (the compiled object's function symbols) maps C++ identifiers to mangled names.
+    Only sources of this binary (src/<bin>/...) carry its addresses: a TU shared with another
+    binary (libvoice reusing the engine's Flite files) adopts nothing."""
+    if not src.startswith(f"src/{b.stem}/"):
+        return
     text = open(path(src)).read()
     by_addr = {f.addr: f for f in b.funcs}
     used = {f.name for f in b.funcs}
