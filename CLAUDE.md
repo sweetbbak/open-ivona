@@ -150,3 +150,16 @@ Read README.md first. The rules below are what keeps the project deterministic.
     stored and reloaded on the stack (`dict_parse`). `= {0}` gets scalarized.
   - A one-byte local whose address is passed (`strbuf_append(b, &c, 1)`) that shares one stack slot
     across several copies of the same code is a function-scope variable, not an inline helper's.
+  - Some IVONA TUs are built with `-fno-inline` (acoustic.c, voxdb.c, track.c). The tell: a
+    `val_delete_X` that is a lone `b delete_X`, or a `return 0` stub called with `bl`. Check
+    this before fighting a function whose small callees aren't inlined.
+  - A loop fully unrolled into an if-chain with one shared epilogue (`mov r0, #i; b common`) means
+    `-O3`'s early complete unrolling. Add `-fno-inline-functions` if the TU's static helpers stay
+    out of line (cst_ffeature.c).
+  - A missing tail call can come from a non-void function that falls off the end on that path
+    (`blacklist_add` returns `val_append(...)` on one path and nothing after `feat_set`).
+  - Paired `ldm`/`stm` copies of a few words are struct assignments (`d->extra = db->extra`).
+  - An `x & 0xc0`-free continuation test that stays as `tst #0x80` + `cmp #0xbf` needs two
+    separate `if`s on a byte local. A single condition gets merged into a range check.
+  - A `char` store forces later loads through any `char *` to be repeated. A value loaded once
+    and used twice in the binary was read into a local first (`c = p[0xd]; u->a = c >> 4; ...`).
