@@ -48,6 +48,7 @@ Read README.md first. The rules below are what keeps the project deterministic.
   | Expat 2.2.0 | ~0x19f000–0x1c9000 | `-O0`, asserts kept (no `-DNDEBUG`) |
   | libcurl 7.52.1 | ~0x1cb000–0x1f1000 (+ cold statics at 0x18924) | engine ARM `-O2`, unsigned char, symbol hiding, no SSL/IPv6/cookies/proxy/crypto-auth |
   | PCRE 8.37 | 0x72000–0xe0a00 (with other code) | `-O0`, UTF + UCP; `real_pcre` is 8 bytes larger than upstream (unexplained) |
+  | SILK SDK 1.0.8 (fixed point) | 0x202cac–0x20cb08 (complete) | engine ARM flags with `-O3` (the SDK Makefile's); vox codec 14 |
 
   Vendored archives are offered only to the binaries listed in their recipe.
 
@@ -56,8 +57,7 @@ Read README.md first. The rules below are what keeps the project deterministic.
     with the engine's ARM `-O2` flags. It's an older revision than xiph master:
     `codec_setup_info` is 0xcb0 bytes (master 0xca8) and `vorbis_comment_clear` has no NULL check.
     With master, 24 functions are byte-identical.
-  - Very likely the **SILK SDK 1.0.8** decoder (vox codec 14, which the Android voices use) after
-    it: `"1.0.8"` getter at 0x20324c, decoder size 0x3570 at 0x202cac, decode at 0x202cc4.
+    Its MDCT code reaches 0x202c88, just before SILK.
   - Unoptimized code before Tremor (~0x1f1000) is still unidentified.
   - Static functions are per object: a table row named `name@member` (e.g.
     `constant_time_is_zero@rsa_pk1`) is that object's copy. The matcher accepts `name` or `name@…`
@@ -66,7 +66,11 @@ Read README.md first. The rules below are what keeps the project deterministic.
     another library inside a library's block is dropped (tiny `-O0` setters are byte-identical
     across libraries). Every library row is re-verified to a fixed point. So it never leaves a row
     `dc check` rejects.
-  - Merged spans also start at rows with a prologue (`-O0` switch tables split functions).
+  - Merged spans also start at rows with a prologue (`-O0` switch tables split functions). The
+    reverse also works: a row that holds two functions (gold merges identical adjacent
+    `.ARM.exidx` entries, hiding a tail-called neighbour) is offered up to an inner `push {..., lr}`,
+    split tentatively so the tail call's target gets an auto name, and split for good if it
+    verifies.
   - `./dc diff FUNC -s lib:<lib>:<member> [--sym NAME]` diffs a todo function against a library
     member. That's how every configure option above was found (struct offsets, missing calls).
 - **Renaming.** `./dc rename` rewrites sources only for placeholder names (`FUN_`/`D_`); pass

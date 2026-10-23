@@ -141,9 +141,15 @@ def _sources_expat(tree: str) -> list[tuple]:
     return [(f"lib/{f}", incs, ".") for f in ("xmlparse.c", "xmlrole.c", "xmltok.c")]
 
 
+def _sources_silk(tree: str) -> list[tuple]:
+    """SILK SDK: every src/*.c, compiled from src/ against interface/ (as the SDK's Makefile)."""
+    files = sorted(f for f in os.listdir(os.path.join(tree, "src")) if f.endswith(".c"))
+    return [(f"src/{f}", ["-I../interface", "-I."]) for f in files]
+
+
 PREPARE = {"openssl": _prepare_openssl, "autoconf": _prepare_autoconf}
 SOURCES = {"openssl-libcrypto": _sources_openssl_libcrypto, "curl-lib": _sources_curl_lib, "pcre": _sources_pcre,
-           "expat": _sources_expat}
+           "expat": _sources_expat, "silk": _sources_silk}
 
 
 def build(stem: str, lib: str) -> None:

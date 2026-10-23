@@ -63,3 +63,11 @@ expat:
   sources: expat
   remove: [-fsigned-char, -DNDEBUG]
   flags: [-marm, -O0, -fno-omit-frame-pointer]
+silk:
+  # SILK SDK 1.0.8 fixed-point decoder: vox codec 14, used by the Android voices
+  # (docs/notes/vox-codecs.md). The engine's ARM flags but -O3, as in the SDK's Makefile: at -O2
+  # SKP_Silk_lin2log (0x204448), SKP_Silk_biquad and SKP_Silk_CNG_Reset differ in inlining.
+  binaries: [libttsivonavoice]
+  src: external/silk-sdk-fix-1.0.8
+  sources: silk
+  flags: [-marm, -O3, -fstrict-aliasing, -funswitch-loops, -finline-limit=300]  # SDK Makefile: -O3

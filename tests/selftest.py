@@ -187,6 +187,21 @@ def main() -> int:
     else:
         print("ok   prologue detection (push / -O0 leaf str fp) for merged library spans")
 
+    # libmatch prefix spans: a row holding two functions is offered up to the inner prologue.
+    from dc.libmatch import _prefix_spans
+
+    class _Elf2:
+        words = {0x100: 0xe92d4010, 0x104: 0xe1a04000, 0x108: 0xe8bd8010, 0x10c: 0xe92d4070,
+                 0x110: 0xe92d0030, 0x114: 0xe12fff1e}  # push {r4,lr} ... pop; push {r4-r6,lr}; push {r4,r5}
+        u32 = staticmethod(lambda a: _Elf2.words[a])
+    fake2 = type("B", (), {"elf": _Elf2, "funcs": [Func(0x100, 0x18, "arm", "FUN_00000100", "todo")]})()
+    got = [(m.addr, m.size) for m in _prefix_spans(fake2)]
+    if got != [(0x100, 0xc)]:  # only push-with-lr counts as a prologue
+        fails += 1
+        print(f"FAIL: _prefix_spans gave {got}")
+    else:
+        print("ok   libmatch offers a row's prefix up to an inner prologue (under-split rows)")
+
     # Mutations: build the *target* differently; candidates from the clean build must fail in
     # exactly the functions whose code or referenced data changed.
     mutations = [

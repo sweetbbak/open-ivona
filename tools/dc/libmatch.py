@@ -58,6 +58,11 @@ def libmatch(stem: str, libs: dict[str, str], verbose: bool = False) -> None:
     for spans in merged.values():
         for m in spans:
             by_size[(m.mode, m.size)].append(m)
+    # The splitter can also miss a boundary (gold merges identical adjacent .ARM.exidx entries, so
+    # a tail-called neighbour shares its predecessor's row). Offer a row's prefix up to an inner
+    # prologue; a verified hit splits the row there.
+    for m in _prefix_spans(b):
+        by_size[(m.mode, m.size)].append(m)
 
     # 1. candidates: (lib, member, symbol) -> Candidate ; signature hits by masked bytes
     hits: dict[int, list[tuple[str, str, str, match.Candidate]]] = defaultdict(list)
@@ -87,6 +92,7 @@ def libmatch(stem: str, libs: dict[str, str], verbose: bool = False) -> None:
     #    verify with the full matcher; repeat until no more changes.
     funcs = {f.addr: f for f in b.funcs}
     merged_hits = set()
+    splits: dict[int, tuple[Func, Func]] = {}  # row addr -> (row, tentative remainder row)
     for a, hs in list(hits.items()):
         pseudo = [h for h in hs if h[5] is not funcs[a]]
         if not pseudo or any(h[5] is funcs[a] for h in hs):
@@ -95,8 +101,15 @@ def libmatch(stem: str, libs: dict[str, str], verbose: bool = False) -> None:
         span = min((h[5] for h in pseudo), key=lambda m: m.size)  # smallest span that hit
         hits[a] = [h for h in pseudo if h[5] is span]
         span.name = funcs[a].name
+        if span.size < funcs[a].size:  # tentative split: the remainder gets an auto name
+            row = funcs[a]
+            rem = Func(a + span.size, row.size - span.size, row.mode, f"FUN_{a + span.size:08x}", "todo")
+            b.funcs.append(rem)
+            splits[a] = (row, rem)
         funcs[a] = span  # compare against the merged span from here on
         merged_hits.add(a)
+    b.funcs.sort(key=lambda r: r.addr)
+    b.__dict__.pop("names", None)
     taken = {f.name for f in b.funcs}
     proposal: dict[int, tuple] = {}
     for addr, hs in hits.items():
@@ -132,15 +145,17 @@ def libmatch(stem: str, libs: dict[str, str], verbose: bool = False) -> None:
         funcs[a].name = old_names[a]
         b.__dict__.pop("names", None)
     verified = verify_fixed_point(proposal, lambda a, h: match.Matcher(b).compare(funcs[a], h[3]).matched, revert)
-    folded = 0
+    folded = split = 0
     for a, h in proposal.items():
         f = funcs[a]
         if a in verified:
             lib, member, sym, cand, obj = verified[a][:5]
-            if a in merged_hits:  # fold the fragments into the table row at a
+            if a in merged_hits:  # fold the fragments into the table row at a, or split it
                 row = next(r for r in b.funcs if r.addr == a)
                 inner = [r for r in b.funcs if a < r.addr < a + f.size]
                 b.funcs = [r for r in b.funcs if not (a < r.addr < a + f.size)]
+                if a in splits:  # keep the tentative remainder row
+                    split += 1
                 row.size, row.name = f.size, f.name
                 f = row
                 folded += len(inner)
@@ -148,6 +163,10 @@ def libmatch(stem: str, libs: dict[str, str], verbose: bool = False) -> None:
             _save_member(lib, member, obj)
         else:
             f.name = old_names[a]
+            if a in splits:  # undo the tentative split
+                row, rem = splits[a]
+                b.funcs = [r for r in b.funcs if r is not rem]
+                b.__dict__.pop("names", None)
             if verbose:
                 print(f"signature hit {a:#x} {h[2]} failed full verification")
     b.save()
@@ -156,6 +175,8 @@ def libmatch(stem: str, libs: dict[str, str], verbose: bool = False) -> None:
         by_lib[h[0]] += 1
     if folded:
         print(f"folded {folded} split fragments back into verified library functions")
+    if split:
+        print(f"split {split} rows that held two functions")
     n_nb = _neighbour_pass(b, libs)
     if n_nb:
         b.save()
@@ -436,6 +457,18 @@ def _walk(b, rows, i, step, obj, order, src, taken) -> int:
             break
         j += step
     return n
+
+
+def _prefix_spans(b: Binary) -> list[Func]:
+    """Pseudo-functions covering a todo ARM row up to each inner prologue (`push {..., lr}`)."""
+    out = []
+    for f in b.funcs:
+        if f.status != "todo" or f.mode != "arm" or f.size < 16:
+            continue
+        for off in range(8, f.size, 4):
+            if (b.elf.u32(f.addr + off) & 0xffff4000) == 0xe92d4000:
+                out.append(Func(f.addr, off, f.mode, f.name, "todo"))
+    return out
 
 
 def _has_prologue(b: Binary, f: Func) -> bool:

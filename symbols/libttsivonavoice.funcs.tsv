@@ -307,6 +307,8 @@ addr	size	mode	name	status	src	score	note
 00028c40	58	arm	FUN_00028c40	todo			
 00028c98	6c	arm	FUN_00028c98	todo			
 00028d04	30	arm	FUN_00028d04	todo			
+00028d10	24	arm	FUN_00028d10	todo			
+00028d10	24	arm	FUN_00028d10	todo			
 00028d34	268	arm	FUN_00028d34	todo			
 00028f9c	30	arm	FUN_00028f9c	todo			
 00028fcc	dc	arm	FUN_00028fcc	todo			
@@ -348,6 +350,8 @@ addr	size	mode	name	status	src	score	note
 0002d320	1b8	arm	FUN_0002d320	todo			
 0002d4d8	9c	arm	FUN_0002d4d8	todo			
 0002d574	1a8	arm	FUN_0002d574	todo			
+0002d57c	1a0	arm	FUN_0002d57c	todo			
+0002d57c	1a0	arm	FUN_0002d57c	todo			
 0002d71c	18	arm	FUN_0002d71c	todo			
 0002d734	64	arm	FUN_0002d734	todo			
 0002d798	e0	arm	FUN_0002d798	todo			
@@ -458,10 +462,14 @@ addr	size	mode	name	status	src	score	note
 00037ba4	4c	arm	FUN_00037ba4	todo			
 00037bf0	1e0	arm	FUN_00037bf0	todo			
 00037dd0	2b4	arm	tts_dict_save	todo			
+00037dd8	2ac	arm	FUN_00037dd8	todo			
+00037dd8	2ac	arm	FUN_00037dd8	todo			
 00038084	268	arm	FUN_00038084	todo			
 000382ec	830	arm	FUN_000382ec	todo			
 00038b1c	64	arm	FUN_00038b1c	todo			
 00038b80	208	arm	tts_dict_load	todo			
+00038b88	200	arm	FUN_00038b88	todo			
+00038b88	200	arm	FUN_00038b88	todo			
 00038d88	64	arm	FUN_00038d88	todo			
 00038dec	c	arm	FUN_00038dec	todo			
 00038df8	74	arm	FUN_00038df8	todo			
@@ -540,6 +548,8 @@ addr	size	mode	name	status	src	score	note
 0003d648	224	arm	FUN_0003d648	todo			
 0003d86c	134	arm	tts_voice_param	wip	src/libttsivonavoice/voice_param_api.c	51.8	
 0003d9a0	f8	arm	FUN_0003d9a0	todo			
+0003d9ac	ec	arm	FUN_0003d9ac	todo			
+0003d9ac	ec	arm	FUN_0003d9ac	todo			
 0003da98	124	arm	FUN_0003da98	todo			
 0003dbbc	4	arm	FUN_0003dbbc	todo			
 0003dbc0	64	arm	FUN_0003dbc0	todo			
@@ -552,6 +562,8 @@ addr	size	mode	name	status	src	score	note
 0003dfc8	5f4	arm	FUN_0003dfc8	todo			
 0003e5bc	2d0	arm	tts_streamer_start	todo			
 0003e88c	38c	arm	tts_streamer_add_voice	todo			
+0003e894	384	arm	FUN_0003e894	todo			
+0003e894	384	arm	FUN_0003e894	todo			
 0003ec18	c0	arm	tts_streamer_stop	todo			
 0003ecd8	5d8	arm	tts_streamer_synth0	todo			
 0003f2b0	98	arm	tts_wave_delete	todo			
@@ -568,10 +580,14 @@ addr	size	mode	name	status	src	score	note
 000405e8	c8	arm	FUN_000405e8	todo			
 000406b0	70	arm	FUN_000406b0	todo			
 00040720	944	arm	tts_load_voice	todo			
+00040728	93c	arm	FUN_00040728	todo			
+00040728	93c	arm	FUN_00040728	todo			
 00041064	f0	arm	tts_unload_voice	todo			
 00041154	84	arm	tts_pls_unload	todo			
 000411d8	110	arm	FUN_000411d8	todo			
 000412e8	1b8	arm	tts_pls_load	todo			
+000412f0	1b0	arm	FUN_000412f0	todo			
+000412f0	1b0	arm	FUN_000412f0	todo			
 000414a0	24	arm	tts_voice_sample_rate	todo			
 000414c4	7c	arm	FUN_000414c4	todo			
 00041540	18c	arm	FUN_00041540	todo			
@@ -590,10 +606,14 @@ addr	size	mode	name	status	src	score	note
 00042598	4b8	arm	FUN_00042598	todo			
 00042a50	60	arm	FUN_00042a50	todo			
 00042ab0	efc	arm	FUN_00042ab0	todo			
+00042abc	ef0	arm	FUN_00042abc	todo			
+00042abc	ef0	arm	FUN_00042abc	todo			
 000439ac	c0	arm	FUN_000439ac	todo			
 00043a6c	78	arm	FUN_00043a6c	todo			
 00043ae4	180	arm	FUN_00043ae4	todo			
 00043c64	220	arm	FUN_00043c64	todo			
+00043c6c	218	arm	FUN_00043c6c	todo			
+00043c6c	218	arm	FUN_00043c6c	todo			
 00043e84	33c	arm	FUN_00043e84	todo			
 000441c0	20	arm	FUN_000441c0	todo			
 000441e0	c8	arm	FUN_000441e0	todo			
@@ -672,6 +692,8 @@ addr	size	mode	name	status	src	score	note
 000470a4	30	arm	FUN_000470a4	todo			
 000470d4	58	arm	FUN_000470d4	todo			
 0004712c	50	arm	FUN_0004712c	todo			
+00047134	48	arm	FUN_00047134	todo			
+00047134	48	arm	FUN_00047134	todo			
 0004717c	1f8	arm	FUN_0004717c	todo			
 00047374	f4	arm	FUN_00047374	todo			
 00047468	238	arm	FUN_00047468	todo			
@@ -687,6 +709,8 @@ addr	size	mode	name	status	src	score	note
 000479c8	34	arm	FUN_000479c8	todo			
 000479fc	9c	arm	FUN_000479fc	todo			
 00047a98	80	arm	FUN_00047a98	todo			
+00047aa0	78	arm	FUN_00047aa0	todo			
+00047aa0	78	arm	FUN_00047aa0	todo			
 00047b18	28	arm	FUN_00047b18	todo			
 00047b40	8c	arm	FUN_00047b40	todo			
 00047bcc	120	arm	FUN_00047bcc	todo			
@@ -713,6 +737,8 @@ addr	size	mode	name	status	src	score	note
 00048818	3c	arm	FUN_00048818	todo			
 00048854	34	arm	FUN_00048854	todo			
 00048888	34	arm	charset_supported	todo			
+00048890	2c	arm	FUN_00048890	todo			
+00048890	2c	arm	FUN_00048890	todo			
 000488bc	c88	arm	FUN_000488bc	todo			
 00049544	90	arm	FUN_00049544	todo			
 000495d4	58	arm	FUN_000495d4	todo			
@@ -905,6 +931,8 @@ addr	size	mode	name	status	src	score	note
 00051308	a0	arm	FUN_00051308	todo			
 000513a8	24	arm	FUN_000513a8	todo			
 000513cc	a0	arm	FUN_000513cc	todo			
+000513d4	98	arm	FUN_000513d4	todo			
+000513d4	98	arm	FUN_000513d4	todo			
 0005146c	94	arm	FUN_0005146c	todo			
 00051500	158	arm	FUN_00051500	todo			
 00051658	1c	arm	FUN_00051658	todo			
@@ -1225,6 +1253,8 @@ addr	size	mode	name	status	src	score	note
 00059134	40	arm	FUN_00059134	todo			
 00059174	58	arm	FUN_00059174	todo			
 000591cc	b0	arm	FUN_000591cc	todo			
+000591d4	a8	arm	FUN_000591d4	todo			
+000591d4	a8	arm	FUN_000591d4	todo			
 0005927c	18	arm	FUN_0005927c	todo			
 00059294	2c	arm	FUN_00059294	todo			
 000592c0	8c	arm	FUN_000592c0	todo			
@@ -1261,6 +1291,8 @@ addr	size	mode	name	status	src	score	note
 00059f58	bc	arm	FUN_00059f58	todo			
 0005a014	88	arm	FUN_0005a014	todo			
 0005a09c	38	arm	FUN_0005a09c	todo			
+0005a0a4	30	arm	FUN_0005a0a4	todo			
+0005a0a4	30	arm	FUN_0005a0a4	todo			
 0005a0d4	ac	arm	FUN_0005a0d4	todo			
 0005a180	1c	arm	FUN_0005a180	todo			
 0005a19c	f4	arm	FUN_0005a19c	todo			
@@ -1457,6 +1489,8 @@ addr	size	mode	name	status	src	score	note
 000663b4	1cc	arm	FUN_000663b4	todo			
 00066580	20	arm	FUN_00066580	todo			
 000665a0	38	arm	FUN_000665a0	todo			
+000665a8	30	arm	FUN_000665a8	todo			
+000665a8	30	arm	FUN_000665a8	todo			
 000665d8	10	arm	FUN_000665d8	todo			
 000665e8	90	arm	FUN_000665e8	todo			
 00066678	80	arm	FUN_00066678	todo			
@@ -1596,6 +1630,8 @@ addr	size	mode	name	status	src	score	note
 00071794	154	arm	FUN_00071794	todo			
 000718e8	8	arm	FUN_000718e8	todo			
 000718f0	64	arm	FUN_000718f0	todo			
+000718f8	5c	arm	FUN_000718f8	todo			
+000718f8	5c	arm	FUN_000718f8	todo			
 00071954	8	arm	FUN_00071954	todo			
 0007195c	1ac	arm	FUN_0007195c	todo			
 00071b08	84	arm	FUN_00071b08	todo			
@@ -4937,24 +4973,24 @@ addr	size	mode	name	status	src	score	note
 001a0bd4	28	arm	XML_GetBase	lib	lib:expat:lib__xmlparse.o	100	
 001a0bfc	28	arm	XML_GetIdAttributeIndex	lib	lib:expat:lib__xmlparse.o	100	
 001a0c24	28	arm	FUN_001a0c24	todo			
-001a0c4c	3c	arm	XML_SetElementHandler	lib	lib:expat:lib__xmlparse.o	100	by object order
-001a0c88	2c	arm	XML_SetStartElementHandler	lib	lib:expat:lib__xmlparse.o	100	by object order
+001a0c4c	3c	arm	XML_SetElementHandler	lib	lib:expat:lib__xmlparse.o	100	
+001a0c88	2c	arm	XML_SetStartElementHandler	lib	lib:expat:lib__xmlparse.o	100	
 001a0cb4	2c	arm	XML_SetEndElementHandler	lib	lib:expat:lib__xmlparse.o	100	
 001a0ce0	2c	arm	XML_SetCharacterDataHandler	lib	lib:expat:lib__xmlparse.o	100	
 001a0d0c	2c	arm	XML_SetProcessingInstructionHandler	lib	lib:expat:lib__xmlparse.o	100	
 001a0d38	2c	arm	XML_SetCommentHandler	lib	lib:expat:lib__xmlparse.o	100	
 001a0d64	3c	arm	XML_SetCdataSectionHandler	lib	lib:expat:lib__xmlparse.o	100	
-001a0da0	2c	arm	XML_SetStartCdataSectionHandler	lib	lib:expat:lib__xmlparse.o	100	by object order
+001a0da0	2c	arm	XML_SetStartCdataSectionHandler	lib	lib:expat:lib__xmlparse.o	100	
 001a0dcc	2c	arm	XML_SetEndCdataSectionHandler	lib	lib:expat:lib__xmlparse.o	100	
 001a0df8	38	arm	XML_SetDefaultHandler	lib	lib:expat:lib__xmlparse.o	100	
 001a0e30	38	arm	XML_SetDefaultHandlerExpand	lib	lib:expat:lib__xmlparse.o	100	
-001a0e68	3c	arm	FUN_001a0e68	todo			
-001a0ea4	2c	arm	FUN_001a0ea4	todo			
-001a0ed0	2c	arm	FUN_001a0ed0	todo			
+001a0e68	3c	arm	XML_SetDoctypeDeclHandler	lib	lib:expat:lib__xmlparse.o	100	
+001a0ea4	2c	arm	XML_SetStartDoctypeDeclHandler	lib	lib:expat:lib__xmlparse.o	100	
+001a0ed0	2c	arm	XML_SetEndDoctypeDeclHandler	lib	lib:expat:lib__xmlparse.o	100	
 001a0efc	2c	arm	XML_SetUnparsedEntityDeclHandler	lib	lib:expat:lib__xmlparse.o	100	
 001a0f28	2c	arm	XML_SetNotationDeclHandler	lib	lib:expat:lib__xmlparse.o	100	
-001a0f54	3c	arm	FUN_001a0f54	todo			
-001a0f90	2c	arm	FUN_001a0f90	todo			
+001a0f54	3c	arm	XML_SetNamespaceDeclHandler	lib	lib:expat:lib__xmlparse.o	100	
+001a0f90	2c	arm	XML_SetStartNamespaceDeclHandler	lib	lib:expat:lib__xmlparse.o	100	
 001a0fbc	2c	arm	XML_SetEndNamespaceDeclHandler	lib	lib:expat:lib__xmlparse.o	100	
 001a0fe8	2c	arm	XML_SetNotStandaloneHandler	lib	lib:expat:lib__xmlparse.o	100	
 001a1014	2c	arm	XML_SetExternalEntityRefHandler	lib	lib:expat:lib__xmlparse.o	100	
@@ -5068,7 +5104,7 @@ addr	size	mode	name	status	src	score	note
 001aec0c	260	arm	build_node@xmlparse	lib	lib:expat:lib__xmlparse.o	100	
 001aee6c	d4	arm	FUN_001aee6c	todo			
 001aef40	100	arm	FUN_001aef40	todo			
-001af040	28	arm	isNever@xmltok	lib	lib:expat:lib__xmltok.o	100	by object order
+001af040	28	arm	isNever@xmltok	lib	lib:expat:lib__xmltok.o	100	
 001af068	a8	arm	utf8_isName2@xmltok	lib	lib:expat:lib__xmltok.o	100	
 001af110	c4	arm	utf8_isName3@xmltok	lib	lib:expat:lib__xmltok.o	100	
 001af1d4	a8	arm	utf8_isNmstrt2@xmltok	lib	lib:expat:lib__xmltok.o	100	
@@ -5226,10 +5262,10 @@ addr	size	mode	name	status	src	score	note
 001c7d68	674	arm	XmlInitUnknownEncoding	lib	lib:expat:lib__xmltok.o	100	
 001c83dc	8c	arm	getEncodingIndex@xmltok	lib	lib:expat:lib__xmltok.o	100	
 001c8468	420	arm	initScan@xmltok	lib	lib:expat:lib__xmltok.o	100	
-001c8888	24	arm	XmlGetUtf8InternalEncoding	lib	lib:expat:lib__xmltok.o	100	by object order
-001c88ac	24	arm	XmlGetUtf16InternalEncoding	lib	lib:expat:lib__xmltok.o	100	by object order
-001c88d0	5c	arm	initScanProlog@xmltok	lib	lib:expat:lib__xmltok.o	100	by object order
-001c892c	5c	arm	initScanContent@xmltok	lib	lib:expat:lib__xmltok.o	100	by object order
+001c8888	24	arm	XmlGetUtf8InternalEncoding	lib	lib:expat:lib__xmltok.o	100	
+001c88ac	24	arm	XmlGetUtf16InternalEncoding	lib	lib:expat:lib__xmltok.o	100	
+001c88d0	5c	arm	initScanProlog@xmltok	lib	lib:expat:lib__xmltok.o	100	
+001c892c	5c	arm	initScanContent@xmltok	lib	lib:expat:lib__xmltok.o	100	
 001c8988	b0	arm	XmlInitEncoding	todo			
 001c8a38	f8	arm	FUN_001c8a38	todo			
 001c8b30	84	arm	FUN_001c8b30	todo			
@@ -5438,6 +5474,8 @@ addr	size	mode	name	status	src	score	note
 001d2ce8	18	arm	Curl_tvlong	lib	lib:curl:lib__timeval.o	100	
 001d2d00	30	arm	hostcache_timestamp_remove@hostip	lib	lib:curl:lib__hostip.o	100	
 001d2d30	58	arm	create_hostcache_id@hostip	todo			
+001d2d3c	4c	arm	FUN_001d2d3c	todo			
+001d2d3c	4c	arm	FUN_001d2d3c	todo			
 001d2d88	18	arm	alarmfunc@hostip	lib	lib:curl:lib__hostip.o	100	
 001d2da0	2c	arm	freednsentry.part.0@hostip	lib	lib:curl:lib__hostip.o	100	
 001d2dcc	18	arm	freednsentry@hostip	lib	lib:curl:lib__hostip.o	100	
@@ -6055,7 +6093,11 @@ addr	size	mode	name	status	src	score	note
 002011f0	16c	arm	FUN_002011f0	todo			
 0020135c	238	arm	FUN_0020135c	todo			
 00201594	770	arm	FUN_00201594	todo			
+0020159c	768	arm	FUN_0020159c	todo			
+0020159c	768	arm	FUN_0020159c	todo			
 00201d04	d4	arm	FUN_00201d04	todo			
+00201d0c	cc	arm	FUN_00201d0c	todo			
+00201d0c	cc	arm	FUN_00201d0c	todo			
 00201dd8	54	arm	FUN_00201dd8	todo			
 00201e2c	168	arm	FUN_00201e2c	todo			
 00201f94	438	arm	FUN_00201f94	todo			
@@ -6069,75 +6111,76 @@ addr	size	mode	name	status	src	score	note
 00202c28	30	arm	FUN_00202c28	todo			
 00202c58	30	arm	FUN_00202c58	todo			
 00202c88	24	arm	FUN_00202c88	todo			
-00202cac	14	arm	FUN_00202cac	todo			
-00202cc0	4	arm	FUN_00202cc0	todo			
-00202cc4	30c	arm	FUN_00202cc4	todo			
-00202fd0	134	arm	FUN_00202fd0	todo			
-00203104	148	arm	FUN_00203104	todo			
-0020324c	10	arm	FUN_0020324c	todo			
-0020325c	218	arm	FUN_0020325c	todo			
-00203474	8d8	arm	FUN_00203474	todo			
-00203d4c	90	arm	FUN_00203d4c	todo			
-00203ddc	270	arm	FUN_00203ddc	todo			
-0020404c	258	arm	FUN_0020404c	todo			
-002042a4	118	arm	FUN_002042a4	todo			
-002043bc	8c	arm	FUN_002043bc	todo			
-00204448	34c	arm	FUN_00204448	todo			
-00204794	68	arm	FUN_00204794	todo			
-002047fc	d4	arm	FUN_002047fc	todo			
-002048d0	44	arm	FUN_002048d0	todo			
-00204914	174	arm	FUN_00204914	todo			
-00204a88	50	arm	FUN_00204a88	todo			
-00204ad8	28	arm	FUN_00204ad8	todo			
-00204b00	6c	arm	FUN_00204b00	todo			
-00204b6c	190	arm	FUN_00204b6c	todo			
-00204cfc	d8	arm	FUN_00204cfc	todo			
-00204dd4	58	arm	FUN_00204dd4	todo			
-00204e2c	518	arm	FUN_00204e2c	todo			
-00205344	90	arm	FUN_00205344	todo			
-002053d4	168	arm	FUN_002053d4	todo			
-0020553c	108	arm	FUN_0020553c	todo			
-00205644	200	arm	FUN_00205644	todo			
-00205844	10	arm	FUN_00205844	todo			
-00205854	118	arm	FUN_00205854	todo			
-0020596c	568	arm	FUN_0020596c	todo			
-00205ed4	354	arm	FUN_00205ed4	todo			
-00206228	4	arm	FUN_00206228	todo			
-0020622c	120	arm	FUN_0020622c	todo			
-0020634c	114	arm	FUN_0020634c	todo			
-00206460	42c	arm	FUN_00206460	todo			
-0020688c	4e8	arm	FUN_0020688c	todo			
-00206d74	184	arm	FUN_00206d74	todo			
-00206ef8	3d4	arm	FUN_00206ef8	todo			
-002072cc	270	arm	FUN_002072cc	todo			
-0020753c	54c	arm	FUN_0020753c	todo			
-00207a88	80	arm	FUN_00207a88	todo			
-00207b08	520	arm	FUN_00207b08	todo			
-00208028	20	arm	FUN_00208028	todo			
-00208048	3e4	arm	FUN_00208048	todo			
-0020842c	c68	arm	FUN_0020842c	todo			
-00209094	90	arm	FUN_00209094	todo			
-00209124	6a8	arm	FUN_00209124	todo			
-002097cc	f8	arm	FUN_002097cc	todo			
-002098c4	74	arm	FUN_002098c4	todo			
-00209938	a0	arm	FUN_00209938	todo			
-002099d8	b0	arm	FUN_002099d8	todo			
-00209a88	54	arm	FUN_00209a88	todo			
-00209adc	298	arm	FUN_00209adc	todo			
-00209d74	f00	arm	FUN_00209d74	todo			
-0020ac74	78	arm	FUN_0020ac74	todo			
-0020acec	1c0	arm	FUN_0020acec	todo			
-0020aeac	19c	arm	FUN_0020aeac	todo			
-0020b048	1c0	arm	FUN_0020b048	todo			
-0020b208	84	arm	FUN_0020b208	todo			
-0020b28c	140	arm	FUN_0020b28c	todo			
-0020b3cc	680	arm	FUN_0020b3cc	todo			
-0020ba4c	48	arm	FUN_0020ba4c	todo			
-0020ba94	50	arm	FUN_0020ba94	todo			
-0020bae4	e0	arm	FUN_0020bae4	todo			
-0020bbc4	184	arm	FUN_0020bbc4	todo			
-0020bd48	cfc	arm	FUN_0020bd48	todo			
-0020ca44	c4	arm	FUN_0020ca44	todo			
+00202cac	14	arm	SKP_Silk_SDK_Get_Decoder_Size	lib	lib:silk:src__SKP_Silk_dec_API.o	100	
+00202cc0	4	arm	SKP_Silk_SDK_InitDecoder	lib	lib:silk:src__SKP_Silk_dec_API.o	100	
+00202cc4	30c	arm	SKP_Silk_SDK_Decode	lib	lib:silk:src__SKP_Silk_dec_API.o	100	
+00202fd0	134	arm	SKP_Silk_SDK_search_for_LBRR	lib	lib:silk:src__SKP_Silk_dec_API.o	100	
+00203104	148	arm	SKP_Silk_SDK_get_TOC	lib	lib:silk:src__SKP_Silk_dec_API.o	100	
+0020324c	10	arm	SKP_Silk_SDK_get_version	lib	lib:silk:src__SKP_Silk_dec_API.o	100	
+0020325c	218	arm	SKP_Silk_decode_frame	lib	lib:silk:src__SKP_Silk_decode_frame.o	100	
+00203474	8d8	arm	SKP_Silk_decode_parameters	lib	lib:silk:src__SKP_Silk_decode_parameters.o	100	
+00203d4c	90	arm	SKP_Silk_decode_pitch	lib	lib:silk:src__SKP_Silk_decode_pitch.o	100	
+00203ddc	270	arm	SKP_Silk_decode_pulses	lib	lib:silk:src__SKP_Silk_decode_pulses.o	100	
+0020404c	258	arm	SKP_Silk_decoder_set_fs	lib	lib:silk:src__SKP_Silk_decoder_set_fs.o	100	
+002042a4	118	arm	SKP_Silk_gains_quant	lib	lib:silk:src__SKP_Silk_gain_quant.o	100	
+002043bc	8c	arm	SKP_Silk_gains_dequant	lib	lib:silk:src__SKP_Silk_gain_quant.o	100	
+00204448	34c	arm	SKP_Silk_lin2log	lib	lib:silk:src__SKP_Silk_lin2log.o	100	
+00204794	68	arm	SKP_Silk_log2lin	lib	lib:silk:src__SKP_Silk_log2lin.o	100	
+002047fc	d4	arm	SKP_Silk_range_encoder	lib	lib:silk:src__SKP_Silk_range_coder.o	100	
+002048d0	44	arm	SKP_Silk_range_encoder_multi	lib	lib:silk:src__SKP_Silk_range_coder.o	100	
+00204914	174	arm	SKP_Silk_range_decoder	lib	lib:silk:src__SKP_Silk_range_coder.o	100	
+00204a88	50	arm	SKP_Silk_range_decoder_multi	lib	lib:silk:src__SKP_Silk_range_coder.o	100	
+00204ad8	28	arm	SKP_Silk_range_enc_init	lib	lib:silk:src__SKP_Silk_range_coder.o	100	
+00204b00	6c	arm	SKP_Silk_range_dec_init	lib	lib:silk:src__SKP_Silk_range_coder.o	100	
+00204b6c	190	arm	SKP_Silk_range_coder_get_length	lib	lib:silk:src__SKP_Silk_range_coder.o	100	
+00204cfc	d8	arm	SKP_Silk_range_enc_wrap_up	lib	lib:silk:src__SKP_Silk_range_coder.o	100	
+00204dd4	58	arm	SKP_Silk_range_coder_check_after_decoding	lib	lib:silk:src__SKP_Silk_range_coder.o	100	
+00204e2c	518	arm	SKP_Silk_resampler_init	lib	lib:silk:src__SKP_Silk_resampler.o	100	
+00205344	90	arm	SKP_Silk_resampler_clear	lib	lib:silk:src__SKP_Silk_resampler.o	100	
+002053d4	168	arm	SKP_Silk_resampler	lib	lib:silk:src__SKP_Silk_resampler.o	100	
+0020553c	108	arm	SKP_Silk_resampler_down2	lib	lib:silk:src__SKP_Silk_resampler_down2.o	100	
+00205644	200	arm	SKP_Silk_resampler_private_IIR_FIR	lib	lib:silk:src__SKP_Silk_resampler_private_IIR_FIR.o	100	
+00205844	10	arm	SKP_Silk_resampler_private_copy	lib	lib:silk:src__SKP_Silk_resampler_private_copy.o	100	
+00205854	118	arm	SKP_Silk_resampler_private_down4	lib	lib:silk:src__SKP_Silk_resampler_private_down4.o	100	
+0020596c	568	arm	SKP_Silk_resampler_private_down_FIR	lib	lib:silk:src__SKP_Silk_resampler_private_down_FIR.o	100	
+00205ed4	354	arm	SKP_Silk_resampler_private_up2_HQ	lib	lib:silk:src__SKP_Silk_resampler_private_up2_HQ.o	100	
+00206228	4	arm	SKP_Silk_resampler_private_up2_HQ_wrapper	lib	lib:silk:src__SKP_Silk_resampler_private_up2_HQ.o	100	
+0020622c	120	arm	SKP_Silk_resampler_private_up4	lib	lib:silk:src__SKP_Silk_resampler_private_up4.o	100	
+0020634c	114	arm	SKP_Silk_resampler_up2	lib	lib:silk:src__SKP_Silk_resampler_up2.o	100	
+00206460	42c	arm	SKP_Silk_shell_encoder	lib	lib:silk:src__SKP_Silk_shell_coder.o	100	
+0020688c	4e8	arm	SKP_Silk_shell_decoder	lib	lib:silk:src__SKP_Silk_shell_coder.o	100	
+00206d74	184	arm	SKP_Silk_CNG_Reset	lib	lib:silk:src__SKP_Silk_CNG.o	100	
+00206ef8	3d4	arm	SKP_Silk_CNG	lib	lib:silk:src__SKP_Silk_CNG.o	100	
+002072cc	270	arm	SKP_Silk_LPC_synthesis_filter	lib	lib:silk:src__SKP_Silk_LPC_synthesis_filter.o	100	
+0020753c	54c	arm	SKP_Silk_LPC_synthesis_order16	lib	lib:silk:src__SKP_Silk_LPC_synthesis_order16.o	100	
+00207a88	80	arm	SKP_Silk_NLSF2A_stable	lib	lib:silk:src__SKP_Silk_NLSF2A_stable.o	100	
+00207b08	1ec	arm	SKP_Silk_NLSF_MSVQ_decode	lib	lib:silk:src__SKP_Silk_NLSF_MSVQ_decode.o	100	
+00207cf4	334	arm	SKP_Silk_NLSF_stabilize	lib	lib:silk:src__SKP_Silk_NLSF_stabilize.o	100	
+00208028	20	arm	SKP_Silk_PLC_Reset	lib	lib:silk:src__SKP_Silk_PLC.o	100	
+00208048	3e4	arm	SKP_Silk_PLC_update	lib	lib:silk:src__SKP_Silk_PLC.o	100	
+0020842c	c68	arm	SKP_Silk_PLC_conceal	lib	lib:silk:src__SKP_Silk_PLC.o	100	
+00209094	90	arm	SKP_Silk_PLC	lib	lib:silk:src__SKP_Silk_PLC.o	100	
+00209124	6a8	arm	SKP_Silk_PLC_glue_frames	lib	lib:silk:src__SKP_Silk_PLC.o	100	
+002097cc	f8	arm	SKP_Silk_biquad	lib	lib:silk:src__SKP_Silk_biquad.o	100	
+002098c4	74	arm	SKP_Silk_bwexpander	lib	lib:silk:src__SKP_Silk_bwexpander.o	100	
+00209938	a0	arm	SKP_Silk_encode_signs	lib	lib:silk:src__SKP_Silk_code_signs.o	100	
+002099d8	b0	arm	SKP_Silk_decode_signs	lib	lib:silk:src__SKP_Silk_code_signs.o	100	
+00209a88	54	arm	SKP_Silk_init_decoder	lib	lib:silk:src__SKP_Silk_create_init_destroy.o	100	
+00209adc	298	arm	SKP_Silk_decode_short_term_prediction	lib	lib:silk:src__SKP_Silk_decode_core.o	100	
+00209d74	f00	arm	SKP_Silk_decode_core	lib	lib:silk:src__SKP_Silk_decode_core.o	100	
+0020ac74	78	arm	SKP_Silk_resampler_private_AR2	lib	lib:silk:src__SKP_Silk_resampler_private_AR2.o	100	
+0020acec	1c0	arm	SKP_Silk_resampler_private_ARMA4	lib	lib:silk:src__SKP_Silk_resampler_private_ARMA4.o	100	
+0020aeac	19c	arm	SKP_Silk_insertion_sort_increasing	lib	lib:silk:src__SKP_Silk_sort.o	100	
+0020b048	1c0	arm	SKP_Silk_insertion_sort_decreasing_int16	lib	lib:silk:src__SKP_Silk_sort.o	100	
+0020b208	84	arm	SKP_Silk_insertion_sort_increasing_all_values	lib	lib:silk:src__SKP_Silk_sort.o	100	
+0020b28c	140	arm	SKP_Silk_sum_sqr_shift	lib	lib:silk:src__SKP_Silk_sum_sqr_shift.o	100	
+0020b3cc	680	arm	LPC_inverse_pred_gain_QA@SKP_Silk_LPC_inv_pred_gain	lib	lib:silk:src__SKP_Silk_LPC_inv_pred_gain.o	100	
+0020ba4c	48	arm	SKP_Silk_LPC_inverse_pred_gain	lib	lib:silk:src__SKP_Silk_LPC_inv_pred_gain.o	100	
+0020ba94	50	arm	SKP_Silk_LPC_inverse_pred_gain_Q24	lib	lib:silk:src__SKP_Silk_LPC_inv_pred_gain.o	100	
+0020bae4	e0	arm	SKP_Silk_MA_Prediction	lib	lib:silk:src__SKP_Silk_MA.o	100	
+0020bbc4	184	arm	SKP_Silk_LPC_analysis_filter	lib	lib:silk:src__SKP_Silk_MA.o	100	
+0020bd48	cfc	arm	SKP_Silk_NLSF2A	lib	lib:silk:src__SKP_Silk_NLSF2A.o	100	
+0020ca44	c4	arm	SKP_Silk_bwexpander_32	lib	lib:silk:src__SKP_Silk_bwexpander_32.o	100	
 0020cb08	9c	thumb	__divsi3	lib	lib:libgcc-thumb:_divsi3.o	100	
 0020cba4	14	thumb	__aeabi_idivmod	lib	lib:libgcc-thumb:_divsi3.o	100	
 0020cbb8	8	arm	__aeabi_drsub	lib	lib:libgcc-thumb:_arm_addsubdf3.o	100	
@@ -6147,6 +6190,8 @@ addr	size	mode	name	status	src	score	note
 0020ce94	28	arm	__floatsidf	lib	lib:libgcc-thumb:_arm_addsubdf3.o	100	
 0020cebc	40	arm	__extendsfdf2	lib	lib:libgcc-thumb:_arm_addsubdf3.o	100	
 0020cefc	14	arm	__aeabi_ul2d	todo			
+0020cf04	c	arm	FUN_0020cf04	todo			
+0020cf04	c	arm	FUN_0020cf04	todo			
 0020cf10	60	arm	__floatdidf	lib	lib:libgcc-thumb:_arm_addsubdf3.o	100	
 0020cf70	26c	arm	__muldf3	lib	lib:libgcc-thumb:_arm_muldivdf3.o	100	
 0020d1dc	204	arm	__divdf3	lib	lib:libgcc-thumb:_arm_muldivdf3.o	100	
