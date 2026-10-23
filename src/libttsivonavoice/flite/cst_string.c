@@ -4,8 +4,11 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+#include <strings.h>
 #include "cst_alloc.h"
 #include "cst_string.h"
+#include "cst_val.h"
+#include "ivona_util.h"
 
 /* 0x5259c */
 cst_string *cst_strrchr(const cst_string *str, int c)
@@ -415,4 +418,185 @@ void cst_strsubchar(char *s, int c, char r)
 {
     for (; (s = strchr(s, c)) != NULL; s++)
         *s = r;
+}
+
+/* 0x5342c arm (IVONA): value for key in a NULL-terminated array of key/value pairs. */
+const char *cst_assoc_string(const char *const *pairs, const char *key)
+{
+    const char *const *p;
+
+    for (p = pairs; *p; p += 2)
+        if (strcmp(p[0], key) == 0)
+            return p[1];
+    return NULL;
+}
+
+/* 0x53470 arm (IVONA): like tr(1): characters of from become the corresponding character of to,
+ * or are deleted when to is shorter (or NULL). */
+char *cst_strtr(const char *s, const char *from, const char *to)
+{
+    char *r = cst_safe_alloc(strlen(s) + 1, 1);
+    size_t n = to ? strlen(to) : 0;
+    const char *p;
+    size_t i;
+    int k = 0;
+
+    for (; *s; s++) {
+        p = strchr(from, (unsigned char)*s);
+        if (p == NULL)
+            r[k++] = *s;
+        else if ((i = p - from) < n)
+            r[k++] = to[i];
+    }
+    r[k] = '\0';
+    return r;
+}
+
+cst_val *string_val_consume(char *s);
+
+/* 0x53520 arm (IVONA): the pieces of s between characters of delims, as a list of strings. */
+cst_val *cst_split_val(const char *s, const char *delims)
+{
+    cst_val *l = NULL;
+    size_t i, n;
+
+    if (s == NULL)
+        return val_reverse(NULL);
+    for (i = 0; s[i]; ) {
+        n = strcspn(s + i, delims);
+        if (n == 0) {
+            i += strspn(s + i, delims);
+            continue;
+        }
+        l = cons_val(string_val_consume(cst_substr(s, i, n)), l);
+        i += n;
+    }
+    return val_reverse(l);
+}
+
+/* 0x535c8 arm (IVONA): a + b, newly allocated. */
+char *cst_strcat2(const char *a, const char *b)
+{
+    size_t la = strlen(a);
+    size_t lb = strlen(b);
+    char *r = cst_safe_alloc(la + lb + 1, 1);
+
+    strncpy(r, a, la);
+    strncpy(r + la, b, lb + 1);
+    return r;
+}
+
+/* 0x53620 arm (IVONA): a[0..na) + b[0..nb), newly allocated. */
+char *cst_strncat2(const char *a, size_t na, const char *b, size_t nb)
+{
+    strbuf buf;
+
+    strbuf_init(&buf);
+    strbuf_reserve(&buf, na + nb);
+    strbuf_append(&buf, a, na);
+    strbuf_append(&buf, b, nb);
+    return strbuf_data(&buf);
+}
+
+/* 0x53680 arm (IVONA): appends b to the allocated string a (which may be NULL). */
+char *cst_strappend(char *a, const char *b)
+{
+    size_t la = a ? strlen(a) : 0;
+    size_t lb;
+
+    if (b == NULL || (lb = strlen(b)) == 0)
+        return a;
+    a = cst_safe_realloc(a, la + 1 + lb, 1);
+    strncpy(a + la, b, lb + 1);
+    return a;
+}
+
+/* 0x5371c arm (IVONA): length of the prefix of s[0..n) made of characters in accept. */
+size_t cst_strnspn(const char *s, size_t n, const char *accept)
+{
+    size_t i;
+
+    for (i = 0; i < n; i++)
+        if (strchr(accept, (unsigned char)s[i]) == NULL)
+            break;
+    return i;
+}
+
+/* 0x53768 arm (IVONA): length of the prefix of s[0..n) without characters in reject. */
+size_t cst_strncspn(const char *s, size_t n, const char *reject)
+{
+    size_t i;
+
+    for (i = 0; i < n && s[i]; i++)
+        if (strchr(reject, (unsigned char)s[i]))
+            break;
+    return i;
+}
+
+#define cst_whitespace " \t\n\v\f\r\x85\xa0"
+
+/* 0x53a58 arm (IVONA) */
+const char *cst_skip_space(const char *s)
+{
+    while (*s && strchr(cst_whitespace, *s))
+        s++;
+    return s;
+}
+
+/* 0x53ac4 arm (IVONA): end of s[0..n) without trailing whitespace. */
+const char *cst_rtrim_n(const char *s, size_t n)
+{
+    while (n && strchr(cst_whitespace, s[n - 1]))
+        n--;
+    return s + n;
+}
+
+/* 0x53b20 arm (IVONA): s without trailing whitespace, or NULL if there was none. */
+char *cst_rtrim_dup(const char *s)
+{
+    size_t n = strlen(s);
+    const char *e = cst_rtrim_n(s, n);
+
+    if (e < s + n)
+        return cst_strndup(s, e - s);
+    return NULL;
+}
+
+/* 0x53b64 arm (IVONA): copy of s with A-Z lowered. */
+char *cst_ascii_downcase(const char *s)
+{
+    char *r = (char *)cst_strdup((const cst_string *)s);
+    char *p;
+
+    for (p = r; *p; p++)
+        if ((unsigned char)*p >= 'A' && (unsigned char)*p <= 'Z')
+            *p += 'a' - 'A';
+    return r;
+}
+
+/* 0x53ba0 arm (IVONA) */
+char cst_ascii_tolower(char c)
+{
+    unsigned char u = c;
+
+    if (u >= 'A' && u <= 'Z')
+        u += 'a' - 'A';
+    return u;
+}
+
+/* 0x53bc0 arm (IVONA) */
+int cst_startswith_nocase(const char *s, const char *prefix)
+{
+    return strncasecmp(s, prefix, strlen(prefix)) == 0;
+}
+
+/* 0x53bf0 arm (IVONA) */
+int cst_endswith_nocase(const char *s, const char *suffix)
+{
+    size_t n = strlen(s);
+    size_t m = strlen(suffix);
+
+    if (n < m)
+        return 0;
+    return strncasecmp(s + n - m, suffix, m) == 0;
 }

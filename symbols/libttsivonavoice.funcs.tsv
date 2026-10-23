@@ -998,15 +998,15 @@ addr	size	mode	name	status	src	score	note
 00053218	74	arm	FUN_00053218	todo			
 0005328c	50	arm	FUN_0005328c	todo			
 000532dc	150	arm	FUN_000532dc	todo			
-0005342c	44	arm	FUN_0005342c	todo			
-00053470	b0	arm	FUN_00053470	todo			
-00053520	a8	arm	FUN_00053520	todo			
-000535c8	58	arm	FUN_000535c8	todo			
-00053620	60	arm	FUN_00053620	todo			
-00053680	6c	arm	FUN_00053680	todo			
+0005342c	44	arm	cst_assoc_string	matched	src/libttsivonavoice/flite/cst_string.c	100	
+00053470	b0	arm	cst_strtr	wip	src/libttsivonavoice/flite/cst_string.c	58.8	
+00053520	a8	arm	cst_split_val	wip	src/libttsivonavoice/flite/cst_string.c	45.7	
+000535c8	58	arm	cst_strcat2	matched	src/libttsivonavoice/flite/cst_string.c	100	
+00053620	60	arm	cst_strncat2	matched	src/libttsivonavoice/flite/cst_string.c	100	
+00053680	6c	arm	cst_strappend	wip	src/libttsivonavoice/flite/cst_string.c	63.0	
 000536ec	30	arm	cst_strndup	matched	src/libttsivonavoice/flite/cst_string.c	100	
-0005371c	4c	arm	FUN_0005371c	todo			
-00053768	68	arm	FUN_00053768	todo			
+0005371c	4c	arm	cst_strnspn	matched	src/libttsivonavoice/flite/cst_string.c	100	
+00053768	68	arm	cst_strncspn	matched	src/libttsivonavoice/flite/cst_string.c	100	
 000537d0	44	arm	cst_strcount	matched	src/libttsivonavoice/flite/cst_string.c	100	
 00053814	f8	arm	cst_strreplace	matched	src/libttsivonavoice/flite/cst_string.c	100	
 0005390c	4c	arm	cst_vnsprintf	matched	src/libttsivonavoice/flite/cst_string.c	100	
@@ -1014,13 +1014,13 @@ addr	size	mode	name	status	src	score	note
 00053968	30	arm	cst_nsprintf	matched	src/libttsivonavoice/flite/cst_string.c	100	
 00053998	30	arm	cst_asprintf	matched	src/libttsivonavoice/flite/cst_string.c	100	
 000539c8	90	arm	cst_strcat3	matched	src/libttsivonavoice/flite/cst_string.c	100	
-00053a58	6c	arm	FUN_00053a58	todo			
-00053ac4	5c	arm	cst_rtrim_n	todo			
-00053b20	44	arm	FUN_00053b20	todo			
-00053b64	3c	arm	FUN_00053b64	todo			
-00053ba0	20	arm	FUN_00053ba0	todo			
-00053bc0	30	arm	FUN_00053bc0	todo			
-00053bf0	4c	arm	FUN_00053bf0	todo			
+00053a58	6c	arm	cst_skip_space	matched	src/libttsivonavoice/flite/cst_string.c	100	
+00053ac4	5c	arm	cst_rtrim_n	matched	src/libttsivonavoice/flite/cst_string.c	100	
+00053b20	44	arm	cst_rtrim_dup	matched	src/libttsivonavoice/flite/cst_string.c	100	
+00053b64	3c	arm	cst_ascii_downcase	matched	src/libttsivonavoice/flite/cst_string.c	100	
+00053ba0	20	arm	cst_ascii_tolower	wip	src/libttsivonavoice/flite/cst_string.c	50.0	
+00053bc0	30	arm	cst_startswith_nocase	matched	src/libttsivonavoice/flite/cst_string.c	100	
+00053bf0	4c	arm	cst_endswith_nocase	matched	src/libttsivonavoice/flite/cst_string.c	100	
 00053c3c	198	arm	FUN_00053c3c	todo			
 00053dd4	5c	arm	FUN_00053dd4	todo			
 00053e30	48	arm	FUN_00053e30	todo			
