@@ -72,7 +72,7 @@ cst_wave *concat_wave(cst_wave *dest, const cst_wave *src);
 #define cst_wave_num_samples(w) (w?w->num_samples:0)
 #define cst_wave_num_channels(w) (w?w->num_channels:0)
 #define cst_wave_sample_rate(w) (w?w->sample_rate:0)
-#define cst_wave_samples(w) (w->samples)
+#define cst_wave_samples(w) (w ? w->samples : NULL)  /* IVONA: NULL-safe */
 
 #define cst_wave_set_num_samples(w,s) w->num_samples=s
 #define cst_wave_set_num_channels(w,s) w->num_channels=s
@@ -98,7 +98,7 @@ int cst_wave_load_raw_fd (cst_wave *w, cst_file fd,
 
 void cst_wave_resize(cst_wave *w,int samples, int num_channels);
 void cst_wave_resample(cst_wave *w, int sample_rate);
-void cst_wave_rescale(cst_wave *w, int factor);
+void cst_wave_rescale(cst_wave *w, float factor);
 
 /* Resampling code */
 typedef struct cst_rateconv_struct {

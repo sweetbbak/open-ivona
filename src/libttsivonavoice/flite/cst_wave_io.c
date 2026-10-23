@@ -124,6 +124,7 @@ int cst_wave_save_raw(cst_wave *w, const char *filename)
     return rv;
 }
 
+/* 0x4e9c8 */
 int cst_wave_save_raw_fd(cst_wave *w, cst_file fd)
 {
     if (cst_fwrite(fd, cst_wave_samples(w),

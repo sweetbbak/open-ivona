@@ -89,12 +89,13 @@ void cst_wave_resize(cst_wave *w,int samples, int num_channels)
 
 }
 
-void cst_wave_rescale(cst_wave *w, int factor)
+/* 0x4e7a8: IVONA: the factor is a float */
+void cst_wave_rescale(cst_wave *w, float factor)
 {
 	int i;
 
 	for (i = 0; i < w->num_samples; ++i)
-		w->samples[i] = ((int)w->samples[i] * factor) / 65536;
+		w->samples[i] = w->samples[i] * factor;
 }
 
 /* 0x4e904 */
