@@ -355,3 +355,127 @@ char *word_phone_string(const cst_item *word)
             seg_append_phone(seg, &sb, 1, 0);
     return strbuf_data(&sb);
 }
+
+/* a compact lexicon entry: name, part of speech ('*' any), phone ids ending in 0xff */
+typedef struct lex_entry {
+    const char *name;
+    char pos;
+    unsigned char phones[1];
+} lex_entry;
+
+typedef struct lex_table {
+    int n;
+    const lex_entry *const *entries;    /* sorted by name */
+    const char *const *phone_names;
+} lex_table;
+
+int cst_bsearch(const void *key, const void *base, int n, int size,
+                int (*cmp)(const void *key, const void *elem, void *arg), void *arg);
+
+/* 0x71e14 arm */
+static int lex_entry_cmp(const void *key, const void *elem, void *arg)
+{
+    return strcmp(key, (*(const lex_entry *const *)elem)->name);
+}
+
+/* 0x71e20 arm: the entry for name with part of speech pos ("0" or NULL: any), or -1. */
+int lex_lookup_index(const lex_table *t, const char *name, const char *pos)
+{
+    const lex_entry *const *e = t->entries;
+    int i;
+
+    if (pos == NULL || *pos == 0)
+        pos = "0";
+    i = cst_bsearch(name, e, t->n, sizeof *e, lex_entry_cmp, NULL);
+    if (i == -1)
+        return i;
+    while (i > 0 && strcmp(name, e[i - 1]->name) == 0)
+        i--;
+    for (; i < t->n; i++) {
+        if (strcmp(name, e[i]->name) != 0)
+            break;
+        if (*pos == '0' || e[i]->pos == '*' || *pos == e[i]->pos)
+            return i;
+    }
+    return -1;
+}
+
+/* 0x71f40 arm: the first entry name not below name, or NULL. */
+const char *lex_lower_bound_name(const lex_table *t, const char *name)
+{
+    unsigned int n = t->n, lo = 0, hi = n, mid;
+    const char *s;
+    int c;
+
+    while (lo < hi) {
+        mid = lo + (hi - lo) / 2;
+        s = t->entries[mid]->name;
+        c = strcmp(name, s);
+        if (c == 0)
+            return s;
+        if (c > 0)
+            lo = mid + 1;
+        else
+            hi = mid;
+    }
+    if (lo == n)
+        return NULL;
+    return t->entries[lo]->name;
+}
+
+/* 0x71fc4 arm */
+int lex_has_entry(const lex_table *t, const char *name, const char *pos)
+{
+    return lex_lookup_index(t, name, pos) >= 0;
+}
+
+/* 0x71fd8 arm: the parts of speech of name's entries (up to max of them in out);
+ * returns how many there are. */
+int lex_lookup_pos_all(const lex_table *t, const char *name, char *out, unsigned int max)
+{
+    const lex_entry *const *e = t->entries, *x;
+    int i, k = 0;
+
+    i = cst_bsearch(name, e, t->n, sizeof *e, lex_entry_cmp, NULL);
+    if (i == -1)
+        return 0;
+    while (i > 0 && strcmp(name, e[i - 1]->name) == 0)
+        i--;
+    if (i >= t->n)
+        return 0;
+    for (e += i; ; ) {
+        x = *e++;
+        if (strcmp(name, x->name) != 0)
+            break;
+        if (max > (unsigned int)k)
+            out[k] = x->pos;
+        k++;
+        if (e[-1]->pos == '*' || t->n <= k + i)
+            break;
+    }
+    return k;
+}
+
+/* 0x720d4 arm: the phone ids of name's entry, or NULL. */
+const unsigned char *lex_lookup_data(const lex_table *t, const char *name, const char *pos)
+{
+    const lex_entry *const *e = t->entries;
+    int i = lex_lookup_index(t, name, pos);
+
+    if (i < 0)
+        return NULL;
+    return e[i]->phones;
+}
+
+/* 0x720f4 arm: the phones of name's entry as a list, or NULL. */
+cst_val *lex_lookup_phones(const lex_table *t, const char *name, const char *pos)
+{
+    const unsigned char *p = lex_lookup_data(t, name, pos);
+    cst_val *l = NULL;
+
+    if (p == NULL)
+        return NULL;
+    for (; *p != 0xff; p++)
+        l = cons_val(string_val(t->phone_names[*p]), l);
+    return val_reverse(l);
+}
