@@ -8,7 +8,14 @@
 #include "cst_alloc.h"
 #include "cst_item.h"
 #include "cst_val.h"
+#include "cst_utterance.h"
 #include "cst_val_defs.h"
+
+typedef struct hash hash;
+void *hash_get(hash *h, const void *key, size_t len);
+cst_item *item_traverse(const cst_item *item, ...);
+
+#define ITEM_TRAVERSE_PREV 0x103
 
 typedef struct breath_covariances breath_covariances;
 typedef struct breath_stats breath_stats;
@@ -32,7 +39,9 @@ typedef struct phone_acoustic_data {
     unsigned int n_frames;
     unsigned int n_streams;
     acoustic_stream *streams;
-    int unk_c[4];
+    int unk_c;
+    float log_dur;
+    int unk_14[2];
     float *data;
     int unk_20;
     acoustic_elem *elems;
@@ -114,7 +123,7 @@ int acoustic_streams_cov_size(const acoustic_stream *s, unsigned int n, int k)
 }
 
 /* 0x5d230 arm */
-void acoustic_nop(void)
+void acoustic_nop(cst_features *f, phone_acoustic_data *p)
 {
 }
 
@@ -204,4 +213,113 @@ void phone_acoustic_data_init(phone_acoustic_data *p)
 int acoustic_streams_frame_size(const acoustic_stream *s, unsigned int n, int k)
 {
     return acoustic_streams_size(s, n) * k;
+}
+
+/* 0x5d4d0 arm: stores the DNN acoustic model outputs in h (per stream: voicing, means,
+ * deltas, delta-deltas; then the voice's covariances) as the item's acoustic data, and sets
+ * its duration. */
+void item_set_dnn_acoustic_data(cst_item *item, hash *h)
+{
+    const cst_utterance *utt;
+    const cst_val *v;
+    const phone_acoustic_data *proto;
+    const float *const *covs;
+    phone_acoustic_data *p;
+    float ldur, dur, x;
+    float *data, *mean, *d, *dd;
+    const char *name, *dname, *ddname;
+    unsigned int f, s, dim, k;
+    int pos;
+
+    item_feat_string(item, "name");
+    if (h == NULL)
+        return;
+    utt = item_utt(item);
+    v = feat_val(utt->features, "dnn_model_acoustic_data");
+    proto = v ? val_phone_acoustic_data(v) : NULL;
+    v = feat_val(utt->features, "acoustic_covariances");
+    covs = v ? (const float *const *)val_acoustic_covariances(v) : NULL;
+    p = cst_safe_alloc(1, sizeof *p);
+    *p = *proto;
+    ldur = *(float *)hash_get(h, "dur", 3);
+    dur = exp(ldur) / 1000.0;
+    item_set_float(item, "end",
+                   ffeature_float(item_traverse(item, ITEM_TRAVERSE_PREV, 0), "end") + dur);
+    item_set_float(item, "dur", dur);
+    p->log_dur = ldur;
+    data = cst_safe_alloc(acoustic_streams_frame_size(p->streams, p->n_streams, p->n_frames),
+                          sizeof(float));
+    p->data = data;
+    pos = 0;
+    for (f = 0; f < p->n_frames; f++) {
+        for (s = 0; s < p->n_streams; s++) {
+            name = acoustic_stream_type_name(p->streams[s].id);
+            switch (p->streams[s].id) {
+            case 1:
+                dname = "f0_delta";
+                break;
+            case 2:
+                dname = "rms_delta";
+                break;
+            case 3:
+                dname = "M_delta";
+                break;
+            default:
+                dname = "UNKNOWN_delta";
+                break;
+            }
+            switch (p->streams[s].id) {
+            case 1:
+                ddname = "f0_delta_delta";
+                break;
+            case 2:
+                ddname = "rms_delta_delta";
+                break;
+            case 3:
+                ddname = "M_delta_delta";
+                break;
+            default:
+                ddname = "UNKNOWN_delta_delta";
+                break;
+            }
+            dim = p->streams[s].dim;
+            if (p->streams[s].has_voicing) {
+                x = ((float *)hash_get(h, "L", 1))[f];
+                if (x > 1.0f)
+                    x = 1.0f;
+                else if (x < 0.0f)
+                    x = 0.0f;
+                data[pos++] = x;
+            }
+            mean = hash_get(h, name, strlen(name));
+            d = hash_get(h, dname, strlen(dname));
+            dd = hash_get(h, ddname, strlen(ddname));
+            if (d == NULL) {
+                k = dim;
+                memcpy(&data[pos], mean + k * f, k * sizeof(float));
+                pos += k;
+            } else {
+                k = dd ? dim / 3 : dim / 2;
+                if (dd)
+                    dd += k * f;
+                d += k * f;
+                memcpy(&data[pos], mean + k * f, k * sizeof(float));
+                pos += k;
+                if (d) {
+                    memcpy(&data[pos], d, k * sizeof(float));
+                    pos += k;
+                }
+            }
+            if (dd) {
+                memcpy(&data[pos], dd, k * sizeof(float));
+                pos += k;
+            }
+            memcpy(&data[pos], covs[s], acoustic_stream_cov_size(&p->streams[s]) * sizeof(float));
+            pos += acoustic_stream_cov_size(&p->streams[s]);
+        }
+    }
+    item_set(item, "acoustic_raw_data", float_ptr_val(p->data));
+    item_set(item, "acoustic_data", phone_acoustic_data_val(p));
+    acoustic_nop(item_feats(item), p);
+    phone_acoustic_data_init(p);
 }

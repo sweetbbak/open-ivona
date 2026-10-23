@@ -1325,7 +1325,7 @@ addr	size	mode	name	status	src	score	note
 0005d2f4	44	arm	acoustic_streams_size	matched	src/libttsivonavoice/acoustic.c	100	
 0005d338	184	arm	phone_acoustic_data_init	wip	src/libttsivonavoice/acoustic.c	72.0	
 0005d4bc	14	arm	acoustic_streams_frame_size	matched	src/libttsivonavoice/acoustic.c	100	
-0005d4d0	544	arm	FUN_0005d4d0	todo			
+0005d4d0	544	arm	item_set_dnn_acoustic_data	wip	src/libttsivonavoice/acoustic.c	44.7	
 0005da14	48c	arm	FUN_0005da14	todo			
 0005dea0	14	arm	FUN_0005dea0	todo			
 0005deb4	8	arm	FUN_0005deb4	todo			
@@ -1418,8 +1418,8 @@ addr	size	mode	name	status	src	score	note
 000639a0	18	arm	ffunc_val	matched	src/libttsivonavoice/flite/cst_ffeature.c	100	flite order 83%
 000639b8	58	arm	FUN_000639b8	todo			
 00063a10	18	arm	FUN_00063a10	todo			
-00063a28	48	arm	FUN_00063a28	todo			
-00063a70	7c	arm	FUN_00063a70	todo			
+00063a28	48	arm	item_traverse_one	todo			
+00063a70	7c	arm	item_traverse	todo			
 00063aec	208	arm	FUN_00063aec	todo			
 00063cf4	10	arm	ffeature_string	wip	src/libttsivonavoice/flite/cst_ffeature.c	75.0	flite order 75%
 00063d04	10	arm	ffeature_int	wip	src/libttsivonavoice/flite/cst_ffeature.c	75.0	flite order 75%
