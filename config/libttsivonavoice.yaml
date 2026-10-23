@@ -29,3 +29,6 @@ units:
   # -fno-inline: val_delete_float_ptr tail-calls a one-instruction delete_float_ptr and
   # phone_acoustic_data_init calls a `return 0` stub; nothing in this TU is inlined
   src/libttsivonavoice/acoustic.c: {add: [-fno-inline]}
+  # -fno-inline: val_delete_diphonedb tail-calls delete_diphonedb and every small helper
+  # (vox_decoder_free, vox_db_free) is called, never inlined
+  src/libttsivonavoice/voxdb.c: {add: [-fno-inline]}

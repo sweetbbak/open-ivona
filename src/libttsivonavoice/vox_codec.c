@@ -1,5 +1,5 @@
 /*
- * Vox database unit decoders (0x6b084..0x6c444). The codec factory (FUN_0005e938) picks one
+ * Vox database unit decoders (0x6b084..0x6c444). The codec factory (vox_db_open) picks one
  * function set from the vox header's codec id (+0x28): 8/12 Vorbis (Tremor), 14 SILK.
  * See docs/notes/vox-codecs.md.
  */

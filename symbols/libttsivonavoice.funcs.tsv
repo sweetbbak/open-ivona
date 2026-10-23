@@ -1344,21 +1344,21 @@ addr	size	mode	name	status	src	score	note
 0005e3ec	4	arm	delete_blacklist	matched	src/libttsivonavoice/blacklist.c	100	
 0005e3f0	80	arm	blacklist_plugin_add	matched	src/libttsivonavoice/blacklist.c	100	
 0005e470	80	arm	blacklist_plugin_remove	matched	src/libttsivonavoice/blacklist.c	100	
-0005e4f0	58	arm	val_diphonedb	todo			
-0005e548	18	arm	diphonedb_val	todo			
-0005e560	68	arm	FUN_0005e560	todo			
-0005e5c8	290	arm	FUN_0005e5c8	todo			
-0005e858	98	arm	FUN_0005e858	todo			
-0005e8f0	48	arm	FUN_0005e8f0	todo			
-0005e938	57c	arm	FUN_0005e938	todo			
-0005eeb4	12c	arm	FUN_0005eeb4	todo			
-0005efe0	3c	arm	FUN_0005efe0	todo			
-0005f01c	1c8	arm	FUN_0005f01c	todo			
-0005f1e4	150	arm	FUN_0005f1e4	todo			
-0005f334	38	arm	FUN_0005f334	todo			
-0005f36c	4	arm	val_delete_diphonedb	todo			
+0005e4f0	58	arm	val_diphonedb	matched	src/libttsivonavoice/voxdb.c	100	
+0005e548	18	arm	diphonedb_val	matched	src/libttsivonavoice/voxdb.c	100	
+0005e560	68	arm	diphonedb_unit_index	matched	src/libttsivonavoice/voxdb.c	100	
+0005e5c8	290	arm	diphonedb_unit_decode	wip	src/libttsivonavoice/voxdb.c	71.1	
+0005e858	98	arm	vox_file_name	wip	src/libttsivonavoice/voxdb.c	90.0	
+0005e8f0	48	arm	vox_db_free	matched	src/libttsivonavoice/voxdb.c	100	
+0005e938	57c	arm	vox_db_open	wip	src/libttsivonavoice/voxdb.c	22.4	
+0005eeb4	12c	arm	vox_decoder_new	wip	src/libttsivonavoice/voxdb.c	60.3	
+0005efe0	3c	arm	vox_decoder_free	matched	src/libttsivonavoice/voxdb.c	100	
+0005f01c	1c8	arm	voxdb_name_match	wip	src/libttsivonavoice/voxdb.c	58.8	
+0005f1e4	150	arm	diphonedb_new	matched	src/libttsivonavoice/voxdb.c	100	
+0005f334	38	arm	delete_diphonedb	matched	src/libttsivonavoice/voxdb.c	100	
+0005f36c	4	arm	val_delete_diphonedb	matched	src/libttsivonavoice/voxdb.c	100	
 0005f370	36c	arm	FUN_0005f370	todo			
-0005f6dc	2c	arm	FUN_0005f6dc	todo			
+0005f6dc	2c	arm	diphonedb_unit_flag	todo			
 0005f708	464	arm	FUN_0005f708	todo			
 0005fb6c	30	arm	FUN_0005fb6c	todo			
 0005fb9c	24	arm	FUN_0005fb9c	todo			
@@ -1512,16 +1512,16 @@ addr	size	mode	name	status	src	score	note
 0006b134	2c	arm	FUN_0006b134	todo			
 0006b160	28	arm	FUN_0006b160	todo			
 0006b188	20	arm	ivona_rand	todo			
-0006b1a8	b8	arm	FUN_0006b1a8	todo			
+0006b1a8	b8	arm	pcm_unit_decode	todo			
 0006b260	c0	arm	silk_unit_open	wip	src/libttsivonavoice/vox_codec.c	72.9	
 0006b320	34	arm	silk_unit_close	matched	src/libttsivonavoice/vox_codec.c	100	
 0006b354	388	arm	silk_unit_decode	wip	src/libttsivonavoice/vox_codec.c	9.2	
-0006b6dc	150	arm	FUN_0006b6dc	todo			
-0006b82c	3c	arm	FUN_0006b82c	todo			
-0006b868	2f0	arm	FUN_0006b868	todo			
-0006bb58	364	arm	FUN_0006bb58	todo			
-0006bebc	3c	arm	FUN_0006bebc	todo			
-0006bef8	54c	arm	FUN_0006bef8	todo			
+0006b6dc	150	arm	vorbis_unit_open	todo			
+0006b82c	3c	arm	vorbis_unit_close	todo			
+0006b868	2f0	arm	vorbis_unit_decode	todo			
+0006bb58	364	arm	vorbis_ogg_unit_open	todo			
+0006bebc	3c	arm	vorbis_ogg_unit_close	todo			
+0006bef8	54c	arm	vorbis_ogg_unit_decode	todo			
 0006c444	4dc	arm	FUN_0006c444	todo			
 0006c920	58	arm	FUN_0006c920	todo			
 0006c978	18	arm	FUN_0006c978	todo			
