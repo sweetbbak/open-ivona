@@ -51,12 +51,14 @@ Read README.md first. The rules below are what keeps the project deterministic.
 
   Vendored archives are offered only to the binaries listed in their recipe.
 
-  Not vendored yet: **Tremor** (integer Vorbis decoder; the voice audio is Vorbis) at
-  ~0x1f9000–0x201500, built with the engine's ARM `-O2` flags. It's an older revision than xiph
-  master: `codec_setup_info` is 0xcb0 bytes (master 0xca8) and `vorbis_comment_clear` has no NULL
-  check. With master, 26 of 69 functions are byte-identical. Unoptimized code before it
-  (~0x1f1000) and an optimized block after it (`"1.0.8"` getter at 0x20324c) are still
-  unidentified.
+  Not vendored yet (see `docs/notes/vox-codecs.md`):
+  - **Tremor** (integer Vorbis decoder, used for vox codec 8/12) at ~0x1f9000–0x201500, built
+    with the engine's ARM `-O2` flags. It's an older revision than xiph master:
+    `codec_setup_info` is 0xcb0 bytes (master 0xca8) and `vorbis_comment_clear` has no NULL check.
+    With master, 24 functions are byte-identical.
+  - Very likely the **SILK SDK 1.0.8** decoder (vox codec 14, which the Android voices use) after
+    it: `"1.0.8"` getter at 0x20324c, decoder size 0x3570 at 0x202cac, decode at 0x202cc4.
+  - Unoptimized code before Tremor (~0x1f1000) is still unidentified.
   - Static functions are per object: a table row named `name@member` (e.g.
     `constant_time_is_zero@rsa_pk1`) is that object's copy. The matcher accepts `name` or `name@…`
     and records the address as a placement, so one object's callers must agree on the copy.
