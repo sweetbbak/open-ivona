@@ -1388,17 +1388,17 @@ addr	size	mode	name	status	src	score	note
 00062174	234	arm	FUN_00062174	todo			
 000623a8	3d4	arm	FUN_000623a8	todo			
 0006277c	168	arm	FUN_0006277c	todo			
-000628e4	a0	arm	FUN_000628e4	todo			
-00062984	70	arm	FUN_00062984	todo			
-000629f4	c	arm	FUN_000629f4	todo			
-00062a00	4	arm	FUN_00062a00	todo			
-00062a04	58	arm	val_streamer_pos	todo			
-00062a5c	18	arm	FUN_00062a5c	todo			
-00062a74	24	arm	FUN_00062a74	todo			
-00062a98	6c	arm	FUN_00062a98	todo			
-00062b04	4	arm	val_delete_wavesynth	todo			
-00062b08	8c	arm	FUN_00062b08	todo			
-00062b94	2c	arm	FUN_00062b94	todo			
+000628e4	a0	arm	speaking_style_id	matched	src/libttsivonavoice/wavesynth.c	100	
+00062984	70	arm	speaking_style_name	wip	src/libttsivonavoice/wavesynth.c	85.7	
+000629f4	c	arm	wavesynth_mark_new	matched	src/libttsivonavoice/wavesynth.c	100	
+00062a00	4	arm	wavesynth_mark_free	matched	src/libttsivonavoice/wavesynth.c	100	
+00062a04	58	arm	val_wavesynth	matched	src/libttsivonavoice/wavesynth.c	100	
+00062a5c	18	arm	wavesynth_val	matched	src/libttsivonavoice/wavesynth.c	100	
+00062a74	24	arm	new_wavesynth	matched	src/libttsivonavoice/wavesynth.c	100	
+00062a98	6c	arm	delete_wavesynth	matched	src/libttsivonavoice/wavesynth.c	100	
+00062b04	4	arm	val_delete_wavesynth	matched	src/libttsivonavoice/wavesynth.c	100	
+00062b08	8c	arm	wavesynth_append	matched	src/libttsivonavoice/wavesynth.c	100	
+00062b94	2c	arm	wavesynth_flush	matched	src/libttsivonavoice/wavesynth.c	100	
 00062bc0	1b8	arm	FUN_00062bc0	todo			
 00062d78	68	arm	FUN_00062d78	todo			
 00062de0	e0	arm	FUN_00062de0	todo			

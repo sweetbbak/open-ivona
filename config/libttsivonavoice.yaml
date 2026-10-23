@@ -37,3 +37,5 @@ units:
   # -O3 -fno-inline-functions: item_traverse_op's lookup loop is completely unrolled (only
   # -O3's early cunrolli does that) while item_feat_func stays out of line in ffeature_*
   src/libttsivonavoice/flite/cst_ffeature.c: {add: [-O3, -fno-inline-functions], remove: [-O2]}
+  # -fno-inline: val_delete_wavesynth tail-calls delete_wavesynth
+  src/libttsivonavoice/wavesynth.c: {add: [-fno-inline]}

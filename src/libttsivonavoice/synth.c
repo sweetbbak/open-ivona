@@ -205,20 +205,20 @@ cst_utterance *utt_synth_frontend(cst_utterance *u, voice_reg *reg)
 }
 
 /* where the backend continues in an utterance */
-typedef struct streamer_pos {
+typedef struct wavesynth {
     int unk_0;
     cst_item *seg;          /* +0x04 */
     int unk_8;
     int unk_c;
     int unk_10;
-} streamer_pos;
+} wavesynth;
 
-streamer_pos *val_streamer_pos(const cst_val *v);
+wavesynth *val_wavesynth(const cst_val *v);
 
 /* 0x50a70 arm: restarts synthesis of the utterance from its first segment. */
 int utt_rewind(cst_utterance *u, int unused)
 {
-    streamer_pos *p = val_streamer_pos(feat_val(u->features, "streamer"));
+    wavesynth *p = val_wavesynth(feat_val(u->features, "streamer"));
 
     p->seg = relation_head(utt_relation(u, 7));
     p->unk_c = 0;
