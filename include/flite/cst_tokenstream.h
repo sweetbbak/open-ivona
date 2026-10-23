@@ -44,77 +44,51 @@
 #include "cst_string.h"
 #include "cst_file.h"
 
+/* IVONA: characters are read through per-encoding callbacks (ASCII or UTF-8), a pushed-back
+ * string is read before the input, and tokens may be length limited. */
 typedef struct  cst_tokenstream_struct {
     cst_file fd;
     int file_pos;
     int line_number;
-    cst_string *string_buffer;
+    char *string_buffer;
+    char *unget;                /* +0x10: pushed back characters (ts_unget) */
+    int unget_len;
+    int unget_pos;
+    int current_char;           /* +0x1c */
 
-    int current_char;
-
-    int token_pos;
+    int token_pos;              /* +0x20 */
     int ws_max;
-    cst_string *whitespace;
+    char *whitespace;
     int prep_max;
-    cst_string *prepunctuation;
+    char *prepunctuation; /* +0x30 */
+    int max_token_len;          /* +0x34: in characters, -1 for none */
     int token_max;
-    cst_string *token;
-    int postp_max;
-    cst_string *postpunctuation;
+    char *token;
+    int postp_max;              /* +0x40 */
+    char *postpunctuation;
+    int tail_max;
+    char *tail;           /* +0x4c: what followed the token up to white space */
 
-    /* Should only be set through set_charclasses as charclass table needs */
-    /* to be updated when you reset these                                  */
-    const cst_string *p_whitespacesymbols;
-    const cst_string *p_singlecharsymbols;
-    const cst_string *p_prepunctuationsymbols;
-    const cst_string *p_postpunctuationsymbols;
+    const char *p_whitespacesymbols;      /* +0x50 */
+    const char *p_singlecharsymbols;
+    const char *p_prepunctuationsymbols;
+    const char *p_postpunctuationsymbols;
 
-    cst_string charclass[256];
+    int (*charlen)(int c);                              /* +0x60: bytes of c, 0 for EOF */
+    const char *(*member)(const char *set, int c);      /* +0x64 */
+    size_t (*span)(const char *s, const char *set);     /* +0x68 */
+    int (*decode)(const char *s, int *len);             /* +0x6c */
+    int (*encode)(int c, char *out);                    /* +0x70 */
 } cst_tokenstream;
 
-#define TS_CHARCLASS_NONE        0
-#define TS_CHARCLASS_WHITESPACE  2
-#define TS_CHARCLASS_SINGLECHAR  4
-#define TS_CHARCLASS_PREPUNCT    8
-#define TS_CHARCLASS_POSTPUNCT  16
-#define TS_CHARCLASS_QUOTE      32
-
-#define ts_charclass(C,CLASS,TS) ((TS)->charclass[(unsigned char)C] & CLASS)
-
-extern const cst_string * const cst_ts_default_whitespacesymbols;
-extern const cst_string * const cst_ts_default_prepunctuationsymbols;
-extern const cst_string * const cst_ts_default_postpunctuationsymbols;
-extern const cst_string * const cst_ts_default_singlecharsymbols;
-
 /* Public functions for tokenstream manipulation */
-cst_tokenstream *ts_open(const char *filename,
-			 const cst_string *whitespacesymbols,
-			 const cst_string *singlecharsymbols,
-			 const cst_string *prepunctsymbols,
-			 const cst_string *postpunctsymbols);
-cst_tokenstream *ts_open_string(const cst_string *string,
-				const cst_string *whitespacesymbols,
-				const cst_string *singlecharsymbols,
-				const cst_string *prepunctsymbols,
-				const cst_string *postpunctsymbols);
+cst_tokenstream *ts_open_fd(cst_file fd);
+cst_tokenstream *ts_open(const char *filename);
+cst_tokenstream *ts_open_string(const char *string);
+cst_tokenstream *ts_open_string_utf8(const char *string);
 void ts_close(cst_tokenstream *ts);
 
 int ts_eof(cst_tokenstream *ts);
-const cst_string *ts_get(cst_tokenstream *ts);
-
-const cst_string *ts_get_quoted_token(cst_tokenstream *ts,
-				char quote,
-				char escape);
-
-void set_charclasses(cst_tokenstream *ts,
-		     const cst_string *whitespace,
-		     const cst_string *singlecharsymbols,
-		     const cst_string *prepunctuation,
-		     const cst_string *postpunctuation);
-
-int ts_read(void *buff, int size, int num, cst_tokenstream *ts);
-
-int ts_set_stream_pos(cst_tokenstream *ts,int pos);
-int ts_get_stream_pos(cst_tokenstream *ts);
+const char *ts_get(cst_tokenstream *ts);
 
 #endif

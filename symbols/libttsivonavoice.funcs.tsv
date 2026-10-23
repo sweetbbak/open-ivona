@@ -1035,27 +1035,27 @@ addr	size	mode	name	status	src	score	note
 0005426c	30	arm	FUN_0005426c	todo			
 0005429c	2c	arm	FUN_0005429c	todo			
 000542c8	44	arm	FUN_000542c8	todo			
-0005430c	c	arm	FUN_0005430c	todo			
-00054318	10	arm	FUN_00054318	todo			
-00054328	c	arm	FUN_00054328	todo			
-00054334	4	arm	FUN_00054334	todo			
-00054338	4	arm	FUN_00054338	todo			
-0005433c	8	arm	FUN_0005433c	todo			
-00054344	4	arm	FUN_00054344	todo			
-00054348	14	arm	FUN_00054348	todo			
-0005435c	1b0	arm	FUN_0005435c	todo			
-0005450c	1e4	arm	FUN_0005450c	todo			
-000546f0	20c	arm	FUN_000546f0	todo			
-000548fc	148	arm	set_charclasses	todo			flite strings(3) 0%
-00054a44	6c	arm	FUN_00054a44	todo			
-00054ab0	44	arm	FUN_00054ab0	todo			
-00054af4	c8	arm	FUN_00054af4	todo			
-00054bbc	54	arm	FUN_00054bbc	todo			
-00054c10	10c	arm	FUN_00054c10	todo			
-00054d1c	10c	arm	FUN_00054d1c	todo			
-00054e28	58	arm	FUN_00054e28	todo			
-00054e80	14	arm	FUN_00054e80	todo			
-00054e94	470	arm	FUN_00054e94	todo			
+0005430c	c	arm	ascii_charlen	matched	src/libttsivonavoice/flite/cst_tokenstream.c	100	
+00054318	10	arm	ascii_decode	matched	src/libttsivonavoice/flite/cst_tokenstream.c	100	
+00054328	c	arm	ascii_encode	matched	src/libttsivonavoice/flite/cst_tokenstream.c	100	
+00054334	4	arm	ts_utf8_encode	matched	src/libttsivonavoice/flite/cst_tokenstream.c	100	
+00054338	4	arm	ts_utf8_decode	matched	src/libttsivonavoice/flite/cst_tokenstream.c	100	
+0005433c	8	arm	ts_utf8_strspn	matched	src/libttsivonavoice/flite/cst_tokenstream.c	100	
+00054344	4	arm	ts_utf8_strchr	matched	src/libttsivonavoice/flite/cst_tokenstream.c	100	
+00054348	14	arm	ts_utf8_charlen	matched	src/libttsivonavoice/flite/cst_tokenstream.c	100	
+0005435c	1b0	arm	ts_unget	wip	src/libttsivonavoice/flite/cst_tokenstream.c	93.5	
+0005450c	1e4	arm	get_token_sub_part	wip	src/libttsivonavoice/flite/cst_tokenstream.c	55.5	
+000546f0	20c	arm	get_token_sub_part_2	wip	src/libttsivonavoice/flite/cst_tokenstream.c	59.4	
+000548fc	148	arm	new_tokenstream	matched	src/libttsivonavoice/flite/cst_tokenstream.c	100	flite strings(3) 0%
+00054a44	6c	arm	new_tokenstream_utf8	matched	src/libttsivonavoice/flite/cst_tokenstream.c	100	
+00054ab0	44	arm	delete_tokenstream	matched	src/libttsivonavoice/flite/cst_tokenstream.c	100	
+00054af4	c8	arm	ts_open_fd	wip	src/libttsivonavoice/flite/cst_tokenstream.c	96.0	
+00054bbc	54	arm	ts_open	matched	src/libttsivonavoice/flite/cst_tokenstream.c	100	
+00054c10	10c	arm	ts_open_string	wip	src/libttsivonavoice/flite/cst_tokenstream.c	97.0	
+00054d1c	10c	arm	ts_open_string_utf8	wip	src/libttsivonavoice/flite/cst_tokenstream.c	97.0	
+00054e28	58	arm	ts_close	matched	src/libttsivonavoice/flite/cst_tokenstream.c	100	
+00054e80	14	arm	ts_eof	matched	src/libttsivonavoice/flite/cst_tokenstream.c	100	
+00054e94	470	arm	ts_get	wip	src/libttsivonavoice/flite/cst_tokenstream.c	38.3	
 00055304	58	arm	val_valfunc	matched	src/libttsivonavoice/flite/cst_val.c	100	
 0005535c	24	arm	int_val	matched	src/libttsivonavoice/flite/cst_val.c	100	
 00055380	24	arm	float_val	matched	src/libttsivonavoice/flite/cst_val.c	100	
@@ -1239,17 +1239,18 @@ addr	size	mode	name	status	src	score	note
 0005953c	34	arm	FUN_0005953c	todo			
 00059570	14	arm	FUN_00059570	todo			
 00059584	16c	arm	FUN_00059584	todo			
-000596f0	14	arm	FUN_000596f0	todo			
-00059704	6c	arm	FUN_00059704	todo			
+000596f0	14	arm	utf8_decode	todo			
+00059704	6c	arm	utf8_strchr	todo			
 00059770	54	arm	FUN_00059770	todo			
 000597c4	24	arm	FUN_000597c4	todo			
 000597e8	54	arm	FUN_000597e8	todo			
 0005983c	24	arm	FUN_0005983c	todo			
-00059860	c0	arm	FUN_00059860	todo			
+00059860	c0	arm	utf8_strspn	todo			
 00059920	c0	arm	FUN_00059920	todo			
 000599e0	100	arm	FUN_000599e0	todo			
 00059ae0	50	arm	FUN_00059ae0	todo			
-00059b30	1e0	arm	FUN_00059b30	todo			
+00059b30	190	arm	FUN_00059b30	todo			
+00059cc0	50	arm	utf8_charlen	todo			split from FUN_00059b30 (leaf after its literal pool)
 00059d10	3c	arm	FUN_00059d10	todo			
 00059d4c	38	arm	FUN_00059d4c	todo			
 00059d84	48	arm	FUN_00059d84	todo			
