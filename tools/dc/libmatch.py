@@ -126,11 +126,10 @@ def libmatch(stem: str, libs: dict[str, str], verbose: bool = False) -> None:
     b.__dict__.pop("names", None)
     print(f"learned {n_learned} names from library relocations")
 
-    verified: dict[int, tuple] = {}
-    for a, h in proposal.items():
-        res = match.Matcher(b).compare(funcs[a], h[3])
-        if res.matched:
-            verified[a] = h
+    def revert(a: int) -> None:
+        funcs[a].name = old_names[a]
+        b.__dict__.pop("names", None)
+    verified = verify_fixed_point(proposal, lambda a, h: match.Matcher(b).compare(funcs[a], h[3]).matched, revert)
     folded = 0
     for a, h in proposal.items():
         f = funcs[a]
@@ -159,7 +158,64 @@ def libmatch(stem: str, libs: dict[str, str], verbose: bool = False) -> None:
     if n_nb:
         b.save()
         print(f"verified {n_nb} more by object order next to verified neighbours")
+    n_bad = _placement_pass(b, libs)
+    if n_bad:
+        b.save()
+        print(f"dropped {n_bad} pairings whose data placement disagrees with their object")
     print(f"verified {len(verified)} library functions: " + ", ".join(f"{k}={v}" for k, v in sorted(by_lib.items())))
+
+
+def verify_fixed_point(proposal: dict, ok, revert) -> dict:
+    """Keep the proposals that verify. A proposal that fails gets its old name back (revert),
+    which can break a caller verified while the tentative name was in place, so repeat until
+    nothing changes."""
+    verified = dict(proposal)
+    while True:
+        failed = [a for a, h in verified.items() if not ok(a, h)]
+        if not failed:
+            return verified
+        for a in failed:
+            del verified[a]
+            revert(a)
+
+
+def placement_outliers(placements: dict[int, dict[str, int]]) -> set[int]:
+    """Functions (addr -> {section: target address}) disagreeing with their object's unique
+    majority placement of a section; on a tie no placement is accepted."""
+    votes: dict[str, dict[int, int]] = defaultdict(lambda: defaultdict(int))
+    for pl in placements.values():
+        for sec, at in pl.items():
+            votes[sec][at] += 1
+
+    def accepted(sec: str, at: int) -> bool:
+        v = votes[sec]
+        best = max(v.values())
+        return v[at] == best and list(v.values()).count(best) == 1
+    return {a for a, pl in placements.items() if not all(accepted(s, at) for s, at in pl.items())}
+
+
+def _placement_pass(b: Binary, libs: dict[str, str]) -> int:
+    """Functions of one object must agree on where its data sections (.bss, .data, ...) landed,
+    as `dc check` requires. Identical code from another object can verify on its own; keep the
+    placement most of the object's functions agree on and return the others to todo."""
+    by_src: dict[str, list[Func]] = defaultdict(list)
+    for f in b.funcs:
+        if f.status == "lib" and f.src.startswith("lib:") and f.src.split(":")[1] in libs:
+            by_src[f.src].append(f)
+    n = 0
+    for src, fs in by_src.items():
+        if len(fs) < 2:
+            continue
+        _, lib, member = src.split(":", 2)
+        obj = ensure_member(libs, lib, member)
+        res = {f.addr: match.run(b, f, obj) for f in fs}
+        bad = placement_outliers({a: r.placements for a, r in res.items()})
+        for f in fs:
+            if f.addr in bad:
+                f.status, f.score, f.src, f.note = "todo", "", "", ""
+                f.name = f"FUN_{f.addr:08x}"
+                n += 1
+    return n
 
 
 def _apply_learned(b: Binary, learned: dict[str, set[int]], taken: set[str]) -> int:

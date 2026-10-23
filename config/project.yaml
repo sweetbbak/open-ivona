@@ -8,3 +8,5 @@ libraries:
   gnustl: toolchain/ndk-r10e/android-ndk-r10e/sources/cxx-stl/gnu-libstdc++/4.8/libs/armeabi/libgnustl_static.a
   crtbegin_so: toolchain/ndk-r10e/android-ndk-r10e/platforms/android-9/arch-arm/usr/lib/crtbegin_so.o
   crtend_so: toolchain/ndk-r10e/android-ndk-r10e/platforms/android-9/arch-arm/usr/lib/crtend_so.o
+  # third-party code built from pinned upstream sources by `dc vendor build` (config/vendor.yaml)
+  openssl: build/libobj/openssl.a

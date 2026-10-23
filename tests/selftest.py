@@ -120,6 +120,26 @@ def main() -> int:
     else:
         print("ok   splitter drops fragments inside verified functions only")
 
+    # libmatch: a failed proposal reverts its name, so callers verified against the tentative
+    # name must be re-verified (fixed point); objects must agree on data placement.
+    from dc.libmatch import verify_fixed_point, placement_outliers
+    names = {1: "callee", 2: "caller"}
+    old = {1: "FUN_1", 2: "FUN_2"}
+    ok = lambda a, h: a == 2 and names[1] == "callee"  # callee itself fails; caller needs its name
+    got = verify_fixed_point({1: None, 2: None}, ok, lambda a: names.__setitem__(a, old[a]))
+    if got:
+        fails += 1
+        print(f"FAIL: verify_fixed_point kept {sorted(got)}")
+    else:
+        print("ok   libmatch re-verifies callers after a callee's tentative name is reverted")
+    got = placement_outliers({1: {".bss": 0x100}, 2: {".bss": 0x100}, 3: {".bss": 0x200}, 4: {}})
+    tie = placement_outliers({1: {".bss": 0x100}, 2: {".bss": 0x200}})
+    if got != {3} or tie != {1, 2}:
+        fails += 1
+        print(f"FAIL: placement_outliers gave {got}, tie {tie}")
+    else:
+        print("ok   libmatch drops pairings that disagree with their object's data placement")
+
     # Mutations: build the *target* differently; candidates from the clean build must fail in
     # exactly the functions whose code or referenced data changed.
     mutations = [

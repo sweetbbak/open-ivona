@@ -1,0 +1,12 @@
+# Third-party code statically linked into libttsivonavoice, built from pinned upstream releases
+# (external/fetch.sh) by `dc vendor build LIB` into build/libobj/LIB.a for `dc libmatch`.
+openssl:
+  # OpenSSL 1.0.2h libcrypto only (no libssl strings in the engine). Calibrated 2026-10-22 on
+  # stack.c/lhash.c/x509_cmp.c (sk_dup at 0xf086c): unoptimized ARM with a frame pointer.
+  # Defines are CFLAG of `Configure android` (no asm modules: no CRYPTOGAMS banners in .rodata).
+  binaries: [libttsivonavoice]  # libmatch offers it only to these (tiny wrappers collide elsewhere)
+  src: external/openssl-1.0.2h
+  prepare: openssl
+  configure: [android, no-shared]
+  sources: openssl-libcrypto
+  flags: [-marm, -O0, -fno-omit-frame-pointer, -DOPENSSL_THREADS, -D_REENTRANT, -DDSO_DLFCN, -DHAVE_DLFCN_H]

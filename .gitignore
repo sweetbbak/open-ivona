@@ -9,3 +9,5 @@ target/*.til
 __pycache__/
 external/dl/
 external/flite-*/
+external/openssl-*/
+external/curl-*/

@@ -12,6 +12,7 @@
   dc data ADDR NAME [SIZE]   name a data address (used to verify GOT/GOTOFF/PC-relative refs)
   dc dump ADDR N FIELDS emit C initializers for N structs (fields: s,p,i,u,h,H,b,B,f)
   dc libmatch           find + verify statically linked NDK library functions (libgcc, gnustl, crt)
+  dc vendor build LIB   compile pinned third-party sources (config/vendor.yaml) into build/libobj/LIB.a
   dc flite build|locate|all [--apply]   compile Flite 1.4 and locate it in the engine
   dc flite import hrg/cst_item.c ...      copy Flite sources in with address comments
   dc selftest           link sample code with gold and verify the matcher end to end
@@ -456,9 +457,18 @@ def project_cfg() -> dict:
         return yaml.safe_load(fh)
 
 
+def cmd_vendor(a):
+    from .vendor import build
+    build(a.bin, a.lib)
+
+
 def cmd_libmatch(a):
     from .libmatch import libmatch
-    libmatch(a.bin, project_cfg()["libraries"], a.verbose)
+    from .vendor import recipes
+    vend = recipes()
+    libs = {k: v for k, v in project_cfg()["libraries"].items()
+            if k not in vend or a.bin in vend[k].get("binaries", [])}  # vendored code: listed binaries only
+    libmatch(a.bin, libs, a.verbose)
 
 
 def cmd_flite(a):
@@ -515,6 +525,8 @@ def main(argv=None):
     s.add_argument("files", nargs="*", help="Flite source files (relative to src/) for `import`")
     s.add_argument("--apply", action="store_true", help="name located functions in the table")
     s.add_argument("-v", "--verbose", action="store_true"); s.set_defaults(fn=cmd_flite)
+    s = sub.add_parser("vendor"); s.add_argument("action", choices=["build"]); s.add_argument("lib")
+    s.set_defaults(fn=cmd_vendor)
     s = sub.add_parser("libmatch"); s.add_argument("-v", "--verbose", action="store_true")
     s.set_defaults(fn=cmd_libmatch)
     s = sub.add_parser("dump"); s.add_argument("addr"); s.add_argument("count", type=int)

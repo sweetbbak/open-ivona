@@ -54,6 +54,56 @@ addr	size	name	note
 00267094	8	val_string_1	
 0026709c	8	val_string_0	
 002683e0	0	cst_regex_table	learned from src/libttsivonavoice/flite/cst_cart.c
+00268c18	0	ASN1_BIT_STRING_it	named from library relocation
+00268e64	0	ASN1_FBOOLEAN_it	named from library relocation
+0026eb74	0	X509_ALGOR_it	named from library relocation
+0026eb90	0	X509_ALGORS_it	named from library relocation
+0026ebc8	0	X509_ATTRIBUTE_it	named from library relocation
+0026ebe4	0	X509_CINF_it	named from library relocation
+0026ec18	0	X509_it	named from library relocation
+0026ec34	0	X509_CERT_AUX_it	named from library relocation
+0026ec50	0	X509_CERT_PAIR_it	named from library relocation
+0026ec6c	0	X509_REVOKED_it	named from library relocation
+0026eca0	0	X509_CRL_INFO_it	named from library relocation
+0026ecd4	0	X509_CRL_it	named from library relocation
+0026ed0c	0	X509_EXTENSIONS_it	named from library relocation
+0026ed28	0	OTHERNAME_it	named from library relocation
+0026ed44	0	EDIPARTYNAME_it	named from library relocation
+0026ed60	0	GENERAL_NAME_it	named from library relocation
+0026ed7c	0	GENERAL_NAMES_it	named from library relocation
+0026ed98	0	PKEY_USAGE_PERIOD_it	named from library relocation
+0026ef24	0	DIST_POINT_NAME_it	named from library relocation
+0026ef40	0	DIST_POINT_it	named from library relocation
+0026ef5c	0	CRL_DIST_POINTS_it	named from library relocation
+0026ef78	0	ISSUING_DIST_POINT_it	named from library relocation
+0026efcc	0	v3_ocsp_nonce	named from library relocation
+0026f020	0	POLICY_MAPPING_it	named from library relocation
+0026f0e4	0	v3_ct_scts	named from library relocation
+0026f188	0	PKCS7_it	named from library relocation
+0026f1a4	0	PKCS7_SIGNED_it	named from library relocation
+0026f1d8	0	PKCS7_SIGNER_INFO_it	named from library relocation
+0026f1f4	0	PKCS7_ISSUER_AND_SERIAL_it	named from library relocation
+0026f210	0	PKCS7_ENVELOPE_it	named from library relocation
+0026f244	0	PKCS7_RECIP_INFO_it	named from library relocation
+0026f260	0	PKCS7_ENC_CONTENT_it	named from library relocation
+0026f27c	0	PKCS7_SIGN_ENVELOPE_it	named from library relocation
+0026f298	0	PKCS7_ENCRYPT_it	named from library relocation
+0026f2b4	0	PKCS7_DIGEST_it	named from library relocation
+0026f3b0	0	PKCS12_SAFEBAGS_it	named from library relocation
+0026f3cc	0	PKCS12_AUTHSAFES_it	named from library relocation
+0026f458	0	OCSP_REQUEST_it	named from library relocation
+0026f490	0	OCSP_RESPONSE_it	named from library relocation
+0026f67c	0	RSAPrivateKey_it	named from library relocation
+0026f6b0	0	RSAPublicKey_it	named from library relocation
+0026f6cc	0	RSA_PSS_PARAMS_it	named from library relocation
+0026f82c	0	X509_PUBKEY_it	named from library relocation
+0026f860	0	X509_REQ_INFO_it	named from library relocation
+0026f87c	0	X509_REQ_it	named from library relocation
+0026f908	0	X509_NAME_ENTRY_it	named from library relocation
+0026f924	0	X509_NAME_ENTRIES_it	named from library relocation
+0026f978	0	NETSCAPE_SPKAC_it	named from library relocation
+0026fc90	0	PKCS8_PRIV_KEY_INFO_it	named from library relocation
+0026fd7c	0	EXTENDED_KEY_USAGE_it	named from library relocation
 00271680	0	_ZTIN9__gnu_cxx24__concurrence_lock_errorE	named from library relocation
 0027168c	0	_ZTIN9__gnu_cxx26__concurrence_unlock_errorE	named from library relocation
 00271698	0	_ZTIN9__gnu_cxx29__concurrence_broadcast_errorE	named from library relocation
@@ -64,9 +114,46 @@ addr	size	name	note
 002716f8	0	_ZTVN9__gnu_cxx24__concurrence_wait_errorE	named from library relocation
 00271838	0	_ZTISt9type_info	named from library relocation
 00271ab4	0	cst_val_defs	
+00272698	0	v3_alt	named from library relocation
+00272740	0	v3_skey_id	named from library relocation
+00272778	0	v3_akey_id	named from library relocation
+002727b0	0	v3_pkey_usage_period	named from library relocation
+00272810	0	v3_crl_num	named from library relocation
+00272848	0	v3_delta_crl	named from library relocation
+00272880	0	v3_inhibit_anyp	named from library relocation
+002728b8	0	v3_crl_reason	named from library relocation
+002728f0	0	v3_sxnet	named from library relocation
+00272978	0	v3_cpols	named from library relocation
+00272aa8	0	v3_crld	named from library relocation
+00272ae0	0	v3_freshest_crl	named from library relocation
+00272c08	0	v3_idp	named from library relocation
+00272c40	0	v3_info	named from library relocation
+00272c78	0	v3_sinfo	named from library relocation
+00272cec	0	v3_ocsp_crlid	named from library relocation
+00272d24	0	v3_ocsp_acutoff	named from library relocation
+00272d5c	0	v3_crl_invdate	named from library relocation
+00272d94	0	v3_crl_hold	named from library relocation
+00272dcc	0	v3_ocsp_nocheck	named from library relocation
+00272e04	0	v3_ocsp_serviceloc	named from library relocation
+00272e78	0	v3_policy_mappings	named from library relocation
+00272eec	0	v3_policy_constraints	named from library relocation
+00272f4c	0	v3_name_constraints	named from library relocation
+00273038	0	v3_pci	named from library relocation
+00273c78	0	X509_NAME_it	named from library relocation
+00273d48	0	v3_bcons	named from library relocation
+00273da8	0	v3_nscert	named from library relocation
+00273de0	0	v3_key_usage	named from library relocation
+00273e18	0	v3_ext_ku	named from library relocation
+00273e50	0	v3_ocsp_accresp	named from library relocation
+00273e9c	0	v3_ns_ia5_list	named from library relocation
 00275000	0	__dso_handle	named from library relocation
 00275248	4	cst_log_level	
+00275300	0	default_pctx	named from library relocation
 00275804	0	cst_relation_id_names	
+00275930	0	rand_ssleay_meth	named from library relocation
 00275f24	10	g_modules	
 0027b094	104	g_tts_error	
 0027b198	4	g_tts_instance_count	
+0027b97c	0	app_pkey_methods	named from library relocation
+0027b9e4	0	cleanse_ctr	named from library relocation
+0027b9f4	0	obj_cleanup_defer	named from library relocation
