@@ -8,11 +8,15 @@
 #include "cst_tokenstream.h"
 #include "cst_val.h"
 #include "cst_val_defs.h"
+#include "cst_item.h"
+#include "ivona_util.h"
 
 /* a named table entry */
 typedef struct named_entry {
     const char *name;
 } named_entry;
+
+cst_item *item_traverse(const cst_item *item, ...);
 
 typedef const cst_val *(*phonefunc)(const cst_val *p);
 CST_VAL_USER_FUNCPTR_DCLS(phonefunc, phonefunc)
@@ -308,4 +312,46 @@ cst_val *phones_keep_first_stress_range(cst_val *from, const cst_val *to)
 cst_val *phones_keep_first_stress(cst_val *p)
 {
     return phones_keep_first_stress_range(p, NULL);
+}
+
+/* 0x7195c arm: appends a segment's phone ("|"-terminated, with its syllable's stress on
+ * vowels, "?" before a glottal stop if mark_glottal, "-" after a syllable's last phone if
+ * sep_syls). */
+void seg_append_phone(const cst_item *seg, strbuf *sb, int sep_syls, int mark_glottal)
+{
+    const char *name = item_feat_string(seg, "name");
+    const cst_item *syl;
+    int stress, gpos;
+    char c;
+
+    if (strcmp(name, "pau") == 0)
+        return;
+    syl = item_parent(item_as(seg, 4));
+    stress = ffeature_int(item_traverse(syl, 0), "stress");
+    gpos = ffeature_int(item_traverse(syl, 0), "glottal_stop_pos");
+    strbuf_append_str(sb, name);
+    if (mark_glottal && ffeature_int(item_traverse(seg, 0), "pos_in_syl") + 1 == gpos)
+        strbuf_append(sb, "?", 1);
+    if (strcmp("+", ffeature_string(item_traverse(seg, 0), "ph_vc")) == 0) {
+        if (stress != 0) {
+            c = stress + '0';
+            strbuf_append(sb, &c, 1);
+        }
+    }
+    strbuf_append(sb, "|", 1);
+    if (sep_syls && item_next(seg) == NULL && item_next(syl) != NULL)
+        strbuf_append(sb, "-", 1);
+}
+
+/* 0x71b08 arm: the phones of a word, syllables separated by "-". */
+char *word_phone_string(const cst_item *word)
+{
+    const cst_item *w = item_as(word, 4), *syl, *seg;
+    strbuf sb;
+
+    strbuf_init(&sb);
+    for (syl = item_daughter(w); syl; syl = item_next(syl))
+        for (seg = item_daughter(syl); seg; seg = item_next(seg))
+            seg_append_phone(seg, &sb, 1, 0);
+    return strbuf_data(&sb);
 }
