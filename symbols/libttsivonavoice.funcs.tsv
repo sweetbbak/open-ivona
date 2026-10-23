@@ -457,12 +457,12 @@ addr	size	mode	name	status	src	score	note
 00037afc	a8	arm	FUN_00037afc	todo			
 00037ba4	4c	arm	FUN_00037ba4	todo			
 00037bf0	1e0	arm	FUN_00037bf0	todo			
-00037dd0	2b4	arm	tts_dict_save	todo			
-00038084	268	arm	FUN_00038084	todo			
-000382ec	830	arm	FUN_000382ec	todo			
-00038b1c	64	arm	FUN_00038b1c	todo			
-00038b80	208	arm	tts_dict_load	todo			
-00038d88	64	arm	FUN_00038d88	todo			
+00037dd0	2b4	arm	tts_dict_save	wip	src/libttsivonavoice/dict.c	75.1	
+00038084	268	arm	dict_split_line	matched	src/libttsivonavoice/dict.c	100	
+000382ec	830	arm	dict_parse	wip	src/libttsivonavoice/dict.c	19.8	
+00038b1c	64	arm	dict_load_file	matched	src/libttsivonavoice/dict.c	100	
+00038b80	208	arm	tts_dict_load	wip	src/libttsivonavoice/dict.c	28.5	
+00038d88	64	arm	dict_load_mem	matched	src/libttsivonavoice/dict.c	100	
 00038dec	c	arm	dict_new	matched	src/libttsivonavoice/dict.c	100	
 00038df8	74	arm	dict_free	matched	src/libttsivonavoice/dict.c	100	
 00038e6c	368	arm	dict_add	wip	src/libttsivonavoice/dict.c	58.7	
@@ -570,7 +570,7 @@ addr	size	mode	name	status	src	score	note
 00040720	944	arm	tts_load_voice	todo			
 00041064	f0	arm	tts_unload_voice	todo			
 00041154	84	arm	tts_pls_unload	todo			
-000411d8	110	arm	FUN_000411d8	todo			
+000411d8	110	arm	voice_fetcher_new	todo			
 000412e8	1b8	arm	tts_pls_load	todo			
 000414a0	24	arm	tts_voice_sample_rate	todo			
 000414c4	7c	arm	FUN_000414c4	todo			
@@ -1129,7 +1129,7 @@ addr	size	mode	name	status	src	score	note
 000560cc	50	arm	val_binary_key	matched	src/libttsivonavoice/flite/cst_val_user.c	100	
 0005611c	c	arm	binary_key_val	matched	src/libttsivonavoice/flite/cst_val_user.c	100	
 00056128	6c	arm	cst_bsearch	todo			
-00056194	3c	arm	FUN_00056194	todo			
+00056194	3c	arm	uni_isspace	todo			
 000561d0	78	arm	FUN_000561d0	todo			
 00056248	30	arm	FUN_00056248	todo			
 00056278	10	arm	FUN_00056278	todo			
