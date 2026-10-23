@@ -1545,9 +1545,9 @@ addr	size	mode	name	status	src	score	note
 0006b160	28	arm	FUN_0006b160	todo			
 0006b188	20	arm	FUN_0006b188	todo			
 0006b1a8	b8	arm	FUN_0006b1a8	todo			
-0006b260	c0	arm	FUN_0006b260	todo			
-0006b320	34	arm	FUN_0006b320	todo			
-0006b354	388	arm	FUN_0006b354	todo			
+0006b260	c0	arm	silk_unit_open	wip	src/libttsivonavoice/vox_codec.c	72.9	
+0006b320	34	arm	silk_unit_close	matched	src/libttsivonavoice/vox_codec.c	100	
+0006b354	388	arm	silk_unit_decode	wip	src/libttsivonavoice/vox_codec.c	9.2	
 0006b6dc	150	arm	FUN_0006b6dc	todo			
 0006b82c	3c	arm	FUN_0006b82c	todo			
 0006b868	2f0	arm	FUN_0006b868	todo			

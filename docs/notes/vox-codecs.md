@@ -47,9 +47,29 @@ reachable for codec 8/12 vox files, such as those of the Windows IVONA 2 product
   `SKP_Silk_SDK_get_version` 0x20324c, `SKP_Silk_decode_frame` 0x20325c,
   `SKP_Silk_init_decoder` 0x209a88.
 
+## Codec 14 unit format (src/libttsivonavoice/vox_codec.c)
+
+Decompiled from `silk_unit_open` (0x6b260), `silk_unit_close` (0x6b320, matched) and
+`silk_unit_decode` (0x6b354, wip: logic complete, stack layout differs).
+
+- **Open.** Allocates a SILK decoder. `API_sampleRate` is the header rate, except 22050 → 24000
+  (SILK's nearest API rate). The 4-byte key is header +0x2c (little-endian), stored at
+  state +0x18.
+- **Unit.** A run of packets, each a little-endian `u16` length (≤ 0x1400) followed by the payload.
+  Decoding re-initialises the decoder for every unit.
+- **Payload obfuscation.** Payload bytes are XORed with an 8-byte key:
+  `key[0..3]` = header +0x2c. For packets over 4 bytes, `key[4..]` = the packet's last `n % 4`
+  bytes, which are left in clear. The rest of the key is zero. Only the first `n - (n % 4)` bytes
+  are XORed (all `n` when n ≤ 4), as `payload[i] ^= key[i % 8]`.
+- **Decode.** Each packet goes to `SKP_Silk_SDK_Decode(dec, &ctrl, 0, payload, n, out, &len)`
+  until `ctrl.moreInternalDecoderFrames` is 0. The first `skip` samples of the unit are dropped,
+  output is clamped to the caller's sample count, and the rest is zero-filled.
+- **Return.** 0, or -1 init / -2 truncated length / -3 packet > 0x1400 / -4 truncated packet /
+  -5 decoder error.
+
 ## Still open
 
-- **Codec-14 wrappers.** `FUN_0006b260`/`FUN_0006b320`/`FUN_0006b354` (IVONA code) and how units
-  are laid out in the vox sections for them.
+- **Unit layout.** How units are located in the vox sections for codec 14 (the caller passes data,
+  length and skip).
 - **Tremor's tail.** Code just before SILK (0x201594–0x202c88, MDCT butterflies) belongs to it.
   The `-O0` code at ~0x1f1000 is still unidentified.
