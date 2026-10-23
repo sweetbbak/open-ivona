@@ -1560,15 +1560,15 @@ addr	size	mode	name	status	src	score	note
 00070acc	18	arm	cart_val	matched	src/libttsivonavoice/flite/cst_cart.c	100	flite order 83%
 00070ae4	104	arm	cart_print_node	matched	src/libttsivonavoice/flite/cst_cart.c	100	
 00070be8	150	arm	cart_interpret	matched	src/libttsivonavoice/flite/cst_cart.c	100	flite order 90%
-00070d38	58	arm	FUN_00070d38	todo			
-00070d90	18	arm	FUN_00070d90	todo			
-00070da8	c	arm	FUN_00070da8	todo			
-00070db4	c	arm	FUN_00070db4	todo			
-00070dc0	ac	arm	FUN_00070dc0	todo			
-00070e6c	50	arm	FUN_00070e6c	todo			
-00070ebc	58	arm	FUN_00070ebc	todo			
-00070f14	10	arm	FUN_00070f14	todo			
-00070f24	74	arm	FUN_00070f24	todo			
+00070d38	58	arm	val_phoneset	matched	src/libttsivonavoice/flite/cst_phoneset.c	100	
+00070d90	18	arm	phoneset_val	matched	src/libttsivonavoice/flite/cst_phoneset.c	100	
+00070da8	c	arm	new_phoneset	matched	src/libttsivonavoice/flite/cst_phoneset.c	100	
+00070db4	c	arm	delete_phoneset	matched	src/libttsivonavoice/flite/cst_phoneset.c	100	
+00070dc0	ac	arm	phone_id	matched	src/libttsivonavoice/flite/cst_phoneset.c	100	
+00070e6c	50	arm	phone_feat_id	matched	src/libttsivonavoice/flite/cst_phoneset.c	100	
+00070ebc	58	arm	phone_feature	matched	src/libttsivonavoice/flite/cst_phoneset.c	100	
+00070f14	10	arm	phone_feature_string	matched	src/libttsivonavoice/flite/cst_phoneset.c	100	
+00070f24	74	arm	item_phoneset	matched	src/libttsivonavoice/flite/cst_phoneset.c	100	
 00070f98	58	arm	FUN_00070f98	todo			
 00070ff0	18	arm	FUN_00070ff0	todo			
 00071008	50	arm	FUN_00071008	todo			

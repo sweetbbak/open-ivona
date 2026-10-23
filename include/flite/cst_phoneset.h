@@ -53,6 +53,7 @@ struct cst_phoneset_struct {
     const char *silence;
     const int num_phones;
     const int * const * fvtable;
+    int sorted;                 /* IVONA: phonenames sorted (binary search) */
 };
 typedef struct cst_phoneset_struct cst_phoneset;
 
