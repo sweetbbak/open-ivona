@@ -49,9 +49,14 @@ Read README.md first. The rules below are what keeps the project deterministic.
   | libcurl 7.52.1 | ~0x1cb000–0x1f1000 (+ cold statics at 0x18924) | engine ARM `-O2`, unsigned char, symbol hiding, no SSL/IPv6/cookies/proxy/crypto-auth |
   | PCRE 8.37 | 0x72000–0xe0a00 (with other code) | `-O0`, UTF + UCP; `real_pcre` is 8 bytes larger than upstream (unexplained) |
 
-  Vendored archives are offered only to the binaries listed in their recipe. Unidentified so far:
-  an integer-only fixed-point DSP/codec block at ~0x1f1000–0x20c000 (`"1.0.8"` version getter at
-  0x20324c, Q15 FFT twiddles, `qsort`).
+  Vendored archives are offered only to the binaries listed in their recipe.
+
+  Not vendored yet: **Tremor** (integer Vorbis decoder; the voice audio is Vorbis) at
+  ~0x1f9000–0x201500, built with the engine's ARM `-O2` flags. It's an older revision than xiph
+  master: `codec_setup_info` is 0xcb0 bytes (master 0xca8) and `vorbis_comment_clear` has no NULL
+  check. With master, 26 of 69 functions are byte-identical. Unoptimized code before it
+  (~0x1f1000) and an optimized block after it (`"1.0.8"` getter at 0x20324c) are still
+  unidentified.
   - Static functions are per object: a table row named `name@member` (e.g.
     `constant_time_is_zero@rsa_pk1`) is that object's copy. The matcher accepts `name` or `name@…`
     and records the address as a placement, so one object's callers must agree on the copy.
