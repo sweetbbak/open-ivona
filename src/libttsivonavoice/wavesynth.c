@@ -6,7 +6,11 @@
 #include <string.h>
 #include "cst_alloc.h"
 #include "cst_val.h"
+#include "cst_item.h"
+#include "cst_utterance.h"
 #include "cst_val_defs.h"
+#include <openssl/evp.h>
+#include <openssl/hmac.h>
 #include "cst_file.h"
 #include "cst_wave.h"
 #include "tts_voxdb.h"
@@ -14,10 +18,16 @@
 typedef struct unit_selector unit_selector;
 void unit_selector_free(unit_selector *s);
 void *val_userdata(const cst_val *v);
+cst_val *userdata_val(const void *v);
+const unsigned char *val_binary_key(const cst_val *v);
 
 /* a mark (0x14 bytes) */
 typedef struct wavesynth_mark {
-    int unk[5];
+    cst_val *a;                 /* items, stored as vals */
+    cst_val *b;
+    int unit;                   /* +0x08 */
+    int start;                  /* +0x0c */
+    int end;                    /* +0x10 */
 } wavesynth_mark;
 
 typedef struct wavesynth {
@@ -267,4 +277,88 @@ int wavesynth_flush(wavesynth *s)
     s->total += n;
     s->pending = 0;
     return n;
+}
+
+/* 0x62d78 arm */
+void wavesynth_add_mark(wavesynth *s, const cst_item *item, int start)
+{
+    wavesynth_mark *m = wavesynth_mark_new();
+    cst_val *l;
+
+    m->a = (cst_val *)item;
+    m->b = NULL;
+    l = s->marks;
+    m->start = start;
+    m->end = 0;
+    if (l)
+        s->marks = val_append(l, cons_val(userdata_val(m), NULL));
+    else
+        s->marks = cons_val(userdata_val(m), l);
+}
+
+/* 0x62de0 arm: marks a unit start..end (and the end of the last unit). */
+void wavesynth_add_unit_marks(wavesynth *s, const cst_item *item, int start, int end)
+{
+    int e = end >= start ? end : start;
+    wavesynth_mark *m = wavesynth_mark_new();
+    const cst_item *next;
+
+    m->b = (cst_val *)item;
+    m->a = NULL;
+    m->start = start;
+    m->end = e;
+    m->unit = 1;
+    if (s->marks)
+        s->marks = val_append(s->marks, cons_val(userdata_val(m), NULL));
+    else
+        s->marks = cons_val(userdata_val(m), s->marks);
+    next = item_next(item);
+    if (next)
+        return;
+    m = wavesynth_mark_new();
+    m->a = (cst_val *)next;
+    m->b = (cst_val *)item;
+    m->unit = (int)next;
+    m->start = e;
+    m->end = e;
+    if (s->marks)
+        s->marks = val_append(s->marks, cons_val(userdata_val(m), next));
+    else
+        s->marks = cons_val(userdata_val(m), s->marks);
+}
+
+/* 0x630c4 arm */
+void wavesynth_nop(void)
+{
+}
+
+const unsigned char cache_key_secret[32] = {
+    0x48, 0x70, 0x5e, 0xe3, 0xa3, 0x3f, 0xa8, 0x3f, 0x43, 0x21, 0xa1, 0xf5,
+    0xbd, 0x09, 0x75, 0x34, 0x61, 0xa9, 0xe0, 0x86, 0xb5, 0x58, 0xde, 0x2d,
+    0x91, 0x82, 0x0a, 0x1e, 0x04, 0x3f, 0x31, 0xd4
+};
+int cache_key_secret_len = 32;
+
+/* 0x637f8 arm: the key that encrypts the voice's unit cache, derived from its
+ * "cache_encrypt_key" (NULL if it has none). */
+unsigned char *utt_cache_key(const cst_utterance *u)
+{
+    const unsigned char *k;
+    const EVP_MD *md;
+    unsigned char *out = NULL;
+    unsigned int len;
+    HMAC_CTX ctx;
+
+    if (!feat_present(u->features, "cache_encrypt_key") ||
+        (k = val_binary_key(feat_val(u->features, "cache_encrypt_key"))) == NULL)
+        return out;
+    md = EVP_sha256();
+    len = EVP_MD_size(md);
+    out = cst_safe_alloc(len, 1);
+    HMAC_CTX_init(&ctx);
+    HMAC_Init_ex(&ctx, cache_key_secret, cache_key_secret_len, md, NULL);
+    HMAC_Update(&ctx, k, EVP_CIPHER_key_length(EVP_aes_256_cbc()));
+    HMAC_Final(&ctx, out, &len);
+    HMAC_CTX_cleanup(&ctx);
+    return out;
 }

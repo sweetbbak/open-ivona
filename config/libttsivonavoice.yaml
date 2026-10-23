@@ -37,5 +37,8 @@ units:
   # -O3 -fno-inline-functions: item_traverse_op's lookup loop is completely unrolled (only
   # -O3's early cunrolli does that) while item_feat_func stays out of line in ffeature_*
   src/libttsivonavoice/flite/cst_ffeature.c: {add: [-O3, -fno-inline-functions], remove: [-O2]}
-  # -fno-inline: val_delete_wavesynth tail-calls delete_wavesynth
-  src/libttsivonavoice/wavesynth.c: {add: [-fno-inline]}
+  # -fno-inline: val_delete_wavesynth tail-calls delete_wavesynth. -fno-strict-aliasing: in
+  # wavesynth_add_mark the load of s->marks stays below the stores to the new mark (int fields
+  # too). utt_cache_key uses OpenSSL's HMAC (headers from `./dc vendor build openssl`, which
+  # libmatch needs anyway)
+  src/libttsivonavoice/wavesynth.c: {add: [-fno-inline, -fno-strict-aliasing, -Ibuild/vendor/openssl-1.0.2h/include], remove: [-fstrict-aliasing]}

@@ -60,6 +60,7 @@ addr	size	name	note
 0021f348	4	cst_val_type_track	
 0021f34c	0	cst_val_type_wave	learned from src/libttsivonavoice/flite/cst_wave.c
 0021f350	0	cst_val_type_utterance	learned from src/libttsivonavoice/flite/cst_item.c
+0022327c	20	cache_key_secret	wavesynth.c
 00223470	100	uni_translit_index1	uni_case.c
 00223570	2000	uni_translit_index2	uni_case.c
 00225570	2460	uni_translit_index3	uni_case.c
@@ -341,6 +342,7 @@ addr	size	name	note
 002743d0	0	SKP_Silk_NLSF_CB1_16	named from library relocation
 00275000	0	__dso_handle	named from library relocation
 00275248	4	cst_log_level	
+0027524c	4	cache_key_secret_len	wavesynth.c
 00275300	0	default_pctx	named from library relocation
 00275804	0	cst_relation_id_names	
 00275830	2c	item_traverse_names	cst_ffeature.c
