@@ -4,6 +4,7 @@
   dc ls [status...]     list functions (filter by status)
   dc asm FUNC           annotated target disassembly of FUNC (name or hex address)
   dc diff FUNC [-s SRC] compile SRC (or the function's recorded src) and diff against target
+                        (-s lib:LIB:MEMBER [--sym NAME] diffs against a library object member)
   dc tu SRC             compile SRC once and diff every table function it defines (records src)
   dc learn SRC          name FUN_/D_ callees and data after what SRC references (from good matches)
   dc check              rebuild every TU and verify all `matched` functions still match
@@ -119,6 +120,14 @@ def cmd_diff(a):
     src = a.src or f.src
     if not src:
         raise SystemExit(f"{f.name} has no source yet; pass -s src/{a.bin}/<file>.c")
+    if src.startswith("lib:"):  # library member: diff only (dc libmatch owns lib rows)
+        from .libmatch import ensure_member, load_aliases
+        libs = project_cfg().get("libraries", {})
+        load_aliases(libs)
+        _, lib, member = src.split(":", 2)
+        res = match.run(b, f, ensure_member(libs, lib, member), a.sym)
+        print_result(res, verbose=not a.quiet)
+        return
     src = os.path.relpath(os.path.abspath(src), ROOT) if os.path.exists(src) else src
     if not os.path.exists(path(src)):
         raise SystemExit(f"{src} does not exist")
@@ -507,6 +516,7 @@ def main(argv=None):
     s = sub.add_parser("diff"); s.add_argument("func"); s.add_argument("-s", "--src")
     s.add_argument("-q", "--quiet", action="store_true"); s.add_argument("-n", "--no-save", action="store_true")
     s.add_argument("-X", "--extra", help="extra compiler flags for an experiment (implies -n)")
+    s.add_argument("--sym", help="symbol in the library member (default: the function name)")
     s.set_defaults(fn=cmd_diff)
     s = sub.add_parser("tu"); s.add_argument("src"); s.add_argument("-v", "--verbose", action="store_true")
     s.set_defaults(fn=cmd_tu)

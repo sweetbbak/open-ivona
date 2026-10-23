@@ -97,3 +97,7 @@ __asm__(".text\n"
         "    b lookup\n"
         ".thumb\n"
         ".size thumb_to_arm_stub, .-thumb_to_arm_stub\n");
+
+/* Same-named static in both sample TUs: each caller must resolve to its own object's copy. */
+static __attribute__((noinline)) int twin(int x) { return x * 3 + 1; }
+int twin_user_thumb(int x) { return twin(x) + 2; }

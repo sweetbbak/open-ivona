@@ -63,3 +63,7 @@ __asm__(".text\n"
         "    pop {r4, pc}\n"
         ".arm\n"
         ".size mixed_stub, .-mixed_stub\n");
+
+/* Same-named static in both sample TUs: each caller must resolve to its own object's copy. */
+static __attribute__((noinline)) int twin(int x) { return x * 5 + 1; }
+int twin_user_arm(int x) { return twin(x) + 2; }

@@ -64,6 +64,11 @@ def _prepare_openssl(tree: str, r: dict) -> None:
                      + " ".join(r.get("configure", ["android", "no-shared"])))
     if not os.path.exists(os.path.join(tree, "crypto", "opensslconf.h")):
         raise SystemExit("OpenSSL Configure failed:\n" + res.stdout + res.stderr)
+    conf = os.path.join(tree, "crypto", "opensslconf.h")
+    txt = open(conf).read()
+    for name in r.get("undef", []):  # settings the original opensslconf.h did not have
+        txt = re.sub(rf"^#define {name}\b.*$", f"#undef {name}", txt, flags=re.M)
+    open(conf, "w").write(txt)
     inc = os.path.join(tree, "include", "openssl")
     os.makedirs(inc, exist_ok=True)
     for mk in [os.path.join(tree, "crypto", "Makefile")] + glob.glob(os.path.join(tree, "crypto", "*", "Makefile")):
@@ -113,7 +118,11 @@ def build(stem: str, lib: str) -> None:
         PREPARE[r["prepare"]](tree, r)
     common = list(b.cfg["flags"]["common"])
     common = [x for x in common if not x.startswith("-Iinclude")]  # the engine's own headers
+    common = [x for x in common if x not in r.get("remove", [])]
     flags = common + list(r.get("flags", []))
+    stale = path("build", "libobj", lib)  # members libmatch saved from the previous archive
+    if os.path.exists(stale):
+        shutil.rmtree(stale)
     objdir = path("build", "libobj", lib + ".objs")
     if os.path.exists(objdir):
         shutil.rmtree(objdir)

@@ -12,6 +12,7 @@ Bytes after the candidate's section end must be inter-function padding.
 from __future__ import annotations
 
 import difflib
+import os
 import struct
 from dataclasses import dataclass, field
 
@@ -123,6 +124,18 @@ class ObjFile:
 # Symbol name -> other names defined at the same address in the same library object (C1/C2, D1/D2
 # ...). Filled by libmatch.load_aliases() from the NDK archives; used for undefined references.
 ALIASES: dict[str, tuple[str, ...]] = {}
+
+
+def base_name(name: str) -> str:
+    """`name@obj` (one copy of a static function that several objects define) -> `name`."""
+    return name.split("@", 1)[0]
+
+
+def qualified(name: str, obj: str) -> str:
+    """Table name for an object's copy of static function `name`: name@<object stem>
+    (lib:openssl:crypto__rsa__rsa_pk1.o -> name@rsa_pk1)."""
+    stem = os.path.basename(obj.rsplit(":", 1)[-1]).split("__")[-1]
+    return f"{name}@{stem.rsplit('.', 2)[0] if stem.endswith('.c.o') else stem.rsplit('.', 1)[0]}"
 
 
 def load_object(obj_path: str, data: bytes | None = None) -> ObjFile:
@@ -388,6 +401,8 @@ class Matcher:
                 s_t &= ~1
         if sym.type == "STT_SECTION":
             return self._expect_section(cand, sym.section, s_t, res)
+        if sym.defined and sym.bind == "STB_LOCAL" and sym.type == "STT_FUNC":
+            return self._expect_static_func(cand, sym, s_t, res)
         want = self.names.addr_of(sym.name)
         if want is None and not sym.defined:
             # defined elsewhere as an alias of a name the target table knows (library C1/C2 ...)
@@ -414,6 +429,18 @@ class Matcher:
             self.learn.setdefault(sym.name, set()).add(s_t)
             return True, ""
         return False, f"unknown name {sym.name}; target uses {self.names.describe(s_t)}"
+
+    def _expect_static_func(self, cand: Candidate, sym: CandSym, s_t: int, res: Result) -> tuple[bool, str]:
+        """A static function exists once per object that defines it (at -O0 every includer of a
+        header's static inline gets a copy). The target row is named `name` or `name@<object>`;
+        which copy an object uses is a placement, so all its functions must agree on it."""
+        here = self.names.index.exact(s_t)
+        if here is not None and base_name(here) == sym.name:
+            return self._place(res, "func:" + sym.name, s_t)
+        if self.learn is not None and _is_auto(self.names.describe(s_t)):
+            self.learn.setdefault(qualified(sym.name, cand.obj), set()).add(s_t)
+            return True, ""
+        return False, f"static {sym.name} but target uses {self.names.describe(s_t)}"
 
     def _place(self, res: Result, section: str, base: int) -> tuple[bool, str]:
         prev = res.placements.setdefault(section, base)
@@ -561,7 +588,7 @@ def _is_padding(b: bytes) -> bool:
 
 
 def run(b: Binary, f: Func, obj: str, name: str | None = None) -> Result:
-    cand = load_candidate(obj, name or f.name)
+    cand = load_candidate(obj, name or base_name(f.name))
     if cand is None:
         r = Result(f)
         r.problems.append(f"{name or f.name} is not defined in {obj}")

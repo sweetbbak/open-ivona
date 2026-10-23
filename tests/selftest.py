@@ -48,11 +48,16 @@ def _funcs_from_symtab(so: str) -> list[Func]:
         elf = ELFFile(fh)
         text = elf.get_section_by_name(".text")
         lo, hi = text["sh_addr"], text["sh_addr"] + text["sh_size"]
-        fs = {}
+        fs, tu = {}, ""
         for s in elf.get_section_by_name(".symtab").iter_symbols():
+            if s["st_info"]["type"] == "STT_FILE":
+                tu = s.name
             if s["st_info"]["type"] == "STT_FUNC" and lo <= (s["st_value"] & ~1) < hi and s.name:
                 a = s["st_value"] & ~1
-                fs[a] = Func(a, 0, "thumb" if s["st_value"] & 1 else "arm", s.name, "todo")
+                # static functions are per object: name@object, as dc libmatch names them
+                name = match.qualified(s.name, tu + ".o") if s["st_info"]["bind"] == "STB_LOCAL" \
+                    and s["st_other"]["visibility"] == "STV_DEFAULT" else s.name  # (hidden globals end up local)
+                fs[a] = Func(a, 0, "thumb" if s["st_value"] & 1 else "arm", name, "todo")
     starts = sorted(fs)
     for i, a in enumerate(starts):
         fs[a].size = (starts[i + 1] if i + 1 < len(starts) else hi) - a
@@ -89,6 +94,16 @@ def main() -> int:
             print_result(r)
         else:
             print(f"ok   {name} ({r.func.mode}, {r.func.size:#x} bytes){'  soft: ' + '; '.join(r.soft) if r.soft else ''}")
+
+    # Static functions: each caller resolves to its own object's copy (recorded as a placement).
+    twins = {f.name: f.addr for f in _funcs_from_symtab(so) if f.name.startswith("twin@")}
+    got = {n: res[n].placements.get("func:twin") for n in ("twin_user_thumb", "twin_user_arm") if n in res}
+    want = {"twin_user_thumb": twins.get("twin@sample"), "twin_user_arm": twins.get("twin@sample_arm")}
+    if got != want or None in want.values() or not all(res[n].matched for n in got):
+        fails += 1
+        print(f"FAIL: static twins resolved {got}, want {want}")
+    else:
+        print("ok   same-named static functions resolve to their own object's copy")
 
     # Address-comment name adoption: definitions are adopted, macro invocations are not.
     from dc.cli import addr_comment_names

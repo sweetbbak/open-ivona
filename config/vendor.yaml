@@ -7,6 +7,13 @@ openssl:
   binaries: [libttsivonavoice]  # libmatch offers it only to these (tiny wrappers collide elsewhere)
   src: external/openssl-1.0.2h
   prepare: openssl
-  configure: [android, no-shared]
+  # The original tree was .../build/arm-android-fireos/openssl-1.0.2h-rsa (OPENSSLDIR strings).
+  # no-err: ERR_put_error gets NULL, 0 (BN_new at 0xed050); no-engine: no ENGINE_finish in
+  # RAND_set_rand_method (0xf23ac); no-dsa/dh/ec*: 4 standard EVP_PKEY_ASN1 methods
+  # (EVP_PKEY_asn1_get_count at 0x148a5c), no Suite B body in X509_CRL_check_suiteb.
+  configure: [android, no-shared, no-err, no-engine, no-dsa, no-dh, no-ec, no-ecdh, no-ecdsa,
+              --prefix=/ivona-pd/jenkins/jobs/ext-core/workspace/build/arm-android-fireos/openssl-1.0.2h-rsa]
+  undef: [BN_LLONG]  # BN_mod_word (0x12700c) has no long long arithmetic
+  remove: [-fsigned-char]  # plain char is unsigned (no sign extension in lh_strhash at 0xf2284)
   sources: openssl-libcrypto
   flags: [-marm, -O0, -fno-omit-frame-pointer, -DOPENSSL_THREADS, -D_REENTRANT, -DDSO_DLFCN, -DHAVE_DLFCN_H]

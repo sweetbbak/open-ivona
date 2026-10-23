@@ -47,6 +47,7 @@ def _masked(code: bytes, relocs) -> bytes:
 def libmatch(stem: str, libs: dict[str, str], verbose: bool = False) -> None:
     load_aliases(libs)
     b = Binary(stem)
+    _drop_vanished(b, libs)
     by_size = defaultdict(list)  # (mode, span size) -> functions
     for f in b.funcs:
         by_size[(f.mode, f.size)].append(f)
@@ -68,10 +69,11 @@ def libmatch(stem: str, libs: dict[str, str], verbose: bool = False) -> None:
             continue
         for member, obj in read_ar(full):
             parsed = match.load_object(f"{lib}:{member}", obj)
-            for sym in parsed.func_names:
-                cand = match.candidate_from(parsed, sym)
+            for raw in parsed.func_names:
+                cand = match.candidate_from(parsed, raw)
                 if cand is None or len(cand.code) < 4:
                     continue
+                sym = table_name(parsed, raw, member)
                 n_syms += 1
                 sig = _masked(cand.code, [o for o in cand.relocs])
                 n = len(cand.code)
@@ -159,10 +161,39 @@ def libmatch(stem: str, libs: dict[str, str], verbose: bool = False) -> None:
         b.save()
         print(f"verified {n_nb} more by object order next to verified neighbours")
     n_bad = _placement_pass(b, libs)
+    n_bad += _final_pass(b, libs)
     if n_bad:
         b.save()
-        print(f"dropped {n_bad} pairings whose data placement disagrees with their object")
+        print(f"dropped {n_bad} pairings that no longer verify or disagree on data placement")
     print(f"verified {len(verified)} library functions: " + ", ".join(f"{k}={v}" for k, v in sorted(by_lib.items())))
+
+
+def table_name(obj, sym: str, member: str) -> str:
+    """Table name of a library function: static functions are per object (name@member)."""
+    if any(x.name == sym and x.bind == "STB_LOCAL" and x.defined and x.type == "STT_FUNC" for x in obj.syms):
+        return match.qualified(sym, member)
+    return sym
+
+
+def _drop_vanished(b: Binary, libs: dict[str, str]) -> None:
+    """A rebuilt (vendored) archive can lose members, e.g. after disabling an algorithm: their
+    rows were coincidental matches and go back to todo."""
+    members: dict[str, set[str]] = {}
+    n = 0
+    for f in b.funcs:
+        if f.status != "lib" or not f.src.startswith("lib:"):
+            continue
+        _, lib, member = f.src.split(":", 2)
+        if lib not in libs or not os.path.exists(path(libs[lib])):
+            continue
+        if lib not in members:
+            members[lib] = {m for m, _ in read_ar(path(libs[lib]))}
+        if member not in members[lib]:
+            f.status, f.score, f.src, f.note, f.name = "todo", "", "", "", f"FUN_{f.addr:08x}"
+            n += 1
+    if n:
+        b.save()
+        print(f"{n} library rows reset: their archive member no longer exists")
 
 
 def verify_fixed_point(proposal: dict, ok, revert) -> dict:
@@ -218,6 +249,31 @@ def _placement_pass(b: Binary, libs: dict[str, str]) -> int:
     return n
 
 
+def _final_pass(b: Binary, libs: dict[str, str]) -> int:
+    """Resetting a row to todo (FUN_ name) can break callers verified against its library name:
+    re-verify every library row (with the per-object placement rule) until nothing changes, so
+    libmatch never leaves a row `dc check` rejects."""
+    n = 0
+    while True:
+        bad = []
+        by_src: dict[str, list[Func]] = defaultdict(list)
+        for f in b.funcs:
+            if f.status == "lib" and f.src.startswith("lib:") and f.src.split(":")[1] in libs:
+                by_src[f.src].append(f)
+        b.__dict__.pop("names", None)
+        for src, fs in by_src.items():
+            _, lib, member = src.split(":", 2)
+            obj = ensure_member(libs, lib, member)
+            res = {f.addr: match.run(b, f, obj) for f in fs}
+            out = placement_outliers({a: r.placements for a, r in res.items()})
+            bad += [f for f in fs if not res[f.addr].matched or f.addr in out]
+        if not bad:
+            return n
+        for f in bad:
+            f.status, f.score, f.src, f.note, f.name = "todo", "", "", "", f"FUN_{f.addr:08x}"
+        n += len(bad)
+
+
 def _apply_learned(b: Binary, learned: dict[str, set[int]], taken: set[str]) -> int:
     """Give auto-named (FUN_/data) target addresses the library names their references imply,
     when a name points at exactly one address."""
@@ -248,7 +304,7 @@ def _member_order(obj) -> list[tuple[str, ...]]:
     groups: dict[tuple, list[str]] = {}
     for x in obj.syms:
         if x.type == "STT_FUNC" and x.defined and x.section in sec_index:
-            groups.setdefault((sec_index[x.section], x.value & ~1), []).append(x.name)
+            groups.setdefault((sec_index[x.section], x.value & ~1), []).append(table_name(obj, x.name, obj.path))
     return [tuple(groups[k]) for k in sorted(groups)]
 
 
@@ -296,7 +352,7 @@ def _walk(b, rows, i, step, obj, order, src, taken) -> int:
                 continue
             else:
                 sym = group[0]
-            cand = match.candidate_from(obj, sym)
+            cand = match.candidate_from(obj, match.base_name(sym))
             if cand is None or cand.mode != f.mode or not (0 <= f.size - len(cand.code) <= 8):
                 continue
             old = f.name

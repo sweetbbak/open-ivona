@@ -38,6 +38,18 @@ Read README.md first. The rules below are what keeps the project deterministic.
   - pairs identical-code functions (`what()`, D0/D1 destructors) by object order next to verified
     neighbours;
   - resolves C1/C2 and D1/D2 aliases through `build/libobj/aliases.json`.
+- **Vendored third-party code.** OpenSSL 1.0.2h libcrypto is statically linked (block 0xe1ffc–0x1af040).
+  It's built from the pinned upstream release by `./dc vendor build openssl` (recipe and calibration
+  evidence in `config/vendor.yaml`): ARM `-O0` with a frame pointer, unsigned char,
+  `Configure android no-err no-engine no-dsa no-dh no-ec*`, no `BN_LLONG`. Then run `./dc libmatch`.
+  Vendored archives are offered only to the binaries listed in their recipe.
+  - Static functions are per object: a table row named `name@member` (e.g.
+    `constant_time_is_zero@rsa_pk1`) is that object's copy. The matcher accepts `name` or `name@…`
+    and records the address as a placement, so one object's callers must agree on the copy.
+  - libmatch re-verifies every library row at the end (`_final_pass`) and resets rows that no
+    longer verify, so it never leaves a row `dc check` rejects.
+  - `./dc diff FUNC -s lib:openssl:<member>` diffs a todo function against a library member, which
+    is how the config flags above were found.
 - **Renaming.** `./dc rename` rewrites sources only for placeholder names (`FUN_`/`D_`); pass
   `--src` to rewrite a real name. Address comments above C++ functions resolve to the mangled
   symbol of the compiled object (`/* 0x4ecc: ... */` above `h(...)` names the row `h` or `_Z...`).
