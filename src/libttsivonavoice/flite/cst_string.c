@@ -254,3 +254,165 @@ char *cst_strndup(const char *s, size_t n)
     r[n] = '\0';
     return r;
 }
+
+/* 0x5258c arm (IVONA): bsearch adapter, compares key with the string an element points to. */
+static int cst_bsearch_str_cmp(const void *key, const void *elem, int (*cmp)(const char *, const char *))
+{
+    return cmp(key, *(const char *const *)elem);
+}
+
+int cst_bsearch(const void *key, const void *base, int n, int size,
+                int (*cmp)(const void *, const void *, void *), void *arg);
+
+/* 0x528dc arm (IVONA): whether some element of slist starts with str. */
+int cst_member_prefix(const char *str, const char *const *slist)
+{
+    const char *const *p;
+
+    for (p = slist; *p; p++)
+        if (cst_strprefixcmp(*p, str) == 0)
+            break;
+    return *p != NULL;
+}
+
+/* 0x52930 arm (IVONA): whether some element of slist ends with str. */
+int cst_member_suffix(const char *str, const char *const *slist)
+{
+    const char *const *p;
+
+    for (p = slist; *p; p++)
+        if (cst_strsuffixcmp(*p, str) == 0)
+            break;
+    return *p != NULL;
+}
+
+/* 0x52984 arm (IVONA): removes every c from s in place. */
+void cst_strrmchar(char *s, int c)
+{
+    char *d = s;
+
+    for (; *s; s++) {
+        *d = *s;
+        if (*d != c)
+            d++;
+    }
+    *d = '\0';
+}
+
+/* 0x529c0 arm (IVONA): index of the first element of slist that cmp() finds equal to key, or -1. */
+int cst_list_find(const char *const *slist, const char *key, int (*cmp)(const char *, const char *))
+{
+    const char *const *p;
+
+    for (p = slist; *p; p++)
+        if (cmp(*p, key) == 0)
+            break;
+    if (*p == NULL)
+        return -1;
+    return p - slist;
+}
+
+/* 0x52a20 arm (IVONA) */
+int cst_list_index(const char *const *slist, const char *key)
+{
+    return cst_list_find(slist, key, strcmp);
+}
+
+/* 0x52a30 arm (IVONA): where in s a member of slist ends it, or NULL. */
+const char *cst_find_suffix(const char *s, const char *const *slist)
+{
+    const char *const *p;
+    const char *t;
+    size_t n, m;
+
+    if (*slist == NULL)
+        return NULL;
+    n = strlen(s);
+    for (p = slist; *p; p++) {
+        m = strlen(*p);
+        t = s + n - m;
+        if (m > n)
+            continue;
+        if (strcmp(t, *p) == 0 && t)
+            return t;
+    }
+    return NULL;
+}
+
+/* 0x52aac arm (IVONA): whether s starts with a member of slist. */
+int cst_startswith_any(const char *s, const char *const *slist)
+{
+    const char *const *p;
+
+    for (p = slist; *p; p++)
+        if (cst_strprefixcmp(s, *p) == 0)
+            break;
+    return *p != NULL;
+}
+
+/* 0x52afc arm (IVONA): whether s ends with a member of slist. */
+int cst_endswith_any(const char *s, const char *const *slist)
+{
+    const char *const *p;
+
+    for (p = slist; *p; p++)
+        if (cst_strsuffixcmp(s, *p) == 0)
+            break;
+    return *p != NULL;
+}
+
+/* 0x52b4c arm (IVONA): whether key is in the sorted array slist[0..n). */
+int cst_sorted_member(const char *key, const char *const *slist, int n)
+{
+    return cst_bsearch(key, slist, n, sizeof(char *), (int (*)(const void *, const void *, void *))cst_bsearch_str_cmp,
+                       strcmp) != -1;
+}
+
+/* 0x52b8c arm (IVONA): the longest prefix of s found in the sorted array slist[0..n), or NULL. */
+const char *cst_sorted_prefix(const char *s, const char *const *slist, int n)
+{
+    char *t = (char *)cst_strdup((const cst_string *)s);
+    size_t len = strlen(t);
+    int i;
+
+    if (len == 0) {
+        cst_free(t);
+        return NULL;
+    }
+    do {
+        i = cst_bsearch(t, slist, n, sizeof(char *), (int (*)(const void *, const void *, void *))cst_bsearch_str_cmp,
+                        strcmp);
+        t[--len] = '\0';
+    } while (i == -1 && len != 0);
+    cst_free(t);
+    return i != -1 ? slist[i] : NULL;
+}
+
+/* 0x52c48 arm (IVONA) */
+int cst_has_sorted_prefix(const char *s, const char *const *slist, int n)
+{
+    return cst_sorted_prefix(s, slist, n) != NULL;
+}
+
+int cst_roman_value(const char *s);
+
+/* 0x53114 arm (IVONA): the value of Roman numeral s in decimal (newly allocated). */
+char *cst_roman_to_decimal(const char *s)
+{
+    int v = cst_roman_value(s);
+    int n = snprintf(NULL, 0, "%d", v);
+    char *r = NULL;
+
+    if (n > 0) {
+        r = cst_safe_alloc(n + 1, 1);
+        snprintf(r, n + 1, "%d", v);
+    }
+    return r;
+}
+
+/* 0x5317c arm (IVONA): replaces every c in s with r. */
+void cst_strsubchar(char *s, int c, char r)
+{
+    for (; (s = strchr(s, c)) != NULL; s++)
+        *s = r;
+}

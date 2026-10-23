@@ -964,7 +964,7 @@ addr	size	mode	name	status	src	score	note
 000524c0	38	arm	cst_free_whole_file	matched	src/libttsivonavoice/flite/cst_mmap_posix.c	100	
 000524f8	64	arm	cst_read_part_file	matched	src/libttsivonavoice/flite/cst_mmap_posix.c	100	
 0005255c	30	arm	cst_free_part_file	matched	src/libttsivonavoice/flite/cst_mmap_posix.c	100	
-0005258c	10	arm	FUN_0005258c	todo			
+0005258c	10	arm	cst_bsearch_str_cmp	matched	src/libttsivonavoice/flite/cst_string.c	100	
 0005259c	8	arm	cst_strrchr	matched	src/libttsivonavoice/flite/cst_string.c	100	
 000525a4	8	arm	cst_atof	matched	src/libttsivonavoice/flite/cst_string.c	100	
 000525ac	28	arm	cst_strchr	matched	src/libttsivonavoice/flite/cst_string.c	100	
@@ -980,20 +980,20 @@ addr	size	mode	name	status	src	score	note
 00052864	14	arm	cst_startswith	matched	src/libttsivonavoice/flite/cst_string.c	100	
 00052878	14	arm	cst_endswith	matched	src/libttsivonavoice/flite/cst_string.c	100	
 0005288c	50	arm	cst_member_string	todo			flite order 100%
-000528dc	54	arm	FUN_000528dc	todo			
-00052930	54	arm	FUN_00052930	todo			
-00052984	3c	arm	FUN_00052984	todo			
-000529c0	60	arm	FUN_000529c0	todo			
-00052a20	10	arm	FUN_00052a20	todo			
-00052a30	7c	arm	FUN_00052a30	todo			
-00052aac	50	arm	FUN_00052aac	todo			
-00052afc	50	arm	FUN_00052afc	todo			
-00052b4c	40	arm	FUN_00052b4c	todo			
-00052b8c	bc	arm	FUN_00052b8c	todo			
-00052c48	14	arm	FUN_00052c48	todo			
-00052c5c	4b8	arm	FUN_00052c5c	todo			
-00053114	68	arm	FUN_00053114	todo			
-0005317c	28	arm	FUN_0005317c	todo			
+000528dc	54	arm	cst_member_prefix	matched	src/libttsivonavoice/flite/cst_string.c	100	
+00052930	54	arm	cst_member_suffix	matched	src/libttsivonavoice/flite/cst_string.c	100	
+00052984	3c	arm	cst_strrmchar	wip	src/libttsivonavoice/flite/cst_string.c	62.5	
+000529c0	60	arm	cst_list_find	matched	src/libttsivonavoice/flite/cst_string.c	100	
+00052a20	10	arm	cst_list_index	matched	src/libttsivonavoice/flite/cst_string.c	100	
+00052a30	7c	arm	cst_find_suffix	wip	src/libttsivonavoice/flite/cst_string.c	50.0	
+00052aac	50	arm	cst_startswith_any	matched	src/libttsivonavoice/flite/cst_string.c	100	
+00052afc	50	arm	cst_endswith_any	matched	src/libttsivonavoice/flite/cst_string.c	100	
+00052b4c	40	arm	cst_sorted_member	matched	src/libttsivonavoice/flite/cst_string.c	100	
+00052b8c	bc	arm	cst_sorted_prefix	matched	src/libttsivonavoice/flite/cst_string.c	100	
+00052c48	14	arm	cst_has_sorted_prefix	matched	src/libttsivonavoice/flite/cst_string.c	100	
+00052c5c	4b8	arm	cst_roman_value	todo			
+00053114	68	arm	cst_roman_to_decimal	matched	src/libttsivonavoice/flite/cst_string.c	100	
+0005317c	28	arm	cst_strsubchar	matched	src/libttsivonavoice/flite/cst_string.c	100	
 000531a4	74	arm	FUN_000531a4	todo			
 00053218	74	arm	FUN_00053218	todo			
 0005328c	50	arm	FUN_0005328c	todo			
@@ -1128,7 +1128,7 @@ addr	size	mode	name	status	src	score	note
 000560c0	c	arm	userdata_val	matched	src/libttsivonavoice/flite/cst_val_user.c	100	flite order 100%
 000560cc	50	arm	FUN_000560cc	todo			
 0005611c	c	arm	FUN_0005611c	todo			
-00056128	6c	arm	FUN_00056128	todo			
+00056128	6c	arm	cst_bsearch	todo			
 00056194	3c	arm	FUN_00056194	todo			
 000561d0	78	arm	FUN_000561d0	todo			
 00056248	30	arm	FUN_00056248	todo			
