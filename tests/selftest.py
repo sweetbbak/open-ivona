@@ -155,6 +155,21 @@ def main() -> int:
     else:
         print("ok   libmatch drops pairings that disagree with their object's data placement")
 
+    # libmatch merged spans may start at a prologue (a function the splitter cut at a jump table).
+    from dc.libmatch import _has_prologue
+
+    class _Elf:
+        words = {0: 0xe92d4800, 4: 0xe52db004, 8: 0xe51b3008, 12: 0xb580, 16: 0x6803}
+        u32 = staticmethod(lambda a: _Elf.words[a])
+    fake = type("B", (), {"elf": _Elf})()
+    got = [_has_prologue(fake, Func(a, 4, m, "f")) for a, m in
+           ((0, "arm"), (4, "arm"), (8, "arm"), (12, "thumb"), (16, "thumb"))]
+    if got != [True, True, False, True, False]:
+        fails += 1
+        print(f"FAIL: _has_prologue gave {got}")
+    else:
+        print("ok   prologue detection (push / -O0 leaf str fp) for merged library spans")
+
     # Mutations: build the *target* differently; candidates from the clean build must fail in
     # exactly the functions whose code or referenced data changed.
     mutations = [

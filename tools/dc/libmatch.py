@@ -394,6 +394,16 @@ def _walk(b, rows, i, step, obj, order, src, taken) -> int:
     return n
 
 
+def _has_prologue(b: Binary, f: Func) -> bool:
+    """Starts like a function: ARM `push {..}` / `str fp, [sp, #-4]!` (-O0 leaf), Thumb `push`.
+    Splitter fragments (code after a jump table or a far branch) do not."""
+    if f.mode == "arm":
+        w = b.elf.u32(f.addr)
+        return (w & 0xffff0000) == 0xe92d0000 or w == 0xe52db004
+    h = b.elf.u32(f.addr) & 0xffff
+    return (h & 0xfe00) == 0xb400
+
+
 def _merged_spans(b: Binary) -> dict[int, list[Func]]:
     """Start address -> pseudo-functions covering 2, 3, ... consecutive unverified rows of one
     mode. Runs start at an exidx start or a named (exported) row and stop before the next one."""
@@ -401,7 +411,7 @@ def _merged_spans(b: Binary) -> dict[int, list[Func]]:
     rows = sorted(b.funcs, key=lambda f: f.addr)
     out = {}
     for i, f in enumerate(rows):
-        if f.status != "todo" or not (f.addr in ex or not f.name.startswith("FUN_")):
+        if f.status != "todo" or not (f.addr in ex or not f.name.startswith("FUN_") or _has_prologue(b, f)):
             continue
         spans = []
         j = i + 1

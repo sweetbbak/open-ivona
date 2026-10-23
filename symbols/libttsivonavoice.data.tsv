@@ -175,6 +175,8 @@ addr	size	name	note
 0026fc90	0	PKCS8_PRIV_KEY_INFO_it	named from library relocation
 0026fd60	0	BASIC_CONSTRAINTS_it	named from library relocation
 0026fd7c	0	EXTENDED_KEY_USAGE_it	named from library relocation
+00271378	0	Curl_wkday	named from library relocation
+002713b0	0	Curl_month	named from library relocation
 00271680	0	_ZTIN9__gnu_cxx24__concurrence_lock_errorE	named from library relocation
 0027168c	0	_ZTIN9__gnu_cxx26__concurrence_unlock_errorE	named from library relocation
 00271698	0	_ZTIN9__gnu_cxx29__concurrence_broadcast_errorE	named from library relocation
@@ -236,3 +238,5 @@ addr	size	name	note
 0027b97c	0	app_pkey_methods	named from library relocation
 0027b9e4	0	cleanse_ctr	named from library relocation
 0027b9f4	0	obj_cleanup_defer	named from library relocation
+0027bf18	0	Curl_ack_eintr	named from library relocation
+0027c010	0	curl_jmpenv	named from library relocation
