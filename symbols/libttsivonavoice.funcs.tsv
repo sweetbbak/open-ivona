@@ -1386,7 +1386,7 @@ addr	size	mode	name	status	src	score	note
 00061658	9c	arm	FUN_00061658	todo			
 000616f4	a80	arm	basic_ff_register	todo			flite strings(7) 0%
 00062174	234	arm	vox_unit_print	matched	src/libttsivonavoice/wavesynth.c	100	
-000623a8	3d4	arm	FUN_000623a8	todo			
+000623a8	3d4	arm	vox_unit_serialize	wip	src/libttsivonavoice/wavesynth.c	94.7	
 0006277c	168	arm	FUN_0006277c	todo			
 000628e4	a0	arm	speaking_style_id	matched	src/libttsivonavoice/wavesynth.c	100	
 00062984	70	arm	speaking_style_name	wip	src/libttsivonavoice/wavesynth.c	85.7	
