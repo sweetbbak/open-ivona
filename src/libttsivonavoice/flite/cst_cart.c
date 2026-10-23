@@ -62,8 +62,8 @@ void delete_cart(cst_cart *cart)
 #define cst_cart_node_yes(n,tree) (n+1)
 #define cst_cart_node_no(n,tree) (cst_cart_node_n(n,tree).no_node)
 
-#if CART_DEBUG
-static void cart_print_node(int n, const cst_cart *tree)
+/* 0x70ae4: IVONA: always compiled in */
+void cart_print_node(int n, const cst_cart *tree)
 {
     printf("%s ",cst_cart_node_feat(n,tree));
     if (cst_cart_node_op(n,tree) == CST_CART_OP_IS)
@@ -81,7 +81,6 @@ static void cart_print_node(int n, const cst_cart *tree)
     val_print(stdout,cst_cart_node_val(n,tree));
     printf("\n");
 }
-#endif
 
 /* 0x70be8 */
 const cst_val *cart_interpret(cst_item *item, const cst_cart *tree)

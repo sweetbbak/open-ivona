@@ -1558,7 +1558,7 @@ addr	size	mode	name	status	src	score	note
 00070868	20c	arm	hs_regexec	wip	src/libttsivonavoice/flite/regexp.c	26.0	flite strings(2) 26%
 00070a74	58	arm	val_cart	matched	src/libttsivonavoice/flite/cst_cart.c	100	flite strings(1) 0%
 00070acc	18	arm	cart_val	matched	src/libttsivonavoice/flite/cst_cart.c	100	flite order 83%
-00070ae4	104	arm	FUN_00070ae4	todo			
+00070ae4	104	arm	cart_print_node	matched	src/libttsivonavoice/flite/cst_cart.c	100	
 00070be8	150	arm	cart_interpret	matched	src/libttsivonavoice/flite/cst_cart.c	100	flite order 90%
 00070d38	58	arm	FUN_00070d38	todo			
 00070d90	18	arm	FUN_00070d90	todo			
