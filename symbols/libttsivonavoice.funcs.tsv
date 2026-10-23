@@ -1571,34 +1571,35 @@ addr	size	mode	name	status	src	score	note
 00070f24	74	arm	item_phoneset	matched	src/libttsivonavoice/flite/cst_phoneset.c	100	
 00070f98	58	arm	FUN_00070f98	todo			
 00070ff0	18	arm	FUN_00070ff0	todo			
-00071008	50	arm	FUN_00071008	todo			
-00071058	58	arm	FUN_00071058	todo			
-000710b0	18	arm	FUN_000710b0	todo			
-000710c8	94	arm	FUN_000710c8	todo			
-0007115c	10	arm	FUN_0007115c	todo			
-0007116c	c0	arm	FUN_0007116c	todo			
-0007122c	44	arm	FUN_0007122c	todo			
-00071270	58	arm	FUN_00071270	todo			
-000712c8	70	arm	FUN_000712c8	todo			
-00071338	8c	arm	FUN_00071338	todo			
-000713c4	38	arm	FUN_000713c4	todo			
-000713fc	34	arm	FUN_000713fc	todo			
-00071430	34	arm	FUN_00071430	todo			
-00071464	7c	arm	FUN_00071464	todo			
-000714e0	34	arm	FUN_000714e0	todo			
-00071514	34	arm	FUN_00071514	todo			
-00071548	34	arm	FUN_00071548	todo			
-0007157c	34	arm	FUN_0007157c	todo			
-000715b0	34	arm	FUN_000715b0	todo			
-000715e4	34	arm	FUN_000715e4	todo			
-00071618	78	arm	ph_cplace	todo			flite strings(1) 0%
-00071690	6c	arm	FUN_00071690	todo			
-000716fc	40	arm	FUN_000716fc	todo			
-0007173c	58	arm	FUN_0007173c	todo			
-00071794	154	arm	FUN_00071794	todo			
-000718e8	8	arm	FUN_000718e8	todo			
-000718f0	64	arm	FUN_000718f0	todo			
-00071954	8	arm	FUN_00071954	todo			
+00071008	50	arm	named_table_find	wip	src/libttsivonavoice/phones.c	80.0	
+00071058	58	arm	val_phonefunc	matched	src/libttsivonavoice/phones.c	100	
+000710b0	18	arm	phonefunc_val	matched	src/libttsivonavoice/phones.c	100	
+000710c8	94	arm	phones_from_string	matched	src/libttsivonavoice/phones.c	100	
+0007115c	10	arm	phone_name	matched	src/libttsivonavoice/phones.c	100	
+0007116c	c0	arm	phone_feature_base	matched	src/libttsivonavoice/phones.c	100	
+0007122c	44	arm	phones_insert_sep	matched	src/libttsivonavoice/phones.c	100	
+00071270	58	arm	phone_stress	matched	src/libttsivonavoice/phones.c	100	
+000712c8	70	arm	phone_set_stress	matched	src/libttsivonavoice/phones.c	100	
+00071338	8c	arm	phone_strip_stress	matched	src/libttsivonavoice/phones.c	100	
+000713c4	38	arm	phone_is_silence	matched	src/libttsivonavoice/phones.c	100	
+000713fc	34	arm	ph_is_vowel	matched	src/libttsivonavoice/phones.c	100	
+00071430	34	arm	ph_is_long	matched	src/libttsivonavoice/phones.c	100	
+00071464	7c	arm	ph_is_syllabic	wip	src/libttsivonavoice/phones.c	60.6	
+000714e0	34	arm	ph_is_glide	matched	src/libttsivonavoice/phones.c	100	
+00071514	34	arm	ph_is_nasal	matched	src/libttsivonavoice/phones.c	100	
+00071548	34	arm	ph_is_short	matched	src/libttsivonavoice/phones.c	100	
+0007157c	34	arm	ph_is_fricative	matched	src/libttsivonavoice/phones.c	100	
+000715b0	34	arm	ph_is_stop	matched	src/libttsivonavoice/phones.c	100	
+000715e4	34	arm	ph_is_liquid	matched	src/libttsivonavoice/phones.c	100	
+00071618	78	arm	ph_cplace	matched	src/libttsivonavoice/phones.c	100	flite strings(1) 0%
+00071690	6c	arm	phones_count_syllables	wip	src/libttsivonavoice/phones.c	92.6	
+000716fc	40	arm	phones_have_stress	matched	src/libttsivonavoice/phones.c	100	
+0007173c	58	arm	phones_find_stress	wip	src/libttsivonavoice/phones.c	77.3	
+00071794	110	arm	phones_stress_syllable	wip	src/libttsivonavoice/phones.c	23.0	
+000718a4	44	arm	phones_strip_stress_range	wip	src/libttsivonavoice/phones.c	82.4	
+000718e8	8	arm	phones_strip_stress	matched	src/libttsivonavoice/phones.c	100	
+000718f0	64	arm	phones_keep_first_stress_range	wip	src/libttsivonavoice/phones.c	70.4	
+00071954	8	arm	phones_keep_first_stress	matched	src/libttsivonavoice/phones.c	100	
 0007195c	1ac	arm	FUN_0007195c	todo			
 00071b08	84	arm	FUN_00071b08	todo			
 00071b8c	288	arm	FUN_00071b8c	todo			
