@@ -83,10 +83,10 @@ void ivona_mutex_free(pthread_mutex_t *m);
 void res_cache_free(res_cache *c);
 void *res_cache_acquire(res_cache *c, const char *path, void *arg);
 void res_cache_release_all(res_cache *c, ivona_vector *list);
-void *FUN_00045178(const char *path);
-void FUN_000452dc(void *buf);
-const char *FUN_0004524c(void *buf);
-void FUN_0004520c(void *buf);
+void *textstream_open(const char *path);
+void textstream_fill_all(void *buf);
+const char *textstream_ptr(void *buf);
+void textstream_close(void *buf);
 void *FUN_000405ac(void *dl, const char *symbol);
 
 
@@ -246,12 +246,12 @@ const tts_certificate *tts_load_certificate_file(tts_instance *tts, const char *
         tts_set_error(TTS_STATUS_INVALID_ARGUMENT);
         return NULL;
     }
-    buf = FUN_00045178(cert_path);
+    buf = textstream_open(cert_path);
     if (buf == NULL)
         return NULL;
-    FUN_000452dc(buf);
-    cert = tts_load_certificate(tts, FUN_0004524c(buf));
-    FUN_0004520c(buf);
+    textstream_fill_all(buf);
+    cert = tts_load_certificate(tts, textstream_ptr(buf));
+    textstream_close(buf);
     return cert;
 }
 

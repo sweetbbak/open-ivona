@@ -601,27 +601,27 @@ addr	size	mode	name	status	src	score	note
 000442b4	10	arm	FUN_000442b4	todo			
 000442c4	2c	arm	FUN_000442c4	todo			
 000442f0	10	arm	FUN_000442f0	todo			
-00044300	ba8	arm	FUN_00044300	todo			
+00044300	ba8	arm	charset_table	todo			
 00044ea8	1ac	arm	FUN_00044ea8	todo			
-00045054	124	arm	FUN_00045054	todo			
-00045178	5c	arm	FUN_00045178	todo			
-000451d4	38	arm	FUN_000451d4	todo			
-0004520c	30	arm	FUN_0004520c	todo			
-0004523c	10	arm	FUN_0004523c	todo			
-0004524c	10	arm	FUN_0004524c	todo			
-0004525c	80	arm	FUN_0004525c	todo			
-000452dc	30	arm	FUN_000452dc	todo			
-0004530c	4c	arm	FUN_0004530c	todo			
-00045358	40	arm	FUN_00045358	todo			
-00045398	8	arm	FUN_00045398	todo			
-000453a0	1c	arm	FUN_000453a0	todo			
-000453bc	4c	arm	FUN_000453bc	todo			
-00045408	30	arm	FUN_00045408	todo			
-00045438	20	arm	FUN_00045438	todo			
-00045458	28	arm	FUN_00045458	todo			
-00045480	94	arm	FUN_00045480	todo			
-00045514	138	arm	FUN_00045514	todo			
-0004564c	4	arm	fopen	todo			
+00045054	124	arm	ivona_crc32	matched	src/libttsivonavoice/textstream.c	100	
+00045178	5c	arm	textstream_open	wip	src/libttsivonavoice/textstream.c	91.3	
+000451d4	38	arm	textstream_from_mem	matched	src/libttsivonavoice/textstream.c	100	
+0004520c	30	arm	textstream_close	matched	src/libttsivonavoice/textstream.c	100	
+0004523c	10	arm	textstream_avail	matched	src/libttsivonavoice/textstream.c	100	
+0004524c	10	arm	textstream_ptr	matched	src/libttsivonavoice/textstream.c	100	
+0004525c	80	arm	textstream_fill	matched	src/libttsivonavoice/textstream.c	100	
+000452dc	30	arm	textstream_fill_all	matched	src/libttsivonavoice/textstream.c	100	
+0004530c	4c	arm	textstream_ensure	matched	src/libttsivonavoice/textstream.c	100	
+00045358	40	arm	textstream_advance	matched	src/libttsivonavoice/textstream.c	100	
+00045398	8	arm	textstream_offset	matched	src/libttsivonavoice/textstream.c	100	
+000453a0	1c	arm	xml_ns_free	matched	src/libttsivonavoice/textstream.c	100	
+000453bc	4c	arm	xml_unknown_encoding	matched	src/libttsivonavoice/textstream.c	100	
+00045408	30	arm	xml_ns_init	matched	src/libttsivonavoice/textstream.c	100	
+00045438	20	arm	xml_ns_stack_new	matched	src/libttsivonavoice/textstream.c	100	
+00045458	28	arm	xml_ns_push	matched	src/libttsivonavoice/textstream.c	100	
+00045480	94	arm	xml_ns_lookup	wip	src/libttsivonavoice/textstream.c	31.8	
+00045514	138	arm	xml_ns_qualify	wip	src/libttsivonavoice/textstream.c	22.1	
+0004564c	4	arm	ivona_fopen	matched	src/libttsivonavoice/textstream.c	100	
 00045650	2c	arm	res_entry_destroy	matched	src/libttsivonavoice/res_cache.c	100	
 0004567c	50	arm	res_cache_new	matched	src/libttsivonavoice/res_cache.c	100	
 000456cc	28	arm	res_cache_free	matched	src/libttsivonavoice/res_cache.c	100	
@@ -974,11 +974,11 @@ addr	size	mode	name	status	src	score	note
 00052678	38	arm	cst_strncpy	matched	src/libttsivonavoice/flite/cst_string.c	100	
 000526b0	44	arm	cst_string_before	matched	src/libttsivonavoice/flite/cst_string.c	100	
 000526f4	74	arm	cst_downcase	matched	src/libttsivonavoice/flite/cst_string.c	100	
-00052768	94	arm	FUN_00052768	todo			
-000527fc	28	arm	FUN_000527fc	todo			
-00052824	40	arm	FUN_00052824	todo			
-00052864	14	arm	FUN_00052864	todo			
-00052878	14	arm	FUN_00052878	todo			
+00052768	94	arm	cst_upcase	matched	src/libttsivonavoice/flite/cst_string.c	100	
+000527fc	28	arm	cst_strprefixcmp	matched	src/libttsivonavoice/flite/cst_string.c	100	
+00052824	40	arm	cst_strsuffixcmp	matched	src/libttsivonavoice/flite/cst_string.c	100	
+00052864	14	arm	cst_startswith	matched	src/libttsivonavoice/flite/cst_string.c	100	
+00052878	14	arm	cst_endswith	matched	src/libttsivonavoice/flite/cst_string.c	100	
 0005288c	50	arm	cst_member_string	todo			flite order 100%
 000528dc	54	arm	FUN_000528dc	todo			
 00052930	54	arm	FUN_00052930	todo			
@@ -1013,7 +1013,7 @@ addr	size	mode	name	status	src	score	note
 00053958	10	arm	cst_vasprintf	matched	src/libttsivonavoice/flite/cst_string.c	100	
 00053968	30	arm	cst_nsprintf	matched	src/libttsivonavoice/flite/cst_string.c	100	
 00053998	30	arm	cst_asprintf	matched	src/libttsivonavoice/flite/cst_string.c	100	
-000539c8	90	arm	FUN_000539c8	todo			
+000539c8	90	arm	cst_strcat3	matched	src/libttsivonavoice/flite/cst_string.c	100	
 00053a58	6c	arm	FUN_00053a58	todo			
 00053ac4	5c	arm	FUN_00053ac4	todo			
 00053b20	44	arm	FUN_00053b20	todo			

@@ -184,3 +184,63 @@ char *cst_asprintf(const char *fmt, ...)
     va_end(ap);
     return s;
 }
+
+/* 0x52768 arm (IVONA): upper-case copy of str. Unlike cst_downcase it reads plain (signed) chars,
+ * so bytes >= 0x80 go through ctype's EOF/range checks. */
+cst_string *cst_upcase(const cst_string *str)
+{
+    const char *s = (const char *)str;
+    cst_string *uc;
+    int i;
+
+    uc = cst_strdup(str);
+    for (i = 0; s[i] != '\0'; i++) {
+        if (islower((int)s[i]))
+            uc[i] = toupper((int)s[i]);
+    }
+    return uc;
+}
+
+/* 0x527fc arm (IVONA): compares the start of s with prefix. */
+int cst_strprefixcmp(const char *s, const char *prefix)
+{
+    return strncmp(s, prefix, strlen(prefix));
+}
+
+/* 0x52824 arm (IVONA): compares the end of s with suffix (-1 if s is shorter). */
+int cst_strsuffixcmp(const char *s, const char *suffix)
+{
+    size_t n = strlen(s);
+    size_t m = strlen(suffix);
+
+    if (n < m)
+        return -1;
+    return strcmp(s + n - m, suffix);
+}
+
+/* 0x52864 arm (IVONA) */
+int cst_startswith(const char *s, const char *prefix)
+{
+    return cst_strprefixcmp(s, prefix) == 0;
+}
+
+/* 0x52878 arm (IVONA) */
+int cst_endswith(const char *s, const char *suffix)
+{
+    return cst_strsuffixcmp(s, suffix) == 0;
+}
+
+/* 0x539c8 arm (IVONA): a + b + c, newly allocated. */
+char *cst_strcat3(const char *a, const char *b, const char *c)
+{
+    size_t la = strlen(a);
+    size_t lb = strlen(b);
+    size_t lc = strlen(c);
+    char *r = cst_safe_alloc(la + lb + lc + 1, 1);
+
+    memcpy(r, a, la);
+    memcpy(r + la, b, lb);
+    memcpy(r + la + lb, c, lc);
+    r[la + lb + lc] = '\0';
+    return r;
+}

@@ -78,5 +78,10 @@ char *cst_vnsprintf(size_t n, const char *fmt, va_list ap);
 char *cst_vasprintf(const char *fmt, va_list ap);
 char *cst_nsprintf(size_t n, const char *fmt, ...);
 char *cst_asprintf(const char *fmt, ...);
+int cst_strprefixcmp(const char *s, const char *prefix);
+int cst_strsuffixcmp(const char *s, const char *suffix);
+int cst_startswith(const char *s, const char *prefix);
+int cst_endswith(const char *s, const char *suffix);
+char *cst_strcat3(const char *a, const char *b, const char *c);
 
 #endif
