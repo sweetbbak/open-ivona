@@ -897,21 +897,21 @@ addr	size	mode	name	status	src	score	note
 00050dd8	1e0	arm	ts_tokenizer_next	matched	src/libttsivonavoice/tokenizer.c	100	
 00050fb8	140	arm	ts_tokenizer_new	matched	src/libttsivonavoice/tokenizer.c	100	
 000510f8	140	arm	ts_tokenizer_new_utf8	matched	src/libttsivonavoice/tokenizer.c	100	
-00051238	8	arm	FUN_00051238	todo			
-00051240	58	arm	FUN_00051240	todo			
-00051298	1c	arm	val_delete_word_embeddings	todo			
-000512b4	18	arm	FUN_000512b4	todo			
-000512cc	3c	arm	FUN_000512cc	todo			
-00051308	a0	arm	FUN_00051308	todo			
-000513a8	24	arm	FUN_000513a8	todo			
-000513cc	a0	arm	FUN_000513cc	todo			
-0005146c	94	arm	FUN_0005146c	todo			
-00051500	158	arm	FUN_00051500	todo			
-00051658	1c	arm	FUN_00051658	todo			
-00051674	1c	arm	FUN_00051674	todo			
-00051690	68	arm	FUN_00051690	todo			
-000516f8	7c	arm	FUN_000516f8	todo			
-00051774	19c	arm	FUN_00051774	todo			
+00051238	8	arm	val_vector_elem_free	matched	src/libttsivonavoice/wordemb.c	100	
+00051240	58	arm	val_word_embeddings	matched	src/libttsivonavoice/wordemb.c	100	
+00051298	1c	arm	val_delete_word_embeddings	matched	src/libttsivonavoice/wordemb.c	100	
+000512b4	18	arm	word_embeddings_val	matched	src/libttsivonavoice/wordemb.c	100	
+000512cc	3c	arm	new_word_embeddings	matched	src/libttsivonavoice/wordemb.c	100	
+00051308	a0	arm	word_embeddings_add	wip	src/libttsivonavoice/wordemb.c	67.5	
+000513a8	24	arm	word_embeddings_from	matched	src/libttsivonavoice/wordemb.c	100	
+000513cc	a0	arm	word_embeddings_remove	matched	src/libttsivonavoice/wordemb.c	100	
+0005146c	94	arm	word_embeddings_lookup	matched	src/libttsivonavoice/wordemb.c	100	
+00051500	158	arm	word_embeddings_read	wip	src/libttsivonavoice/wordemb.c	86.0	
+00051658	1c	arm	delete_word_embeddings	matched	src/libttsivonavoice/wordemb.c	100	
+00051674	1c	arm	word_vectors_free	matched	src/libttsivonavoice/wordemb.c	100	
+00051690	68	arm	word_embeddings_load	matched	src/libttsivonavoice/wordemb.c	100	
+000516f8	7c	arm	item_word_embedding	matched	src/libttsivonavoice/wordemb.c	100	
+00051774	19c	arm	item_word_embedding_coeff	wip	src/libttsivonavoice/wordemb.c	55.5	
 00051910	44	arm	cst_safe_alloc	wip	src/libttsivonavoice/flite/cst_alloc.c	88.2	
 00051954	4	arm	cst_safe_calloc	matched	src/libttsivonavoice/flite/cst_alloc.c	100	
 00051958	6c	arm	cst_safe_realloc	wip	src/libttsivonavoice/flite/cst_alloc.c	92.6	
@@ -1152,22 +1152,22 @@ addr	size	mode	name	status	src	score	note
 00056500	4	arm	FUN_00056500	todo			
 00056504	10	arm	FUN_00056504	todo			
 00056514	74	arm	FUN_00056514	todo			
-00056588	78	arm	FUN_00056588	todo			
-00056600	3c	arm	FUN_00056600	todo			
-0005663c	1c	arm	FUN_0005663c	todo			
-00056658	118	arm	FUN_00056658	todo			
-00056770	98	arm	FUN_00056770	todo			
+00056588	78	arm	mp_reader_init	todo			
+00056600	3c	arm	mp_reader_free	todo			
+0005663c	1c	arm	mp_read_int	todo			
+00056658	118	arm	mp_read_bin	todo			
+00056770	98	arm	mp_read_str_array	todo			
 00056808	4c	arm	FUN_00056808	todo			
 00056854	50	arm	FUN_00056854	todo			
 000568a4	38	arm	FUN_000568a4	todo			
 000568dc	5c	arm	FUN_000568dc	todo			
 00056938	28	arm	FUN_00056938	todo			
 00056960	b4	arm	FUN_00056960	todo			
-00056a14	40	arm	FUN_00056a14	todo			
-00056a54	7c	arm	FUN_00056a54	todo			
-00056ad0	78	arm	FUN_00056ad0	todo			
-00056b48	b8	arm	FUN_00056b48	todo			
-00056c00	ac	arm	FUN_00056c00	todo			
+00056a14	40	arm	hash_new	todo			
+00056a54	7c	arm	hash_free	todo			
+00056ad0	78	arm	hash_get	todo			
+00056b48	b8	arm	hash_put	todo			
+00056c00	ac	arm	hash_remove	todo			
 00056cac	58	arm	val_metric	matched	src/libttsivonavoice/metrics.c	100	
 00056d04	4	arm	val_delete_metric	matched	src/libttsivonavoice/metrics.c	100	
 00056d08	18	arm	metric_val	matched	src/libttsivonavoice/metrics.c	100	
@@ -5515,7 +5515,7 @@ addr	size	mode	name	status	src	score	note
 001f5f3c	80	arm	FUN_001f5f3c	todo			
 001f5fbc	d0	arm	FUN_001f5fbc	todo			
 001f608c	90	arm	FUN_001f608c	todo			
-001f611c	90	arm	FUN_001f611c	todo			
+001f611c	90	arm	mp_read_map	todo			
 001f61ac	7c	arm	FUN_001f61ac	todo			
 001f6228	88	arm	FUN_001f6228	todo			
 001f62b0	7c	arm	FUN_001f62b0	todo			
