@@ -1044,8 +1044,8 @@ addr	size	mode	name	status	src	score	note
 00054344	4	arm	ts_utf8_strchr	matched	src/libttsivonavoice/flite/cst_tokenstream.c	100	
 00054348	14	arm	ts_utf8_charlen	matched	src/libttsivonavoice/flite/cst_tokenstream.c	100	
 0005435c	1b0	arm	ts_unget	wip	src/libttsivonavoice/flite/cst_tokenstream.c	93.5	
-0005450c	1e4	arm	get_token_sub_part	wip	src/libttsivonavoice/flite/cst_tokenstream.c	55.5	
-000546f0	20c	arm	get_token_sub_part_2	wip	src/libttsivonavoice/flite/cst_tokenstream.c	59.4	
+0005450c	1e4	arm	get_token_sub_part	wip	src/libttsivonavoice/flite/cst_tokenstream.c	80.2	
+000546f0	20c	arm	get_token_sub_part_2	wip	src/libttsivonavoice/flite/cst_tokenstream.c	83.8	
 000548fc	148	arm	new_tokenstream	matched	src/libttsivonavoice/flite/cst_tokenstream.c	100	flite strings(3) 0%
 00054a44	6c	arm	new_tokenstream_utf8	matched	src/libttsivonavoice/flite/cst_tokenstream.c	100	
 00054ab0	44	arm	delete_tokenstream	matched	src/libttsivonavoice/flite/cst_tokenstream.c	100	
@@ -1055,7 +1055,7 @@ addr	size	mode	name	status	src	score	note
 00054d1c	10c	arm	ts_open_string_utf8	wip	src/libttsivonavoice/flite/cst_tokenstream.c	97.0	
 00054e28	58	arm	ts_close	matched	src/libttsivonavoice/flite/cst_tokenstream.c	100	
 00054e80	14	arm	ts_eof	matched	src/libttsivonavoice/flite/cst_tokenstream.c	100	
-00054e94	470	arm	ts_get	wip	src/libttsivonavoice/flite/cst_tokenstream.c	38.3	
+00054e94	470	arm	ts_get	wip	src/libttsivonavoice/flite/cst_tokenstream.c	72.2	
 00055304	58	arm	val_valfunc	matched	src/libttsivonavoice/flite/cst_val.c	100	
 0005535c	24	arm	int_val	matched	src/libttsivonavoice/flite/cst_val.c	100	
 00055380	24	arm	float_val	matched	src/libttsivonavoice/flite/cst_val.c	100	

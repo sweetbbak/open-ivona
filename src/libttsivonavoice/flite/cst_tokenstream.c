@@ -169,7 +169,8 @@ static void get_token_sub_part(cst_tokenstream *ts, const char *charclass, char 
         extend_buffer(buffer, buffer_max, p + len);
         ts->encode(ts->current_char, *buffer + p);
         p += len;
-        len = ts->charlen(ts_getc(ts));
+        ts_getc(ts);
+        len = ts->charlen(ts->current_char);
     }
     (*buffer)[p] = '\0';
 }
@@ -189,7 +190,8 @@ static void get_token_sub_part_2(cst_tokenstream *ts, const char *endclass, char
         ts->encode(ts->current_char, *buffer + p);
         n++;
         p += len;
-        len = ts->charlen(ts_getc(ts));
+        ts_getc(ts);
+        len = ts->charlen(ts->current_char);
     }
     (*buffer)[p] = '\0';
 }
@@ -324,6 +326,23 @@ int ts_eof(cst_tokenstream *ts)
     return ts->current_char == EOF;
 }
 
+/* a token of only prepunctuation is the prepunctuation (up to the length limit) */
+static inline void ts_prepunct_token(cst_tokenstream *ts)
+{
+    int n;
+
+    if (ts->token[0] != '\0' || ts->prepunctuation[0] == '\0')
+        return;
+    n = strlen(ts->prepunctuation);
+    if (ts->max_token_len > 0 && n >= ts->max_token_len)
+        n = ts->max_token_len;
+    extend_buffer(&ts->token, &ts->token_max, n);
+    strncpy(ts->token, ts->prepunctuation, n);
+    ts->token[n] = '\0';
+    ts_unget(ts, ts->prepunctuation + n);
+    ts->prepunctuation[0] = '\0';
+}
+
 /* 0x54e94 arm: the next token. Prepunctuation alone becomes the token; trailing
  * postpunctuation (up to white space) goes to ts->postpunctuation. */
 const char *ts_get(cst_tokenstream *ts)
@@ -339,46 +358,36 @@ const char *ts_get(cst_tokenstream *ts)
         n = ts->charlen(ts->current_char);
         extend_buffer(&ts->token, &ts->token_max, n);
         ts->token[ts->encode(ts->current_char, ts->token)] = '\0';
-        ts_getc(ts);
+        ts->current_char = ts_getc(ts);
     } else
         get_token_sub_part_2(ts, ts->p_whitespacesymbols, &ts->token, &ts->token_max,
                              ts->max_token_len);
 
-    if (ts->token[0] == '\0' && ts->prepunctuation[0] != '\0') {
-        n = strlen(ts->prepunctuation);
-        if (ts->max_token_len > 0 && n >= ts->max_token_len)
-            n = ts->max_token_len;
-        extend_buffer(&ts->token, &ts->token_max, n);
-        strncpy(ts->token, ts->prepunctuation, n);
-        ts->token[n] = '\0';
-        ts_unget(ts, ts->prepunctuation + n);
-        ts->prepunctuation[0] = '\0';
-    }
-
+    ts_prepunct_token(ts);
     get_token_sub_part_2(ts, ts->p_whitespacesymbols, &ts->tail, &ts->tail_max, -1);
-    if (ts->span(ts->tail, ts->p_postpunctuationsymbols) != strlen(ts->tail)) {
+    if (ts->span(ts->tail, ts->p_postpunctuationsymbols) == strlen(ts->tail)) {
+        /* the token's trailing postpunctuation joins the tail */
+        cut = 0;
+        for (p = ts->token; (c = ts->decode(p, &len)) != 0; ) {
+            p += len;
+            if (!ts->member(ts->p_postpunctuationsymbols, c))
+                cut = p - ts->token;
+        }
+        total = strlen(ts->token);
+        if (total) {
+            if (cut == 0) {
+                ts->decode(ts->token, &len);
+                cut = len;
+            }
+            total = total - cut + 1;
+            extend_buffer(&ts->postpunctuation, &ts->postp_max, total);
+            memmove(ts->postpunctuation, ts->token + cut, total);
+            ts->token[cut] = '\0';
+        }
+        total += strlen(ts->tail);
+        extend_buffer(&ts->postpunctuation, &ts->postp_max, total);
+        strcat(ts->postpunctuation, ts->tail);
+    } else
         ts_unget(ts, ts->tail);
-        return ts->token;
-    }
-    /* the token's trailing postpunctuation joins the tail */
-    cut = 0;
-    for (p = ts->token; (c = ts->decode(p, &len)) != 0; ) {
-        p += len;
-        if (!ts->member(ts->p_postpunctuationsymbols, c))
-            cut = p - ts->token;
-    }
-    total = strlen(ts->token);
-    if (total) {
-        if (cut == 0)
-            ts->decode(ts->token, &cut);
-        total = total - cut + 1;
-        extend_buffer(&ts->postpunctuation, &ts->postp_max, total);
-        memmove(ts->postpunctuation, ts->token + cut, total);
-        ts->token[cut] = '\0';
-    }
-    total += strlen(ts->tail);
-    if (total > ts->postp_max)
-        extend_buffer(&ts->postpunctuation, &ts->postp_max, total);
-    strcat(ts->postpunctuation, ts->tail);
     return ts->token;
 }
