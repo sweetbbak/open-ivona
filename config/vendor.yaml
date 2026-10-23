@@ -42,13 +42,19 @@ curl:
 pcre:
   # PCRE 8.37: its compile-error table ends at ERR86 "digits missing in \x{} or \o{}" (0x22809c),
   # as in 8.37 only. Unoptimized ARM with a frame pointer like OpenSSL (find_error_text at 0x72148).
+  # --disable-stack-for-recursion: match() switches on frame->Xwhere (heap frames, NO_RECURSE),
+  # one 0x280b0-byte function at 0x8370c; --enable-newline-is-any: pcre_compile2 starts with
+  # newline -1; --enable-jit: the sljit emitter (sljit_emit_op shape at 0xb53d4) follows pcre_exec.
+  # real_pcre is 8 bytes bigger than upstream (sizeof 0x40; fields to nullpad at upstream offsets):
+  # a local change that keeps pcre_compile2 and its few users from matching.
   # UTF + Unicode properties: pcre_compile's .rodata has the \p{Nd} posix_substitutes before
   # error_texts (0x228014); the "compiled without ... support" texts are always in the table.
   binaries: [libttsivonavoice]
   src: external/pcre-8.37
   prepare: autoconf
   config_h: config.h
-  configure: [--disable-shared, --enable-static, --disable-cpp, --enable-utf, --enable-unicode-properties]
+  configure: [--disable-shared, --enable-static, --disable-cpp, --enable-utf, --enable-unicode-properties,
+              --disable-stack-for-recursion, --enable-newline-is-any, --enable-jit]
   sources: pcre
   remove: [-fsigned-char]
   flags: [-marm, -O0, -fno-omit-frame-pointer]

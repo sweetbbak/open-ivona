@@ -41,6 +41,7 @@ addr	size	name	note
 00229530	0	_pcre_utf8_table2	named from library relocation
 00229560	0	_pcre_utf8_table4	named from library relocation
 002295a0	0	_pcre_ucp_gentype	named from library relocation
+00229618	0	_pcre_ucp_gbtable	named from library relocation
 00229684	0	_pcre_utt_names	named from library relocation
 00229b8c	0	_pcre_utt	named from library relocation
 00229f84	0	_pcre_utt_size	named from library relocation
@@ -310,6 +311,8 @@ addr	size	name	note
 00275f24	10	g_modules	
 00275f34	0	pcre_malloc	named from library relocation
 00275f38	0	pcre_free	named from library relocation
+00275f3c	0	pcre_stack_malloc	named from library relocation
+00275f40	0	pcre_stack_free	named from library relocation
 00276054	0	Curl_cmalloc	named from library relocation
 00276058	0	Curl_cfree	named from library relocation
 0027605c	0	Curl_crealloc	named from library relocation
@@ -317,6 +320,7 @@ addr	size	name	note
 00276064	0	Curl_ccalloc	named from library relocation
 0027b094	104	g_tts_error	
 0027b198	4	g_tts_instance_count	
+0027b5e4	0	pcre_callout	named from library relocation
 0027b5e8	0	pcre_stack_guard	named from library relocation
 0027b97c	0	app_pkey_methods	named from library relocation
 0027b9e4	0	cleanse_ctr	named from library relocation
