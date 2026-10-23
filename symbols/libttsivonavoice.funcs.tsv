@@ -1128,13 +1128,13 @@ addr	size	mode	name	status	src	score	note
 000560c0	c	arm	userdata_val	matched	src/libttsivonavoice/flite/cst_val_user.c	100	flite order 100%
 000560cc	50	arm	val_binary_key	matched	src/libttsivonavoice/flite/cst_val_user.c	100	
 0005611c	c	arm	binary_key_val	matched	src/libttsivonavoice/flite/cst_val_user.c	100	
-00056128	6c	arm	cst_bsearch	todo			
-00056194	3c	arm	uni_isspace	todo			
-000561d0	78	arm	FUN_000561d0	todo			
-00056248	30	arm	FUN_00056248	todo			
-00056278	10	arm	FUN_00056278	todo			
-00056288	28	arm	FUN_00056288	todo			
-000562b0	74	arm	FUN_000562b0	todo			
+00056128	6c	arm	cst_bsearch	matched	src/libttsivonavoice/uni.c	100	
+00056194	3c	arm	uni_isspace	matched	src/libttsivonavoice/uni.c	100	
+000561d0	78	arm	uni_category	matched	src/libttsivonavoice/uni.c	100	
+00056248	30	arm	uni_cat_is_punct	wip	src/libttsivonavoice/uni.c	66.7	
+00056278	10	arm	uni_ispunct	matched	src/libttsivonavoice/uni.c	100	
+00056288	28	arm	uni_cat_is_text	matched	src/libttsivonavoice/uni.c	100	
+000562b0	74	arm	uni_str_category	matched	src/libttsivonavoice/uni.c	100	
 00056324	8	arm	FUN_00056324	todo			
 0005632c	8	arm	FUN_0005632c	todo			
 00056334	4	arm	FUN_00056334	todo			
