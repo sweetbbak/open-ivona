@@ -521,24 +521,24 @@ addr	size	mode	name	status	src	score	note
 0003b37c	34	arm	tts_metrics_get_size	matched	src/libttsivonavoice/tts_api.c	100	
 0003b3b0	100	arm	tts_metrics_get	matched	src/libttsivonavoice/tts_api.c	100	
 0003b4b0	508	arm	tts_voice_param_float	wip	src/libttsivonavoice/voice_param.c	57.3	
-0003b9b8	51c	arm	FUN_0003b9b8	todo			
+0003b9b8	51c	arm	voice_param_factor	wip	src/libttsivonavoice/voice_param.c	35.3	
 0003bed4	c8	arm	voice_param_bool_plain	matched	src/libttsivonavoice/voice_param.c	100	
-0003bf9c	144	arm	voice_param_bool	wip	src/libttsivonavoice/voice_param.c	52.8	
-0003c0e0	2d0	arm	FUN_0003c0e0	todo			
-0003c3b0	280	arm	FUN_0003c3b0	todo			
+0003bf9c	144	arm	voice_param_bool	wip	src/libttsivonavoice/voice_param.c	39.5	
+0003c0e0	2d0	arm	voice_param_time	wip	src/libttsivonavoice/voice_param.c	53.8	
+0003c3b0	280	arm	voice_param_int	wip	src/libttsivonavoice/voice_param.c	62.5	
 0003c630	2c0	arm	FUN_0003c630	todo			
 0003c8f0	1f4	arm	FUN_0003c8f0	todo			
 0003cae4	250	arm	FUN_0003cae4	todo			
-0003cd34	21c	arm	FUN_0003cd34	todo			
-0003cf50	a0	arm	FUN_0003cf50	todo			
-0003cff0	ec	arm	FUN_0003cff0	todo			
-0003d0dc	110	arm	FUN_0003d0dc	todo			
-0003d1ec	124	arm	FUN_0003d1ec	todo			
+0003cd34	21c	arm	voice_param_string	wip	src/libttsivonavoice/voice_param.c	86.7	
+0003cf50	a0	arm	voice_param_encoding	matched	src/libttsivonavoice/voice_param.c	100	
+0003cff0	ec	arm	voice_param_base_uri	wip	src/libttsivonavoice/voice_param.c	22.2	
+0003d0dc	110	arm	voice_param_input_type	wip	src/libttsivonavoice/voice_param.c	29.9	
+0003d1ec	124	arm	voice_param_pointer	matched	src/libttsivonavoice/voice_param.c	100	
 0003d310	148	arm	FUN_0003d310	todo			
 0003d458	148	arm	FUN_0003d458	todo			
 0003d5a0	a8	arm	FUN_0003d5a0	todo			
 0003d648	224	arm	FUN_0003d648	todo			
-0003d86c	134	arm	tts_voice_param	wip	src/libttsivonavoice/voice_param.c	51.8	
+0003d86c	134	arm	tts_voice_param	wip	src/libttsivonavoice/voice_param_api.c	51.8	
 0003d9a0	f8	arm	FUN_0003d9a0	todo			
 0003da98	124	arm	FUN_0003da98	todo			
 0003dbbc	4	arm	FUN_0003dbbc	todo			
@@ -712,7 +712,7 @@ addr	size	mode	name	status	src	score	note
 0004880c	c	arm	FUN_0004880c	todo			
 00048818	3c	arm	FUN_00048818	todo			
 00048854	34	arm	FUN_00048854	todo			
-00048888	34	arm	FUN_00048888	todo			
+00048888	34	arm	charset_supported	todo			
 000488bc	c88	arm	FUN_000488bc	todo			
 00049544	90	arm	FUN_00049544	todo			
 000495d4	58	arm	FUN_000495d4	todo			

@@ -12,7 +12,7 @@ typedef struct tts_cert_data {
     int license_id;               /* +0x1c: -1 when the certificate carries no license */
     int id;                       /* +0x20 */
     int unk_24;
-    int unk_28;
+    int ssml;                     /* +0x28: SSML input is licensed */
     unsigned int key;             /* +0x2c: obfuscates voice parameter values */
 } tts_cert_data;
 tts_cert_data *FUN_00042ab0(const char *text);
