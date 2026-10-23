@@ -42,6 +42,7 @@ addr	size	name	note
 00229560	0	_pcre_utf8_table4	named from library relocation
 002295a0	0	_pcre_ucp_gentype	named from library relocation
 00229618	0	_pcre_ucp_gbtable	named from library relocation
+0022964c	0	_pcre_ucp_typerange	named from library relocation
 00229684	0	_pcre_utt_names	named from library relocation
 00229b8c	0	_pcre_utt	named from library relocation
 00229f84	0	_pcre_utt_size	named from library relocation
@@ -49,6 +50,7 @@ addr	size	name	note
 0022a0c4	0	_pcre_ucd_records	named from library relocation
 0022b744	0	_pcre_ucd_stage1	named from library relocation
 0022d944	0	_pcre_ucd_stage2	named from library relocation
+0023bc44	0	_pcre_default_tables	named from library relocation
 0025bdbc	0	SKP_Silk_CB_lags_stage3	named from library relocation
 0025becc	0	SKP_Silk_CB_lags_stage2	named from library relocation
 0025bf24	0	SKP_Silk_resampler_frac_FIR_144	named from library relocation

@@ -47,7 +47,7 @@ Read README.md first. The rules below are what keeps the project deterministic.
   | OpenSSL 1.0.2h libcrypto | 0xe1ffc–0x1af040 | ARM `-O0` + frame pointer, unsigned char, `no-err no-engine no-dsa no-dh no-ec*`, no `BN_LLONG` |
   | Expat 2.2.0 | ~0x19f000–0x1c9000 | `-O0`, asserts kept (no `-DNDEBUG`) |
   | libcurl 7.52.1 | ~0x1cb000–0x1f1000 (+ cold statics at 0x18924) | engine ARM `-O2`, unsigned char, symbol hiding, no SSL/IPv6/cookies/proxy/crypto-auth |
-  | PCRE 8.37 | 0x72000–0xe0a00 (with other code) | `-O0`, UTF + UCP; `real_pcre` is 8 bytes larger than upstream (unexplained) |
+  | PCRE 8.37 | 0x72000–0xe0a00 | `-O0`, UTF + UCP, JIT (sljit), NO_RECURSE, NEWLINE=ANY; `real_pcre` is 8 bytes larger than upstream (local change) |
   | SILK SDK 1.0.8 (fixed point) | 0x202cac–0x20cb08 (complete) | engine ARM flags with `-O3` (the SDK Makefile's); vox codec 14 |
 
   Vendored archives are offered only to the binaries listed in their recipe.
