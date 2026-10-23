@@ -7,8 +7,8 @@ addr	size	mode	name	status	src	score	note
 00018bec	84	arm	IsPipeliningPossible.isra.3@url	lib	lib:curl:lib__url.o	100	
 00018c70	74	arm	proxy_info_matches@url	lib	lib:curl:lib__url.o	100	
 00018ce4	10	arm	__on_dlclose	lib	lib:crtbegin_so:crtbegin_so.o	100	
-00018cf4	3c	thumb	_GLOBAL__sub_I_eh_globals.cc@eh_globals	lib	lib:gnustl-thumb:eh_globals.o	100	
-00018d30	10	thumb	_GLOBAL__sub_I_eh_alloc.cc@eh_alloc	lib	lib:gnustl-thumb:eh_alloc.o	100	
+00018cf4	3c	thumb	FUN_00018cf4	todo			
+00018d30	10	thumb	FUN_00018d30	todo			
 00018d40	14	arm	__atexit_handler_wrapper	lib	lib:crtbegin_so:crtbegin_so.o	100	
 00018d54	20	arm	atexit	lib	lib:crtbegin_so:crtbegin_so.o	100	
 00018d74	60	thumb	_ZL18metrics_get_all_v2PK19cst_features_structP13tts_metric_v2j	wip	src/libttsivonavoice/ivona_ext.cpp	31.9	
@@ -1987,7 +1987,7 @@ addr	size	mode	name	status	src	score	note
 000ab7bc	6c	arm	FUN_000ab7bc	todo			
 000ab828	1c6c	arm	FUN_000ab828	todo			
 000ad494	28	arm	FUN_000ad494	todo			
-000ad4bc	28	arm	TS_RESP_CTX_get_request	lib	lib:openssl:crypto__ts__ts_rsp_sign.o	100	
+000ad4bc	28	arm	FUN_000ad4bc	todo			
 000ad4e4	28	arm	FUN_000ad4e4	todo			
 000ad50c	20	arm	FUN_000ad50c	todo			
 000ad52c	20	arm	FUN_000ad52c	todo			
@@ -4937,24 +4937,24 @@ addr	size	mode	name	status	src	score	note
 001a0bd4	28	arm	XML_GetBase	lib	lib:expat:lib__xmlparse.o	100	
 001a0bfc	28	arm	XML_GetIdAttributeIndex	lib	lib:expat:lib__xmlparse.o	100	
 001a0c24	28	arm	FUN_001a0c24	todo			
-001a0c4c	3c	arm	FUN_001a0c4c	todo			
-001a0c88	2c	arm	X509_STORE_set_lookup_crls_cb	lib	lib:openssl:crypto__x509__x509_lu.o	100	
+001a0c4c	3c	arm	XML_SetElementHandler	lib	lib:expat:lib__xmlparse.o	100	by object order
+001a0c88	2c	arm	XML_SetStartElementHandler	lib	lib:expat:lib__xmlparse.o	100	by object order
 001a0cb4	2c	arm	XML_SetEndElementHandler	lib	lib:expat:lib__xmlparse.o	100	
 001a0ce0	2c	arm	XML_SetCharacterDataHandler	lib	lib:expat:lib__xmlparse.o	100	
 001a0d0c	2c	arm	XML_SetProcessingInstructionHandler	lib	lib:expat:lib__xmlparse.o	100	
 001a0d38	2c	arm	XML_SetCommentHandler	lib	lib:expat:lib__xmlparse.o	100	
 001a0d64	3c	arm	XML_SetCdataSectionHandler	lib	lib:expat:lib__xmlparse.o	100	
-001a0da0	2c	arm	X509_CRL_set_meth_data	lib	lib:openssl:crypto__asn1__x_crl.o	100	
+001a0da0	2c	arm	XML_SetStartCdataSectionHandler	lib	lib:expat:lib__xmlparse.o	100	by object order
 001a0dcc	2c	arm	XML_SetEndCdataSectionHandler	lib	lib:expat:lib__xmlparse.o	100	
 001a0df8	38	arm	XML_SetDefaultHandler	lib	lib:expat:lib__xmlparse.o	100	
 001a0e30	38	arm	XML_SetDefaultHandlerExpand	lib	lib:expat:lib__xmlparse.o	100	
-001a0e68	3c	arm	EVP_PKEY_meth_set_decrypt	lib	lib:openssl:crypto__evp__pmeth_lib.o	100	
+001a0e68	3c	arm	FUN_001a0e68	todo			
 001a0ea4	2c	arm	FUN_001a0ea4	todo			
-001a0ed0	2c	arm	EVP_PKEY_asn1_set_ctrl	lib	lib:openssl:crypto__asn1__ameth_lib.o	100	
+001a0ed0	2c	arm	FUN_001a0ed0	todo			
 001a0efc	2c	arm	XML_SetUnparsedEntityDeclHandler	lib	lib:expat:lib__xmlparse.o	100	
 001a0f28	2c	arm	XML_SetNotationDeclHandler	lib	lib:expat:lib__xmlparse.o	100	
-001a0f54	3c	arm	EVP_PKEY_meth_set_ctrl	lib	lib:openssl:crypto__evp__pmeth_lib.o	100	
-001a0f90	2c	arm	X509_STORE_CTX_set_error	lib	lib:openssl:crypto__x509__x509_vfy.o	100	
+001a0f54	3c	arm	FUN_001a0f54	todo			
+001a0f90	2c	arm	FUN_001a0f90	todo			
 001a0fbc	2c	arm	XML_SetEndNamespaceDeclHandler	lib	lib:expat:lib__xmlparse.o	100	
 001a0fe8	2c	arm	XML_SetNotStandaloneHandler	lib	lib:expat:lib__xmlparse.o	100	
 001a1014	2c	arm	XML_SetExternalEntityRefHandler	lib	lib:expat:lib__xmlparse.o	100	
@@ -5068,7 +5068,7 @@ addr	size	mode	name	status	src	score	note
 001aec0c	260	arm	build_node@xmlparse	lib	lib:expat:lib__xmlparse.o	100	
 001aee6c	d4	arm	FUN_001aee6c	todo			
 001aef40	100	arm	FUN_001aef40	todo			
-001af040	28	arm	i2d_X509_PKEY	lib	lib:openssl:crypto__asn1__x_pkey.o	100	
+001af040	28	arm	isNever@xmltok	lib	lib:expat:lib__xmltok.o	100	by object order
 001af068	a8	arm	utf8_isName2@xmltok	lib	lib:expat:lib__xmltok.o	100	
 001af110	c4	arm	utf8_isName3@xmltok	lib	lib:expat:lib__xmltok.o	100	
 001af1d4	a8	arm	utf8_isNmstrt2@xmltok	lib	lib:expat:lib__xmltok.o	100	
@@ -5157,7 +5157,7 @@ addr	size	mode	name	status	src	score	note
 001bc154	2b0	arm	little2_scanLit@xmltok	lib	lib:expat:lib__xmltok.o	100	
 001bc404	e44	arm	little2_prologTok@xmltok	lib	lib:expat:lib__xmltok.o	100	
 001bd248	34c	arm	little2_attributeValueTok@xmltok	lib	lib:expat:lib__xmltok.o	100	
-001bd594	380	arm	FUN_001bd594	todo			
+001bd594	380	arm	little2_entityValueTok@xmltok	todo			
 001bd914	350	arm	little2_ignoreSectionTok@xmltok	lib	lib:expat:lib__xmltok.o	100	
 001bdc64	1fc	arm	little2_isPublicId@xmltok	lib	lib:expat:lib__xmltok.o	100	
 001bde60	5d8	arm	little2_getAtts@xmltok	lib	lib:expat:lib__xmltok.o	100	
@@ -5197,7 +5197,7 @@ addr	size	mode	name	status	src	score	note
 001c3974	2b0	arm	big2_scanLit@xmltok	lib	lib:expat:lib__xmltok.o	100	
 001c3c24	e54	arm	big2_prologTok@xmltok	lib	lib:expat:lib__xmltok.o	100	
 001c4a78	34c	arm	big2_attributeValueTok@xmltok	lib	lib:expat:lib__xmltok.o	100	
-001c4dc4	380	arm	FUN_001c4dc4	todo			
+001c4dc4	380	arm	big2_entityValueTok@xmltok	todo			
 001c5144	350	arm	big2_ignoreSectionTok@xmltok	lib	lib:expat:lib__xmltok.o	100	
 001c5494	1fc	arm	big2_isPublicId@xmltok	lib	lib:expat:lib__xmltok.o	100	
 001c5690	5d8	arm	big2_getAtts@xmltok	lib	lib:expat:lib__xmltok.o	100	
@@ -5209,12 +5209,12 @@ addr	size	mode	name	status	src	score	note
 001c671c	ac	arm	big2_skipS@xmltok	lib	lib:expat:lib__xmltok.o	100	
 001c67c8	218	arm	big2_updatePosition@xmltok	lib	lib:expat:lib__xmltok.o	100	
 001c69e0	c8	arm	streqci@xmltok	lib	lib:expat:lib__xmltok.o	100	
-001c6aa8	44	arm	FUN_001c6aa8	todo			
+001c6aa8	44	arm	initUpdatePosition@xmltok	lib	lib:expat:lib__xmltok.o	100	
 001c6aec	74	arm	toAscii@xmltok	lib	lib:expat:lib__xmltok.o	100	
 001c6b60	a0	arm	isSpace@xmltok	lib	lib:expat:lib__xmltok.o	100	
 001c6c00	3b4	arm	FUN_001c6c00	todo			
 001c6fb4	4d4	arm	FUN_001c6fb4	todo			
-001c7488	c4	arm	checkCharRefNumber@xmltok	todo			
+001c7488	c4	arm	checkCharRefNumber@xmltok	lib	lib:expat:lib__xmltok.o	100	
 001c754c	21c	arm	XmlUtf8Encode	lib	lib:expat:lib__xmltok.o	100	
 001c7768	dc	arm	XmlUtf16Encode	lib	lib:expat:lib__xmltok.o	100	
 001c7844	20	arm	XmlSizeOfUnknownEncoding	lib	lib:expat:lib__xmltok.o	100	
@@ -5223,13 +5223,13 @@ addr	size	mode	name	status	src	score	note
 001c79d4	80	arm	unknown_isInvalid@xmltok	todo			
 001c7a54	1b8	arm	unknown_toUtf8@xmltok	todo			
 001c7c0c	15c	arm	unknown_toUtf16@xmltok	lib	lib:expat:lib__xmltok.o	100	
-001c7d68	674	arm	FUN_001c7d68	todo			
-001c83dc	8c	arm	FUN_001c83dc	todo			
+001c7d68	674	arm	XmlInitUnknownEncoding	lib	lib:expat:lib__xmltok.o	100	
+001c83dc	8c	arm	getEncodingIndex@xmltok	lib	lib:expat:lib__xmltok.o	100	
 001c8468	420	arm	initScan@xmltok	lib	lib:expat:lib__xmltok.o	100	
-001c8888	24	arm	FUN_001c8888	todo			
-001c88ac	24	arm	FUN_001c88ac	todo			
-001c88d0	5c	arm	FUN_001c88d0	todo			
-001c892c	5c	arm	FUN_001c892c	todo			
+001c8888	24	arm	XmlGetUtf8InternalEncoding	lib	lib:expat:lib__xmltok.o	100	by object order
+001c88ac	24	arm	XmlGetUtf16InternalEncoding	lib	lib:expat:lib__xmltok.o	100	by object order
+001c88d0	5c	arm	initScanProlog@xmltok	lib	lib:expat:lib__xmltok.o	100	by object order
+001c892c	5c	arm	initScanContent@xmltok	lib	lib:expat:lib__xmltok.o	100	by object order
 001c8988	b0	arm	XmlInitEncoding	todo			
 001c8a38	f8	arm	FUN_001c8a38	todo			
 001c8b30	84	arm	FUN_001c8b30	todo			
@@ -5522,7 +5522,7 @@ addr	size	mode	name	status	src	score	note
 001da5f0	1e20	arm	Curl_setopt	lib	lib:curl:lib__url.o	100	
 001dc410	e0	arm	Curl_disconnect	lib	lib:curl:lib__url.o	100	
 001dc4f0	a0	arm	disconnect_if_dead@url	lib	lib:curl:lib__url.o	100	
-001dc590	10	arm	call_disconnect_if_dead@url	lib	lib:curl:lib__url.o	100	by object order
+001dc590	10	arm	call_disconnect_if_dead@url	lib	lib:curl:lib__url.o	100	
 001dc5a0	58	arm	Curl_removeHandleFromPipeline	lib	lib:curl:lib__url.o	100	
 001dc5f8	94	arm	Curl_getoff_all_pipelines	lib	lib:curl:lib__url.o	100	
 001dc68c	c8	arm	Curl_oldest_idle_connection	lib	lib:curl:lib__url.o	100	
@@ -5621,10 +5621,10 @@ addr	size	mode	name	status	src	score	note
 001e5d2c	10	arm	Curl_ipvalid	lib	lib:curl:lib__hostip4.o	100	
 001e5d3c	c8	arm	Curl_ipv4_resolve_r	lib	lib:curl:lib__hostip4.o	100	
 001e5e04	50	arm	Curl_getaddrinfo	lib	lib:curl:lib__hostip4.o	100	
-001e5e54	8	arm	Curl_set_dns_servers	todo			
-001e5e5c	8	arm	Curl_set_dns_interface	todo			
-001e5e64	8	arm	Curl_set_dns_local_ip4	todo			
-001e5e6c	8	arm	Curl_set_dns_local_ip6	todo			
+001e5e54	8	arm	Curl_set_dns_servers	lib	lib:curl:lib__hostsyn.o	100	
+001e5e5c	8	arm	Curl_set_dns_interface	lib	lib:curl:lib__hostsyn.o	100	
+001e5e64	8	arm	Curl_set_dns_local_ip4	lib	lib:curl:lib__hostsyn.o	100	
+001e5e6c	8	arm	Curl_set_dns_local_ip6	lib	lib:curl:lib__hostsyn.o	100	
 001e5e74	740	arm	FUN_001e5e74	todo			
 001e65b4	2c	arm	Curl_gmtime	lib	lib:curl:lib__parsedate.o	100	
 001e65e0	40	arm	Curl_memdup	lib	lib:curl:lib__strdup.o	100	

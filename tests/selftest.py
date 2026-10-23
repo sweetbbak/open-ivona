@@ -157,14 +157,16 @@ def main() -> int:
 
     # libmatch: a lone row from another library amid one library's code is a mis-attribution.
     from dc.libmatch import island_rows
-    rows = sorted([(a, "openssl", f"o{a // 40}") for a in range(0, 400, 4)]     # openssl block
-                  + [(a, "expat", "xmlparse") for a in range(400, 800, 4) if a != 600]  # expat block
-                  + [(600, "openssl", "o3"),                                        # stray setter
-                     (804, "curl", "url"), (808, "curl", "url"), (900, "curl", "easy")])
-    rows = [r for r in rows if r[0] != 700] + [(700, "curl", "url"), (702, "curl", "url")]
+    E = 4000  # expat block after a 1000-row openssl block; strays inside it
+    rows = [(a, "openssl", f"o{a // 40}") for a in range(0, E, 4)]
+    rows += [(a, "expat", "xmlparse") for a in range(E, E + 400, 4) if a not in (E + 100, E + 104, E + 200, E + 300)]
+    rows += [(E + 100, "openssl", "o5"), (E + 104, "openssl", "o6"),  # two strays from two objects
+             (E + 200, "openssl", "o3"),                              # a lone stray
+             (E + 300, "curl", "url"), (E + 302, "curl", "url"),      # two rows of one object: kept
+             (E + 404, "curl", "url"), (E + 408, "curl", "easy")]
     rows.sort()
     got = island_rows(rows)
-    if got != {600}:  # the curl pair inside expat's block is two adjacent rows of one object: kept
+    if got != {E + 100, E + 104, E + 200}:
         fails += 1
         print(f"FAIL: island_rows gave {sorted(got)}")
     else:

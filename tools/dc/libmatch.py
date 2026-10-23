@@ -274,9 +274,9 @@ def _placement_pass(b: Binary, libs: dict[str, str]) -> int:
 def island_rows(rows: list[tuple[int, str, str]]) -> set[int]:
     """rows: (addr, library, member) of verified library functions in address order. A static
     archive's code is one contiguous block, so identical code from the wrong library (tiny -O0
-    setters are byte-identical across OpenSSL and Expat) shows up as a lone row: its member has
-    no adjacent row, both nearest verified neighbours come from one other library, and it lies
-    inside that library's main range (central 95% of its rows) but outside its own."""
+    setters are byte-identical across OpenSSL and Expat) shows up as a short run (<= 3 rows, no
+    two from one object) enclosed by another library, inside that library's main range (central
+    95% of its rows) and outside its own."""
     by_lib: dict[str, list[int]] = defaultdict(list)
     for a, lib, _ in rows:
         by_lib[lib].append(a)
@@ -287,18 +287,20 @@ def island_rows(rows: list[tuple[int, str, str]]) -> set[int]:
         return v[k], v[len(v) - 1 - k]
     ranges = {lib: main_range(lib) for lib in by_lib}
     out = set()
-    for i in range(1, len(rows) - 1):
-        a, lib, member = rows[i]
-        prev, nxt = rows[i - 1], rows[i + 1]
-        if (prev[1], prev[2]) == (lib, member) or (nxt[1], nxt[2]) == (lib, member):
-            continue
-        other = prev[1]
-        if other == lib or nxt[1] != other:
-            continue
-        lo, hi = ranges[other]
-        own_lo, own_hi = ranges[lib]
-        if lo <= a <= hi and not own_lo <= a <= own_hi:
-            out.add(a)
+    i = 0
+    while i < len(rows):
+        j = i
+        while j + 1 < len(rows) and rows[j + 1][1] == rows[i][1]:
+            j += 1
+        run, lib = rows[i:j + 1], rows[i][1]
+        members = [m for _, _, m in run]
+        if 0 < i and j + 1 < len(rows) and len(run) <= 3 and len(set(members)) == len(members):
+            other = rows[i - 1][1]
+            lo, hi = ranges[other]
+            own_lo, own_hi = ranges[lib]
+            if rows[j + 1][1] == other and all(lo <= a <= hi and not own_lo <= a <= own_hi for a, _, _ in run):
+                out.update(a for a, _, _ in run)
+        i = j + 1
     return out
 
 
