@@ -179,6 +179,11 @@ typedef struct unit_selector {
 
 float acoustic_stub_1(const void *a, const void *b, int x);
 
+int ivona_is_dir(const char *path);
+cst_val *FUN_00067fec(const unsigned char **tables);
+cst_val *dynamic_voxdbs_val(const dynamic_voxdbs *v);
+dynamic_voxdbs *dynamic_voxdbs_new(diphonedb *a);
+
 int pcm_unit_decode();
 int vorbis_unit_open(vox_decoder *d);
 void vorbis_unit_close(vox_decoder *d);
@@ -612,6 +617,83 @@ void val_delete_diphonedb(void *v)
     delete_diphonedb(v);
 }
 
+/* 0x5f370 arm: loads the voice's unit database from dir (a directory holding
+ * <voxdbname>/<checksum>/<voxdbname><format>, or the vox file itself; NULL: the voice name)
+ * and sets the voice features that come from it. */
+diphonedb *voice_load_diphonedb(cst_features *f, const char *dir)
+{
+    const char *name = get_param_string(f, "name", NULL);
+    const char *checksum = get_param_string(f, "checksum", NULL);
+    const char *vname, *fmt, *p, *semi;
+    char *path;
+    cst_filemap *map;
+    diphonedb *d;
+    vox_db *db;
+    int key, k;
+
+    path = NULL;
+    if (dir == NULL)
+        dir = name;
+    else if (ivona_is_dir(dir)) {
+        vname = get_param_string(f, "voxdbname", get_param_string(f, "name", NULL));
+        checksum = get_param_string(f, "checksum", NULL);
+        fmt = get_param_string(f, "voxdb_format", "22v");
+        if (checksum && vname) {
+            semi = strchr(checksum, ';');
+            k = semi ? semi - checksum : (int)strlen(checksum);
+            path = cst_safe_alloc(strlen(dir) + 2 * strlen(vname) + strlen(fmt) + 4 + k, 1);
+            sprintf(path, "%s/%s/%.*s/%s%s", dir, vname, k, checksum, vname, fmt);
+        }
+        if (path)
+            dir = path;
+    }
+    map = cst_mmap_file(dir);
+    if (map == NULL || (d = diphonedb_new(map->mem)) == NULL) {
+        cst_free(path);
+        return NULL;
+    }
+    db = d->db;
+    db->path = cst_strdup(dir);
+    db->map = map;
+    if (!voxdb_name_match((char *)name, db->name)) {
+        delete_diphonedb(d);
+        cst_free(path);
+        return NULL;
+    }
+    key = db->key;
+    if (checksum) {
+        for (p = checksum; p;) {
+            long v = atol(p);
+
+            semi = strchr(p, ';');
+            if (v == key)
+                goto ok;
+            if (semi == NULL)
+                break;
+            p = semi + 1;
+        }
+        goto fail;
+    }
+ok:
+    if (!feat_present(f, "zdur_cart")) {
+        if (db->sec10 == NULL || db->sec8 == NULL || db->sec9 == NULL)
+            goto fail;
+        feat_set(f, "zdur_cart", FUN_00067fec(&db->sec9));
+    }
+    if (!feat_present(f, "dynamic_voxdbs")) {
+        feat_set(f, "dynamic_voxdbs", dynamic_voxdbs_val(dynamic_voxdbs_new(d)));
+        feat_set_int(f, "sample_rate", db->sample_rate);
+        feat_set(f, "diphonedb", diphonedb_val(d));
+        feat_set_int(f, "pitchmarks_on_fly", db->sec11 ? *(const int *)db->sec11 != 0 : 0);
+    }
+    cst_free(path);
+    return d;
+fail:
+    delete_diphonedb(d);
+    cst_free(path);
+    return NULL;
+}
+
 /* 0x5f6dc arm */
 int diphonedb_unit_flag(const dynamic_voxdbs *dv, int x)
 {
@@ -750,7 +832,15 @@ int dynamic_voxdbs_has_unit(const dynamic_voxdbs *dv, const char *name)
     return diphonedb_unit_index(dv->b, name) != -1;
 }
 
-CST_VAL_REGISTER_TYPE_NODEL(dynamic_voxdbs, dynamic_voxdbs)
+/* 0x614d8 arm */
+dynamic_voxdbs *val_dynamic_voxdbs(const cst_val *v)
+{
+    if (v && CST_VAL_TYPE(v) == cst_val_type_dynamic_voxdbs)
+        return (dynamic_voxdbs *)CST_VAL_VOID(v);
+    cst_errmsg("VAL: tried to access %s in %d type val\n", "dynamic_voxdbs",
+               (v ? CST_VAL_TYPE(v) : -1));
+    cst_error();
+}
 
 /* 0x61530 arm: whether the voice's databases have breath units. */
 int feats_have_breath_units(const cst_features *f)
@@ -773,4 +863,10 @@ int feats_have_breath_units(const cst_features *f)
 void val_delete_dynamic_voxdbs(void *v)
 {
     cst_free(v);
+}
+
+/* 0x615d0 arm */
+cst_val *dynamic_voxdbs_val(const dynamic_voxdbs *v)
+{
+    return val_new_typed(cst_val_type_dynamic_voxdbs, (void *)v);
 }

@@ -1357,7 +1357,7 @@ addr	size	mode	name	status	src	score	note
 0005f1e4	150	arm	diphonedb_new	matched	src/libttsivonavoice/voxdb.c	100	
 0005f334	38	arm	delete_diphonedb	matched	src/libttsivonavoice/voxdb.c	100	
 0005f36c	4	arm	val_delete_diphonedb	matched	src/libttsivonavoice/voxdb.c	100	
-0005f370	36c	arm	FUN_0005f370	todo			
+0005f370	36c	arm	voice_load_diphonedb	wip	src/libttsivonavoice/voxdb.c	25.2	
 0005f6dc	2c	arm	diphonedb_unit_flag	matched	src/libttsivonavoice/voxdb.c	100	
 0005f708	464	arm	FUN_0005f708	todo			
 0005fb6c	30	arm	utt_diphonedb_extra	matched	src/libttsivonavoice/voxdb.c	100	
@@ -1380,7 +1380,7 @@ addr	size	mode	name	status	src	score	note
 000614d8	58	arm	val_dynamic_voxdbs	matched	src/libttsivonavoice/voxdb.c	100	
 00061530	9c	arm	feats_have_breath_units	matched	src/libttsivonavoice/voxdb.c	100	
 000615cc	4	arm	val_delete_dynamic_voxdbs	matched	src/libttsivonavoice/voxdb.c	100	
-000615d0	18	arm	FUN_000615d0	todo			
+000615d0	18	arm	dynamic_voxdbs_val	matched	src/libttsivonavoice/voxdb.c	100	
 000615e8	58	arm	FUN_000615e8	todo			
 00061640	18	arm	FUN_00061640	todo			
 00061658	9c	arm	FUN_00061658	todo			
@@ -1509,7 +1509,7 @@ addr	size	mode	name	status	src	score	note
 0006a9e4	548	arm	FUN_0006a9e4	todo			
 0006af2c	158	arm	FUN_0006af2c	todo			
 0006b084	b0	arm	FUN_0006b084	todo			
-0006b134	2c	arm	FUN_0006b134	todo			
+0006b134	2c	arm	ivona_is_dir	todo			
 0006b160	28	arm	FUN_0006b160	todo			
 0006b188	20	arm	ivona_rand	todo			
 0006b1a8	b8	arm	pcm_unit_decode	todo			
