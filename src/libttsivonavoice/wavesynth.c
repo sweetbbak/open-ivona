@@ -13,6 +13,7 @@
 #include <openssl/hmac.h>
 #include "cst_file.h"
 #include "cst_wave.h"
+#include "tts_track.h"
 #include "tts_voxdb.h"
 
 typedef struct unit_selector unit_selector;
@@ -20,6 +21,8 @@ void unit_selector_free(unit_selector *s);
 void *val_userdata(const cst_val *v);
 cst_val *userdata_val(const void *v);
 const unsigned char *val_binary_key(const cst_val *v);
+int track_span(const track *t, int from, int to);
+int wave_crossfade(short *dst, short n, const short *src, short len);
 
 /* a mark (0x14 bytes) */
 typedef struct wavesynth_mark {
@@ -276,6 +279,39 @@ int wavesynth_flush(wavesynth *s)
     s->pos += n;
     s->total += n;
     s->pending = 0;
+    return n;
+}
+
+#define WS_MAX(a, b) ((a) < (b) ? (b) : (a))
+
+/* 0x62bc0 arm: appends a track's frames (cross-fading the first one into the pending
+ * tail); with keep_last the last frame becomes the new pending tail. */
+int wavesynth_add_track(wavesynth *s, const track *t, int keep_last)
+{
+    int n = 0, i, len, k, last;
+
+    if (s->wave->num_samples - s->pos < track_span(t, 0, t->num_frames - 1))
+        cst_wave_resize(s->wave,
+                        WS_MAX(track_span(t, 0, t->num_frames - 1), s->wave->sample_rate * 5) +
+                        s->wave->num_samples, 1);
+    for (i = 0; last = t->num_frames - 1, i < last; i++) {
+        len = track_frame_len(t, i);
+        if (i == 0 && s->pending > 0)
+            k = wave_crossfade(s->wave->samples + s->pos + n, s->pending, t->frames[0], len);
+        else {
+            memcpy(s->wave->samples + s->pos + n, t->frames[i], len * sizeof(short));
+            k = len;
+        }
+        n += k;
+    }
+    s->pos += n;
+    if (keep_last) {
+        len = track_frame_len(t, last);
+        memcpy(&s->wave->samples[s->pos], t->frames[t->num_frames - 1],
+               (s->pending = len) * sizeof(short));
+    } else
+        s->pending = 0;
+    s->total += n;
     return n;
 }
 

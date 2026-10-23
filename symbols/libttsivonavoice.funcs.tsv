@@ -1399,7 +1399,7 @@ addr	size	mode	name	status	src	score	note
 00062b04	4	arm	val_delete_wavesynth	matched	src/libttsivonavoice/wavesynth.c	100	
 00062b08	8c	arm	wavesynth_append	matched	src/libttsivonavoice/wavesynth.c	100	
 00062b94	2c	arm	wavesynth_flush	matched	src/libttsivonavoice/wavesynth.c	100	
-00062bc0	1b8	arm	FUN_00062bc0	todo			
+00062bc0	1b8	arm	wavesynth_add_track	wip	src/libttsivonavoice/wavesynth.c	95.5	
 00062d78	68	arm	wavesynth_add_mark	matched	src/libttsivonavoice/wavesynth.c	100	
 00062de0	e0	arm	wavesynth_add_unit_marks	wip	src/libttsivonavoice/wavesynth.c	43.3	
 00062ec0	204	arm	FUN_00062ec0	todo			
@@ -1447,8 +1447,8 @@ addr	size	mode	name	status	src	score	note
 00064434	6c	arm	track_frame_at	matched	src/libttsivonavoice/track.c	100	
 000644a0	b8	arm	track_print	matched	src/libttsivonavoice/track.c	100	
 00064558	240	arm	FUN_00064558	todo			
-00064798	68	arm	FUN_00064798	todo			
-00064800	7c	arm	FUN_00064800	todo			
+00064798	68	arm	crossfade_weight	todo			
+00064800	7c	arm	wave_crossfade	todo			
 0006487c	4e4	arm	FUN_0006487c	todo			
 00064d60	f8	arm	FUN_00064d60	todo			
 00064e58	790	arm	FUN_00064e58	todo			
