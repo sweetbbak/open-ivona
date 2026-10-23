@@ -1,8 +1,12 @@
 addr	size	name	note
 0010c384	0	cst_val_type_features	learned from src/libttsivonavoice/flite/cst_features.c
 0010c388	0	cst_val_type_itemfunc	learned from src/libttsivonavoice/flite/cst_item.c
+0010c3a8	4	cst_val_type_cart	
+0010c3ac	4	cst_val_type_item	learned from src/libttsivonavoice/flite/cst_item.c
+0010c3b0	4	cst_val_type_relation	
 0010c3b4	0	cst_val_type_ffunc	learned from src/libttsivonavoice/flite/cst_ffeature.c
 0010c3b8	0	cst_val_type_uttfunc	learned from src/libttsivonavoice/flite/cst_utterance.c
+0010c3c0	4	cst_val_type_wave	
 0010c3c4	0	cst_val_type_utterance	learned from src/libttsivonavoice/flite/cst_item.c
 003b900c	0	__exidx_start	named from library relocation
 003d6bf4	0	cst_regex_table	learned from src/libttsivonavoice/flite/cst_cart.c
