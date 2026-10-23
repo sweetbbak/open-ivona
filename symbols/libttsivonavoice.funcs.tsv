@@ -881,22 +881,22 @@ addr	size	mode	name	status	src	score	note
 00050abc	3c	arm	voice_reg_set_lexicon	matched	src/libttsivonavoice/synth.c	100	
 00050af8	38	arm	synth_text	matched	src/libttsivonavoice/synth.c	100	
 00050b30	38	arm	synth_phones	matched	src/libttsivonavoice/synth.c	100	
-00050b68	58	arm	FUN_00050b68	todo			
-00050bc0	18	arm	FUN_00050bc0	todo			
-00050bd8	14	arm	FUN_00050bd8	todo			
-00050bec	58	arm	FUN_00050bec	todo			
-00050c44	18	arm	FUN_00050c44	todo			
-00050c5c	2c	arm	FUN_00050c5c	todo			
-00050c88	18	arm	FUN_00050c88	todo			
-00050ca0	8	arm	FUN_00050ca0	todo			
-00050ca8	40	arm	FUN_00050ca8	todo			
-00050ce8	68	arm	FUN_00050ce8	todo			
-00050d50	5c	arm	FUN_00050d50	todo			
-00050dac	10	arm	FUN_00050dac	todo			
-00050dbc	1c	arm	FUN_00050dbc	todo			
-00050dd8	1e0	arm	FUN_00050dd8	todo			
-00050fb8	140	arm	FUN_00050fb8	todo			
-000510f8	140	arm	FUN_000510f8	todo			
+00050b68	58	arm	val_tokenizer_expand_str_func	matched	src/libttsivonavoice/tokenizer.c	100	
+00050bc0	18	arm	tokenizer_expand_str_func_val	matched	src/libttsivonavoice/tokenizer.c	100	
+00050bd8	14	arm	segment_key_cmp	matched	src/libttsivonavoice/tokenizer.c	100	
+00050bec	58	arm	val_string_tokenizer_new_func	matched	src/libttsivonavoice/tokenizer.c	100	
+00050c44	18	arm	string_tokenizer_new_func_val	matched	src/libttsivonavoice/tokenizer.c	100	
+00050c5c	2c	arm	tokenizer_new	matched	src/libttsivonavoice/tokenizer.c	100	
+00050c88	18	arm	tokenizer_next	matched	src/libttsivonavoice/tokenizer.c	100	
+00050ca0	8	arm	tokenizer_get	matched	src/libttsivonavoice/tokenizer.c	100	
+00050ca8	40	arm	tokenizer_free	matched	src/libttsivonavoice/tokenizer.c	100	
+00050ce8	68	arm	string_tokenizer_new	matched	src/libttsivonavoice/tokenizer.c	100	
+00050d50	5c	arm	string_tokenizer_new_single	matched	src/libttsivonavoice/tokenizer.c	100	
+00050dac	10	arm	segments_find	matched	src/libttsivonavoice/tokenizer.c	100	
+00050dbc	1c	arm	ts_tokenizer_free	matched	src/libttsivonavoice/tokenizer.c	100	
+00050dd8	1e0	arm	ts_tokenizer_next	matched	src/libttsivonavoice/tokenizer.c	100	
+00050fb8	140	arm	ts_tokenizer_new	matched	src/libttsivonavoice/tokenizer.c	100	
+000510f8	140	arm	ts_tokenizer_new_utf8	matched	src/libttsivonavoice/tokenizer.c	100	
 00051238	8	arm	FUN_00051238	todo			
 00051240	58	arm	FUN_00051240	todo			
 00051298	1c	arm	val_delete_word_embeddings	todo			
