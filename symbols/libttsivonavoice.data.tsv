@@ -60,6 +60,9 @@ addr	size	name	note
 0021f348	4	cst_val_type_track	
 0021f34c	0	cst_val_type_wave	learned from src/libttsivonavoice/flite/cst_wave.c
 0021f350	0	cst_val_type_utterance	learned from src/libttsivonavoice/flite/cst_item.c
+00223470	100	uni_translit_index1	uni_case.c
+00223570	2000	uni_translit_index2	uni_case.c
+00225570	2460	uni_translit_index3	uni_case.c
 00229400	0	_pcre_OP_lengths	named from library relocation
 002294a4	0	_pcre_hspace_list	named from library relocation
 002294f4	0	_pcre_vspace_list	named from library relocation
@@ -176,6 +179,8 @@ addr	size	name	note
 0026708c	8	val_string_2	
 00267094	8	val_string_1	
 0026709c	8	val_string_0	
+00267654	6c0	uni_halfwidth_table	uni_case.c
+00267d14	6cc	uni_translit_strs	uni_case.c
 002683e0	0	cst_regex_table	learned from src/libttsivonavoice/flite/cst_cart.c
 00268bc4	0	X509_SIG_it	named from library relocation
 00268be0	0	ASN1_INTEGER_it	named from library relocation

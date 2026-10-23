@@ -1217,9 +1217,9 @@ addr	size	mode	name	status	src	score	note
 00057df8	8	arm	strlist_free_ptr	matched	src/libttsivonavoice/strutil.c	100	
 00057e00	48	arm	ivona_time_msec	matched	src/libttsivonavoice/strutil.c	100	
 00057e48	44	arm	ivona_time_usec	matched	src/libttsivonavoice/strutil.c	100	
-00057e8c	150	arm	uni_decode	todo			
-00057fdc	b8	arm	uni_translit	todo			
-00058094	2e8	arm	FUN_00058094	todo			
+00057e8c	150	arm	uni_decode	wip	src/libttsivonavoice/uni_case.c	63.1	
+00057fdc	b8	arm	uni_translit	matched	src/libttsivonavoice/uni_case.c	100	
+00058094	2e8	arm	uni_fraction	matched	src/libttsivonavoice/uni_case.c	100	
 0005837c	d74	arm	uni_tolower	todo			
 000590f0	44	arm	strv_len	matched	src/libttsivonavoice/utf8_iter.c	100	
 00059134	40	arm	utf8_iter_init	matched	src/libttsivonavoice/utf8_iter.c	100	
