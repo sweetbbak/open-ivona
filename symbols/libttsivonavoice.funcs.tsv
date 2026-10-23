@@ -1402,7 +1402,7 @@ addr	size	mode	name	status	src	score	note
 00062bc0	1b8	arm	wavesynth_add_track	wip	src/libttsivonavoice/wavesynth.c	95.5	
 00062d78	68	arm	wavesynth_add_mark	matched	src/libttsivonavoice/wavesynth.c	100	
 00062de0	e0	arm	wavesynth_add_unit_marks	wip	src/libttsivonavoice/wavesynth.c	43.3	
-00062ec0	204	arm	FUN_00062ec0	todo			
+00062ec0	204	arm	wavesynth_take	wip	src/libttsivonavoice/wavesynth.c	96.9	
 000630c4	4	arm	wavesynth_nop	matched	src/libttsivonavoice/wavesynth.c	100	
 000630c8	27c	arm	FUN_000630c8	todo			
 00063344	290	arm	FUN_00063344	todo			

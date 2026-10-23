@@ -363,6 +363,49 @@ void wavesynth_add_unit_marks(wavesynth *s, const cst_item *item, int start, int
         s->marks = cons_val(userdata_val(m), s->marks);
 }
 
+/* 0x62ec0 arm: takes up to max (0: all) finished samples as a new wave; marks (optional)
+ * gets the marks inside it, relative to its start. */
+cst_wave *wavesynth_take(wavesynth *s, int max, cst_val **marks)
+{
+    int n = s->pos, off;
+    cst_wave *w;
+    cst_val *out = NULL, *l;
+    wavesynth_mark *m;
+
+    if (n == 0)
+        return NULL;
+    if (max > 0) {
+        if (n >= max)
+            n = max;
+    }
+    w = new_wave();
+    w->sample_rate = s->wave->sample_rate;
+    cst_wave_resize(w, n, 1);
+    memcpy(w->samples, s->wave->samples, n * sizeof(short));
+    if (s->pos - n > 0 || s->pending > 0)
+        memmove(s->wave->samples, s->wave->samples + n,
+                (s->wave->num_samples - n) * sizeof(short));
+    s->pos -= w->num_samples;
+    while (s->marks &&
+           (m = val_userdata(val_car(s->marks)))->start < s->total - s->pos) {
+        l = s->marks;
+        s->marks = (cst_val *)val_cdr(l);
+        if (s->marks)
+            set_cdr(l, NULL);
+        if (marks) {
+            off = s->total - s->pos - w->num_samples;
+            m->start -= off;
+            m->end -= off;
+            out = cons_val(val_car(l), out);
+        } else
+            wavesynth_mark_free(m);
+        delete_val(l);
+    }
+    if (marks)
+        *marks = val_reverse(out);
+    return w;
+}
+
 /* 0x630c4 arm */
 void wavesynth_nop(void)
 {
