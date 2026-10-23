@@ -431,59 +431,52 @@ int dict_load_file(tts_dict_entry ***dictp, const char *path, const char *encodi
     return ret;
 }
 
-static inline int dict_is_url(const char *uri)
+static inline int dict_fetch(tts_voice *v, const char *uri)
 {
-    if (cst_startswith(uri, "file://"))
-        return 1;
-    if (cst_startswith(uri, "http://"))
-        return 1;
-    return 0;
+    fetcher *f = voice_fetcher_new(v);
+    fetch_result *r;
+    textstream *ts;
+    const char *dict_id;
+    tts_msg *m;
+    char *msg;
+    int ret = -1, status;
+
+    status = fetcher_fetch(f, uri, 120.0f, (void *)-1, (void *)-1, NULL);
+    if (status == FETCH_OK) {
+        r = fetcher_result(f);
+        ts = textstream_from_mem(r->data, r->size);
+        dict_id = get_param_string(VOICE_FEATURES(v), "eng_dict_insert_id", NULL);
+        ret = dict_parse(ts, get_param_string(VOICE_FEATURES(v), "eng_text_encoding", "UTF-8"),
+                         &v->dict, uri, dict_id, 1);
+        textstream_close(ts);
+    } else if (status == FETCH_ABORTED)
+        tts_set_error(TTS_STATUS_USER_ABORTED);
+    else if ((m = fetcher_messages(f)) != NULL) {
+        msg = tts_msg_join(m);
+        tts_set_errorf(TTS_STATUS_SYSTEM_ERROR, "%s", msg);
+        cst_free(msg);
+    } else
+        tts_set_errorf(TTS_STATUS_SYSTEM_ERROR, "Failed fetching lexicon file");
+    fetcher_delete(f);
+    return ret;
 }
 
 /* 0x38b80 arm: exported. Loads a dictionary file, fetching file:// and http:// URIs through the
  * voice's fetcher; returns the number of rules added or -1. */
 int tts_dict_load(tts_voice *v, const char *uri)
 {
-    fetcher *f;
-    fetch_result *r;
-    textstream *ts;
     const char *dict_id;
-    tts_msg *m;
-    char *msg;
-    int ret, status;
 
     if (v == NULL || uri == NULL) {
         tts_set_error(TTS_STATUS_INVALID_ARGUMENT);
         return -1;
     }
-    if (dict_is_url(uri)) {
-        f = voice_fetcher_new(v);
-        ret = -1;
-        status = fetcher_fetch(f, uri, 120.0f, (void *)-1, (void *)-1, NULL);
-        if (status == FETCH_OK) {
-            r = fetcher_result(f);
-            ts = textstream_from_mem(r->data, r->size);
-            dict_id = get_param_string(VOICE_FEATURES(v), "eng_dict_insert_id", NULL);
-            ret = dict_parse(ts, get_param_string(VOICE_FEATURES(v), "eng_text_encoding", "UTF-8"),
-                             &v->dict, uri, dict_id, 1);
-            textstream_close(ts);
-        } else if (status != FETCH_ABORTED) {
-            if ((m = fetcher_messages(f)) != NULL) {
-                msg = tts_msg_join(m);
-                tts_set_errorf(TTS_STATUS_SYSTEM_ERROR, "%s", msg);
-                cst_free(msg);
-            } else
-                tts_set_errorf(TTS_STATUS_SYSTEM_ERROR, "Failed fetching lexicon file");
-        } else
-            tts_set_error(TTS_STATUS_USER_ABORTED);
-        fetcher_delete(f);
-    } else {
-        dict_id = get_param_string(VOICE_FEATURES(v), "eng_dict_insert_id", NULL);
-        ret = dict_load_file(&v->dict, uri,
-                             get_param_string(VOICE_FEATURES(v), "eng_text_encoding", "UTF-8"),
-                             dict_id);
-    }
-    return ret;
+    if (cst_startswith(uri, "file://") || cst_startswith(uri, "http://"))
+        return dict_fetch(v, uri);
+    dict_id = get_param_string(VOICE_FEATURES(v), "eng_dict_insert_id", NULL);
+    return dict_load_file(&v->dict, uri,
+                          get_param_string(VOICE_FEATURES(v), "eng_text_encoding", "UTF-8"),
+                          dict_id);
 }
 
 /* 0x38d88 arm: adds the rules of an in-memory UTF-8 dictionary (rules not kept for saving). */

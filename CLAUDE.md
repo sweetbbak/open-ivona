@@ -143,3 +143,10 @@ Read README.md first. The rules below are what keeps the project deterministic.
   - In an if/else chain, block layout follows source order (seen in `feat_print`).
   - A call result consumed after another load means it was a separate statement
     (seen in `feat_copy_into`).
+  - When `if (a || b)` lays out `b` inline before the then-block, the then-block is probably a
+    `return helper(...)` of a static inline function, not inline code (the fetch paths of
+    `tts_pls_load` and `tts_dict_load`).
+  - A `memset(&s, 0, sizeof s)` of a local struct keeps it in memory (no SRA), so its fields are
+    stored and reloaded on the stack (`dict_parse`). `= {0}` gets scalarized.
+  - A one-byte local whose address is passed (`strbuf_append(b, &c, 1)`) that shares one stack slot
+    across several copies of the same code is a function-scope variable, not an inline helper's.

@@ -233,7 +233,7 @@ addr	size	mode	name	status	src	score	note
 0002285c	178	arm	FUN_0002285c	todo			
 000229d4	8	arm	FUN_000229d4	todo			
 000229dc	12c	arm	FUN_000229dc	todo			
-00022b08	24	arm	FUN_00022b08	todo			
+00022b08	24	arm	vox_file_check	todo			
 00022b2c	57c	arm	FUN_00022b2c	todo			
 000230a8	24	arm	FUN_000230a8	todo			
 000230cc	4c	arm	FUN_000230cc	todo			
@@ -269,7 +269,7 @@ addr	size	mode	name	status	src	score	note
 00024c58	6f4	arm	FUN_00024c58	todo			
 0002534c	104	arm	FUN_0002534c	todo			
 00025450	38	arm	FUN_00025450	todo			
-00025488	38	arm	FUN_00025488	todo			
+00025488	38	arm	pls_lexicon_free	todo			
 000254c0	24	arm	FUN_000254c0	todo			
 000254e4	8	arm	FUN_000254e4	todo			
 000254ec	24	arm	FUN_000254ec	todo			
@@ -281,7 +281,7 @@ addr	size	mode	name	status	src	score	note
 000257b0	a4	arm	FUN_000257b0	todo			
 00025854	3c4	arm	FUN_00025854	todo			
 00025c18	ccc	arm	FUN_00025c18	todo			
-000268e4	3d0	arm	FUN_000268e4	todo			
+000268e4	3d0	arm	pls_lexicon_parse	todo			
 00026cb4	84	arm	FUN_00026cb4	todo			
 00026d38	14	arm	FUN_00026d38	todo			
 00026d4c	270	arm	FUN_00026d4c	todo			
@@ -461,7 +461,7 @@ addr	size	mode	name	status	src	score	note
 00038084	268	arm	dict_split_line	matched	src/libttsivonavoice/dict.c	100	
 000382ec	830	arm	dict_parse	wip	src/libttsivonavoice/dict.c	19.8	
 00038b1c	64	arm	dict_load_file	matched	src/libttsivonavoice/dict.c	100	
-00038b80	208	arm	tts_dict_load	wip	src/libttsivonavoice/dict.c	28.5	
+00038b80	208	arm	tts_dict_load	matched	src/libttsivonavoice/dict.c	100	
 00038d88	64	arm	dict_load_mem	matched	src/libttsivonavoice/dict.c	100	
 00038dec	c	arm	dict_new	matched	src/libttsivonavoice/dict.c	100	
 00038df8	74	arm	dict_free	matched	src/libttsivonavoice/dict.c	100	
@@ -539,7 +539,7 @@ addr	size	mode	name	status	src	score	note
 0003d5a0	a8	arm	FUN_0003d5a0	todo			
 0003d648	224	arm	FUN_0003d648	todo			
 0003d86c	134	arm	tts_voice_param	wip	src/libttsivonavoice/voice_param_api.c	51.8	
-0003d9a0	f8	arm	FUN_0003d9a0	todo			
+0003d9a0	f8	arm	voice_params_init	todo			
 0003da98	124	arm	FUN_0003da98	todo			
 0003dbbc	4	arm	FUN_0003dbbc	todo			
 0003dbc0	64	arm	FUN_0003dbc0	todo			
@@ -558,22 +558,22 @@ addr	size	mode	name	status	src	score	note
 0003f348	cfc	arm	tts_streamer_synth	todo			
 00040044	1a0	arm	tts_streamer_jump	todo			
 000401e4	b8	arm	tts_get_input_warning	todo			
-0004029c	ec	arm	FUN_0004029c	todo			
-00040388	18	arm	FUN_00040388	todo			
-000403a0	8	arm	FUN_000403a0	todo			
-000403a8	188	arm	FUN_000403a8	todo			
-00040530	58	arm	FUN_00040530	todo			
-00040588	24	arm	FUN_00040588	todo			
-000405ac	3c	arm	FUN_000405ac	todo			
-000405e8	c8	arm	FUN_000405e8	todo			
-000406b0	70	arm	FUN_000406b0	todo			
-00040720	944	arm	tts_load_voice	todo			
-00041064	f0	arm	tts_unload_voice	todo			
-00041154	84	arm	tts_pls_unload	todo			
-000411d8	110	arm	voice_fetcher_new	todo			
-000412e8	1b8	arm	tts_pls_load	todo			
-000414a0	24	arm	tts_voice_sample_rate	todo			
-000414c4	7c	arm	FUN_000414c4	todo			
+0004029c	ec	arm	lang_find_part	wip	src/libttsivonavoice/voice.c	86.7	
+00040388	18	arm	lang_part_data	matched	src/libttsivonavoice/voice.c	100	
+000403a0	8	arm	pls_entry_free	matched	src/libttsivonavoice/voice.c	100	
+000403a8	188	arm	voice_pls_add	wip	src/libttsivonavoice/voice.c	98.0	
+00040530	58	arm	voice_data_new	matched	src/libttsivonavoice/voice.c	100	
+00040588	24	arm	voice_data_free	matched	src/libttsivonavoice/voice.c	100	
+000405ac	3c	arm	ivona_dlsym	matched	src/libttsivonavoice/voice.c	100	
+000405e8	c8	arm	voice_dat_name	matched	src/libttsivonavoice/voice.c	100	
+000406b0	70	arm	lang_dat_name	matched	src/libttsivonavoice/voice.c	100	
+00040720	944	arm	tts_load_voice	wip	src/libttsivonavoice/voice.c	34.9	
+00041064	f0	arm	tts_unload_voice	matched	src/libttsivonavoice/voice.c	100	
+00041154	84	arm	tts_pls_unload	wip	src/libttsivonavoice/voice.c	97.0	
+000411d8	110	arm	voice_fetcher_new	matched	src/libttsivonavoice/voice.c	100	
+000412e8	1b8	arm	tts_pls_load	matched	src/libttsivonavoice/voice.c	100	
+000414a0	24	arm	tts_voice_sample_rate	matched	src/libttsivonavoice/voice.c	100	
+000414c4	7c	arm	voice_lang_part	matched	src/libttsivonavoice/voice.c	100	
 00041540	18c	arm	FUN_00041540	todo			
 000416cc	b8	arm	FUN_000416cc	todo			
 00041784	5c	arm	FUN_00041784	todo			
@@ -591,8 +591,8 @@ addr	size	mode	name	status	src	score	note
 00042a50	60	arm	FUN_00042a50	todo			
 00042ab0	efc	arm	FUN_00042ab0	todo			
 000439ac	c0	arm	FUN_000439ac	todo			
-00043a6c	78	arm	FUN_00043a6c	todo			
-00043ae4	180	arm	FUN_00043ae4	todo			
+00043a6c	78	arm	cert_status	todo			
+00043ae4	180	arm	cert_allows_voice	todo			
 00043c64	220	arm	FUN_00043c64	todo			
 00043e84	33c	arm	FUN_00043e84	todo			
 000441c0	20	arm	FUN_000441c0	todo			
@@ -766,7 +766,7 @@ addr	size	mode	name	status	src	score	note
 0004b42c	bec	arm	FUN_0004b42c	todo			
 0004c018	10	arm	FUN_0004c018	todo			
 0004c028	10	arm	FUN_0004c028	todo			
-0004c038	18	arm	FUN_0004c038	todo			
+0004c038	18	arm	voice_attach_language	todo			
 0004c050	38c	arm	FUN_0004c050	todo			
 0004c3dc	34c	arm	FUN_0004c3dc	todo			
 0004c728	34c	arm	FUN_0004c728	todo			
@@ -865,10 +865,10 @@ addr	size	mode	name	status	src	score	note
 000500b4	c	arm	FUN_000500b4	todo			
 000500c0	1c	arm	FUN_000500c0	todo			
 000500dc	4	arm	val_delete_audiotag	todo			
-000500e0	94	arm	FUN_000500e0	todo			
+000500e0	94	arm	voice_reg_fixup	todo			
 00050174	58	arm	FUN_00050174	todo			
 000501cc	18	arm	FUN_000501cc	todo			
-000501e4	94	arm	FUN_000501e4	todo			
+000501e4	94	arm	lang_desc_find	todo			
 00050278	b4	arm	FUN_00050278	todo			
 0005032c	bc	arm	FUN_0005032c	todo			
 000503e8	34	arm	FUN_000503e8	todo			

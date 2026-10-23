@@ -84,5 +84,7 @@ int cst_startswith(const char *s, const char *prefix);
 int cst_endswith(const char *s, const char *suffix);
 char *cst_strcat3(const char *a, const char *b, const char *c);
 char *cst_strndup(const char *s, size_t n);
+void cst_strsubchar(char *s, int c, char r);
+char *cst_ascii_downcase(const char *s);
 
 #endif

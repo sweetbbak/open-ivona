@@ -16,7 +16,7 @@ typedef struct tts_cert_data {
     unsigned int key;             /* +0x2c: obfuscates voice parameter values */
 } tts_cert_data;
 tts_cert_data *FUN_00042ab0(const char *text);
-int FUN_00043a6c(tts_cert_data *cert);
+int cert_status(tts_cert_data *cert);
 void *FUN_00047d80(int key);
 int FUN_00043c64(tts_cert_data *a, tts_cert_data *b);
 void FUN_00043e84(void *merged, tts_cert_data *c);

@@ -13,6 +13,7 @@
 #include "ivona_vector.h"
 #include "tts_metrics.h"
 #include "tts_cert.h"
+#include "tts_instance.h"
 
 #define TTS_INSTANCE_MAGIC 0x3e1b8f65
 #define TTS_RESOURCE_MAGIC    0x730366b1
@@ -21,34 +22,11 @@
 int curl_global_init(long flags);
 const char *curl_easy_strerror(int code);
 
-typedef struct res_cache res_cache;
 res_cache *res_cache_new(void *(*load)(const char *path, void *arg), void (*free_fn)(void *data));
 pthread_mutex_t *ivona_mutex_new(void);
 int ivona_mutex_trylock(pthread_mutex_t *m);
 int ivona_mutex_unlock(pthread_mutex_t *m);
 
-/* language_data exported by a language library (copied per loaded language) */
-typedef struct tts_lang_desc {
-    void *unk_0;
-    void *unk_4;
-    ivona_vector *parts;              /* +0x08: loaded data files (cache data pointers) */
-    void (*part_init)(void *part);    /* +0x0c */
-    void (*part_fini)(void *part);    /* +0x10 */
-} tts_lang_desc;
-
-struct tts_instance_struct {
-    int magic;                    /* TTS_INSTANCE_MAGIC */
-    ivona_vector *resources;      /* +0x04: of tts_resource * */
-    void *certificate;            /* +0x08 */
-    ivona_vector *modules;        /* +0x0c */
-    pthread_mutex_t *modules_lock;/* +0x10 */
-    res_cache *lang_cache;        /* +0x14 */
-    ivona_vector *languages;      /* +0x18: of tts_language * */
-    tts_lang_desc *lang_table;    /* +0x1c: copies of every language descriptor (+1 spare) */
-    pthread_mutex_t *lock_20;     /* +0x20 */
-    ivona_vector *addons_list;      /* +0x24 */
-    pthread_mutex_t *addons_lock; /* +0x28 */
-};
 
 typedef struct tts_language {
     void *dl;                     /* dlopen() handle */
@@ -87,7 +65,7 @@ void *textstream_open(const char *path);
 void textstream_fill_all(void *buf);
 const char *textstream_ptr(void *buf);
 void textstream_close(void *buf);
-void *FUN_000405ac(void *dl, const char *symbol);
+void *ivona_dlsym(void *dl, const char *symbol);
 
 
 /* 0x3a188 */
@@ -182,7 +160,7 @@ const tts_certificate *tts_load_certificate(tts_instance *tts, const char *cert_
     if (cert == NULL)
         goto out;
 
-    if (FUN_00043a6c(cert)) {
+    if (cert_status(cert)) {
         FUN_00042a50(cert);
         tts_set_error(TTS_STATUS_CERTIFICATE_EXPIRED);
         return NULL;
@@ -557,7 +535,7 @@ tts_instance *tts_init(const char *certificate_text)
 /* 0x3ae84: load one data file of a language through the instance's cache */
 int lang_load_part(tts_lang_desc *desc, tts_instance *tts, const char *path)
 {
-    void *part = res_cache_acquire(tts->lang_cache, path, desc->unk_4);
+    void *part = res_cache_acquire(tts->lang_cache, path, (void *)desc->codes);
 
     if (part != NULL) {
         if (desc->part_init)
@@ -599,14 +577,14 @@ tts_language *tts_load_language(tts_instance *tts, const char *lib_path, const c
         tts_set_errorf(TTS_STATUS_SYSTEM_ERROR, "%s", dlerror());
         return NULL;
     }
-    version = FUN_000405ac(dl, "engine_version");
+    version = ivona_dlsym(dl, "engine_version");
     if (strcmp(version, "1.6.101.3") != 0) {
         tts_set_errorf(TTS_STATUS_LOAD_LANGUGE_ERROR, "Language library version mismatch: got %s, required %s",
                        version, "1.6.101.3");
         dlclose(dl);
         return NULL;
     }
-    desc = FUN_000405ac(dl, "language_data");
+    desc = ivona_dlsym(dl, "language_data");
     if (desc == NULL) {
         tts_set_errorf(TTS_STATUS_LOAD_LANGUGE_ERROR, "The library does not have language data");
         dlclose(dl);
