@@ -12,3 +12,4 @@ libraries:
   openssl: build/libobj/openssl.a
   curl: build/libobj/curl.a
   pcre: build/libobj/pcre.a
+  expat: build/libobj/expat.a

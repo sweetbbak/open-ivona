@@ -33,6 +33,21 @@ addr	size	name	note
 0021f344	0	cst_val_type_uttfunc	learned from src/libttsivonavoice/flite/cst_utterance.c
 0021f34c	0	cst_val_type_wave	learned from src/libttsivonavoice/flite/cst_wave.c
 0021f350	0	cst_val_type_utterance	learned from src/libttsivonavoice/flite/cst_item.c
+00229400	0	_pcre_OP_lengths	named from library relocation
+002294a4	0	_pcre_hspace_list	named from library relocation
+002294f4	0	_pcre_vspace_list	named from library relocation
+00229514	0	_pcre_utf8_table1	named from library relocation
+0022952c	0	_pcre_utf8_table1_size	named from library relocation
+00229530	0	_pcre_utf8_table2	named from library relocation
+00229560	0	_pcre_utf8_table4	named from library relocation
+002295a0	0	_pcre_ucp_gentype	named from library relocation
+00229684	0	_pcre_utt_names	named from library relocation
+00229b8c	0	_pcre_utt	named from library relocation
+00229f84	0	_pcre_utt_size	named from library relocation
+00229f88	0	_pcre_ucd_caseless_sets	named from library relocation
+0022a0c4	0	_pcre_ucd_records	named from library relocation
+0022b744	0	_pcre_ucd_stage1	named from library relocation
+0022d944	0	_pcre_ucd_stage2	named from library relocation
 00267004	8	val_string_19	
 0026700c	8	val_string_18	
 00267014	8	val_string_17	
@@ -208,6 +223,8 @@ addr	size	name	note
 00275804	0	cst_relation_id_names	
 00275930	0	rand_ssleay_meth	named from library relocation
 00275f24	10	g_modules	
+00275f34	0	pcre_malloc	named from library relocation
+00275f38	0	pcre_free	named from library relocation
 00276054	0	Curl_cmalloc	named from library relocation
 00276058	0	Curl_cfree	named from library relocation
 0027605c	0	Curl_crealloc	named from library relocation
@@ -215,6 +232,7 @@ addr	size	name	note
 00276064	0	Curl_ccalloc	named from library relocation
 0027b094	104	g_tts_error	
 0027b198	4	g_tts_instance_count	
+0027b5e8	0	pcre_stack_guard	named from library relocation
 0027b97c	0	app_pkey_methods	named from library relocation
 0027b9e4	0	cleanse_ctr	named from library relocation
 0027b9f4	0	obj_cleanup_defer	named from library relocation

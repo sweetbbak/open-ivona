@@ -1607,22 +1607,22 @@ addr	size	mode	name	status	src	score	note
 00071fd8	fc	arm	FUN_00071fd8	todo			
 000720d4	20	arm	FUN_000720d4	todo			
 000720f4	54	arm	FUN_000720f4	todo			
-00072148	8c	arm	FUN_00072148	todo			
-000721d4	144	arm	FUN_000721d4	todo			
-00072318	150	arm	FUN_00072318	todo			
-00072468	1124	arm	FUN_00072468	todo			
-0007358c	2e8	arm	FUN_0007358c	todo			
-00073874	1ac	arm	FUN_00073874	todo			
-00073a20	130	arm	FUN_00073a20	todo			
-00073b50	7a8	arm	FUN_00073b50	todo			
-000742f8	390	arm	FUN_000742f8	todo			
-00074688	2e4	arm	FUN_00074688	todo			
-0007496c	a38	arm	FUN_0007496c	todo			
-000753a4	94	arm	FUN_000753a4	todo			
-00075438	8c	arm	FUN_00075438	todo			
-000754c4	448	arm	FUN_000754c4	todo			
-0007590c	bf0	arm	FUN_0007590c	todo			
-000764fc	3b4	arm	FUN_000764fc	todo			
+00072148	8c	arm	find_error_text@pcre_compile	lib	lib:pcre:pcre_compile.o	100	
+000721d4	144	arm	expand_workspace@pcre_compile	lib	lib:pcre:pcre_compile.o	100	
+00072318	150	arm	is_counted_repeat@pcre_compile	lib	lib:pcre:pcre_compile.o	100	
+00072468	1124	arm	check_escape@pcre_compile	lib	lib:pcre:pcre_compile.o	100	
+0007358c	2e8	arm	get_ucp@pcre_compile	lib	lib:pcre:pcre_compile.o	100	
+00073874	1ac	arm	read_repeat_counts@pcre_compile	lib	lib:pcre:pcre_compile.o	100	
+00073a20	130	arm	first_significant_code@pcre_compile	lib	lib:pcre:pcre_compile.o	100	
+00073b50	7a8	arm	find_fixedlength@pcre_compile	lib	lib:pcre:pcre_compile.o	100	
+000742f8	390	arm	_pcre_find_bracket	lib	lib:pcre:pcre_compile.o	100	
+00074688	2e4	arm	find_recurse@pcre_compile	lib	lib:pcre:pcre_compile.o	100	
+0007496c	a38	arm	could_be_empty_branch@pcre_compile	lib	lib:pcre:pcre_compile.o	100	
+000753a4	94	arm	could_be_empty@pcre_compile	lib	lib:pcre:pcre_compile.o	100	
+00075438	8c	arm	get_repeat_base@pcre_compile	lib	lib:pcre:pcre_compile.o	100	
+000754c4	448	arm	check_char_prop@pcre_compile	lib	lib:pcre:pcre_compile.o	100	
+0007590c	bf0	arm	get_chr_property_list@pcre_compile	lib	lib:pcre:pcre_compile.o	100	
+000764fc	3b4	arm	compare_opcodes@pcre_compile	todo			
 000768b0	c5c	arm	FUN_000768b0	todo			
 0007750c	38	arm	FUN_0007750c	todo			
 00077544	68	arm	FUN_00077544	todo			
@@ -1649,51 +1649,25 @@ addr	size	mode	name	status	src	score	note
 00077a38	3c	arm	FUN_00077a38	todo			
 00077a74	4	arm	FUN_00077a74	todo			
 00077a78	c	arm	FUN_00077a78	todo			
-00077a84	558	arm	FUN_00077a84	todo			
-00077fdc	15c	arm	FUN_00077fdc	todo			
-00078138	c0	arm	FUN_00078138	todo			
-000781f8	1ac	arm	FUN_000781f8	todo			
-000783a4	b8	arm	FUN_000783a4	todo			
-0007845c	88	arm	FUN_0007845c	todo			
-000784e4	318	arm	FUN_000784e4	todo			
-000787fc	428	arm	FUN_000787fc	todo			
-00078c24	108	arm	FUN_00078c24	todo			
-00078d2c	16c	arm	FUN_00078d2c	todo			
-00078e98	fe8	arm	FUN_00078e98	todo			
-00079e80	a84	arm	FUN_00079e80	todo			
-0007a904	b14	arm	FUN_0007a904	todo			
-0007b418	54	arm	FUN_0007b418	todo			
-0007b46c	14	arm	FUN_0007b46c	todo			
-0007b480	14	arm	FUN_0007b480	todo			
-0007b494	aac	arm	FUN_0007b494	todo			
-0007bf40	f4	arm	FUN_0007bf40	todo			
-0007c034	bb0	arm	FUN_0007c034	todo			
-0007cbe4	3dc	arm	FUN_0007cbe4	todo			
-0007cfc0	1094	arm	FUN_0007cfc0	todo			
-0007e054	d0	arm	FUN_0007e054	todo			
-0007e124	c0	arm	FUN_0007e124	todo			
-0007e1e4	18	arm	FUN_0007e1e4	todo			
-0007e1fc	14c	arm	FUN_0007e1fc	todo			
-0007e348	74	arm	FUN_0007e348	todo			
-0007e3bc	3f0	arm	FUN_0007e3bc	todo			
-0007e7ac	518	arm	FUN_0007e7ac	todo			
-0007ecc4	3e8	arm	FUN_0007ecc4	todo			
-0007f0ac	35c	arm	FUN_0007f0ac	todo			
-0007f408	4	arm	FUN_0007f408	todo			
-0007f40c	20	arm	FUN_0007f40c	todo			
-0007f42c	4d4	arm	FUN_0007f42c	todo			
-0007f900	5ec	arm	FUN_0007f900	todo			
-0007feec	454	arm	FUN_0007feec	todo			
-00080340	1c	arm	FUN_00080340	todo			
-0008035c	14	arm	FUN_0008035c	todo			
-00080370	8b0	arm	FUN_00080370	todo			
-00080c20	288	arm	FUN_00080c20	todo			
-00080ea8	384	arm	FUN_00080ea8	todo			
-0008122c	428	arm	FUN_0008122c	todo			
-00081654	17c	arm	FUN_00081654	todo			
-000817d0	50	arm	FUN_000817d0	todo			
-00081820	187c	arm	FUN_00081820	todo			
-0008309c	670	arm	FUN_0008309c	todo			
+00077a84	558	arm	auto_possessify@pcre_compile	lib	lib:pcre:pcre_compile.o	100	
+00077fdc	15c	arm	check_posix_syntax@pcre_compile	lib	lib:pcre:pcre_compile.o	100	
+00078138	c0	arm	check_posix_name@pcre_compile	lib	lib:pcre:pcre_compile.o	100	
+000781f8	1ac	arm	adjust_recurse@pcre_compile	lib	lib:pcre:pcre_compile.o	100	
+000783a4	b8	arm	auto_callout@pcre_compile	lib	lib:pcre:pcre_compile.o	100	
+0007845c	88	arm	complete_callout@pcre_compile	lib	lib:pcre:pcre_compile.o	100	
+000784e4	318	arm	get_othercase_range@pcre_compile	lib	lib:pcre:pcre_compile.o	100	
+000787fc	428	arm	add_to_class@pcre_compile	lib	lib:pcre:pcre_compile.o	100	
+00078c24	108	arm	add_list_to_class@pcre_compile	lib	lib:pcre:pcre_compile.o	100	
+00078d2c	16c	arm	add_not_list_to_class@pcre_compile	lib	lib:pcre:pcre_compile.o	100	
+00078e98	74d8	arm	compile_branch@pcre_compile	lib	lib:pcre:pcre_compile.o	100	
+00080370	8b0	arm	compile_regex@pcre_compile	lib	lib:pcre:pcre_compile.o	100	
+00080c20	288	arm	is_anchored@pcre_compile	lib	lib:pcre:pcre_compile.o	100	
+00080ea8	384	arm	is_startline@pcre_compile	lib	lib:pcre:pcre_compile.o	100	
+0008122c	428	arm	find_firstassertedchar@pcre_compile	lib	lib:pcre:pcre_compile.o	100	
+00081654	17c	arm	add_name@pcre_compile	lib	lib:pcre:pcre_compile.o	100	
+000817d0	50	arm	pcre_compile	lib	lib:pcre:pcre_compile.o	100	
+00081820	187c	arm	pcre_compile2	todo			
+0008309c	670	arm	match_ref@pcre_exec	lib	lib:pcre:pcre_exec.o	100	
 0008370c	5a8	arm	FUN_0008370c	todo			
 00083cb4	4	arm	FUN_00083cb4	todo			
 00083cb8	e0	arm	FUN_00083cb8	todo			
@@ -2254,18 +2228,18 @@ addr	size	mode	name	status	src	score	note
 000dd0cc	24	arm	FUN_000dd0cc	todo			
 000dd0f0	78	arm	FUN_000dd0f0	todo			
 000dd168	10	arm	FUN_000dd168	todo			
-000dd178	3b8	arm	FUN_000dd178	todo			
-000dd530	3e0	arm	FUN_000dd530	todo			
-000dd910	100	arm	FUN_000dd910	todo			
-000dda10	d7c	arm	FUN_000dda10	todo			
-000de78c	480	arm	FUN_000de78c	todo			
-000dec0c	124	arm	FUN_000dec0c	todo			
-000ded30	bc	arm	FUN_000ded30	todo			
-000dedec	111c	arm	FUN_000dedec	todo			
+000dd178	3b8	arm	_pcre_is_newline	lib	lib:pcre:pcre_newline.o	100	
+000dd530	3e0	arm	_pcre_was_newline	lib	lib:pcre:pcre_newline.o	100	
+000dd910	100	arm	_pcre_ord2utf	lib	lib:pcre:pcre_ord2utf8.o	100	
+000dda10	d7c	arm	find_minlength@pcre_study	lib	lib:pcre:pcre_study.o	100	
+000de78c	480	arm	set_table_bit@pcre_study	lib	lib:pcre:pcre_study.o	100	
+000dec0c	124	arm	set_type_bits@pcre_study	lib	lib:pcre:pcre_study.o	100	
+000ded30	bc	arm	set_nottype_bits@pcre_study	lib	lib:pcre:pcre_study.o	100	
+000dedec	111c	arm	set_start_bits@pcre_study	lib	lib:pcre:pcre_study.o	100	
 000dff08	498	arm	FUN_000dff08	todo			
 000e03a0	80	arm	FUN_000e03a0	todo			
-000e0420	57c	arm	FUN_000e0420	todo			
-000e099c	106c	arm	FUN_000e099c	todo			
+000e0420	57c	arm	_pcre_valid_utf	lib	lib:pcre:pcre_valid_utf8.o	100	
+000e099c	106c	arm	_pcre_xclass	lib	lib:pcre:pcre_xclass.o	100	
 000e1a08	5f4	arm	FUN_000e1a08	todo			
 000e1ffc	80	arm	impl_check@ex_data	lib	lib:openssl:crypto__ex_data.o	100	
 000e207c	3c	arm	CRYPTO_get_ex_data_implementation	lib	lib:openssl:crypto__ex_data.o	100	
@@ -4973,54 +4947,54 @@ addr	size	mode	name	status	src	score	note
 0019f3dc	fc	arm	policy_node_match	lib	lib:openssl:crypto__x509v3__pcy_node.o	100	
 0019f4d8	30	arm	FUN_0019f4d8	todo			
 0019f508	44	arm	FUN_0019f508	todo			
-0019f54c	78	arm	FUN_0019f54c	todo			
-0019f5c4	4c	arm	FUN_0019f5c4	todo			
+0019f54c	78	arm	gather_time_entropy@xmlparse	todo			
+0019f5c4	4c	arm	generate_hash_secret_salt@xmlparse	lib	lib:expat:lib__xmlparse.o	100	
 0019f610	74	arm	FUN_0019f610	todo			
 0019f684	3c	arm	ENGINE_load_ubsec	todo			
 0019f6c0	568	arm	FUN_0019f6c0	todo			
 0019fc28	378	arm	FUN_0019fc28	todo			
-0019ffa0	60	arm	FUN_0019ffa0	todo			
+0019ffa0	60	arm	moveToFreeBindingList@xmlparse	lib	lib:expat:lib__xmlparse.o	100	
 001a0000	190	arm	FUN_001a0000	todo			
 001a0190	a0	arm	FUN_001a0190	todo			
 001a0230	478	arm	FUN_001a0230	todo			
-001a06a8	6c	arm	FUN_001a06a8	todo			
+001a06a8	6c	arm	destroyBindings@xmlparse	lib	lib:expat:lib__xmlparse.o	100	
 001a0714	2f0	arm	FUN_001a0714	todo			
-001a0a04	28	arm	FUN_001a0a04	todo			
+001a0a04	28	arm	XML_UseParserAsHandlerArg	lib	lib:expat:lib__xmlparse.o	100	
 001a0a2c	60	arm	FUN_001a0a2c	todo			
 001a0a8c	64	arm	FUN_001a0a8c	todo			
-001a0af0	64	arm	FUN_001a0af0	todo			
+001a0af0	64	arm	XML_SetUserData	lib	lib:expat:lib__xmlparse.o	100	
 001a0b54	80	arm	FUN_001a0b54	todo			
-001a0bd4	28	arm	FUN_001a0bd4	todo			
-001a0bfc	28	arm	FUN_001a0bfc	todo			
+001a0bd4	28	arm	XML_GetBase	lib	lib:expat:lib__xmlparse.o	100	
+001a0bfc	28	arm	XML_GetIdAttributeIndex	lib	lib:expat:lib__xmlparse.o	100	
 001a0c24	28	arm	FUN_001a0c24	todo			
 001a0c4c	3c	arm	FUN_001a0c4c	todo			
 001a0c88	2c	arm	X509_STORE_set_lookup_crls_cb	lib	lib:openssl:crypto__x509__x509_lu.o	100	
-001a0cb4	2c	arm	FUN_001a0cb4	todo			
-001a0ce0	2c	arm	FUN_001a0ce0	todo			
-001a0d0c	2c	arm	FUN_001a0d0c	todo			
-001a0d38	2c	arm	FUN_001a0d38	todo			
-001a0d64	3c	arm	FUN_001a0d64	todo			
+001a0cb4	2c	arm	XML_SetEndElementHandler	lib	lib:expat:lib__xmlparse.o	100	
+001a0ce0	2c	arm	XML_SetCharacterDataHandler	lib	lib:expat:lib__xmlparse.o	100	
+001a0d0c	2c	arm	XML_SetProcessingInstructionHandler	lib	lib:expat:lib__xmlparse.o	100	
+001a0d38	2c	arm	XML_SetCommentHandler	lib	lib:expat:lib__xmlparse.o	100	
+001a0d64	3c	arm	XML_SetCdataSectionHandler	lib	lib:expat:lib__xmlparse.o	100	
 001a0da0	2c	arm	X509_CRL_set_meth_data	lib	lib:openssl:crypto__asn1__x_crl.o	100	
-001a0dcc	2c	arm	FUN_001a0dcc	todo			
-001a0df8	38	arm	FUN_001a0df8	todo			
-001a0e30	38	arm	FUN_001a0e30	todo			
+001a0dcc	2c	arm	XML_SetEndCdataSectionHandler	lib	lib:expat:lib__xmlparse.o	100	
+001a0df8	38	arm	XML_SetDefaultHandler	lib	lib:expat:lib__xmlparse.o	100	
+001a0e30	38	arm	XML_SetDefaultHandlerExpand	lib	lib:expat:lib__xmlparse.o	100	
 001a0e68	3c	arm	EVP_PKEY_meth_set_decrypt	lib	lib:openssl:crypto__evp__pmeth_lib.o	100	
 001a0ea4	2c	arm	FUN_001a0ea4	todo			
 001a0ed0	2c	arm	EVP_PKEY_asn1_set_ctrl	lib	lib:openssl:crypto__asn1__ameth_lib.o	100	
-001a0efc	2c	arm	FUN_001a0efc	todo			
-001a0f28	2c	arm	FUN_001a0f28	todo			
+001a0efc	2c	arm	XML_SetUnparsedEntityDeclHandler	lib	lib:expat:lib__xmlparse.o	100	
+001a0f28	2c	arm	XML_SetNotationDeclHandler	lib	lib:expat:lib__xmlparse.o	100	
 001a0f54	3c	arm	EVP_PKEY_meth_set_ctrl	lib	lib:openssl:crypto__evp__pmeth_lib.o	100	
 001a0f90	2c	arm	X509_STORE_CTX_set_error	lib	lib:openssl:crypto__x509__x509_vfy.o	100	
-001a0fbc	2c	arm	FUN_001a0fbc	todo			
-001a0fe8	2c	arm	FUN_001a0fe8	todo			
-001a1014	2c	arm	FUN_001a1014	todo			
-001a1040	48	arm	FUN_001a1040	todo			
-001a1088	2c	arm	FUN_001a1088	todo			
-001a10b4	3c	arm	FUN_001a10b4	todo			
-001a10f0	2c	arm	FUN_001a10f0	todo			
-001a111c	2c	arm	FUN_001a111c	todo			
-001a1148	2c	arm	FUN_001a1148	todo			
-001a1174	2c	arm	FUN_001a1174	todo			
+001a0fbc	2c	arm	XML_SetEndNamespaceDeclHandler	lib	lib:expat:lib__xmlparse.o	100	
+001a0fe8	2c	arm	XML_SetNotStandaloneHandler	lib	lib:expat:lib__xmlparse.o	100	
+001a1014	2c	arm	XML_SetExternalEntityRefHandler	lib	lib:expat:lib__xmlparse.o	100	
+001a1040	48	arm	XML_SetExternalEntityRefHandlerArg	lib	lib:expat:lib__xmlparse.o	100	
+001a1088	2c	arm	XML_SetSkippedEntityHandler	lib	lib:expat:lib__xmlparse.o	100	
+001a10b4	3c	arm	XML_SetUnknownEncodingHandler	lib	lib:expat:lib__xmlparse.o	100	
+001a10f0	2c	arm	XML_SetElementDeclHandler	lib	lib:expat:lib__xmlparse.o	100	
+001a111c	2c	arm	XML_SetAttlistDeclHandler	lib	lib:expat:lib__xmlparse.o	100	
+001a1148	2c	arm	XML_SetEntityDeclHandler	lib	lib:expat:lib__xmlparse.o	100	
+001a1174	2c	arm	XML_SetXmlDeclHandler	lib	lib:expat:lib__xmlparse.o	100	
 001a11a0	5c	arm	FUN_001a11a0	todo			
 001a11fc	5c	arm	FUN_001a11fc	todo			
 001a1258	23c	arm	FUN_001a1258	todo			
@@ -5029,20 +5003,20 @@ addr	size	mode	name	status	src	score	note
 001a1b00	d4	arm	FUN_001a1b00	todo			
 001a1bd4	150	arm	FUN_001a1bd4	todo			
 001a1d24	74	arm	FUN_001a1d24	todo			
-001a1d98	28	arm	FUN_001a1d98	todo			
-001a1dc0	5c	arm	FUN_001a1dc0	todo			
-001a1e1c	60	arm	FUN_001a1e1c	todo			
-001a1e7c	98	arm	FUN_001a1e7c	todo			
+001a1d98	28	arm	XML_GetErrorCode	lib	lib:expat:lib__xmlparse.o	100	
+001a1dc0	5c	arm	XML_GetCurrentByteIndex	lib	lib:expat:lib__xmlparse.o	100	
+001a1e1c	60	arm	XML_GetCurrentByteCount	lib	lib:expat:lib__xmlparse.o	100	
+001a1e7c	98	arm	XML_GetInputContext	lib	lib:expat:lib__xmlparse.o	100	
 001a1f14	90	arm	FUN_001a1f14	todo			
 001a1fa4	8c	arm	FUN_001a1fa4	todo			
-001a2030	2c	arm	FUN_001a2030	todo			
-001a205c	34	arm	FUN_001a205c	todo			
-001a2090	3c	arm	FUN_001a2090	todo			
-001a20cc	2c	arm	FUN_001a20cc	todo			
-001a20f8	84	arm	FUN_001a20f8	todo			
+001a2030	2c	arm	XML_FreeContentModel	lib	lib:expat:lib__xmlparse.o	100	by object order
+001a205c	34	arm	XML_MemMalloc	lib	lib:expat:lib__xmlparse.o	100	
+001a2090	3c	arm	XML_MemRealloc	lib	lib:expat:lib__xmlparse.o	100	
+001a20cc	2c	arm	XML_MemFree	lib	lib:expat:lib__xmlparse.o	100	by object order
+001a20f8	84	arm	XML_DefaultCurrent	lib	lib:expat:lib__xmlparse.o	100	
 001a217c	54	arm	FUN_001a217c	todo			
 001a21d0	24	arm	FUN_001a21d0	todo			
-001a21f4	48	arm	FUN_001a21f4	todo			
+001a21f4	48	arm	XML_ExpatVersionInfo	lib	lib:expat:lib__xmlparse.o	100	
 001a223c	24	arm	FUN_001a223c	todo			
 001a2260	1b4	arm	FUN_001a2260	todo			
 001a2414	a4	arm	FUN_001a2414	todo			
@@ -5071,9 +5045,9 @@ addr	size	mode	name	status	src	score	note
 001a56b8	46c	arm	FUN_001a56b8	todo			
 001a5b24	d0	arm	FUN_001a5b24	todo			
 001a5bf4	274	arm	FUN_001a5bf4	todo			
-001a5e68	ac	arm	FUN_001a5e68	todo			
+001a5e68	ac	arm	initializeEncoding@xmlparse	lib	lib:expat:lib__xmlparse.o	100	
 001a5f14	3f0	arm	FUN_001a5f14	todo			
-001a6304	1ec	arm	FUN_001a6304	todo			
+001a6304	1ec	arm	handleUnknownEncoding@xmlparse	todo			
 001a64f0	78	arm	FUN_001a64f0	todo			
 001a6568	c8	arm	FUN_001a6568	todo			
 001a6630	220	arm	FUN_001a6630	todo			
@@ -5084,73 +5058,67 @@ addr	size	mode	name	status	src	score	note
 001a9780	2e0	arm	FUN_001a9780	todo			
 001a9a60	280	arm	FUN_001a9a60	todo			
 001a9ce0	308	arm	FUN_001a9ce0	todo			
-001a9fe8	34	arm	FUN_001a9fe8	todo			
+001a9fe8	34	arm	errorProcessor@xmlparse	lib	lib:expat:lib__xmlparse.o	100	
 001aa01c	12c	arm	FUN_001aa01c	todo			
 001aa148	75c	arm	FUN_001aa148	todo			
 001aa8a4	628	arm	FUN_001aa8a4	todo			
-001aaecc	ec	arm	FUN_001aaecc	todo			
+001aaecc	ec	arm	normalizeLines@xmlparse	lib	lib:expat:lib__xmlparse.o	100	
 001aafb8	184	arm	FUN_001aafb8	todo			
 001ab13c	104	arm	FUN_001ab13c	todo			
-001ab240	148	arm	FUN_001ab240	todo			
+001ab240	148	arm	reportDefault@xmlparse	todo			
 001ab388	254	arm	FUN_001ab388	todo			
 001ab5dc	1fc	arm	FUN_001ab5dc	todo			
 001ab7d8	438	arm	FUN_001ab7d8	todo			
 001abc10	628	arm	FUN_001abc10	todo			
 001ac238	4a4	arm	FUN_001ac238	todo			
-001ac6dc	100	arm	FUN_001ac6dc	todo			
+001ac6dc	100	arm	normalizePublicId@xmlparse	lib	lib:expat:lib__xmlparse.o	100	
 001ac7dc	170	arm	FUN_001ac7dc	todo			
 001ac94c	1c0	arm	FUN_001ac94c	todo			
 001acb0c	14c	arm	FUN_001acb0c	todo			
 001acc58	728	arm	FUN_001acc58	todo			
 001ad380	2bc	arm	FUN_001ad380	todo			
-001ad63c	74	arm	FUN_001ad63c	todo			
+001ad63c	74	arm	keyeq@xmlparse	lib	lib:expat:lib__xmlparse.o	100	
 001ad6b0	70	arm	FUN_001ad6b0	todo			
 001ad720	610	arm	FUN_001ad720	todo			
-001add30	98	arm	FUN_001add30	todo			
-001addc8	8c	arm	FUN_001addc8	todo			
-001ade54	5c	arm	FUN_001ade54	todo			
-001adeb0	50	arm	FUN_001adeb0	todo			
-001adf00	70	arm	FUN_001adf00	todo			
-001adf70	68	arm	FUN_001adf70	todo			
-001adfd8	bc	arm	FUN_001adfd8	todo			
-001ae094	a0	arm	FUN_001ae094	todo			
-001ae134	cc	arm	FUN_001ae134	todo			
-001ae200	c0	arm	FUN_001ae200	todo			
-001ae2c0	100	arm	FUN_001ae2c0	todo			
-001ae3c0	b0	arm	FUN_001ae3c0	todo			
-001ae470	a8	arm	FUN_001ae470	todo			
-001ae518	44c	arm	FUN_001ae518	todo			
+001add30	98	arm	hashTableClear@xmlparse	lib	lib:expat:lib__xmlparse.o	100	
+001addc8	8c	arm	hashTableDestroy@xmlparse	lib	lib:expat:lib__xmlparse.o	100	
+001ade54	5c	arm	hashTableInit@xmlparse	lib	lib:expat:lib__xmlparse.o	100	
+001adeb0	50	arm	hashTableIterInit@xmlparse	lib	lib:expat:lib__xmlparse.o	100	
+001adf00	70	arm	hashTableIterNext@xmlparse	lib	lib:expat:lib__xmlparse.o	100	
+001adf70	68	arm	poolInit@xmlparse	lib	lib:expat:lib__xmlparse.o	100	
+001adfd8	bc	arm	poolClear@xmlparse	lib	lib:expat:lib__xmlparse.o	100	
+001ae094	a0	arm	poolDestroy@xmlparse	lib	lib:expat:lib__xmlparse.o	100	
+001ae134	cc	arm	poolAppend@xmlparse	todo			
+001ae200	c0	arm	poolCopyString@xmlparse	lib	lib:expat:lib__xmlparse.o	100	
+001ae2c0	100	arm	poolCopyStringN@xmlparse	lib	lib:expat:lib__xmlparse.o	100	
+001ae3c0	b0	arm	poolAppendString@xmlparse	lib	lib:expat:lib__xmlparse.o	100	
+001ae470	a8	arm	poolStoreString@xmlparse	lib	lib:expat:lib__xmlparse.o	100	
+001ae518	44c	arm	poolGrow@xmlparse	todo			
 001ae964	2a8	arm	FUN_001ae964	todo			
-001aec0c	260	arm	FUN_001aec0c	todo			
+001aec0c	260	arm	build_node@xmlparse	lib	lib:expat:lib__xmlparse.o	100	
 001aee6c	d4	arm	FUN_001aee6c	todo			
 001aef40	100	arm	FUN_001aef40	todo			
 001af040	28	arm	i2d_X509_PKEY	lib	lib:openssl:crypto__asn1__x_pkey.o	100	
-001af068	a8	arm	FUN_001af068	todo			
-001af110	c4	arm	FUN_001af110	todo			
-001af1d4	a8	arm	FUN_001af1d4	todo			
-001af27c	c4	arm	FUN_001af27c	todo			
-001af340	78	arm	FUN_001af340	todo			
-001af3b8	17c	arm	FUN_001af3b8	todo			
-001af534	178	arm	FUN_001af534	todo			
-001af6ac	308	arm	FUN_001af6ac	todo			
-001af9b4	28c	arm	FUN_001af9b4	todo			
-001afc40	134	arm	FUN_001afc40	todo			
-001afd74	728	arm	FUN_001afd74	todo			
-001b049c	c4	arm	FUN_001b049c	todo			
-001b0560	4ac	arm	FUN_001b0560	todo			
-001b0a0c	4a4	arm	FUN_001b0a0c	todo			
-001b0eb0	28	arm	FUN_001b0eb0	todo			
-001b0ed8	10	arm	FUN_001b0ed8	todo			
-001b0ee8	18	arm	FUN_001b0ee8	todo			
-001b0f00	14	arm	FUN_001b0f00	todo			
-001b0f14	24	arm	FUN_001b0f14	todo			
-001b0f38	74	arm	FUN_001b0f38	todo			
-001b0fac	b0	arm	FUN_001b0fac	todo			
-001b105c	a4	arm	FUN_001b105c	todo			
+001af068	a8	arm	utf8_isName2@xmltok	lib	lib:expat:lib__xmltok.o	100	by object order
+001af110	c4	arm	utf8_isName3@xmltok	lib	lib:expat:lib__xmltok.o	100	by object order
+001af1d4	a8	arm	utf8_isNmstrt2@xmltok	lib	lib:expat:lib__xmltok.o	100	by object order
+001af27c	c4	arm	utf8_isNmstrt3@xmltok	lib	lib:expat:lib__xmltok.o	100	by object order
+001af340	78	arm	utf8_isInvalid2@xmltok	lib	lib:expat:lib__xmltok.o	100	
+001af3b8	17c	arm	utf8_isInvalid3@xmltok	lib	lib:expat:lib__xmltok.o	100	
+001af534	178	arm	utf8_isInvalid4@xmltok	lib	lib:expat:lib__xmltok.o	100	
+001af6ac	308	arm	normal_scanComment@xmltok	lib	lib:expat:lib__xmltok.o	100	
+001af9b4	28c	arm	normal_scanDecl@xmltok	lib	lib:expat:lib__xmltok.o	100	
+001afc40	134	arm	normal_checkPiTarget@xmltok	lib	lib:expat:lib__xmltok.o	100	
+001afd74	728	arm	normal_scanPi@xmltok	lib	lib:expat:lib__xmltok.o	100	
+001b049c	c4	arm	normal_scanCdataSection@xmltok	lib	lib:expat:lib__xmltok.o	100	
+001b0560	4ac	arm	normal_cdataSectionTok@xmltok	lib	lib:expat:lib__xmltok.o	100	
+001b0a0c	52c	arm	normal_scanEndTag@xmltok	lib	lib:expat:lib__xmltok.o	100	
+001b0f38	124	arm	normal_scanHexCharRef@xmltok	lib	lib:expat:lib__xmltok.o	100	
+001b105c	a4	arm	normal_scanCharRef@xmltok	todo			
 001b1100	74	arm	FUN_001b1100	todo			
 001b1174	30	arm	FUN_001b1174	todo			
-001b11a4	474	arm	FUN_001b11a4	todo			
-001b1618	458	arm	FUN_001b1618	todo			
+001b11a4	474	arm	normal_scanRef@xmltok	lib	lib:expat:lib__xmltok.o	100	
+001b1618	458	arm	normal_scanAtts@xmltok	todo			
 001b1a70	90	arm	FUN_001b1a70	todo			
 001b1b00	4	arm	FUN_001b1b00	todo			
 001b1b04	a0	arm	FUN_001b1b04	todo			
@@ -5163,44 +5131,42 @@ addr	size	mode	name	status	src	score	note
 001b2150	4	arm	FUN_001b2150	todo			
 001b2154	14	arm	FUN_001b2154	todo			
 001b2168	24	arm	FUN_001b2168	todo			
-001b218c	a44	arm	FUN_001b218c	todo			
-001b2bd0	578	arm	FUN_001b2bd0	todo			
-001b3148	468	arm	FUN_001b3148	todo			
-001b35b0	468	arm	FUN_001b35b0	todo			
-001b3a18	2d4	arm	FUN_001b3a18	todo			
-001b3cec	d24	arm	FUN_001b3cec	todo			
-001b4a10	2b4	arm	FUN_001b4a10	todo			
-001b4cc4	2e8	arm	FUN_001b4cc4	todo			
-001b4fac	320	arm	FUN_001b4fac	todo			
-001b52cc	144	arm	FUN_001b52cc	todo			
-001b5410	4	arm	FUN_001b5410	todo			
-001b5414	38	arm	FUN_001b5414	todo			
-001b544c	544	arm	FUN_001b544c	todo			
-001b5990	268	arm	FUN_001b5990	todo			
-001b5bf8	1c0	arm	FUN_001b5bf8	todo			
-001b5db8	27c	arm	FUN_001b5db8	todo			
-001b6034	ac	arm	FUN_001b6034	todo			
-001b60e0	114	arm	FUN_001b60e0	todo			
-001b61f4	74	arm	FUN_001b61f4	todo			
-001b6268	184	arm	FUN_001b6268	todo			
-001b63ec	148	arm	FUN_001b63ec	todo			
-001b6534	144	arm	FUN_001b6534	todo			
-001b6678	33c	arm	FUN_001b6678	todo			
-001b69b4	158	arm	FUN_001b69b4	todo			
-001b6b0c	bc	arm	FUN_001b6b0c	todo			
-001b6bc8	bc	arm	FUN_001b6bc8	todo			
-001b6c84	110	arm	FUN_001b6c84	todo			
-001b6d94	4a0	arm	FUN_001b6d94	todo			
-001b7234	180	arm	FUN_001b7234	todo			
-001b73b4	4a0	arm	FUN_001b73b4	todo			
-001b7854	180	arm	FUN_001b7854	todo			
-001b79d4	2e4	arm	FUN_001b79d4	todo			
-001b7cb8	344	arm	FUN_001b7cb8	todo			
-001b7ffc	188	arm	FUN_001b7ffc	todo			
-001b8184	708	arm	FUN_001b8184	todo			
-001b888c	d8	arm	FUN_001b888c	todo			
-001b8964	4f8	arm	FUN_001b8964	todo			
-001b8e5c	4e8	arm	FUN_001b8e5c	todo			
+001b218c	a44	arm	normal_scanLt@xmltok	lib	lib:expat:lib__xmltok.o	100	
+001b2bd0	578	arm	normal_contentTok@xmltok	lib	lib:expat:lib__xmltok.o	100	
+001b3148	468	arm	normal_scanPercent@xmltok	lib	lib:expat:lib__xmltok.o	100	
+001b35b0	468	arm	normal_scanPoundName@xmltok	lib	lib:expat:lib__xmltok.o	100	
+001b3a18	2d4	arm	normal_scanLit@xmltok	lib	lib:expat:lib__xmltok.o	100	
+001b3cec	d24	arm	normal_prologTok@xmltok	lib	lib:expat:lib__xmltok.o	100	
+001b4a10	2b4	arm	normal_attributeValueTok@xmltok	lib	lib:expat:lib__xmltok.o	100	
+001b4cc4	2e8	arm	normal_entityValueTok@xmltok	todo			
+001b4fac	320	arm	normal_ignoreSectionTok@xmltok	lib	lib:expat:lib__xmltok.o	100	
+001b52cc	180	arm	normal_isPublicId@xmltok	lib	lib:expat:lib__xmltok.o	100	
+001b544c	544	arm	normal_getAtts@xmltok	lib	lib:expat:lib__xmltok.o	100	
+001b5990	268	arm	normal_charRefNumber@xmltok	lib	lib:expat:lib__xmltok.o	100	by object order
+001b5bf8	1c0	arm	normal_predefinedEntityName@xmltok	lib	lib:expat:lib__xmltok.o	100	
+001b5db8	27c	arm	normal_sameName@xmltok	lib	lib:expat:lib__xmltok.o	100	
+001b6034	ac	arm	normal_nameMatchesAscii@xmltok	lib	lib:expat:lib__xmltok.o	100	
+001b60e0	114	arm	normal_nameLength@xmltok	lib	lib:expat:lib__xmltok.o	100	
+001b61f4	74	arm	normal_skipS@xmltok	lib	lib:expat:lib__xmltok.o	100	
+001b6268	184	arm	normal_updatePosition@xmltok	lib	lib:expat:lib__xmltok.o	100	
+001b63ec	148	arm	align_limit_to_full_utf8_characters	lib	lib:expat:lib__xmltok.o	100	
+001b6534	144	arm	utf8_toUtf8@xmltok	lib	lib:expat:lib__xmltok.o	100	
+001b6678	33c	arm	utf8_toUtf16@xmltok	lib	lib:expat:lib__xmltok.o	100	
+001b69b4	158	arm	latin1_toUtf8@xmltok	lib	lib:expat:lib__xmltok.o	100	
+001b6b0c	bc	arm	latin1_toUtf16@xmltok	lib	lib:expat:lib__xmltok.o	100	
+001b6bc8	bc	arm	ascii_toUtf8@xmltok	lib	lib:expat:lib__xmltok.o	100	
+001b6c84	110	arm	unicode_byte_type@xmltok	lib	lib:expat:lib__xmltok.o	100	
+001b6d94	4a0	arm	little2_toUtf8@xmltok	lib	lib:expat:lib__xmltok.o	100	
+001b7234	180	arm	little2_toUtf16@xmltok	lib	lib:expat:lib__xmltok.o	100	
+001b73b4	4a0	arm	big2_toUtf8@xmltok	lib	lib:expat:lib__xmltok.o	100	
+001b7854	180	arm	big2_toUtf16@xmltok	lib	lib:expat:lib__xmltok.o	100	
+001b79d4	2e4	arm	little2_scanComment@xmltok	lib	lib:expat:lib__xmltok.o	100	
+001b7cb8	344	arm	little2_scanDecl@xmltok	lib	lib:expat:lib__xmltok.o	100	
+001b7ffc	188	arm	little2_checkPiTarget@xmltok	lib	lib:expat:lib__xmltok.o	100	
+001b8184	708	arm	little2_scanPi@xmltok	lib	lib:expat:lib__xmltok.o	100	
+001b888c	d8	arm	little2_scanCdataSection@xmltok	lib	lib:expat:lib__xmltok.o	100	
+001b8964	4f8	arm	little2_cdataSectionTok@xmltok	lib	lib:expat:lib__xmltok.o	100	
+001b8e5c	4e8	arm	little2_scanEndTag@xmltok	todo			
 001b9344	28	arm	FUN_001b9344	todo			
 001b936c	10	arm	FUN_001b936c	todo			
 001b937c	18	arm	FUN_001b937c	todo			
@@ -5209,11 +5175,11 @@ addr	size	mode	name	status	src	score	note
 001b93cc	10	arm	FUN_001b93cc	todo			
 001b93dc	b0	arm	FUN_001b93dc	todo			
 001b948c	e8	arm	FUN_001b948c	todo			
-001b9574	f4	arm	FUN_001b9574	todo			
+001b9574	f4	arm	little2_scanCharRef@xmltok	todo			
 001b9668	b0	arm	FUN_001b9668	todo			
 001b9718	30	arm	FUN_001b9718	todo			
-001b9748	48c	arm	FUN_001b9748	todo			
-001b9bd4	448	arm	FUN_001b9bd4	todo			
+001b9748	48c	arm	little2_scanRef@xmltok	lib	lib:expat:lib__xmltok.o	100	
+001b9bd4	448	arm	little2_scanAtts@xmltok	todo			
 001ba01c	cc	arm	FUN_001ba01c	todo			
 001ba0e8	4	arm	FUN_001ba0e8	todo			
 001ba0ec	dc	arm	FUN_001ba0ec	todo			
@@ -5225,33 +5191,33 @@ addr	size	mode	name	status	src	score	note
 001ba754	14	arm	FUN_001ba754	todo			
 001ba768	24	arm	FUN_001ba768	todo			
 001ba78c	18	arm	FUN_001ba78c	todo			
-001ba7a4	ac4	arm	FUN_001ba7a4	todo			
-001bb268	5ec	arm	FUN_001bb268	todo			
-001bb854	480	arm	FUN_001bb854	todo			
-001bbcd4	480	arm	FUN_001bbcd4	todo			
-001bc154	2b0	arm	FUN_001bc154	todo			
-001bc404	e44	arm	FUN_001bc404	todo			
-001bd248	34c	arm	FUN_001bd248	todo			
+001ba7a4	ac4	arm	little2_scanLt@xmltok	lib	lib:expat:lib__xmltok.o	100	
+001bb268	5ec	arm	little2_contentTok@xmltok	lib	lib:expat:lib__xmltok.o	100	
+001bb854	480	arm	little2_scanPercent@xmltok	lib	lib:expat:lib__xmltok.o	100	
+001bbcd4	480	arm	little2_scanPoundName@xmltok	lib	lib:expat:lib__xmltok.o	100	
+001bc154	2b0	arm	little2_scanLit@xmltok	lib	lib:expat:lib__xmltok.o	100	
+001bc404	e44	arm	little2_prologTok@xmltok	lib	lib:expat:lib__xmltok.o	100	
+001bd248	34c	arm	little2_attributeValueTok@xmltok	lib	lib:expat:lib__xmltok.o	100	
 001bd594	380	arm	FUN_001bd594	todo			
-001bd914	350	arm	FUN_001bd914	todo			
+001bd914	350	arm	little2_ignoreSectionTok@xmltok	lib	lib:expat:lib__xmltok.o	100	
 001bdc64	1c4	arm	FUN_001bdc64	todo			
 001bde28	4	arm	FUN_001bde28	todo			
 001bde2c	34	arm	FUN_001bde2c	todo			
-001bde60	5d8	arm	FUN_001bde60	todo			
-001be438	2dc	arm	FUN_001be438	todo			
-001be714	2cc	arm	FUN_001be714	todo			
-001be9e0	300	arm	FUN_001be9e0	todo			
-001bece0	c0	arm	FUN_001bece0	todo			
-001beda0	14c	arm	FUN_001beda0	todo			
-001beeec	ac	arm	FUN_001beeec	todo			
-001bef98	218	arm	FUN_001bef98	todo			
-001bf1b0	2e4	arm	FUN_001bf1b0	todo			
-001bf494	344	arm	FUN_001bf494	todo			
-001bf7d8	188	arm	FUN_001bf7d8	todo			
-001bf960	710	arm	FUN_001bf960	todo			
-001c0070	d8	arm	FUN_001c0070	todo			
-001c0148	4f8	arm	FUN_001c0148	todo			
-001c0640	4f0	arm	FUN_001c0640	todo			
+001bde60	5d8	arm	little2_getAtts@xmltok	lib	lib:expat:lib__xmltok.o	100	
+001be438	2dc	arm	little2_charRefNumber@xmltok	lib	lib:expat:lib__xmltok.o	100	by object order
+001be714	2cc	arm	little2_predefinedEntityName@xmltok	lib	lib:expat:lib__xmltok.o	100	
+001be9e0	300	arm	little2_sameName@xmltok	lib	lib:expat:lib__xmltok.o	100	
+001bece0	c0	arm	little2_nameMatchesAscii@xmltok	lib	lib:expat:lib__xmltok.o	100	
+001beda0	14c	arm	little2_nameLength@xmltok	lib	lib:expat:lib__xmltok.o	100	
+001beeec	ac	arm	little2_skipS@xmltok	lib	lib:expat:lib__xmltok.o	100	
+001bef98	218	arm	little2_updatePosition@xmltok	lib	lib:expat:lib__xmltok.o	100	
+001bf1b0	2e4	arm	big2_scanComment@xmltok	lib	lib:expat:lib__xmltok.o	100	
+001bf494	344	arm	big2_scanDecl@xmltok	lib	lib:expat:lib__xmltok.o	100	
+001bf7d8	188	arm	big2_checkPiTarget@xmltok	lib	lib:expat:lib__xmltok.o	100	
+001bf960	710	arm	big2_scanPi@xmltok	lib	lib:expat:lib__xmltok.o	100	
+001c0070	d8	arm	big2_scanCdataSection@xmltok	lib	lib:expat:lib__xmltok.o	100	
+001c0148	4f8	arm	big2_cdataSectionTok@xmltok	lib	lib:expat:lib__xmltok.o	100	
+001c0640	4f0	arm	big2_scanEndTag@xmltok	todo			
 001c0b30	28	arm	FUN_001c0b30	todo			
 001c0b58	10	arm	FUN_001c0b58	todo			
 001c0b68	18	arm	FUN_001c0b68	todo			
@@ -5260,11 +5226,11 @@ addr	size	mode	name	status	src	score	note
 001c0bb8	10	arm	FUN_001c0bb8	todo			
 001c0bc8	b0	arm	FUN_001c0bc8	todo			
 001c0c78	e8	arm	FUN_001c0c78	todo			
-001c0d60	f4	arm	FUN_001c0d60	todo			
+001c0d60	f4	arm	big2_scanCharRef@xmltok	todo			
 001c0e54	b0	arm	FUN_001c0e54	todo			
 001c0f04	30	arm	FUN_001c0f04	todo			
-001c0f34	494	arm	FUN_001c0f34	todo			
-001c13c8	450	arm	FUN_001c13c8	todo			
+001c0f34	494	arm	big2_scanRef@xmltok	lib	lib:expat:lib__xmltok.o	100	
+001c13c8	450	arm	big2_scanAtts@xmltok	todo			
 001c1818	cc	arm	FUN_001c1818	todo			
 001c18e4	4	arm	FUN_001c18e4	todo			
 001c18e8	dc	arm	FUN_001c18e8	todo			
@@ -5276,113 +5242,113 @@ addr	size	mode	name	status	src	score	note
 001c1f54	14	arm	FUN_001c1f54	todo			
 001c1f68	24	arm	FUN_001c1f68	todo			
 001c1f8c	18	arm	FUN_001c1f8c	todo			
-001c1fa4	ad4	arm	FUN_001c1fa4	todo			
-001c2a78	5ec	arm	FUN_001c2a78	todo			
-001c3064	488	arm	FUN_001c3064	todo			
-001c34ec	488	arm	FUN_001c34ec	todo			
-001c3974	2b0	arm	FUN_001c3974	todo			
-001c3c24	e54	arm	FUN_001c3c24	todo			
-001c4a78	34c	arm	FUN_001c4a78	todo			
+001c1fa4	ad4	arm	big2_scanLt@xmltok	lib	lib:expat:lib__xmltok.o	100	
+001c2a78	5ec	arm	big2_contentTok@xmltok	lib	lib:expat:lib__xmltok.o	100	
+001c3064	488	arm	big2_scanPercent@xmltok	lib	lib:expat:lib__xmltok.o	100	
+001c34ec	488	arm	big2_scanPoundName@xmltok	lib	lib:expat:lib__xmltok.o	100	
+001c3974	2b0	arm	big2_scanLit@xmltok	lib	lib:expat:lib__xmltok.o	100	
+001c3c24	e54	arm	big2_prologTok@xmltok	lib	lib:expat:lib__xmltok.o	100	
+001c4a78	34c	arm	big2_attributeValueTok@xmltok	lib	lib:expat:lib__xmltok.o	100	
 001c4dc4	380	arm	FUN_001c4dc4	todo			
-001c5144	350	arm	FUN_001c5144	todo			
+001c5144	350	arm	big2_ignoreSectionTok@xmltok	lib	lib:expat:lib__xmltok.o	100	
 001c5494	1c4	arm	FUN_001c5494	todo			
 001c5658	4	arm	FUN_001c5658	todo			
 001c565c	34	arm	FUN_001c565c	todo			
-001c5690	5d8	arm	FUN_001c5690	todo			
-001c5c68	2dc	arm	FUN_001c5c68	todo			
-001c5f44	2cc	arm	FUN_001c5f44	todo			
-001c6210	300	arm	FUN_001c6210	todo			
-001c6510	c0	arm	FUN_001c6510	todo			
-001c65d0	14c	arm	FUN_001c65d0	todo			
-001c671c	ac	arm	FUN_001c671c	todo			
-001c67c8	218	arm	FUN_001c67c8	todo			
-001c69e0	c8	arm	FUN_001c69e0	todo			
+001c5690	5d8	arm	big2_getAtts@xmltok	lib	lib:expat:lib__xmltok.o	100	
+001c5c68	2dc	arm	big2_charRefNumber@xmltok	lib	lib:expat:lib__xmltok.o	100	by object order
+001c5f44	2cc	arm	big2_predefinedEntityName@xmltok	lib	lib:expat:lib__xmltok.o	100	
+001c6210	300	arm	big2_sameName@xmltok	lib	lib:expat:lib__xmltok.o	100	
+001c6510	c0	arm	big2_nameMatchesAscii@xmltok	lib	lib:expat:lib__xmltok.o	100	
+001c65d0	14c	arm	big2_nameLength@xmltok	lib	lib:expat:lib__xmltok.o	100	
+001c671c	ac	arm	big2_skipS@xmltok	lib	lib:expat:lib__xmltok.o	100	
+001c67c8	218	arm	big2_updatePosition@xmltok	lib	lib:expat:lib__xmltok.o	100	
+001c69e0	c8	arm	streqci@xmltok	lib	lib:expat:lib__xmltok.o	100	
 001c6aa8	44	arm	FUN_001c6aa8	todo			
-001c6aec	74	arm	FUN_001c6aec	todo			
-001c6b60	a0	arm	FUN_001c6b60	todo			
+001c6aec	74	arm	toAscii@xmltok	lib	lib:expat:lib__xmltok.o	100	
+001c6b60	a0	arm	isSpace@xmltok	lib	lib:expat:lib__xmltok.o	100	
 001c6c00	3b4	arm	FUN_001c6c00	todo			
 001c6fb4	4d4	arm	FUN_001c6fb4	todo			
-001c7488	c4	arm	FUN_001c7488	todo			
-001c754c	21c	arm	FUN_001c754c	todo			
-001c7768	dc	arm	FUN_001c7768	todo			
-001c7844	20	arm	FUN_001c7844	todo			
-001c7864	b8	arm	FUN_001c7864	todo			
-001c791c	b8	arm	FUN_001c791c	todo			
-001c79d4	80	arm	FUN_001c79d4	todo			
-001c7a54	1b8	arm	FUN_001c7a54	todo			
-001c7c0c	15c	arm	FUN_001c7c0c	todo			
+001c7488	c4	arm	checkCharRefNumber@xmltok	todo			
+001c754c	21c	arm	XmlUtf8Encode	lib	lib:expat:lib__xmltok.o	100	
+001c7768	dc	arm	XmlUtf16Encode	lib	lib:expat:lib__xmltok.o	100	
+001c7844	20	arm	XmlSizeOfUnknownEncoding	lib	lib:expat:lib__xmltok.o	100	
+001c7864	b8	arm	unknown_isName@xmltok	todo			
+001c791c	b8	arm	unknown_isNmstrt@xmltok	todo			
+001c79d4	80	arm	unknown_isInvalid@xmltok	todo			
+001c7a54	1b8	arm	unknown_toUtf8@xmltok	todo			
+001c7c0c	15c	arm	unknown_toUtf16@xmltok	lib	lib:expat:lib__xmltok.o	100	
 001c7d68	674	arm	FUN_001c7d68	todo			
 001c83dc	8c	arm	FUN_001c83dc	todo			
-001c8468	420	arm	FUN_001c8468	todo			
+001c8468	420	arm	initScan@xmltok	lib	lib:expat:lib__xmltok.o	100	
 001c8888	24	arm	FUN_001c8888	todo			
 001c88ac	24	arm	FUN_001c88ac	todo			
 001c88d0	5c	arm	FUN_001c88d0	todo			
 001c892c	5c	arm	FUN_001c892c	todo			
-001c8988	b0	arm	FUN_001c8988	todo			
+001c8988	b0	arm	XmlInitEncoding	todo			
 001c8a38	f8	arm	FUN_001c8a38	todo			
 001c8b30	84	arm	FUN_001c8b30	todo			
 001c8bb4	24	arm	FUN_001c8bb4	todo			
 001c8bd8	24	arm	FUN_001c8bd8	todo			
 001c8bfc	5c	arm	FUN_001c8bfc	todo			
 001c8c58	5c	arm	FUN_001c8c58	todo			
-001c8cb4	b0	arm	FUN_001c8cb4	todo			
+001c8cb4	b0	arm	XmlInitEncodingNS	todo			
 001c8d64	f8	arm	FUN_001c8d64	todo			
 001c8e5c	84	arm	FUN_001c8e5c	todo			
 001c8ee0	60	arm	FUN_001c8ee0	todo			
-001c8f40	190	arm	FUN_001c8f40	todo			
-001c90d0	138	arm	FUN_001c90d0	todo			
-001c9208	cc	arm	FUN_001c9208	todo			
-001c92d4	78	arm	FUN_001c92d4	todo			
-001c934c	154	arm	FUN_001c934c	todo			
-001c94a0	74	arm	FUN_001c94a0	todo			
-001c9514	74	arm	FUN_001c9514	todo			
-001c9588	94	arm	FUN_001c9588	todo			
-001c961c	74	arm	FUN_001c961c	todo			
-001c9690	298	arm	FUN_001c9690	todo			
-001c9928	70	arm	FUN_001c9928	todo			
-001c9998	180	arm	FUN_001c9998	todo			
-001c9b18	94	arm	FUN_001c9b18	todo			
-001c9bac	74	arm	FUN_001c9bac	todo			
-001c9c20	120	arm	FUN_001c9c20	todo			
-001c9d40	74	arm	FUN_001c9d40	todo			
-001c9db4	74	arm	FUN_001c9db4	todo			
-001c9e28	e8	arm	FUN_001c9e28	todo			
-001c9f10	80	arm	FUN_001c9f10	todo			
-001c9f90	120	arm	FUN_001c9f90	todo			
-001ca0b0	74	arm	FUN_001ca0b0	todo			
-001ca124	74	arm	FUN_001ca124	todo			
-001ca198	94	arm	FUN_001ca198	todo			
-001ca22c	74	arm	FUN_001ca22c	todo			
-001ca2a0	f4	arm	FUN_001ca2a0	todo			
-001ca394	74	arm	FUN_001ca394	todo			
-001ca408	80	arm	FUN_001ca408	todo			
-001ca488	c0	arm	FUN_001ca488	todo			
-001ca548	78	arm	FUN_001ca548	todo			
-001ca5c0	118	arm	FUN_001ca5c0	todo			
-001ca6d8	144	arm	FUN_001ca6d8	todo			
-001ca81c	dc	arm	FUN_001ca81c	todo			
-001ca8f8	94	arm	FUN_001ca8f8	todo			
-001ca98c	74	arm	FUN_001ca98c	todo			
-001caa00	74	arm	FUN_001caa00	todo			
-001caa74	94	arm	FUN_001caa74	todo			
-001cab08	190	arm	FUN_001cab08	todo			
-001cac98	74	arm	FUN_001cac98	todo			
-001cad0c	78	arm	FUN_001cad0c	todo			
-001cad84	138	arm	FUN_001cad84	todo			
-001caebc	1b8	arm	FUN_001caebc	todo			
-001cb074	118	arm	FUN_001cb074	todo			
-001cb18c	78	arm	FUN_001cb18c	todo			
-001cb204	a0	arm	FUN_001cb204	todo			
-001cb2a4	14c	arm	FUN_001cb2a4	todo			
-001cb3f0	21c	arm	FUN_001cb3f0	todo			
-001cb60c	f4	arm	FUN_001cb60c	todo			
-001cb700	88	arm	FUN_001cb700	todo			
-001cb788	74	arm	FUN_001cb788	todo			
-001cb7fc	9c	arm	FUN_001cb7fc	todo			
-001cb898	30	arm	FUN_001cb898	todo			
-001cb8c8	60	arm	FUN_001cb8c8	todo			
-001cb928	54	arm	FUN_001cb928	todo			
-001cb97c	48	arm	FUN_001cb97c	todo			
+001c8f40	190	arm	prolog0@xmlrole	lib	lib:expat:lib__xmlrole.o	100	
+001c90d0	138	arm	prolog1@xmlrole	lib	lib:expat:lib__xmlrole.o	100	
+001c9208	cc	arm	prolog2@xmlrole	lib	lib:expat:lib__xmlrole.o	100	
+001c92d4	78	arm	doctype0@xmlrole	lib	lib:expat:lib__xmlrole.o	100	
+001c934c	154	arm	doctype1@xmlrole	lib	lib:expat:lib__xmlrole.o	100	
+001c94a0	74	arm	doctype2@xmlrole	lib	lib:expat:lib__xmlrole.o	100	
+001c9514	74	arm	doctype3@xmlrole	lib	lib:expat:lib__xmlrole.o	100	
+001c9588	94	arm	doctype4@xmlrole	lib	lib:expat:lib__xmlrole.o	100	
+001c961c	74	arm	doctype5@xmlrole	lib	lib:expat:lib__xmlrole.o	100	
+001c9690	298	arm	internalSubset@xmlrole	lib	lib:expat:lib__xmlrole.o	100	
+001c9928	70	arm	externalSubset0@xmlrole	lib	lib:expat:lib__xmlrole.o	100	
+001c9998	180	arm	externalSubset1@xmlrole	lib	lib:expat:lib__xmlrole.o	100	
+001c9b18	94	arm	entity0@xmlrole	lib	lib:expat:lib__xmlrole.o	100	
+001c9bac	74	arm	entity1@xmlrole	lib	lib:expat:lib__xmlrole.o	100	
+001c9c20	120	arm	entity2@xmlrole	lib	lib:expat:lib__xmlrole.o	100	by object order
+001c9d40	74	arm	entity3@xmlrole	lib	lib:expat:lib__xmlrole.o	100	by object order
+001c9db4	74	arm	entity4@xmlrole	lib	lib:expat:lib__xmlrole.o	100	by object order
+001c9e28	e8	arm	entity5@xmlrole	lib	lib:expat:lib__xmlrole.o	100	
+001c9f10	80	arm	entity6@xmlrole	lib	lib:expat:lib__xmlrole.o	100	
+001c9f90	120	arm	entity7@xmlrole	lib	lib:expat:lib__xmlrole.o	100	by object order
+001ca0b0	74	arm	entity8@xmlrole	lib	lib:expat:lib__xmlrole.o	100	by object order
+001ca124	74	arm	entity9@xmlrole	lib	lib:expat:lib__xmlrole.o	100	by object order
+001ca198	94	arm	entity10@xmlrole	lib	lib:expat:lib__xmlrole.o	100	
+001ca22c	74	arm	notation0@xmlrole	lib	lib:expat:lib__xmlrole.o	100	
+001ca2a0	f4	arm	notation1@xmlrole	lib	lib:expat:lib__xmlrole.o	100	
+001ca394	74	arm	notation2@xmlrole	lib	lib:expat:lib__xmlrole.o	100	
+001ca408	80	arm	notation3@xmlrole	lib	lib:expat:lib__xmlrole.o	100	
+001ca488	c0	arm	notation4@xmlrole	lib	lib:expat:lib__xmlrole.o	100	
+001ca548	78	arm	attlist0@xmlrole	lib	lib:expat:lib__xmlrole.o	100	
+001ca5c0	118	arm	attlist1@xmlrole	lib	lib:expat:lib__xmlrole.o	100	
+001ca6d8	144	arm	attlist2@xmlrole	lib	lib:expat:lib__xmlrole.o	100	
+001ca81c	dc	arm	attlist3@xmlrole	lib	lib:expat:lib__xmlrole.o	100	
+001ca8f8	94	arm	attlist4@xmlrole	lib	lib:expat:lib__xmlrole.o	100	by object order
+001ca98c	74	arm	attlist5@xmlrole	lib	lib:expat:lib__xmlrole.o	100	
+001caa00	74	arm	attlist6@xmlrole	lib	lib:expat:lib__xmlrole.o	100	
+001caa74	94	arm	attlist7@xmlrole	lib	lib:expat:lib__xmlrole.o	100	by object order
+001cab08	190	arm	attlist8@xmlrole	lib	lib:expat:lib__xmlrole.o	100	
+001cac98	74	arm	attlist9@xmlrole	lib	lib:expat:lib__xmlrole.o	100	
+001cad0c	78	arm	element0@xmlrole	lib	lib:expat:lib__xmlrole.o	100	
+001cad84	138	arm	element1@xmlrole	lib	lib:expat:lib__xmlrole.o	100	
+001caebc	1b8	arm	element2@xmlrole	lib	lib:expat:lib__xmlrole.o	100	
+001cb074	118	arm	element3@xmlrole	lib	lib:expat:lib__xmlrole.o	100	
+001cb18c	78	arm	element4@xmlrole	lib	lib:expat:lib__xmlrole.o	100	
+001cb204	a0	arm	element5@xmlrole	lib	lib:expat:lib__xmlrole.o	100	
+001cb2a4	14c	arm	element6@xmlrole	lib	lib:expat:lib__xmlrole.o	100	
+001cb3f0	21c	arm	element7@xmlrole	lib	lib:expat:lib__xmlrole.o	100	
+001cb60c	f4	arm	condSect0@xmlrole	lib	lib:expat:lib__xmlrole.o	100	
+001cb700	88	arm	condSect1@xmlrole	lib	lib:expat:lib__xmlrole.o	100	
+001cb788	74	arm	condSect2@xmlrole	lib	lib:expat:lib__xmlrole.o	100	
+001cb7fc	9c	arm	declClose@xmlrole	lib	lib:expat:lib__xmlrole.o	100	
+001cb898	30	arm	error@xmlrole	lib	lib:expat:lib__xmlrole.o	100	by object order
+001cb8c8	60	arm	common@xmlrole	lib	lib:expat:lib__xmlrole.o	100	
+001cb928	54	arm	XmlPrologStateInit	lib	lib:expat:lib__xmlrole.o	100	
+001cb97c	48	arm	XmlPrologStateInitExternalEntity	lib	lib:expat:lib__xmlrole.o	100	
 001cb9c4	74	arm	easy_connection@easy	lib	lib:curl:lib__easy.o	100	
 001cba38	c8	arm	curl_global_init	todo			
 001cbb00	c0	arm	FUN_001cbb00	todo			
@@ -5399,7 +5365,7 @@ addr	size	mode	name	status	src	score	note
 001cc254	8c	arm	curl_easy_send	lib	lib:curl:lib__easy.o	100	
 001cc2e0	18	arm	conn_is_conn@connect	lib	lib:curl:lib__connect.o	100	
 001cc2f8	6c	arm	verifyconnect@connect	lib	lib:curl:lib__connect.o	100	
-001cc364	a0	arm	getaddressinfo@connect	todo			
+001cc364	a0	arm	getaddressinfo@connect	lib	lib:curl:lib__connect.o	100	
 001cc404	e0	arm	FUN_001cc404	todo			
 001cc4e4	8c	arm	Curl_persistconninfo	todo			
 001cc570	1b8	arm	Curl_updateconninfo	lib	lib:curl:lib__connect.o	100	
@@ -5407,19 +5373,19 @@ addr	size	mode	name	status	src	score	note
 001cc7ac	94	arm	Curl_getconnectinfo	todo			
 001cc840	48	arm	Curl_connalive	lib	lib:curl:lib__connect.o	100	
 001cc888	78	arm	Curl_closesocket	lib	lib:curl:lib__connect.o	100	
-001cc900	a4	arm	FUN_001cc900	todo			
-001cc9a4	7e8	arm	FUN_001cc9a4	todo			
-001cd18c	c4	arm	FUN_001cd18c	todo			
+001cc900	a4	arm	Curl_socket	lib	lib:curl:lib__connect.o	100	
+001cc9a4	7e8	arm	singleipconnect@connect	todo			
+001cd18c	c4	arm	trynextip@connect	lib	lib:curl:lib__connect.o	100	
 001cd250	3e8	arm	FUN_001cd250	todo			
 001cd638	110	arm	FUN_001cd638	todo			
 001cd748	3c	arm	Curl_conncontrol	lib	lib:curl:lib__connect.o	100	
 001cd784	40	arm	Curl_conn_data_pending	lib	lib:curl:lib__connect.o	100	
 001cd7c4	48	arm	mstate@multi	lib	lib:curl:lib__multi.o	100	
-001cd80c	1c	arm	sh_freeentry@multi	lib	lib:curl:lib__multi.o	100	by object order
+001cd80c	1c	arm	sh_freeentry@multi	lib	lib:curl:lib__multi.o	100	
 001cd828	18	arm	fd_key_compare@multi	lib	lib:curl:lib__multi.o	100	
 001cd840	18	arm	hash_fd@multi	lib	lib:curl:lib__multi.o	100	
-001cd858	4	arm	multi_freeamsg@multi	lib	lib:curl:lib__multi.o	100	by object order
-001cd85c	20	arm	multi_freetimeout@multi	lib	lib:curl:lib__multi.o	100	by object order
+001cd858	4	arm	multi_freeamsg@multi	lib	lib:curl:lib__multi.o	100	
+001cd85c	20	arm	multi_freetimeout@multi	lib	lib:curl:lib__multi.o	100	
 001cd87c	264	arm	FUN_001cd87c	todo			
 001cdae0	2c	arm	do_complete@multi	lib	lib:curl:lib__multi.o	100	
 001cdb0c	dc	arm	multi_addtimeout@multi	lib	lib:curl:lib__multi.o	100	
@@ -5431,7 +5397,7 @@ addr	size	mode	name	status	src	score	note
 001ce30c	184	arm	Curl_multi_handle	todo			
 001ce490	10	arm	curl_multi_init	lib	lib:curl:lib__multi.o	100	
 001ce4a0	1c	arm	Curl_pipeline_wanted	lib	lib:curl:lib__multi.o	100	
-001ce4bc	c	arm	Curl_multi_handlePipeBreak	lib	lib:curl:lib__multi.o	100	by object order
+001ce4bc	c	arm	Curl_multi_handlePipeBreak	lib	lib:curl:lib__multi.o	100	
 001ce4c8	154	arm	FUN_001ce4c8	todo			
 001ce61c	32c	arm	FUN_001ce61c	todo			
 001ce948	c	arm	FUN_001ce948	todo			
@@ -5446,12 +5412,12 @@ addr	size	mode	name	status	src	score	note
 001cf138	c0	arm	Curl_expire_latest	todo			
 001cf1f8	b0	arm	FUN_001cf1f8	todo			
 001cf2a8	4c	arm	curl_multi_assign	lib	lib:curl:lib__multi.o	100	
-001cf2f4	c	arm	Curl_multi_max_host_connections	lib	lib:curl:lib__multi.o	100	by object order
-001cf300	c	arm	Curl_multi_max_total_connections	lib	lib:curl:lib__multi.o	100	by object order
+001cf2f4	c	arm	Curl_multi_max_host_connections	lib	lib:curl:lib__multi.o	100	
+001cf300	c	arm	Curl_multi_max_total_connections	lib	lib:curl:lib__multi.o	100	
 001cf30c	18	arm	Curl_multi_content_length_penalty_size	lib	lib:curl:lib__multi.o	100	
 001cf324	18	arm	Curl_multi_chunk_length_penalty_size	lib	lib:curl:lib__multi.o	100	
-001cf33c	8	arm	Curl_multi_pipelining_site_bl	lib	lib:curl:lib__multi.o	100	by object order
-001cf344	8	arm	Curl_multi_pipelining_server_bl	lib	lib:curl:lib__multi.o	100	by object order
+001cf33c	8	arm	Curl_multi_pipelining_site_bl	lib	lib:curl:lib__multi.o	100	
+001cf344	8	arm	Curl_multi_pipelining_server_bl	lib	lib:curl:lib__multi.o	100	
 001cf34c	74	arm	Curl_multi_process_pending_handles	lib	lib:curl:lib__multi.o	100	
 001cf3c0	208	arm	FUN_001cf3c0	todo			
 001cf5c8	1270	arm	multi_runsingle@multi	todo			
@@ -5476,37 +5442,37 @@ addr	size	mode	name	status	src	score	note
 001d1ea4	4c	arm	curl_slist_free_all	lib	lib:curl:lib__slist.o	100	
 001d1ef0	58	arm	Curl_slist_duplicate	lib	lib:curl:lib__slist.o	100	
 001d1f48	48	arm	curlx_nonblock	lib	lib:curl:lib__nonblock.o	100	
-001d1f90	c	arm	FUN_001d1f90	todo			
-001d1f9c	8	arm	curlx_ultouc	todo			
-001d1fa4	8	arm	FUN_001d1fa4	todo			
-001d1fac	8	arm	FUN_001d1fac	todo			
-001d1fb4	8	arm	curlx_uztosi	todo			
-001d1fbc	4	arm	FUN_001d1fbc	todo			
-001d1fc0	4	arm	FUN_001d1fc0	todo			
-001d1fc4	8	arm	curlx_sltosi	todo			
-001d1fcc	4	arm	FUN_001d1fcc	todo			
-001d1fd0	c	arm	FUN_001d1fd0	todo			
-001d1fdc	8	arm	FUN_001d1fdc	todo			
-001d1fe4	4	arm	FUN_001d1fe4	todo			
-001d1fe8	8	arm	FUN_001d1fe8	todo			
-001d1ff0	c	arm	FUN_001d1ff0	todo			
-001d1ffc	8	arm	FUN_001d1ffc	todo			
-001d2004	8	arm	FUN_001d2004	todo			
-001d200c	4	arm	FUN_001d200c	todo			
-001d2010	c	arm	conn_llist_dtor@conncache	lib	lib:curl:lib__conncache.o	100	by object order
+001d1f90	c	arm	curlx_ultous	lib	lib:curl:lib__warnless.o	100	
+001d1f9c	8	arm	curlx_ultouc	lib	lib:curl:lib__warnless.o	100	
+001d1fa4	8	arm	curlx_ultosi	lib	lib:curl:lib__warnless.o	100	
+001d1fac	8	arm	curlx_uztoso	lib	lib:curl:lib__warnless.o	100	
+001d1fb4	8	arm	curlx_uztosi	lib	lib:curl:lib__warnless.o	100	
+001d1fbc	4	arm	curlx_uztoul	lib	lib:curl:lib__warnless.o	100	
+001d1fc0	4	arm	curlx_uztoui	lib	lib:curl:lib__warnless.o	100	
+001d1fc4	8	arm	curlx_sltosi	lib	lib:curl:lib__warnless.o	100	
+001d1fcc	4	arm	curlx_sltoui	lib	lib:curl:lib__warnless.o	100	
+001d1fd0	c	arm	curlx_sltous	lib	lib:curl:lib__warnless.o	100	
+001d1fdc	8	arm	curlx_uztosz	lib	lib:curl:lib__warnless.o	100	
+001d1fe4	4	arm	curlx_sotouz	lib	lib:curl:lib__warnless.o	100	
+001d1fe8	8	arm	curlx_sztosi	lib	lib:curl:lib__warnless.o	100	
+001d1ff0	c	arm	curlx_uitous	lib	lib:curl:lib__warnless.o	100	
+001d1ffc	8	arm	curlx_uitouc	lib	lib:curl:lib__warnless.o	100	
+001d2004	8	arm	curlx_uitosi	lib	lib:curl:lib__warnless.o	100	
+001d200c	4	arm	curlx_sitouz	lib	lib:curl:lib__warnless.o	100	
+001d2010	c	arm	conn_llist_dtor@conncache	lib	lib:curl:lib__conncache.o	100	
 001d201c	44	arm	bundle_destroy@conncache	lib	lib:curl:lib__conncache.o	100	
-001d2060	4	arm	free_bundle_hash_entry@conncache	lib	lib:curl:lib__conncache.o	100	by object order
+001d2060	4	arm	free_bundle_hash_entry@conncache	lib	lib:curl:lib__conncache.o	100	
 001d2064	4c	arm	hashkey@conncache	lib	lib:curl:lib__conncache.o	100	
 001d20b0	5c	arm	conncache_remove_bundle@conncache	lib	lib:curl:lib__conncache.o	100	
 001d210c	3c	arm	Curl_conncache_init	lib	lib:curl:lib__conncache.o	100	
-001d2148	c	arm	Curl_conncache_destroy	lib	lib:curl:lib__conncache.o	100	by object order
+001d2148	c	arm	Curl_conncache_destroy	lib	lib:curl:lib__conncache.o	100	
 001d2154	58	arm	Curl_conncache_find_bundle	lib	lib:curl:lib__conncache.o	100	
 001d21ac	16c	arm	FUN_001d21ac	todo			
 001d2318	98	arm	Curl_conncache_remove_conn	lib	lib:curl:lib__conncache.o	100	
 001d23b0	80	arm	Curl_conncache_foreach	lib	lib:curl:lib__conncache.o	100	
 001d2430	54	arm	Curl_conncache_find_first_connection	lib	lib:curl:lib__conncache.o	100	
 001d2484	38	arm	site_blacklist_llist_dtor@pipeline	lib	lib:curl:lib__pipeline.o	100	
-001d24bc	20	arm	server_blacklist_llist_dtor@pipeline	lib	lib:curl:lib__pipeline.o	100	by object order
+001d24bc	20	arm	server_blacklist_llist_dtor@pipeline	lib	lib:curl:lib__pipeline.o	100	
 001d24dc	138	arm	Curl_pipeline_penalized	lib	lib:curl:lib__pipeline.o	100	
 001d2614	64	arm	FUN_001d2614	todo			
 001d2678	70	arm	FUN_001d2678	todo			
@@ -5518,8 +5484,8 @@ addr	size	mode	name	status	src	score	note
 001d2aa8	3c	arm	Curl_sendpipe_head	lib	lib:curl:lib__pipeline.o	100	
 001d2ae4	4c	arm	FUN_001d2ae4	todo			
 001d2b30	4c	arm	FUN_001d2b30	todo			
-001d2b7c	c	arm	Curl_pipeline_leave_write	todo			
-001d2b88	c	arm	Curl_pipeline_leave_read	todo			
+001d2b7c	c	arm	Curl_pipeline_leave_write	lib	lib:curl:lib__pipeline.o	100	
+001d2b88	c	arm	Curl_pipeline_leave_read	lib	lib:curl:lib__pipeline.o	100	
 001d2b94	6c	arm	curlx_tvnow	lib	lib:curl:lib__timeval.o	100	
 001d2c00	5c	arm	curlx_tvdiff	lib	lib:curl:lib__timeval.o	100	
 001d2c5c	8c	arm	curlx_tvdiff_secs	lib	lib:curl:lib__timeval.o	100	
@@ -5533,7 +5499,7 @@ addr	size	mode	name	status	src	score	note
 001d2eb4	84	arm	Curl_global_host_cache_init	lib	lib:curl:lib__hostip.o	100	
 001d2f38	30	arm	Curl_global_host_cache_dtor	lib	lib:curl:lib__hostip.o	100	
 001d2f68	28	arm	Curl_num_addresses	lib	lib:curl:lib__hostip.o	100	
-001d2f90	3c	arm	FUN_001d2f90	todo			
+001d2f90	3c	arm	Curl_printable_address	lib	lib:curl:lib__hostip.o	100	
 001d2fcc	8c	arm	Curl_hostcache_prune	lib	lib:curl:lib__hostip.o	100	
 001d3058	70	arm	Curl_fetch_addr	lib	lib:curl:lib__hostip.o	100	
 001d30c8	10c	arm	Curl_cache_addr	lib	lib:curl:lib__hostip.o	100	
@@ -5585,7 +5551,7 @@ addr	size	mode	name	status	src	score	note
 001d7a6c	1060	arm	FUN_001d7a6c	todo			
 001d8acc	2b8	arm	FUN_001d8acc	todo			
 001d8d84	84	arm	showit@sendf	lib	lib:curl:lib__sendf.o	100	
-001d8e08	8	arm	Curl_recv_has_postponed_data	lib	lib:curl:lib__sendf.o	100	by object order
+001d8e08	8	arm	Curl_recv_has_postponed_data	lib	lib:curl:lib__sendf.o	100	
 001d8e10	78	arm	Curl_write	lib	lib:curl:lib__sendf.o	100	
 001d8e88	44	arm	Curl_read_plain	lib	lib:curl:lib__sendf.o	100	
 001d8ecc	184	arm	Curl_read	lib	lib:curl:lib__sendf.o	100	
@@ -5599,7 +5565,7 @@ addr	size	mode	name	status	src	score	note
 001d96ec	1d4	arm	Curl_client_write	todo			
 001d98c0	dc	arm	Curl_sendf	lib	lib:curl:lib__sendf.o	100	
 001d999c	70	arm	setstropt@url	lib	lib:curl:lib__url.o	100	
-001d9a0c	4	arm	llist_dtor@url	lib	lib:curl:lib__url.o	100	by object order
+001d9a0c	4	arm	llist_dtor@url	lib	lib:curl:lib__url.o	100	
 001d9a10	34c	arm	parse_login_details@url	lib	lib:curl:lib__url.o	100	
 001d9d5c	258	arm	conn_free@url	lib	lib:curl:lib__url.o	100	
 001d9fb4	58	arm	FUN_001d9fb4	todo			
@@ -5612,7 +5578,7 @@ addr	size	mode	name	status	src	score	note
 001db668	da8	arm	FUN_001db668	todo			
 001dc410	e0	arm	Curl_disconnect	todo			
 001dc4f0	a0	arm	disconnect_if_dead@url	lib	lib:curl:lib__url.o	100	
-001dc590	10	arm	call_disconnect_if_dead@url	lib	lib:curl:lib__url.o	100	by object order
+001dc590	10	arm	call_disconnect_if_dead@url	lib	lib:curl:lib__url.o	100	
 001dc5a0	58	arm	Curl_removeHandleFromPipeline	lib	lib:curl:lib__url.o	100	
 001dc5f8	94	arm	Curl_getoff_all_pipelines	lib	lib:curl:lib__url.o	100	
 001dc68c	c8	arm	FUN_001dc68c	todo			
@@ -5628,7 +5594,7 @@ addr	size	mode	name	status	src	score	note
 001dcb0c	f0	arm	Curl_init_do	todo			
 001dcbfc	d68	arm	FUN_001dcbfc	todo			
 001dd964	1ebc	arm	FUN_001dd964	todo			
-001df820	8	arm	FUN_001df820	todo			
+001df820	8	arm	Curl_ipv6_scope	lib	lib:curl:lib__if2ip.o	100	
 001df828	fc	arm	Curl_if2ip	lib	lib:curl:lib__if2ip.o	100	
 001df924	38	arm	Curl_if_is_interface_name	lib	lib:curl:lib__if2ip.o	100	
 001df95c	28	arm	FUN_001df95c	todo			
@@ -5640,27 +5606,12 @@ addr	size	mode	name	status	src	score	note
 001dfda0	188	arm	Curl_urldecode	todo			
 001dff28	90	arm	curl_easy_unescape	lib	lib:curl:lib__escape.o	100	
 001dffb8	18	arm	curl_unescape	lib	lib:curl:lib__escape.o	100	
-001dffd0	1c	arm	curl_free	lib	lib:curl:lib__escape.o	100	by object order
+001dffd0	1c	arm	curl_free	lib	lib:curl:lib__escape.o	100	
 001dffec	34	arm	addbyter@mprintf	lib	lib:curl:lib__mprintf.o	100	
 001e0020	cc	arm	alloc_addbyter@mprintf	lib	lib:curl:lib__mprintf.o	100	
 001e00ec	1c	arm	storebuffer@mprintf	lib	lib:curl:lib__mprintf.o	100	
 001e0108	30	arm	curl_msnprintf	lib	lib:curl:lib__mprintf.o	100	
-001e0138	115c	arm	dprintf_formatf@mprintf	todo			
-001e1294	2e8	arm	FUN_001e1294	todo			
-001e157c	1c	arm	FUN_001e157c	todo			
-001e1598	1c	arm	FUN_001e1598	todo			
-001e15b4	18	arm	FUN_001e15b4	todo			
-001e15cc	1c	arm	FUN_001e15cc	todo			
-001e15e8	18	arm	FUN_001e15e8	todo			
-001e1600	1c	arm	FUN_001e1600	todo			
-001e161c	18	arm	FUN_001e161c	todo			
-001e1634	1c	arm	FUN_001e1634	todo			
-001e1650	1c	arm	FUN_001e1650	todo			
-001e166c	1c	arm	FUN_001e166c	todo			
-001e1688	1c	arm	FUN_001e1688	todo			
-001e16a4	18	arm	FUN_001e16a4	todo			
-001e16bc	68	arm	FUN_001e16bc	todo			
-001e1724	1e0	arm	FUN_001e1724	todo			
+001e0138	17cc	arm	dprintf_formatf@mprintf	lib	lib:curl:lib__mprintf.o	100	
 001e1904	5c	arm	curl_mvsnprintf	lib	lib:curl:lib__mprintf.o	100	
 001e1960	ec	arm	curl_maprintf	lib	lib:curl:lib__mprintf.o	100	
 001e1a4c	c4	arm	curl_mvaprintf	lib	lib:curl:lib__mprintf.o	100	
@@ -5694,8 +5645,8 @@ addr	size	mode	name	status	src	score	note
 001e4aa8	24	arm	Curl_safe_strcasecompare	lib	lib:curl:lib__strcase.o	100	
 001e4acc	e0	arm	Curl_strncasecompare	todo			
 001e4bac	48	arm	FUN_001e4bac	todo			
-001e4bf4	4	arm	FUN_001e4bf4	todo			
-001e4bf8	4	arm	curl_strnequal	todo			
+001e4bf4	4	arm	curl_strequal	lib	lib:curl:lib__strcase.o	100	
+001e4bf8	4	arm	curl_strnequal	lib	lib:curl:lib__strcase.o	100	
 001e4bfc	2c	arm	Curl_wildcard_init	lib	lib:curl:lib__wildcard.o	100	
 001e4c28	84	arm	Curl_wildcard_dtor	lib	lib:curl:lib__wildcard.o	100	
 001e4cac	14	arm	Curl_httpchunk_init	lib	lib:curl:lib__http_chunks.o	100	
@@ -5705,7 +5656,7 @@ addr	size	mode	name	status	src	score	note
 001e51d0	b4	arm	Curl_llist_insert_next	lib	lib:curl:lib__llist.o	100	
 001e5284	b0	arm	Curl_llist_remove	lib	lib:curl:lib__llist.o	100	
 001e5334	4c	arm	Curl_llist_destroy	lib	lib:curl:lib__llist.o	100	
-001e5380	8	arm	Curl_llist_count	lib	lib:curl:lib__llist.o	100	by object order
+001e5380	8	arm	Curl_llist_count	lib	lib:curl:lib__llist.o	100	
 001e5388	c8	arm	Curl_llist_move	lib	lib:curl:lib__llist.o	100	
 001e5450	5c	arm	hash_element_dtor@hash	lib	lib:curl:lib__hash.o	100	
 001e54ac	138	arm	Curl_hash_init	lib	lib:curl:lib__hash.o	100	
@@ -5714,19 +5665,19 @@ addr	size	mode	name	status	src	score	note
 001e57c8	7c	arm	Curl_hash_pick	lib	lib:curl:lib__hash.o	100	
 001e5844	70	arm	Curl_hash_destroy	lib	lib:curl:lib__hash.o	100	
 001e58b4	98	arm	Curl_hash_clean_with_criterium	todo			
-001e594c	c	arm	Curl_hash_clean	lib	lib:curl:lib__hash.o	100	by object order
+001e594c	c	arm	Curl_hash_clean	lib	lib:curl:lib__hash.o	100	
 001e5958	40	arm	Curl_hash_str	lib	lib:curl:lib__hash.o	100	
 001e5998	30	arm	Curl_str_key_compare	lib	lib:curl:lib__hash.o	100	
-001e59c8	10	arm	Curl_hash_start_iterate	lib	lib:curl:lib__hash.o	100	by object order
+001e59c8	10	arm	Curl_hash_start_iterate	lib	lib:curl:lib__hash.o	100	
 001e59d8	84	arm	Curl_hash_next_element	lib	lib:curl:lib__hash.o	100	
 001e5a5c	6c	arm	FUN_001e5a5c	todo			
 001e5ac8	124	arm	FUN_001e5ac8	todo			
 001e5bec	b0	arm	FUN_001e5bec	todo			
 001e5c9c	48	arm	Curl_share_lock	lib	lib:curl:lib__share.o	100	
 001e5ce4	48	arm	Curl_share_unlock	lib	lib:curl:lib__share.o	100	
-001e5d2c	10	arm	Curl_ipvalid	todo			
-001e5d3c	c8	arm	FUN_001e5d3c	todo			
-001e5e04	50	arm	Curl_getaddrinfo	todo			
+001e5d2c	10	arm	Curl_ipvalid	lib	lib:curl:lib__hostip4.o	100	
+001e5d3c	c8	arm	Curl_ipv4_resolve_r	lib	lib:curl:lib__hostip4.o	100	
+001e5e04	50	arm	Curl_getaddrinfo	lib	lib:curl:lib__hostip4.o	100	
 001e5e54	8	arm	FUN_001e5e54	todo			
 001e5e5c	8	arm	FUN_001e5e5c	todo			
 001e5e64	8	arm	FUN_001e5e64	todo			
@@ -5736,29 +5687,29 @@ addr	size	mode	name	status	src	score	note
 001e65e0	40	arm	Curl_memdup	lib	lib:curl:lib__strdup.o	100	
 001e6620	5c	arm	Curl_saferealloc	lib	lib:curl:lib__strdup.o	100	
 001e667c	50	arm	Curl_freeaddrinfo	lib	lib:curl:lib__curl_addrinfo.o	100	
-001e66cc	1d8	arm	FUN_001e66cc	todo			
-001e68a4	19c	arm	FUN_001e68a4	todo			
-001e6a40	128	arm	FUN_001e6a40	todo			
-001e6b68	50	arm	FUN_001e6b68	todo			
+001e66cc	1d8	arm	Curl_getaddrinfo_ex	lib	lib:curl:lib__curl_addrinfo.o	100	
+001e68a4	19c	arm	Curl_he2ai	lib	lib:curl:lib__curl_addrinfo.o	100	
+001e6a40	128	arm	Curl_ip2addr	lib	lib:curl:lib__curl_addrinfo.o	100	
+001e6b68	50	arm	Curl_str2addr	lib	lib:curl:lib__curl_addrinfo.o	100	
 001e6bb8	f0	arm	Curl_unix2addr	lib	lib:curl:lib__curl_addrinfo.o	100	
 001e6ca8	198	arm	imap_is_bchar@imap	lib	lib:curl:lib__imap.o	100	
 001e6e40	100	arm	imap_sendf@imap	lib	lib:curl:lib__imap.o	100	
-001e6f40	3c	arm	imap_block_statemach@imap	lib	lib:curl:lib__imap.o	100	by object order
+001e6f40	3c	arm	imap_block_statemach@imap	lib	lib:curl:lib__imap.o	100	
 001e6f7c	a0	arm	imap_disconnect@imap	lib	lib:curl:lib__imap.o	100	
 001e701c	8	arm	FUN_001e701c	todo			
 001e7024	88	arm	FUN_001e7024	todo			
 001e70ac	1c4	arm	imap_atom@imap	lib	lib:curl:lib__imap.o	100	
 001e7270	f8	arm	imap_perform_list@imap	lib	lib:curl:lib__imap.o	100	
-001e7368	18	arm	imap_continue_authenticate@imap	lib	lib:curl:lib__imap.o	100	by object order
+001e7368	18	arm	imap_continue_authenticate@imap	lib	lib:curl:lib__imap.o	100	
 001e7380	158	arm	imap_done@imap	lib	lib:curl:lib__imap.o	100	
 001e74d8	58	arm	imap_perform_search@imap	lib	lib:curl:lib__imap.o	100	
 001e7530	c0	arm	imap_perform_fetch@imap	lib	lib:curl:lib__imap.o	100	
 001e75f0	d0	arm	imap_matchresp@imap	lib	lib:curl:lib__imap.o	100	
 001e76c0	428	arm	imap_endofresp@imap	lib	lib:curl:lib__imap.o	100	
 001e7ae8	2c	arm	imap_perform_authenticate@imap	lib	lib:curl:lib__imap.o	100	
-001e7b14	50	arm	imap_multi_statemach@imap	lib	lib:curl:lib__imap.o	100	by object order
-001e7b64	34	arm	imap_dophase_done.isra.6.part.7@imap	lib	lib:curl:lib__imap.o	100	by object order
-001e7b98	50	arm	imap_doing@imap	lib	lib:curl:lib__imap.o	100	by object order
+001e7b14	50	arm	imap_multi_statemach@imap	lib	lib:curl:lib__imap.o	100	
+001e7b64	34	arm	imap_dophase_done.isra.6.part.7@imap	lib	lib:curl:lib__imap.o	100	
+001e7b98	50	arm	imap_doing@imap	lib	lib:curl:lib__imap.o	100	
 001e7be8	a0	arm	imap_perform_login.part.10@imap	lib	lib:curl:lib__imap.o	100	
 001e7c88	ac	arm	imap_perform_authentication@imap	lib	lib:curl:lib__imap.o	100	
 001e7d34	c8	arm	FUN_001e7d34	todo			
@@ -5766,35 +5717,35 @@ addr	size	mode	name	status	src	score	note
 001e7e64	8a0	arm	FUN_001e7e64	todo			
 001e8704	1d4	arm	FUN_001e8704	todo			
 001e88d8	7fc	arm	FUN_001e88d8	todo			
-001e90d4	18	arm	pop3_continue_auth@pop3	lib	lib:curl:lib__pop3.o	100	by object order
+001e90d4	18	arm	pop3_continue_auth@pop3	lib	lib:curl:lib__pop3.o	100	
 001e90ec	c0	arm	pop3_disconnect@pop3	lib	lib:curl:lib__pop3.o	100	
 001e91ac	8	arm	FUN_001e91ac	todo			
 001e91b4	70	arm	pop3_done@pop3	lib	lib:curl:lib__pop3.o	100	
-001e9224	88	arm	pop3_get_message@pop3	lib	lib:curl:lib__pop3.o	100	by object order
-001e92ac	30	arm	pop3_perform_auth@pop3	lib	lib:curl:lib__pop3.o	100	by object order
+001e9224	88	arm	pop3_get_message@pop3	lib	lib:curl:lib__pop3.o	100	
+001e92ac	30	arm	pop3_perform_auth@pop3	lib	lib:curl:lib__pop3.o	100	
 001e92dc	11c	arm	FUN_001e92dc	todo			
-001e93f8	50	arm	pop3_multi_statemach@pop3	lib	lib:curl:lib__pop3.o	100	by object order
-001e9448	4	arm	pop3_doing@pop3	lib	lib:curl:lib__pop3.o	100	by object order
+001e93f8	50	arm	pop3_multi_statemach@pop3	lib	lib:curl:lib__pop3.o	100	
+001e9448	4	arm	pop3_doing@pop3	lib	lib:curl:lib__pop3.o	100	
 001e944c	d4	arm	pop3_endofresp@pop3	lib	lib:curl:lib__pop3.o	100	
 001e9520	c8	arm	FUN_001e9520	todo			
 001e95e8	214	arm	FUN_001e95e8	todo			
 001e97fc	1e8	arm	FUN_001e97fc	todo			
 001e99e4	220	arm	Curl_pop3_write	lib	lib:curl:lib__pop3.o	100	
 001e9c04	6e4	arm	FUN_001e9c04	todo			
-001ea2e8	18	arm	smtp_continue_auth@smtp	lib	lib:curl:lib__smtp.o	100	by object order
+001ea2e8	18	arm	smtp_continue_auth@smtp	lib	lib:curl:lib__smtp.o	100	
 001ea300	bc	arm	smtp_perform_command@smtp	lib	lib:curl:lib__smtp.o	100	
 001ea3bc	5c	arm	smtp_perform_rcpt_to@smtp	lib	lib:curl:lib__smtp.o	100	
-001ea418	3c	arm	smtp_block_statemach@smtp	lib	lib:curl:lib__smtp.o	100	by object order
+001ea418	3c	arm	smtp_block_statemach@smtp	lib	lib:curl:lib__smtp.o	100	
 001ea454	a8	arm	smtp_disconnect@smtp	lib	lib:curl:lib__smtp.o	100	
 001ea4fc	8	arm	FUN_001ea4fc	todo			
 001ea504	88	arm	smtp_get_message@smtp	lib	lib:curl:lib__smtp.o	100	
 001ea58c	90	arm	smtp_perform_authentication@smtp	lib	lib:curl:lib__smtp.o	100	
 001ea61c	84	arm	FUN_001ea61c	todo			
 001ea6a0	1ec	arm	FUN_001ea6a0	todo			
-001ea88c	30	arm	smtp_perform_auth@smtp	lib	lib:curl:lib__smtp.o	100	by object order
-001ea8bc	50	arm	smtp_multi_statemach@smtp	lib	lib:curl:lib__smtp.o	100	by object order
-001ea90c	34	arm	smtp_dophase_done.isra.5.part.6@smtp	lib	lib:curl:lib__smtp.o	100	by object order
-001ea940	50	arm	smtp_doing@smtp	lib	lib:curl:lib__smtp.o	100	by object order
+001ea88c	30	arm	smtp_perform_auth@smtp	lib	lib:curl:lib__smtp.o	100	
+001ea8bc	50	arm	smtp_multi_statemach@smtp	lib	lib:curl:lib__smtp.o	100	
+001ea90c	34	arm	smtp_dophase_done.isra.5.part.6@smtp	lib	lib:curl:lib__smtp.o	100	
+001ea940	50	arm	smtp_doing@smtp	lib	lib:curl:lib__smtp.o	100	
 001ea990	bc	arm	smtp_endofresp@smtp	lib	lib:curl:lib__smtp.o	100	
 001eaa4c	b8	arm	FUN_001eaa4c	todo			
 001eab04	798	arm	FUN_001eab04	todo			
@@ -5810,7 +5761,7 @@ addr	size	mode	name	status	src	score	note
 001ec148	a8	arm	Curl_pp_flushsend	lib	lib:curl:lib__pingpong.o	100	
 001ec1f0	2c	arm	Curl_pp_disconnect	lib	lib:curl:lib__pingpong.o	100	
 001ec21c	40	arm	Curl_pp_moredata	lib	lib:curl:lib__pingpong.o	100	
-001ec25c	10	arm	rtsp_getsock_do@rtsp	lib	lib:curl:lib__rtsp.o	100	by object order
+001ec25c	10	arm	rtsp_getsock_do@rtsp	lib	lib:curl:lib__rtsp.o	100	
 001ec26c	38	arm	rtsp_setup_connection@rtsp	lib	lib:curl:lib__rtsp.o	100	
 001ec2a4	2c	arm	rtsp_disconnect@rtsp	lib	lib:curl:lib__rtsp.o	100	
 001ec2d0	4c	arm	FUN_001ec2d0	todo			
@@ -5821,7 +5772,7 @@ addr	size	mode	name	status	src	score	note
 001ed1a4	1f0	arm	FUN_001ed1a4	todo			
 001ed394	4c	arm	Curl_gethostname	lib	lib:curl:lib__curl_gethostname.o	100	
 001ed3e0	220	arm	FUN_001ed3e0	todo			
-001ed600	4	arm	Curl_sasl_cleanup	todo			
+001ed600	4	arm	Curl_sasl_cleanup	lib	lib:curl:lib__curl_sasl.o	100	
 001ed604	e4	arm	Curl_sasl_decode_mech	todo			
 001ed6e8	a0	arm	Curl_sasl_parse_url_auth_option	lib	lib:curl:lib__curl_sasl.o	100	
 001ed788	30	arm	Curl_sasl_init	lib	lib:curl:lib__curl_sasl.o	100	
@@ -5831,20 +5782,20 @@ addr	size	mode	name	status	src	score	note
 001edf4c	340	arm	Curl_dedotdotify	lib	lib:curl:lib__dotdot.o	100	
 001ee28c	11c	arm	Curl_auth_create_plain_message	lib	lib:curl:lib__vauth__cleartext.o	100	
 001ee3a8	8c	arm	Curl_auth_create_login_message	lib	lib:curl:lib__vauth__cleartext.o	100	
-001ee434	4	arm	Curl_auth_create_external_message	lib	lib:curl:lib__vauth__cleartext.o	100	by object order
+001ee434	4	arm	Curl_auth_create_external_message	lib	lib:curl:lib__vauth__cleartext.o	100	
 001ee438	e4	arm	Curl_auth_create_oauth_bearer_message	lib	lib:curl:lib__vauth__oauth2.o	100	
 001ee51c	88	arm	Curl_ssl_config_matches	lib	lib:curl:lib__vtls__vtls.o	100	
 001ee5a4	194	arm	Curl_clone_primary_ssl_config	lib	lib:curl:lib__vtls__vtls.o	100	
 001ee738	7c	arm	Curl_free_primary_ssl_config	lib	lib:curl:lib__vtls__vtls.o	100	
-001ee7b4	8	arm	Curl_ssl_backend	lib	lib:curl:lib__vtls__vtls.o	100	by object order
+001ee7b4	8	arm	Curl_ssl_backend	lib	lib:curl:lib__vtls__vtls.o	100	
 001ee7bc	44	arm	file_setup_connection@file	lib	lib:curl:lib__file.o	100	
-001ee800	58	arm	file_disconnect@file	lib	lib:curl:lib__file.o	100	by object order
-001ee858	58	arm	file_done@file	lib	lib:curl:lib__file.o	100	by object order
+001ee800	58	arm	file_disconnect@file	lib	lib:curl:lib__file.o	100	
+001ee858	58	arm	file_done@file	lib	lib:curl:lib__file.o	100	
 001ee8b0	f8	arm	FUN_001ee8b0	todo			
 001ee9a8	864	arm	FUN_001ee9a8	todo			
 001ef20c	200	arm	base64_encode.isra.0@base64	lib	lib:curl:lib__base64.o	100	
 001ef40c	214	arm	Curl_base64_decode	lib	lib:curl:lib__base64.o	100	
-001ef620	10	arm	Curl_base64_encode	lib	lib:curl:lib__base64.o	100	by object order
+001ef620	10	arm	Curl_base64_encode	lib	lib:curl:lib__base64.o	100	
 001ef630	14	arm	Curl_base64url_encode	lib	lib:curl:lib__base64.o	100	
 001ef644	c8	arm	readfromfile@formdata	lib	lib:curl:lib__formdata.o	100	
 001ef70c	3c	arm	formboundary@formdata	lib	lib:curl:lib__formdata.o	100	

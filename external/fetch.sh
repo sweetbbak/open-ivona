@@ -25,3 +25,6 @@ fetch https://curl.se/download/curl-7.52.1.tar.bz2 \
 # PCRE 8.37 (checksum pinned at first download from SourceForge)
 fetch https://sourceforge.net/projects/pcre/files/pcre/8.37/pcre-8.37.tar.bz2/download \
     51679ea8006ce31379fb0860e46dd86665d864b5020fc9cd19e71260eef4789d pcre-8.37 pcre-8.37.tar.bz2
+# Expat 2.2.0 (GitHub release asset; checksum as published)
+fetch https://github.com/libexpat/libexpat/releases/download/R_2_2_0/expat-2.2.0.tar.bz2 \
+    d9e50ff2d19b3538bd2127902a89987474e1a4db8e43a66a4d1a712ab9a504ff expat-2.2.0

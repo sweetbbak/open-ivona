@@ -119,7 +119,10 @@ def _sources_curl_lib(tree: str) -> list[tuple]:
     files = []
     for var in ("LIB_CFILES", "LIB_VAUTH_CFILES", "LIB_VTLS_CFILES"):
         files += _makefile_var(mk, var)
-    incs = ["-DHAVE_CONFIG_H", "-DBUILDING_LIBCURL", "-DCURL_STATICLIB", "-I../include", "-I../lib", "-I."]
+    # libcurl_la_CPPFLAGS/CFLAGS of lib/Makefile: static, symbol hiding (lets GCC inline global
+    # helpers such as Curl_raw_toupper under -fpic)
+    incs = ["-DHAVE_CONFIG_H", "-DBUILDING_LIBCURL", "-DCURL_STATICLIB", "-DCURL_HIDDEN_SYMBOLS",
+            "-fvisibility=hidden", "-I../include", "-I../lib", "-I."]
     return [(f"lib/{f}", incs, "lib") for f in files]
 
 
@@ -131,8 +134,16 @@ def _sources_pcre(tree: str) -> list[tuple]:
     return [(f, ["-DHAVE_CONFIG_H", "-I."]) for f in files + ["pcre_chartables.c"]]
 
 
+def _sources_expat(tree: str) -> list[tuple]:
+    """lib/xmlparse.c, xmlrole.c, xmltok.c compiled from the top directory (__FILE__ is
+    "lib/xmlparse.c" in the engine's assert strings), as Expat's Makefile does."""
+    incs = ["-DHAVE_EXPAT_CONFIG_H", "-I./lib", "-I."]
+    return [(f"lib/{f}", incs, ".") for f in ("xmlparse.c", "xmlrole.c", "xmltok.c")]
+
+
 PREPARE = {"openssl": _prepare_openssl, "autoconf": _prepare_autoconf}
-SOURCES = {"openssl-libcrypto": _sources_openssl_libcrypto, "curl-lib": _sources_curl_lib, "pcre": _sources_pcre}
+SOURCES = {"openssl-libcrypto": _sources_openssl_libcrypto, "curl-lib": _sources_curl_lib, "pcre": _sources_pcre,
+           "expat": _sources_expat}
 
 
 def build(stem: str, lib: str) -> None:
