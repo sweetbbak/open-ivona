@@ -100,8 +100,39 @@ def _sources_openssl_libcrypto(tree: str) -> list[tuple[str, list[str]]]:
     return out
 
 
-PREPARE = {"openssl": _prepare_openssl}
-SOURCES = {"openssl-libcrypto": _sources_openssl_libcrypto}
+# --- autoconf projects (libcurl) ----------------------------------------------------------------
+
+def _prepare_autoconf(tree: str, r: dict) -> None:
+    """Cross-configure in the container (the NDK compiler against the platform sysroot)."""
+    rel = os.path.relpath(tree, path())
+    env = ("CC='arm-linux-androideabi-gcc --sysroot=/opt/sysroot' CXX='arm-linux-androideabi-g++ --sysroot=/opt/sysroot' "
+           "CFLAGS=-O2")
+    res = _container(f"cd {shlex.quote(rel)} && {env} ./configure --host=arm-linux-androideabi "
+                     + " ".join(shlex.quote(x) for x in r.get("configure", [])) + " > configure.log 2>&1; tail -5 configure.log")
+    if not os.path.exists(os.path.join(tree, r.get("config_h", "config.h"))):
+        raise SystemExit("configure failed:\n" + res.stdout + res.stderr)
+
+
+def _sources_curl_lib(tree: str) -> list[tuple]:
+    """CSOURCES of lib/Makefile.inc, compiled from lib/ as libcurl's Makefile does."""
+    mk = os.path.join(tree, "lib", "Makefile.inc")
+    files = []
+    for var in ("LIB_CFILES", "LIB_VAUTH_CFILES", "LIB_VTLS_CFILES"):
+        files += _makefile_var(mk, var)
+    incs = ["-DHAVE_CONFIG_H", "-DBUILDING_LIBCURL", "-DCURL_STATICLIB", "-I../include", "-I../lib", "-I."]
+    return [(f"lib/{f}", incs, "lib") for f in files]
+
+
+def _sources_pcre(tree: str) -> list[tuple]:
+    """libpcre_la_SOURCES of Makefile.am plus pcre_chartables.c (the shipped .dist tables, as
+    `make` links them when dftables is not rebuilt)."""
+    shutil.copy(os.path.join(tree, "pcre_chartables.c.dist"), os.path.join(tree, "pcre_chartables.c"))
+    files = [f for f in _makefile_var(os.path.join(tree, "Makefile.am"), "libpcre_la_SOURCES") if f.endswith(".c")]
+    return [(f, ["-DHAVE_CONFIG_H", "-I."]) for f in files + ["pcre_chartables.c"]]
+
+
+PREPARE = {"openssl": _prepare_openssl, "autoconf": _prepare_autoconf}
+SOURCES = {"openssl-libcrypto": _sources_openssl_libcrypto, "curl-lib": _sources_curl_lib, "pcre": _sources_pcre}
 
 
 def build(stem: str, lib: str) -> None:
@@ -128,8 +159,9 @@ def build(stem: str, lib: str) -> None:
         shutil.rmtree(objdir)
     os.makedirs(objdir)
     script, objs = [], []
-    for rel, incs in SOURCES[r["sources"]](tree):
-        d, fn = os.path.split(rel)
+    for rel, incs, *where in SOURCES[r["sources"]](tree):
+        # compiled from its own directory unless the lister names the build directory
+        d, fn = (where[0], os.path.relpath(rel, where[0])) if where else os.path.split(rel)
         obj = os.path.join(objdir, rel.replace("/", "__")[:-2] + ".o")
         objs.append(obj)
         cwd = os.path.join(tree, d)

@@ -10,3 +10,5 @@ libraries:
   crtend_so: toolchain/ndk-r10e/android-ndk-r10e/platforms/android-9/arch-arm/usr/lib/crtend_so.o
   # third-party code built from pinned upstream sources by `dc vendor build` (config/vendor.yaml)
   openssl: build/libobj/openssl.a
+  curl: build/libobj/curl.a
+  pcre: build/libobj/pcre.a

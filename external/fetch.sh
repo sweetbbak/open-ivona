@@ -12,8 +12,8 @@ echo "45c662160aeca6560589f78daf42ab62c6111dd4d244afc28118c4e6f553cd0c  $F" | sh
 
 # OpenSSL 1.0.2h (libcrypto is statically linked; checksum from openssl.org's .sha256) and
 # libcurl 7.52.1 (checksum pinned at first download). Built by `dc vendor build <lib>`.
-fetch() {  # url sha256 dir
-    local f=dl/$(basename "$1")
+fetch() {  # url sha256 dir [file name, default: the URL basename]
+    local f=dl/${4:-$(basename "$1")}
     [ -f "$f" ] || curl -fL -o "$f" "$1"
     echo "$2  $f" | sha256sum -c -
     [ -d "$3" ] || { mkdir -p "$3" && tar -xf "$f" -C "$3" --strip-components=1; }
@@ -22,3 +22,6 @@ fetch https://www.openssl.org/source/old/1.0.2/openssl-1.0.2h.tar.gz \
     1d4007e53aad94a5b2002fe045ee7bb0b3d98f1a47f8b2bc851dcd1c74332919 openssl-1.0.2h
 fetch https://curl.se/download/curl-7.52.1.tar.bz2 \
     d16185a767cb2c1ba3d5b9096ec54e5ec198b213f45864a38b3bda4bbf87389b curl-7.52.1
+# PCRE 8.37 (checksum pinned at first download from SourceForge)
+fetch https://sourceforge.net/projects/pcre/files/pcre/8.37/pcre-8.37.tar.bz2/download \
+    51679ea8006ce31379fb0860e46dd86665d864b5020fc9cd19e71260eef4789d pcre-8.37 pcre-8.37.tar.bz2

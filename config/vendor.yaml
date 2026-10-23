@@ -17,3 +17,28 @@ openssl:
   remove: [-fsigned-char]  # plain char is unsigned (no sign extension in lh_strhash at 0xf2284)
   sources: openssl-libcrypto
   flags: [-marm, -O0, -fno-omit-frame-pointer, -DOPENSSL_THREADS, -D_REENTRANT, -DDSO_DLFCN, -DHAVE_DLFCN_H]
+curl:
+  # libcurl 7.52.1 (block from ~0x1cb000; curl_global_init at 0x1cba38). Calibrated 2026-10-22 on
+  # easy.c/url.c/http.c: the engine's ARM -O2 flags, but plain char unsigned. No SSL or zlib.
+  binaries: [libttsivonavoice]
+  src: external/curl-7.52.1
+  prepare: autoconf
+  config_h: lib/curl_config.h
+  configure: [--disable-shared, --enable-static, --without-ssl, --without-zlib, --without-libidn2,
+              --without-libpsl, --without-librtmp, --without-libssh2, --without-nghttp2,
+              --without-gssapi, --without-ca-bundle, --without-ca-path]
+  sources: curl-lib
+  remove: [-fsigned-char]
+  flags: [-marm, -O2, -fstrict-aliasing, -funswitch-loops, -finline-limit=300]  # the engine's ARM flags
+pcre:
+  # PCRE 8.37: its compile-error table ends at ERR86 "digits missing in \x{} or \o{}" (0x22809c),
+  # as in 8.37 only. Unoptimized ARM with a frame pointer like OpenSSL (find_error_text at 0x72148).
+  # No UTF or Unicode property support ("this version of PCRE is compiled without UTF support").
+  binaries: [libttsivonavoice]
+  src: external/pcre-8.37
+  prepare: autoconf
+  config_h: config.h
+  configure: [--disable-shared, --enable-static, --disable-cpp, --disable-utf, --disable-unicode-properties]
+  sources: pcre
+  remove: [-fsigned-char]
+  flags: [-marm, -O0, -fno-omit-frame-pointer]

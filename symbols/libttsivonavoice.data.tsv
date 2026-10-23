@@ -208,6 +208,11 @@ addr	size	name	note
 00275804	0	cst_relation_id_names	
 00275930	0	rand_ssleay_meth	named from library relocation
 00275f24	10	g_modules	
+00276054	0	Curl_cmalloc	named from library relocation
+00276058	0	Curl_cfree	named from library relocation
+0027605c	0	Curl_crealloc	named from library relocation
+00276060	0	Curl_cstrdup	named from library relocation
+00276064	0	Curl_ccalloc	named from library relocation
 0027b094	104	g_tts_error	
 0027b198	4	g_tts_instance_count	
 0027b97c	0	app_pkey_methods	named from library relocation

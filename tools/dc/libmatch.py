@@ -225,6 +225,28 @@ def placement_outliers(placements: dict[int, dict[str, int]]) -> set[int]:
     return {a for a, pl in placements.items() if not all(accepted(s, at) for s, at in pl.items())}
 
 
+_OBJ_CACHE: dict[str, object] = {}
+
+
+def _verify_rows(b: Binary, libs: dict[str, str], src: str, fs: list[Func]) -> dict[int, match.Result]:
+    """Full verification of the rows that claim library member `src` (parsed once)."""
+    _, lib, member = src.split(":", 2)
+    if src not in _OBJ_CACHE:
+        _OBJ_CACHE[src] = match.load_object(ensure_member(libs, lib, member))
+    obj = _OBJ_CACHE[src]
+    m = match.Matcher(b)
+    out = {}
+    for f in fs:
+        cand = match.candidate_from(obj, match.base_name(f.name))
+        if cand is None:
+            r = match.Result(f)
+            r.problems.append(f"{f.name} is not defined in {src}")
+            out[f.addr] = r
+        else:
+            out[f.addr] = m.compare(f, cand)
+    return out
+
+
 def _placement_pass(b: Binary, libs: dict[str, str]) -> int:
     """Functions of one object must agree on where its data sections (.bss, .data, ...) landed,
     as `dc check` requires. Identical code from another object can verify on its own; keep the
@@ -238,8 +260,7 @@ def _placement_pass(b: Binary, libs: dict[str, str]) -> int:
         if len(fs) < 2:
             continue
         _, lib, member = src.split(":", 2)
-        obj = ensure_member(libs, lib, member)
-        res = {f.addr: match.run(b, f, obj) for f in fs}
+        res = _verify_rows(b, libs, src, fs)
         bad = placement_outliers({a: r.placements for a, r in res.items()})
         for f in fs:
             if f.addr in bad:
@@ -262,9 +283,7 @@ def _final_pass(b: Binary, libs: dict[str, str]) -> int:
                 by_src[f.src].append(f)
         b.__dict__.pop("names", None)
         for src, fs in by_src.items():
-            _, lib, member = src.split(":", 2)
-            obj = ensure_member(libs, lib, member)
-            res = {f.addr: match.run(b, f, obj) for f in fs}
+            res = _verify_rows(b, libs, src, fs)
             out = placement_outliers({a: r.placements for a, r in res.items()})
             bad += [f for f in fs if not res[f.addr].matched or f.addr in out]
         if not bad:

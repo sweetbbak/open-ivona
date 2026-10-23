@@ -11,3 +11,4 @@ external/dl/
 external/flite-*/
 external/openssl-*/
 external/curl-*/
+external/pcre-*/
