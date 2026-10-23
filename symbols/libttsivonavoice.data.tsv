@@ -300,6 +300,7 @@ addr	size	name	note
 002716f8	0	_ZTVN9__gnu_cxx24__concurrence_wait_errorE	named from library relocation
 00271838	0	_ZTISt9type_info	named from library relocation
 00271ab4	0	cst_val_defs	
+00271c24	2c	item_traverse_ops	cst_ffeature.c
 00272698	0	v3_alt	named from library relocation
 00272740	0	v3_skey_id	named from library relocation
 00272778	0	v3_akey_id	named from library relocation
@@ -342,6 +343,7 @@ addr	size	name	note
 00275248	4	cst_log_level	
 00275300	0	default_pctx	named from library relocation
 00275804	0	cst_relation_id_names	
+00275830	2c	item_traverse_names	cst_ffeature.c
 00275930	0	rand_ssleay_meth	named from library relocation
 00275f24	10	g_modules	
 00275f34	0	pcre_malloc	named from library relocation
