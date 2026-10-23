@@ -864,7 +864,7 @@ addr	size	mode	name	status	src	score	note
 0005009c	18	arm	FUN_0005009c	todo			
 000500b4	c	arm	FUN_000500b4	todo			
 000500c0	1c	arm	FUN_000500c0	todo			
-000500dc	4	arm	FUN_000500dc	todo			
+000500dc	4	arm	val_delete_audiotag	todo			
 000500e0	94	arm	FUN_000500e0	todo			
 00050174	58	arm	FUN_00050174	todo			
 000501cc	18	arm	FUN_000501cc	todo			
@@ -899,7 +899,7 @@ addr	size	mode	name	status	src	score	note
 000510f8	140	arm	FUN_000510f8	todo			
 00051238	8	arm	FUN_00051238	todo			
 00051240	58	arm	FUN_00051240	todo			
-00051298	1c	arm	FUN_00051298	todo			
+00051298	1c	arm	val_delete_word_embeddings	todo			
 000512b4	18	arm	FUN_000512b4	todo			
 000512cc	3c	arm	FUN_000512cc	todo			
 00051308	a0	arm	FUN_00051308	todo			
@@ -1107,27 +1107,27 @@ addr	size	mode	name	status	src	score	note
 00056018	4	arm	val_delete_phoneset	matched	src/libttsivonavoice/flite/cst_val_user.c	100	flite order 100%
 0005601c	4	arm	val_delete_lexicon	matched	src/libttsivonavoice/flite/cst_val_user.c	100	flite order 100%
 00056020	4	arm	val_delete_dur_stats	matched	src/libttsivonavoice/flite/cst_val_user.c	100	flite order 100%
-00056024	4	arm	val_delete_diphone_db	matched	src/libttsivonavoice/flite/cst_val_user.c	100	flite order 100%
-00056028	4	arm	val_delete_clunit_db	matched	src/libttsivonavoice/flite/cst_val_user.c	100	flite order 100%
-0005602c	4	arm	val_delete_vit_cand	matched	src/libttsivonavoice/flite/cst_val_user.c	100	flite order 100%
-00056030	4	arm	val_delete_sts_list	matched	src/libttsivonavoice/flite/cst_val_user.c	100	flite order 100%
-00056034	4	arm	val_delete_userdata	matched	src/libttsivonavoice/flite/cst_val_user.c	100	flite order 100%
-00056038	4	arm	val_delete_itemfunc	matched	src/libttsivonavoice/flite/cst_val_user.c	100	flite order 100%
-0005603c	4	arm	val_delete_breakfunc	matched	src/libttsivonavoice/flite/cst_val_user.c	100	flite order 100%
-00056040	4	arm	val_delete_cg_db	matched	src/libttsivonavoice/flite/cst_val_user.c	100	flite order 100%
-00056044	4	arm	FUN_00056044	todo			
-00056048	4	arm	FUN_00056048	todo			
-0005604c	4	arm	FUN_0005604c	todo			
-00056050	4	arm	FUN_00056050	todo			
-00056054	4	arm	FUN_00056054	todo			
-00056058	4	arm	FUN_00056058	todo			
-0005605c	4	arm	FUN_0005605c	todo			
-00056060	4	arm	FUN_00056060	todo			
-00056064	c	arm	FUN_00056064	todo			
+00056024	4	arm	val_delete_userdata	matched	src/libttsivonavoice/flite/cst_val_user.c	100	flite order 100%
+00056028	4	arm	val_delete_itemfunc	matched	src/libttsivonavoice/flite/cst_val_user.c	100	flite order 100%
+0005602c	4	arm	val_delete_phonefunc	matched	src/libttsivonavoice/flite/cst_val_user.c	100	flite order 100%
+00056030	4	arm	val_delete_xsampafunc	matched	src/libttsivonavoice/flite/cst_val_user.c	100	flite order 100%
+00056034	4	arm	val_delete_allwordposfunc	matched	src/libttsivonavoice/flite/cst_val_user.c	100	flite order 100%
+00056038	4	arm	val_delete_zdur_cart	matched	src/libttsivonavoice/flite/cst_val_user.c	100	flite order 100%
+0005603c	4	arm	val_delete_valfunc	matched	src/libttsivonavoice/flite/cst_val_user.c	100	flite order 100%
+00056040	4	arm	val_delete_string_tokenizer_new_func	matched	src/libttsivonavoice/flite/cst_val_user.c	100	flite order 100%
+00056044	4	arm	val_delete_join_cost_func	matched	src/libttsivonavoice/flite/cst_val_user.c	100	
+00056048	4	arm	val_delete_blacklist	matched	src/libttsivonavoice/flite/cst_val_user.c	100	
+0005604c	4	arm	val_delete_tokenizer_expand_str_func	matched	src/libttsivonavoice/flite/cst_val_user.c	100	
+00056050	4	arm	val_delete_lang_dat_core_data	matched	src/libttsivonavoice/flite/cst_val_user.c	100	
+00056054	4	arm	val_delete_synth_module_callback	matched	src/libttsivonavoice/flite/cst_val_user.c	100	
+00056058	4	arm	val_delete_ffunc2	matched	src/libttsivonavoice/flite/cst_val_user.c	100	
+0005605c	4	arm	val_delete_acoustic_covariances	matched	src/libttsivonavoice/flite/cst_val_user.c	100	
+00056060	4	arm	val_delete_breaths_stats	matched	src/libttsivonavoice/flite/cst_val_user.c	100	
+00056064	c	arm	val_delete_binary_key	matched	src/libttsivonavoice/flite/cst_val_user.c	100	
 00056070	50	arm	val_userdata	matched	src/libttsivonavoice/flite/cst_val_user.c	100	flite strings(1) 100%
 000560c0	c	arm	userdata_val	matched	src/libttsivonavoice/flite/cst_val_user.c	100	flite order 100%
-000560cc	50	arm	FUN_000560cc	todo			
-0005611c	c	arm	FUN_0005611c	todo			
+000560cc	50	arm	val_binary_key	matched	src/libttsivonavoice/flite/cst_val_user.c	100	
+0005611c	c	arm	binary_key_val	matched	src/libttsivonavoice/flite/cst_val_user.c	100	
 00056128	6c	arm	cst_bsearch	todo			
 00056194	3c	arm	FUN_00056194	todo			
 000561d0	78	arm	FUN_000561d0	todo			
@@ -1145,7 +1145,7 @@ addr	size	mode	name	status	src	score	note
 000563ac	24	arm	FUN_000563ac	todo			
 000563d0	8	arm	FUN_000563d0	todo			
 000563d8	58	arm	FUN_000563d8	todo			
-00056430	4	arm	FUN_00056430	todo			
+00056430	4	arm	val_delete_dnn_models	todo			
 00056434	18	arm	FUN_00056434	todo			
 0005644c	60	arm	FUN_0005644c	todo			
 000564ac	54	arm	FUN_000564ac	todo			
@@ -1308,7 +1308,7 @@ addr	size	mode	name	status	src	score	note
 0005d050	18	arm	FUN_0005d050	todo			
 0005d068	58	arm	FUN_0005d068	todo			
 0005d0c0	1c	arm	FUN_0005d0c0	todo			
-0005d0dc	4	arm	FUN_0005d0dc	todo			
+0005d0dc	4	arm	val_delete_float_ptr	todo			
 0005d0e0	70	arm	FUN_0005d0e0	todo			
 0005d150	58	arm	FUN_0005d150	todo			
 0005d1a8	34	arm	FUN_0005d1a8	todo			
@@ -1316,7 +1316,7 @@ addr	size	mode	name	status	src	score	note
 0005d230	4	arm	FUN_0005d230	todo			
 0005d234	8	arm	FUN_0005d234	todo			
 0005d23c	18	arm	FUN_0005d23c	todo			
-0005d254	4	arm	FUN_0005d254	todo			
+0005d254	4	arm	val_delete_phone_acoustic_data	todo			
 0005d258	6c	arm	FUN_0005d258	todo			
 0005d2c4	8	arm	FUN_0005d2c4	todo			
 0005d2cc	28	arm	FUN_0005d2cc	todo			
@@ -1354,7 +1354,7 @@ addr	size	mode	name	status	src	score	note
 0005f01c	1c8	arm	FUN_0005f01c	todo			
 0005f1e4	150	arm	FUN_0005f1e4	todo			
 0005f334	38	arm	FUN_0005f334	todo			
-0005f36c	4	arm	FUN_0005f36c	todo			
+0005f36c	4	arm	val_delete_diphonedb	todo			
 0005f370	36c	arm	FUN_0005f370	todo			
 0005f6dc	2c	arm	FUN_0005f6dc	todo			
 0005f708	464	arm	FUN_0005f708	todo			
@@ -1377,7 +1377,7 @@ addr	size	mode	name	status	src	score	note
 00061488	50	arm	FUN_00061488	todo			
 000614d8	58	arm	FUN_000614d8	todo			
 00061530	9c	arm	FUN_00061530	todo			
-000615cc	4	arm	FUN_000615cc	todo			
+000615cc	4	arm	val_delete_dynamic_voxdbs	todo			
 000615d0	18	arm	FUN_000615d0	todo			
 000615e8	58	arm	FUN_000615e8	todo			
 00061640	18	arm	FUN_00061640	todo			
@@ -1394,7 +1394,7 @@ addr	size	mode	name	status	src	score	note
 00062a5c	18	arm	FUN_00062a5c	todo			
 00062a74	24	arm	FUN_00062a74	todo			
 00062a98	6c	arm	FUN_00062a98	todo			
-00062b04	4	arm	FUN_00062b04	todo			
+00062b04	4	arm	val_delete_wavesynth	todo			
 00062b08	8c	arm	FUN_00062b08	todo			
 00062b94	2c	arm	FUN_00062b94	todo			
 00062bc0	1b8	arm	FUN_00062bc0	todo			
@@ -1433,7 +1433,7 @@ addr	size	mode	name	status	src	score	note
 00064108	18	arm	track_val	todo			flite order 83%
 00064120	20	arm	FUN_00064120	todo			
 00064140	54	arm	FUN_00064140	todo			
-00064194	4	arm	FUN_00064194	todo			
+00064194	4	arm	val_delete_track	todo			
 00064198	8c	arm	FUN_00064198	todo			
 00064224	24	arm	FUN_00064224	todo			
 00064248	18	arm	FUN_00064248	todo			
