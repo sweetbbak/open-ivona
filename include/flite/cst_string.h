@@ -83,5 +83,6 @@ int cst_strsuffixcmp(const char *s, const char *suffix);
 int cst_startswith(const char *s, const char *prefix);
 int cst_endswith(const char *s, const char *suffix);
 char *cst_strcat3(const char *a, const char *b, const char *c);
+char *cst_strndup(const char *s, size_t n);
 
 #endif

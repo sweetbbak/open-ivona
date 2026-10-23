@@ -633,27 +633,27 @@ addr	size	mode	name	status	src	score	note
 00045b44	8c	arm	ivona_sem_wait	matched	src/libttsivonavoice/ivona_sem.c	100	
 00045bd0	74	arm	ivona_sem_post	matched	src/libttsivonavoice/ivona_sem.c	100	
 00045c44	44	arm	ivona_sem_unlink	matched	src/libttsivonavoice/ivona_sem.c	100	
-00045c88	15c	arm	FUN_00045c88	todo			
-00045de4	c	arm	FUN_00045de4	todo			
-00045df0	8	arm	FUN_00045df0	todo			
-00045df8	8	arm	FUN_00045df8	todo			
-00045e00	214	arm	FUN_00045e00	todo			
-00046014	2c	arm	FUN_00046014	todo			
-00046040	a8	arm	FUN_00046040	todo			
-000460e8	c4	arm	FUN_000460e8	todo			
-000461ac	b4	arm	FUN_000461ac	todo			
-00046260	28	arm	ivona_ustr_free	todo			
-00046288	18	arm	FUN_00046288	todo			
-000462a0	114	arm	FUN_000462a0	todo			
-000463b4	f0	arm	FUN_000463b4	todo			
-000464a4	3c	arm	FUN_000464a4	todo			
-000464e0	ec	arm	FUN_000464e0	todo			
-000465cc	104	arm	FUN_000465cc	todo			
-000466d0	3c	arm	FUN_000466d0	todo			
-0004670c	7c	arm	FUN_0004670c	todo			
+00045c88	15c	arm	linereader_new	matched	src/libttsivonavoice/ustr.c	100	
+00045de4	c	arm	linereader_free	matched	src/libttsivonavoice/ustr.c	100	
+00045df0	8	arm	linereader_len	matched	src/libttsivonavoice/ustr.c	100	
+00045df8	8	arm	linereader_lineno	matched	src/libttsivonavoice/ustr.c	100	
+00045e00	214	arm	linereader_next	wip	src/libttsivonavoice/ustr.c	82.6	
+00046014	2c	arm	linereader_line	matched	src/libttsivonavoice/ustr.c	100	
+00046040	a8	arm	linereader_read_lines	matched	src/libttsivonavoice/ustr.c	100	
+000460e8	c4	arm	ustr_new	matched	src/libttsivonavoice/ustr.c	100	
+000461ac	b4	arm	ustr_copy	matched	src/libttsivonavoice/ustr.c	100	
+00046260	28	arm	ivona_ustr_free	matched	src/libttsivonavoice/ustr.c	100	
+00046288	18	arm	ustr_clear	matched	src/libttsivonavoice/ustr.c	100	
+000462a0	114	arm	ustr_span_of	wip	src/libttsivonavoice/ustr.c	89.9	
+000463b4	f0	arm	ustr_append	matched	src/libttsivonavoice/ustr.c	100	
+000464a4	3c	arm	ustr_from	matched	src/libttsivonavoice/ustr.c	100	
+000464e0	ec	arm	ustr_append_char	wip	src/libttsivonavoice/ustr.c	98.3	
+000465cc	104	arm	ustr_append_ustr	wip	src/libttsivonavoice/ustr.c	68.2	
+000466d0	3c	arm	ustr_sub	matched	src/libttsivonavoice/ustr.c	100	
+0004670c	7c	arm	ustr_equal	wip	src/libttsivonavoice/ustr.c	41.7	
 00046788	444	arm	FUN_00046788	todo			
-00046bcc	78	arm	FUN_00046bcc	todo			
-00046c44	74	arm	FUN_00046c44	todo			
+00046bcc	78	arm	text_has_breaks	wip	src/libttsivonavoice/ustr.c	90.0	
+00046c44	74	arm	text_ends_with_breaks	wip	src/libttsivonavoice/ustr.c	65.5	
 00046cb8	40	arm	ivona_time_cmp	wip	src/libttsivonavoice/ivona_sys.c	56.2	
 00046cf8	24	arm	ivona_mutex_new	matched	src/libttsivonavoice/ivona_sys.c	100	
 00046d1c	18	arm	ivona_mutex_free	matched	src/libttsivonavoice/ivona_sys.c	100	
@@ -1004,7 +1004,7 @@ addr	size	mode	name	status	src	score	note
 000535c8	58	arm	FUN_000535c8	todo			
 00053620	60	arm	FUN_00053620	todo			
 00053680	6c	arm	FUN_00053680	todo			
-000536ec	30	arm	FUN_000536ec	todo			
+000536ec	30	arm	cst_strndup	matched	src/libttsivonavoice/flite/cst_string.c	100	
 0005371c	4c	arm	FUN_0005371c	todo			
 00053768	68	arm	FUN_00053768	todo			
 000537d0	44	arm	cst_strcount	matched	src/libttsivonavoice/flite/cst_string.c	100	
@@ -1015,7 +1015,7 @@ addr	size	mode	name	status	src	score	note
 00053998	30	arm	cst_asprintf	matched	src/libttsivonavoice/flite/cst_string.c	100	
 000539c8	90	arm	cst_strcat3	matched	src/libttsivonavoice/flite/cst_string.c	100	
 00053a58	6c	arm	FUN_00053a58	todo			
-00053ac4	5c	arm	FUN_00053ac4	todo			
+00053ac4	5c	arm	cst_rtrim_n	todo			
 00053b20	44	arm	FUN_00053b20	todo			
 00053b64	3c	arm	FUN_00053b64	todo			
 00053ba0	20	arm	FUN_00053ba0	todo			
@@ -1031,7 +1031,7 @@ addr	size	mode	name	status	src	score	note
 00053ff0	e8	arm	FUN_00053ff0	todo			
 000540d8	e8	arm	FUN_000540d8	todo			
 000541c0	68	arm	FUN_000541c0	todo			
-00054228	44	arm	FUN_00054228	todo			
+00054228	44	arm	cst_strn_cmp	todo			
 0005426c	30	arm	FUN_0005426c	todo			
 0005429c	2c	arm	FUN_0005429c	todo			
 000542c8	44	arm	FUN_000542c8	todo			
@@ -1263,7 +1263,7 @@ addr	size	mode	name	status	src	score	note
 0005a09c	38	arm	FUN_0005a09c	todo			
 0005a0d4	ac	arm	FUN_0005a0d4	todo			
 0005a180	1c	arm	FUN_0005a180	todo			
-0005a19c	f4	arm	FUN_0005a19c	todo			
+0005a19c	f4	arm	utf8_rtrim	todo			
 0005a290	1bc	arm	FUN_0005a290	todo			
 0005a44c	58	arm	val_vector	matched	src/libttsivonavoice/vector.c	100	
 0005a4a4	18	arm	vector_val	matched	src/libttsivonavoice/vector.c	100	
@@ -1293,7 +1293,7 @@ addr	size	mode	name	status	src	score	note
 0005aaa0	b4	arm	vector_equal	wip	src/libttsivonavoice/vector.c	95.6	
 0005ab54	5c	arm	FUN_0005ab54	todo			
 0005abb0	8	arm	FUN_0005abb0	todo			
-0005abb8	c0	arm	FUN_0005abb8	todo			
+0005abb8	c0	arm	utf8_encode	todo			
 0005ac78	10c	arm	FUN_0005ac78	todo			
 0005ad84	950	arm	FUN_0005ad84	todo			
 0005b6d4	568	arm	FUN_0005b6d4	todo			

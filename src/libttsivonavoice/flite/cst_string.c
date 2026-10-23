@@ -244,3 +244,13 @@ char *cst_strcat3(const char *a, const char *b, const char *c)
     r[la + lb + lc] = '\0';
     return r;
 }
+
+/* 0x536ec arm (IVONA): the first n bytes of s as a new string. */
+char *cst_strndup(const char *s, size_t n)
+{
+    char *r = cst_safe_alloc(n + 1, 1);
+
+    memcpy(r, s, n);
+    r[n] = '\0';
+    return r;
+}
