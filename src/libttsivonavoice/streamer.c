@@ -794,6 +794,88 @@ static inline tts_wave *waves_merge(ivona_vector *waves, size_t count)
     return m;
 }
 
+/* tts_streamer_synth(st, 0): synthesizes one piece and drops it */
+static inline tts_wave *streamer_skip(tts_streamer *st, cst_features *tm, int t_start)
+{
+    cst_features *m;
+    streamer *s;
+    cst_utterance *utt;
+    cst_wave *w;
+    void *chunk;
+    int n, t_fe, t_be;
+
+    s = st->data;
+    if (s == NULL) {
+        tts_set_error(TTS_STATUS_INVALID_ARGUMENT);
+        goto out;
+    }
+    if (s->rate_conv == NULL || s->rate_conv->pending == 0)
+        rate_conv_reset(s->rate_conv);
+    if (s->license && !license_check(s->license)) {
+        if (tts_errno() == TTS_STATUS_OK)
+            tts_set_errorf(TTS_STATUS_INTERNAL_ERROR, "Limits verification error");
+        goto out;
+    }
+next_chunk:
+    t_fe = ivona_time_usec();
+    if (streamer_fill(s, s->pos) == -1)
+        goto out;
+    if ((int)vector_size(s->chunks) <= s->pos) {
+        tts_set_error(TTS_STATUS_OK);
+        goto out;
+    }
+    utt = s->utt;
+    if (utt == NULL) {
+        chunk = vector_at(s->chunks, s->pos);
+        utt = s->utt = chunk_utterance(chunk);
+        if (s->metrics) {
+            feat_set_features(utt->features, "core_metrics", s->metrics);
+            utt = s->utt;
+            s->metrics = NULL;
+        }
+        utt->unk_14 = synth_iter_ctx(s->iter);
+        s->voice = ((stream_chunk *)chunk)->voice;
+        utt = s->utt = utt_synth_frontend(s->utt, VOICE_DATA(s->voice)->reg);
+        if (utt == NULL) {
+            tts_set_error(TTS_STATUS_INTERNAL_ERROR);
+            goto out;
+        }
+    }
+    m = get_param_features(utt->features, "core_metrics", NULL);
+    metrics_add_time(m, "frontend_time", ivona_time_usec() - t_fe);
+    t_be = ivona_time_usec();
+    feat_set_float(s->utt->features, "duration_stretch",
+                   feat_float(VOICE_FEATURES(s->voice), "duration_stretch"));
+    feat_set_float(s->utt->features, "amplify", feat_float(VOICE_FEATURES(s->voice), "amplify"));
+    feat_set_int(s->utt->features, "num_parallel_threads",
+                 get_param_int(VOICE_FEATURES(s->voice), "num_parallel_threads", 1));
+    w = utt_synth_wave(s->utt, 0, NULL);
+    if (w == NULL) {
+        m = get_param_features(s->utt->features, "core_metrics", NULL);
+        metrics_add_time(m, "backend_time", ivona_time_usec() - t_be);
+        n = 0;
+    } else if (w->num_samples > 0) {
+        metrics_add_time(m, "backend_time", ivona_time_usec() - t_be);
+        n = w->num_samples;
+    } else {
+        delete_wave(w);
+        delete_val(NULL);
+        streamer_seek(s, s->pos + 1);
+        metrics_add_time(m, "backend_time", ivona_time_usec() - t_be);
+        goto next_chunk;
+    }
+    delete_val(NULL);
+    s->done += n;
+    if (s->speed != -1.0f)
+        rate_conv_add(s->rate_conv, n);
+    if (n == 0)
+        tts_set_error(TTS_STATUS_OK);
+out:
+    if (tm)
+        metrics_add_time(tm, "tts_streamer_synth_time", ivona_time_usec() - t_start);
+    return NULL;
+}
+
 /* 0x3f348 arm: exported. Synthesizes up to num_samples samples (all of the input when negative)
  * as a wave with marks. 0 synthesizes one piece and returns NULL. */
 tts_wave *tts_streamer_synth(tts_streamer *st, int num_samples)
@@ -819,7 +901,7 @@ tts_wave *tts_streamer_synth(tts_streamer *st, int num_samples)
     tm = tts_streamer_get_metrics(st);
     t_start = tm ? ivona_time_usec() : 0;
     if (num_samples == 0)
-        goto single;
+        return streamer_skip(st, tm, t_start);
     s = st->data;
     piece.wave = NULL;
     piece.marks = NULL;
@@ -930,79 +1012,6 @@ done:
     if (tm)
         metrics_add_time(tm, "tts_streamer_synth_time", ivona_time_usec() - t_start);
     return ret;
-
-single:
-    /* one piece, discarded */
-    s = st->data;
-    if (s == NULL) {
-        tts_set_error(TTS_STATUS_INVALID_ARGUMENT);
-        goto out;
-    }
-    if (s->rate_conv == NULL || s->rate_conv->pending == 0)
-        rate_conv_reset(s->rate_conv);
-    if (s->license && !license_check(s->license)) {
-        if (tts_errno() == TTS_STATUS_OK)
-            tts_set_errorf(TTS_STATUS_INTERNAL_ERROR, "Limits verification error");
-        goto out;
-    }
-single_chunk:
-    t_fe = ivona_time_usec();
-    if (streamer_fill(s, s->pos) == -1)
-        goto out;
-    if ((int)vector_size(s->chunks) <= s->pos) {
-        tts_set_error(TTS_STATUS_OK);
-        goto out;
-    }
-    utt = s->utt;
-    if (utt == NULL) {
-        chunk = vector_at(s->chunks, s->pos);
-        utt = s->utt = chunk_utterance(chunk);
-        if (s->metrics) {
-            feat_set_features(utt->features, "core_metrics", s->metrics);
-            utt = s->utt;
-            s->metrics = NULL;
-        }
-        utt->unk_14 = synth_iter_ctx(s->iter);
-        s->voice = ((stream_chunk *)chunk)->voice;
-        utt = s->utt = utt_synth_frontend(s->utt, VOICE_DATA(s->voice)->reg);
-        if (utt == NULL) {
-            tts_set_error(TTS_STATUS_INTERNAL_ERROR);
-            goto out;
-        }
-    }
-    m = get_param_features(utt->features, "core_metrics", NULL);
-    metrics_add_time(m, "frontend_time", ivona_time_usec() - t_fe);
-    t_be = ivona_time_usec();
-    feat_set_float(s->utt->features, "duration_stretch",
-                   feat_float(VOICE_FEATURES(s->voice), "duration_stretch"));
-    feat_set_float(s->utt->features, "amplify", feat_float(VOICE_FEATURES(s->voice), "amplify"));
-    feat_set_int(s->utt->features, "num_parallel_threads",
-                 get_param_int(VOICE_FEATURES(s->voice), "num_parallel_threads", 1));
-    w = utt_synth_wave(s->utt, 0, NULL);
-    if (w == NULL) {
-        m = get_param_features(s->utt->features, "core_metrics", NULL);
-        metrics_add_time(m, "backend_time", ivona_time_usec() - t_be);
-        n = 0;
-    } else if (w->num_samples > 0) {
-        metrics_add_time(m, "backend_time", ivona_time_usec() - t_be);
-        n = w->num_samples;
-    } else {
-        delete_wave(w);
-        delete_val(NULL);
-        streamer_seek(s, s->pos + 1);
-        metrics_add_time(m, "backend_time", ivona_time_usec() - t_be);
-        goto single_chunk;
-    }
-    delete_val(NULL);
-    s->done += n;
-    if (s->speed != -1.0f)
-        rate_conv_add(s->rate_conv, n);
-    if (n == 0)
-        tts_set_error(TTS_STATUS_OK);
-out:
-    if (tm)
-        metrics_add_time(tm, "tts_streamer_synth_time", ivona_time_usec() - t_start);
-    return NULL;
 }
 
 /* 0x40044 arm: exported. Skips n chunks (back for negative n); returns how far it moved. */

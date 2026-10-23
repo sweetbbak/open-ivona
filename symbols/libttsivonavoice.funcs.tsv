@@ -555,7 +555,7 @@ addr	size	mode	name	status	src	score	note
 0003ec18	c0	arm	tts_streamer_stop	matched	src/libttsivonavoice/streamer.c	100	
 0003ecd8	5d8	arm	tts_streamer_synth0	wip	src/libttsivonavoice/streamer.c	50.1	
 0003f2b0	98	arm	tts_wave_delete	wip	src/libttsivonavoice/streamer.c	68.4	
-0003f348	cfc	arm	tts_streamer_synth	wip	src/libttsivonavoice/streamer.c	19.5	
+0003f348	cfc	arm	tts_streamer_synth	wip	src/libttsivonavoice/streamer.c	31.1	
 00040044	1a0	arm	tts_streamer_jump	wip	src/libttsivonavoice/streamer.c	80.8	
 000401e4	b8	arm	tts_get_input_warning	todo			
 0004029c	ec	arm	lang_find_part	wip	src/libttsivonavoice/voice.c	86.7	
