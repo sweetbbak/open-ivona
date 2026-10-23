@@ -2,6 +2,7 @@
  * Waveform synthesis state (0x62174..0x638e0): the output wave of an utterance, the
  * unit selector and the marks collected while concatenating. Compiled without inlining.
  */
+#include <stdio.h>
 #include <string.h>
 #include "cst_alloc.h"
 #include "cst_val.h"
@@ -130,6 +131,35 @@ size_t vox_unit_serialize(char *out, const vox_unit *u)
         memcpy(out + n + 2, &u->f98, sizeof u->f98);
     }
     return n + 6;
+}
+
+/* 0x6277c arm: a short name for the unit ("0" for none): the centre phone with markers
+ * and its stress; the first '0' is dropped. */
+char *vox_unit_name(char *buf, size_t size, const vox_unit *u)
+{
+    const char *pre, *mid, *p;
+
+    if (u == NULL) {
+        snprintf(buf, size, "0");
+        return buf;
+    }
+    pre = "";
+    if (u->f18 == 1)
+        pre = u->f1f[1] == 1 ? "#" : "~";
+    mid = "";
+    if (u->f1e != 0) {
+        if (u->f18 != u->f1e)
+            mid = "";
+        else
+            mid = "?";
+    }
+    snprintf(buf, size, "%s%s%s%d%s", pre, u->phones[2]->name, mid,
+             strcmp(u->phones[2]->name, u->ph30->name) == 0 ? u->f1d : 0,
+             u->f19 == 1 ? (u->f1f[2] == 1 ? "#" : "~") : "");
+    p = strchr(buf, '0');
+    if (p)
+        memmove((char *)p, p + 1, buf + strlen(buf) - p);
+    return buf;
 }
 
 /* 0x628e4 arm: speaking style by name (0: generic). */
