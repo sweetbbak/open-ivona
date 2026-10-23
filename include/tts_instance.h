@@ -18,6 +18,13 @@ typedef struct tts_lang_desc {
     void (*part_fini)(void *part);    /* +0x10 */
 } tts_lang_desc;
 
+/* a loaded language data file (res_cache data) */
+typedef struct lang_part {
+    const char *name;
+    int unk_4[3];
+    unsigned char data[1];      /* +0x10: handed to the language/voice library */
+} lang_part;
+
 struct tts_instance_struct {
     int magic;                    /* TTS_INSTANCE_MAGIC */
     ivona_vector *resources;      /* +0x04: of tts_resource * */

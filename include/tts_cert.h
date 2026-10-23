@@ -6,9 +6,10 @@
 
 /* parsed certificate (layout partly known) */
 typedef struct tts_cert_data {
-    char unk_0[0x10];
+    struct cst_features_struct *attrs;  /* certificate attributes ("Extension-Metrics", ...) */
+    char unk_4[0xc];
     long long issued;             /* +0x10 */
-    int unk_18;
+    float max_speed;              /* +0x18: streamer speed limit, -1 for none */
     int license_id;               /* +0x1c: -1 when the certificate carries no license */
     int id;                       /* +0x20 */
     int unk_24;

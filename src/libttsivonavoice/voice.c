@@ -16,38 +16,15 @@
 #include "tts_cert.h"
 #include "tts_instance.h"
 #include "tts_internal.h"
+#include "tts_voice.h"
 
 #define ENGINE_VERSION "1.6.101.3"
-
-/* returned by a voice library's register_voice() */
-typedef struct voice_reg {
-    cst_features *features;
-} voice_reg;
-
-/* a loaded language data file */
-typedef struct lang_part {
-    const char *name;
-    int unk_4[3];
-    unsigned char data[1];
-} lang_part;
 
 typedef struct pls_entry {
     int id;
     void *lex;
 } pls_entry;
 
-/* tts_voice.voice_feats */
-typedef struct voice_data {
-    voice_reg *reg;
-    tts_lang_desc *lang;    /* language data loaded from the voice library, NULL if shared */
-    void *vox;              /* voice data file (instance cache) */
-    ivona_vector *pls;      /* of pls_entry */
-    void *unk_10;
-    cst_features *features;
-} voice_data;
-
-#define VOICE_DATA(v) ((voice_data *)(v)->voice_feats)
-#define VOICE_FEATURES(v) (VOICE_DATA(v)->reg->features)
 
 void *res_cache_acquire(res_cache *c, const char *path, void *arg);
 void res_cache_release(res_cache *c, void *data);

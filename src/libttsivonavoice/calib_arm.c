@@ -22,18 +22,6 @@ int FUN_000355dc(struct Handle *h)
     return h->obj->unkc == 0;
 }
 
-extern int get_param_val(void *a, void *b, int c);
-extern int FUN_0004e680(int x);
-
-/* 0x3dcf0 arm: looks something up and post-processes a non-zero result. */
-int FUN_0003dcf0(void *a, void *b)
-{
-    int r = get_param_val(a, b, 0);
-    if (r == 0)
-        return 0;
-    return FUN_0004e680(r);
-}
-
 struct Module {
     void *unk0;
     void *unk4;
