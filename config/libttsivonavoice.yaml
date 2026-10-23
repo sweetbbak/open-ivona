@@ -32,3 +32,5 @@ units:
   # -fno-inline: val_delete_diphonedb tail-calls delete_diphonedb and every small helper
   # (vox_decoder_free, vox_db_free) is called, never inlined
   src/libttsivonavoice/voxdb.c: {add: [-fno-inline]}
+  # -fno-inline: val_delete_track tail-calls delete_track, copy_track calls new_track
+  src/libttsivonavoice/track.c: {add: [-fno-inline]}

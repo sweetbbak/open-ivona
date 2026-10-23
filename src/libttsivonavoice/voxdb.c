@@ -11,6 +11,7 @@
 #include "cst_val.h"
 #include "cst_utterance.h"
 #include "cst_val_defs.h"
+#include "tts_track.h"
 
 #define VOX_MAGIC_CDXV 0x56584443
 #define VOX_MAGIC_DDXV 0x56584444
@@ -182,21 +183,6 @@ float acoustic_stub_1(const void *a, const void *b, int x);
 int ivona_is_dir(const char *path);
 int ivona_time_usec(void);
 float metrics_add_time(cst_features *metrics, const char *name, int usec);
-
-/* decoded unit audio: frames of samples (IVONA's "track") */
-typedef struct track {
-    int flag;
-    int sample_rate;            /* +0x04 */
-    int unk_8;
-    unsigned int *ends;         /* +0x0c: cumulative sample counts */
-    short **frames;             /* +0x10 */
-} track;
-
-track *new_track(void);
-void track_resize(track *t, int n);
-void track_frame_alloc(track *t, int i, int len);
-int track_frame_start(const track *t, int i);
-int track_frame_len(const track *t, int i);
 
 typedef track *(*vox_decode_fn)(vox_decoder *d, const unsigned char *data, unsigned int size);
 typedef int (*vox_decode2_fn)(vox_decoder *d, const unsigned char *data, unsigned int size,
@@ -796,7 +782,7 @@ track *vox_decoder_read_unit(vox_decoder *dec, unsigned int i, cst_features *m)
                 w = new_track();
                 track_resize(w, n);
                 for (k = 0; k < n; k++) {
-                    w->ends[k] = p[0] | p[1] << 8;
+                    w->pms[k] = p[0] | p[1] << 8;
                     p += 2;
                     track_frame_alloc(w, k, track_frame_len(w, k));
                     memcpy(w->frames[k], out + track_frame_start(w, k),
@@ -813,7 +799,7 @@ cleanup:
     }
     if (w) {
         w->sample_rate = db->sample_rate;
-        if (diphonedb_unit_flag(dec, w->unk_8))
+        if (diphonedb_unit_flag(dec, w->num_frames))
             w->flag = 1;
     }
     if (dec->fp)

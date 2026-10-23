@@ -1431,21 +1431,21 @@ addr	size	mode	name	status	src	score	note
 00063eec	48	arm	ffeature	wip	src/libttsivonavoice/flite/cst_ffeature.c	0.0	flite (callee of a located function)
 00063f34	28	arm	FUN_00063f34	todo			
 00063f5c	154	arm	FUN_00063f5c	todo			
-000640b0	58	arm	val_track	todo			flite strings(1) 0%
-00064108	18	arm	track_val	todo			flite order 83%
-00064120	20	arm	new_track	todo			
-00064140	54	arm	FUN_00064140	todo			
-00064194	4	arm	val_delete_track	todo			
-00064198	8c	arm	track_resize	todo			
-00064224	24	arm	track_frame_alloc	todo			
-00064248	18	arm	track_frame_start	todo			
-00064260	20	arm	track_frame_len	todo			
-00064280	98	arm	FUN_00064280	todo			
-00064318	bc	arm	FUN_00064318	todo			
-000643d4	48	arm	FUN_000643d4	todo			
-0006441c	18	arm	FUN_0006441c	todo			
-00064434	6c	arm	FUN_00064434	todo			
-000644a0	b8	arm	FUN_000644a0	todo			
+000640b0	58	arm	val_track	matched	src/libttsivonavoice/track.c	100	flite strings(1) 0%
+00064108	18	arm	track_val	matched	src/libttsivonavoice/track.c	100	flite order 83%
+00064120	20	arm	new_track	matched	src/libttsivonavoice/track.c	100	
+00064140	54	arm	delete_track	matched	src/libttsivonavoice/track.c	100	
+00064194	4	arm	val_delete_track	matched	src/libttsivonavoice/track.c	100	
+00064198	8c	arm	track_resize	matched	src/libttsivonavoice/track.c	100	
+00064224	24	arm	track_frame_alloc	matched	src/libttsivonavoice/track.c	100	
+00064248	18	arm	track_frame_start	matched	src/libttsivonavoice/track.c	100	
+00064260	20	arm	track_frame_len	matched	src/libttsivonavoice/track.c	100	
+00064280	98	arm	copy_track	matched	src/libttsivonavoice/track.c	100	
+00064318	bc	arm	track_sub	matched	src/libttsivonavoice/track.c	100	
+000643d4	48	arm	track_frame_copy	matched	src/libttsivonavoice/track.c	100	
+0006441c	18	arm	track_span	matched	src/libttsivonavoice/track.c	100	
+00064434	6c	arm	track_frame_at	matched	src/libttsivonavoice/track.c	100	
+000644a0	b8	arm	track_print	matched	src/libttsivonavoice/track.c	100	
 00064558	240	arm	FUN_00064558	todo			
 00064798	68	arm	FUN_00064798	todo			
 00064800	7c	arm	FUN_00064800	todo			
