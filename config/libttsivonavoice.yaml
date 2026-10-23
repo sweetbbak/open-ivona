@@ -26,3 +26,6 @@ units:
   # -O3: ivona_crc32's 8-step table loop is completely unrolled (only -O3 peels it); every other
   # function of the TU compiles identically at -O2 and -O3
   src/libttsivonavoice/textstream.c: {add: [-O3], remove: [-O2]}
+  # -fno-inline: val_delete_float_ptr tail-calls a one-instruction delete_float_ptr and
+  # phone_acoustic_data_init calls a `return 0` stub; nothing in this TU is inlined
+  src/libttsivonavoice/acoustic.c: {add: [-fno-inline]}

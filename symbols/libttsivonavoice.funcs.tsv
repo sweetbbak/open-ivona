@@ -1301,29 +1301,30 @@ addr	size	mode	name	status	src	score	note
 0005bc3c	1064	arm	FUN_0005bc3c	todo			
 0005cca0	1b4	arm	FUN_0005cca0	todo			
 0005ce54	c4	arm	FUN_0005ce54	todo			
-0005cf18	58	arm	FUN_0005cf18	todo			
-0005cf70	18	arm	FUN_0005cf70	todo			
-0005cf88	58	arm	FUN_0005cf88	todo			
-0005cfe0	18	arm	FUN_0005cfe0	todo			
-0005cff8	58	arm	FUN_0005cff8	todo			
-0005d050	18	arm	acoustic_covariances_val	todo			
-0005d068	58	arm	FUN_0005d068	todo			
-0005d0c0	1c	arm	breaths_stats_val	todo			
-0005d0dc	4	arm	val_delete_float_ptr	todo			
-0005d0e0	70	arm	FUN_0005d0e0	todo			
-0005d150	58	arm	FUN_0005d150	todo			
-0005d1a8	34	arm	FUN_0005d1a8	todo			
-0005d1dc	54	arm	FUN_0005d1dc	todo			
-0005d230	4	arm	FUN_0005d230	todo			
-0005d234	8	arm	FUN_0005d234	todo			
-0005d23c	18	arm	FUN_0005d23c	todo			
-0005d254	4	arm	val_delete_phone_acoustic_data	todo			
-0005d258	6c	arm	FUN_0005d258	todo			
-0005d2c4	8	arm	FUN_0005d2c4	todo			
-0005d2cc	28	arm	FUN_0005d2cc	todo			
-0005d2f4	44	arm	FUN_0005d2f4	todo			
-0005d338	184	arm	FUN_0005d338	todo			
-0005d4bc	14	arm	FUN_0005d4bc	todo			
+0005cf18	58	arm	val_float_ptr	matched	src/libttsivonavoice/acoustic.c	100	
+0005cf70	18	arm	float_ptr_val	matched	src/libttsivonavoice/acoustic.c	100	
+0005cf88	58	arm	val_phone_acoustic_data	matched	src/libttsivonavoice/acoustic.c	100	
+0005cfe0	18	arm	phone_acoustic_data_val	matched	src/libttsivonavoice/acoustic.c	100	
+0005cff8	58	arm	val_acoustic_covariances	matched	src/libttsivonavoice/acoustic.c	100	
+0005d050	18	arm	acoustic_covariances_val	matched	src/libttsivonavoice/acoustic.c	100	
+0005d068	58	arm	val_breaths_stats	matched	src/libttsivonavoice/acoustic.c	100	
+0005d0c0	18	arm	breaths_stats_val	matched	src/libttsivonavoice/acoustic.c	100	
+0005d0d8	4	arm	delete_float_ptr	matched	src/libttsivonavoice/acoustic.c	100	
+0005d0dc	4	arm	val_delete_float_ptr	matched	src/libttsivonavoice/acoustic.c	100	
+0005d0e0	70	arm	acoustic_stream_type	matched	src/libttsivonavoice/acoustic.c	100	
+0005d150	58	arm	acoustic_stream_type_name	matched	src/libttsivonavoice/acoustic.c	100	
+0005d1a8	34	arm	acoustic_stream_cov_size	matched	src/libttsivonavoice/acoustic.c	100	
+0005d1dc	54	arm	acoustic_streams_cov_size	matched	src/libttsivonavoice/acoustic.c	100	
+0005d230	4	arm	acoustic_nop	matched	src/libttsivonavoice/acoustic.c	100	
+0005d234	8	arm	phone_acoustic_data_clear	matched	src/libttsivonavoice/acoustic.c	100	
+0005d23c	18	arm	delete_phone_acoustic_data	matched	src/libttsivonavoice/acoustic.c	100	
+0005d254	4	arm	val_delete_phone_acoustic_data	matched	src/libttsivonavoice/acoustic.c	100	
+0005d258	6c	arm	item_phone_acoustic_data	matched	src/libttsivonavoice/acoustic.c	100	
+0005d2c4	8	arm	acoustic_elem_init	matched	src/libttsivonavoice/acoustic.c	100	
+0005d2cc	28	arm	acoustic_stream_size	matched	src/libttsivonavoice/acoustic.c	100	
+0005d2f4	44	arm	acoustic_streams_size	matched	src/libttsivonavoice/acoustic.c	100	
+0005d338	184	arm	phone_acoustic_data_init	wip	src/libttsivonavoice/acoustic.c	72.0	
+0005d4bc	14	arm	acoustic_streams_frame_size	matched	src/libttsivonavoice/acoustic.c	100	
 0005d4d0	544	arm	FUN_0005d4d0	todo			
 0005da14	48c	arm	FUN_0005da14	todo			
 0005dea0	14	arm	FUN_0005dea0	todo			
