@@ -3,6 +3,7 @@
  * the log-probability table built from a phone's frames. This TU is compiled without
  * inlining (see config).
  */
+#include <float.h>
 #include <math.h>
 #include <string.h>
 #include "cst_alloc.h"
@@ -15,7 +16,11 @@ typedef struct hash hash;
 void *hash_get(hash *h, const void *key, size_t len);
 cst_item *item_traverse(const cst_item *item, ...);
 
+int ivona_rand(int *seed);
+int *FUN_0005fb6c(const cst_utterance *utt);
+
 #define ITEM_TRAVERSE_PREV 0x103
+#define ITEM_TRAVERSE_PARENT 0x106
 
 typedef struct breath_covariances breath_covariances;
 typedef struct breath_stats breath_stats;
@@ -39,9 +44,10 @@ typedef struct phone_acoustic_data {
     unsigned int n_frames;
     unsigned int n_streams;
     acoustic_stream *streams;
-    int unk_c;
+    const void *unk_c;
     float log_dur;
-    int unk_14[2];
+    float det;
+    const float *voicing;
     float *data;
     int unk_20;
     acoustic_elem *elems;
@@ -322,4 +328,126 @@ void item_set_dnn_acoustic_data(cst_item *item, hash *h)
     item_set(item, "acoustic_data", phone_acoustic_data_val(p));
     acoustic_nop(item_feats(item), p);
     phone_acoustic_data_init(p);
+}
+
+/* a normal sample (Box-Muller) seeded from the item's "end_pos" */
+#define BREATH_GAUSS(out, w, mean, std, seed)                                         \
+    do {                                                                              \
+        float u1_, g_;                                                                \
+        int u2_;                                                                      \
+        seed = ffeature_int(item_traverse(w, 0), "end_pos");                          \
+        do {                                                                          \
+            u1_ = ivona_rand(&seed) * (1.0f / 32767);                                 \
+            u2_ = ivona_rand(&seed);                                                  \
+        } while (u1_ <= FLT_MIN);                                                     \
+        g_ = sqrt(-2.0 * log(u1_)) * cos(2.0 * M_PI * (u2_ * (1.0f / 32767)));    \
+        out = std * g_ + mean;                                                        \
+    } while (0)
+
+static const float breath_unk[4] = { 0, 0, 10.0f, 0 };
+static const acoustic_stream breath_streams[1] = { { 2, 1, 0, 0 } };
+
+/* 0x5da14 arm: gives a breath item its duration and volume (from the phrase's "breath_dur"
+ * and "breath_volume", else sampled from the voice's breath statistics) and its acoustic
+ * data; returns the duration. */
+float item_set_breath_acoustic_data(cst_item *item)
+{
+    const cst_item *w;
+    const cst_val *v;
+    const float *st = NULL;
+    const float *const *covs;
+    phone_acoustic_data *p;
+    float dur, rms, m, sd;
+    float *data;
+    unsigned int i;
+    int seed1, seed2;
+
+    w = item_traverse(item_traverse(item, 4, ITEM_TRAVERSE_PARENT, 0),
+                      ITEM_TRAVERSE_PARENT, 1, ITEM_TRAVERSE_PARENT, 0);
+    v = feat_val(item_utt(item)->features, "breaths_rms_dur_stats");
+    if (v == NULL || (st = *(const float *const *)val_breaths_stats(v)) == NULL) {
+        rms = -27.657f;
+        dur = 0.295f;
+    } else {
+        if (!item_feat_present(w, "breath_dur")) {
+            m = st[0];
+            sd = st[1];
+            BREATH_GAUSS(dur, w, m, sd, seed1);
+        } else
+            dur = ffeature_float(item_traverse(w, 0), "breath_dur");
+        if (item_feat_present(w, "breath_volume"))
+            rms = st[2] + 20.0f * (float)log10(ffeature_float(item_traverse(w, 0), "breath_volume"));
+        else {
+            m = st[2];
+            sd = st[3];
+            BREATH_GAUSS(rms, w, m, sd, seed2);
+        }
+    }
+    item_set_float(item, "dur", dur);
+    item_set_float(item, "end",
+                   ffeature_float(item_traverse(item, ITEM_TRAVERSE_PREV, 0), "end") + dur);
+    {
+        const cst_utterance *utt = item_utt(item);
+
+        v = feat_val(utt->features, "acoustic_breath_covariances");
+        covs = v ? (const float *const *)val_acoustic_covariances(v) : NULL;
+        p = cst_safe_alloc(1, sizeof *p);
+        p->n_streams = 1;
+        p->log_dur = log(dur * 1000.0f);
+        p->streams = (acoustic_stream *)breath_streams;
+        p->unk_c = breath_unk;
+        p->det = covs[0][0];
+        p->n_frames = *FUN_0005fb6c(utt);
+    }
+    data = cst_safe_alloc(acoustic_streams_frame_size(p->streams, p->n_streams, p->n_frames),
+                          sizeof(float));
+    p->data = data;
+    for (i = 0; i < p->n_frames; i++) {
+        data[2 * i] = rms;
+        data[2 * i + 1] = covs[1][i];
+    }
+    item_set(item, "acoustic_raw_data", float_ptr_val(data));
+    item_set(item, "acoustic_data", phone_acoustic_data_val(p));
+    acoustic_nop(item_feats(item), p);
+    phone_acoustic_data_init(p);
+    return dur;
+}
+
+/* 0x5dea0 arm */
+int acoustic_streams_frame_size_voiced(const acoustic_stream *s, unsigned int n, int k)
+{
+    return k * acoustic_streams_size(s, n) + k;
+}
+
+/* 0x5deb4 arm */
+int acoustic_stub_0(void)
+{
+    return 0;
+}
+
+/* 0x5debc arm */
+int acoustic_stub_1(void)
+{
+    return 0;
+}
+
+/* 0x5dec4 arm: writes the frame count and the frames to out (if not NULL); returns the
+ * byte size. */
+size_t phone_acoustic_data_serialize(char *out, const phone_acoustic_data *p)
+{
+    size_t size, head = 0;
+
+    if (p == NULL)
+        return 0;
+    size = acoustic_streams_frame_size(p->streams, p->n_streams, p->n_frames) * sizeof(float);
+    if (p->voicing)
+        head = p->n_frames * sizeof(float);
+    if (out) {
+        if (p->voicing) {
+            memcpy(out, p->voicing, head);
+            out += head;
+        }
+        memcpy(out, p->data, size);
+    }
+    return head + size;
 }

@@ -1326,11 +1326,11 @@ addr	size	mode	name	status	src	score	note
 0005d338	184	arm	phone_acoustic_data_init	wip	src/libttsivonavoice/acoustic.c	72.0	
 0005d4bc	14	arm	acoustic_streams_frame_size	matched	src/libttsivonavoice/acoustic.c	100	
 0005d4d0	544	arm	item_set_dnn_acoustic_data	wip	src/libttsivonavoice/acoustic.c	44.7	
-0005da14	48c	arm	FUN_0005da14	todo			
-0005dea0	14	arm	FUN_0005dea0	todo			
-0005deb4	8	arm	FUN_0005deb4	todo			
-0005debc	8	arm	FUN_0005debc	todo			
-0005dec4	84	arm	FUN_0005dec4	todo			
+0005da14	48c	arm	item_set_breath_acoustic_data	wip	src/libttsivonavoice/acoustic.c	69.8	
+0005dea0	14	arm	acoustic_streams_frame_size_voiced	matched	src/libttsivonavoice/acoustic.c	100	
+0005deb4	8	arm	acoustic_stub_0	matched	src/libttsivonavoice/acoustic.c	100	
+0005debc	8	arm	acoustic_stub_1	matched	src/libttsivonavoice/acoustic.c	100	
+0005dec4	84	arm	phone_acoustic_data_serialize	matched	src/libttsivonavoice/acoustic.c	100	
 0005df48	24	arm	FUN_0005df48	todo			
 0005df6c	10	arm	FUN_0005df6c	todo			
 0005df7c	58	arm	FUN_0005df7c	todo			
@@ -1511,7 +1511,7 @@ addr	size	mode	name	status	src	score	note
 0006b084	b0	arm	FUN_0006b084	todo			
 0006b134	2c	arm	FUN_0006b134	todo			
 0006b160	28	arm	FUN_0006b160	todo			
-0006b188	20	arm	FUN_0006b188	todo			
+0006b188	20	arm	ivona_rand	todo			
 0006b1a8	b8	arm	FUN_0006b1a8	todo			
 0006b260	c0	arm	silk_unit_open	wip	src/libttsivonavoice/vox_codec.c	72.9	
 0006b320	34	arm	silk_unit_close	matched	src/libttsivonavoice/vox_codec.c	100	
