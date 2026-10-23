@@ -1331,21 +1331,21 @@ addr	size	mode	name	status	src	score	note
 0005deb4	8	arm	acoustic_stub_0	matched	src/libttsivonavoice/acoustic.c	100	
 0005debc	8	arm	acoustic_stub_1	matched	src/libttsivonavoice/acoustic.c	100	
 0005dec4	84	arm	phone_acoustic_data_serialize	matched	src/libttsivonavoice/acoustic.c	100	
-0005df48	24	arm	FUN_0005df48	todo			
-0005df6c	10	arm	FUN_0005df6c	todo			
-0005df7c	58	arm	FUN_0005df7c	todo			
-0005dfd4	18	arm	FUN_0005dfd4	todo			
-0005dfec	178	arm	FUN_0005dfec	todo			
-0005e164	58	arm	FUN_0005e164	todo			
-0005e1bc	34	arm	FUN_0005e1bc	todo			
-0005e1f0	5c	arm	FUN_0005e1f0	todo			
-0005e24c	11c	arm	FUN_0005e24c	todo			
-0005e368	84	arm	FUN_0005e368	todo			
-0005e3ec	4	arm	FUN_0005e3ec	todo			
-0005e3f0	80	arm	FUN_0005e3f0	todo			
-0005e470	80	arm	FUN_0005e470	todo			
-0005e4f0	58	arm	FUN_0005e4f0	todo			
-0005e548	18	arm	FUN_0005e548	todo			
+0005df48	24	arm	blacklist_cmp_sort	matched	src/libttsivonavoice/blacklist.c	100	
+0005df6c	10	arm	blacklist_cmp	matched	src/libttsivonavoice/blacklist.c	100	
+0005df7c	58	arm	val_blacklist	matched	src/libttsivonavoice/blacklist.c	100	
+0005dfd4	18	arm	blacklist_val	matched	src/libttsivonavoice/blacklist.c	100	
+0005dfec	178	arm	blacklist_load_ts	matched	src/libttsivonavoice/blacklist.c	100	
+0005e164	58	arm	blacklist_load_file	matched	src/libttsivonavoice/blacklist.c	100	
+0005e1bc	34	arm	blacklist_load_string	matched	src/libttsivonavoice/blacklist.c	100	
+0005e1f0	5c	arm	blacklist_add	matched	src/libttsivonavoice/blacklist.c	100	
+0005e24c	11c	arm	blacklist_remove	wip	src/libttsivonavoice/blacklist.c	97.2	
+0005e368	84	arm	blacklists_contain	matched	src/libttsivonavoice/blacklist.c	100	
+0005e3ec	4	arm	delete_blacklist	matched	src/libttsivonavoice/blacklist.c	100	
+0005e3f0	80	arm	blacklist_plugin_add	matched	src/libttsivonavoice/blacklist.c	100	
+0005e470	80	arm	blacklist_plugin_remove	matched	src/libttsivonavoice/blacklist.c	100	
+0005e4f0	58	arm	val_diphonedb	todo			
+0005e548	18	arm	diphonedb_val	todo			
 0005e560	68	arm	FUN_0005e560	todo			
 0005e5c8	290	arm	FUN_0005e5c8	todo			
 0005e858	98	arm	FUN_0005e858	todo			
