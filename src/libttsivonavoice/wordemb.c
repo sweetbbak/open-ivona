@@ -28,7 +28,7 @@ typedef struct mp_reader {
 } mp_reader;
 void mp_reader_init(mp_reader *r, const void *data, size_t size, int flags);
 void mp_reader_free(mp_reader *r);
-int mp_read_map(mp_reader *r, unsigned int *size);
+int cmp_read_map(mp_reader *r, unsigned int *size);
 int mp_read_int(mp_reader *r);
 void *mp_read_bin(mp_reader *r, unsigned int *size, int type);
 char **mp_read_str_array(mp_reader *r, unsigned int *count);
@@ -150,7 +150,7 @@ word_vectors *word_embeddings_read(mp_reader *r)
     const char *key;
     word_vectors *wv;
 
-    mp_read_map(r, &n);
+    cmp_read_map(r, &n);
     while (n--) {
         key = mp_read_bin(r, NULL, 1);
         if (strcmp(key, "vector_size") == 0)

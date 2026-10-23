@@ -1135,33 +1135,33 @@ addr	size	mode	name	status	src	score	note
 00056278	10	arm	uni_ispunct	matched	src/libttsivonavoice/uni.c	100	
 00056288	28	arm	uni_cat_is_text	matched	src/libttsivonavoice/uni.c	100	
 000562b0	74	arm	uni_str_category	matched	src/libttsivonavoice/uni.c	100	
-00056324	8	arm	FUN_00056324	todo			
-0005632c	8	arm	FUN_0005632c	todo			
-00056334	4	arm	FUN_00056334	todo			
-00056338	4	arm	FUN_00056338	todo			
-0005633c	8	arm	FUN_0005633c	todo			
-00056344	8	arm	FUN_00056344	todo			
-0005634c	60	arm	FUN_0005634c	todo			
-000563ac	24	arm	FUN_000563ac	todo			
-000563d0	8	arm	FUN_000563d0	todo			
-000563d8	58	arm	FUN_000563d8	todo			
-00056430	4	arm	val_delete_dnn_models	todo			
-00056434	18	arm	FUN_00056434	todo			
-0005644c	60	arm	FUN_0005644c	todo			
-000564ac	54	arm	FUN_000564ac	todo			
-00056500	4	arm	FUN_00056500	todo			
-00056504	10	arm	FUN_00056504	todo			
-00056514	74	arm	FUN_00056514	todo			
-00056588	78	arm	mp_reader_init	todo			
-00056600	3c	arm	mp_reader_free	todo			
-0005663c	1c	arm	mp_read_int	todo			
-00056658	118	arm	mp_read_bin	todo			
-00056770	98	arm	mp_read_str_array	todo			
-00056808	4c	arm	FUN_00056808	todo			
-00056854	50	arm	FUN_00056854	todo			
-000568a4	38	arm	FUN_000568a4	todo			
-000568dc	5c	arm	FUN_000568dc	todo			
-00056938	28	arm	FUN_00056938	todo			
+00056324	8	arm	new_dnn_models	matched	src/libttsivonavoice/dnn_stub.c	100	
+0005632c	8	arm	dnn_stub_2c	matched	src/libttsivonavoice/dnn_stub.c	100	
+00056334	4	arm	dnn_stub_34	matched	src/libttsivonavoice/dnn_stub.c	100	
+00056338	4	arm	delete_dnn_models	matched	src/libttsivonavoice/dnn_stub.c	100	
+0005633c	8	arm	dnn_stub_3c	matched	src/libttsivonavoice/dnn_stub.c	100	
+00056344	8	arm	dnn_stub_44	matched	src/libttsivonavoice/dnn_stub.c	100	
+0005634c	60	arm	dnn_models_find	matched	src/libttsivonavoice/dnn_models.c	100	
+000563ac	24	arm	dnn_models_add	matched	src/libttsivonavoice/dnn_models.c	100	
+000563d0	8	arm	dnn_models_remove	matched	src/libttsivonavoice/dnn_models.c	100	
+000563d8	58	arm	val_dnn_models	matched	src/libttsivonavoice/dnn_models.c	100	
+00056430	4	arm	val_delete_dnn_models	matched	src/libttsivonavoice/dnn_models.c	100	
+00056434	18	arm	dnn_models_val	matched	src/libttsivonavoice/dnn_models.c	100	
+0005644c	60	arm	voice_dnn_models	matched	src/libttsivonavoice/dnn_models.c	100	
+000564ac	54	arm	mp_mem_read	matched	src/libttsivonavoice/mpack_io.c	100	
+00056500	4	arm	mp_free_elem	matched	src/libttsivonavoice/mpack_io.c	100	
+00056504	10	arm	mp_file_write	matched	src/libttsivonavoice/mpack_io.c	100	
+00056514	74	arm	mp_mem_write	matched	src/libttsivonavoice/mpack_io.c	100	
+00056588	78	arm	mp_reader_init	matched	src/libttsivonavoice/mpack_io.c	100	
+00056600	3c	arm	mp_reader_free	matched	src/libttsivonavoice/mpack_io.c	100	
+0005663c	1c	arm	mp_read_int	matched	src/libttsivonavoice/mpack_io.c	100	
+00056658	118	arm	mp_read_bin	wip	src/libttsivonavoice/mpack_io.c	31.5	
+00056770	98	arm	mp_read_str_array	matched	src/libttsivonavoice/mpack_io.c	100	
+00056808	4c	arm	mp_writer_open_file	matched	src/libttsivonavoice/mpack_io.c	100	
+00056854	50	arm	mp_writer_open_mem	matched	src/libttsivonavoice/mpack_io.c	100	
+000568a4	38	arm	mp_writer_close_file	matched	src/libttsivonavoice/mpack_io.c	100	
+000568dc	5c	arm	mp_writer_close_mem	matched	src/libttsivonavoice/mpack_io.c	100	
+00056938	28	arm	mp_write_str	matched	src/libttsivonavoice/mpack_io.c	100	
 00056960	b4	arm	murmur_hash2	matched	src/libttsivonavoice/hash.c	100	
 00056a14	40	arm	hash_new	matched	src/libttsivonavoice/hash.c	100	
 00056a54	7c	arm	hash_free	wip	src/libttsivonavoice/hash.c	93.5	
@@ -5408,7 +5408,7 @@ addr	size	mode	name	status	src	score	note
 001f1698	50	arm	FUN_001f1698	todo			
 001f16e8	58	arm	FUN_001f16e8	todo			
 001f1740	58	arm	FUN_001f1740	todo			
-001f1798	58	arm	FUN_001f1798	todo			
+001f1798	58	arm	cmp_init	todo			
 001f17f0	1c	arm	FUN_001f17f0	todo			
 001f180c	1c	arm	FUN_001f180c	todo			
 001f1828	78	arm	FUN_001f1828	todo			
@@ -5444,7 +5444,7 @@ addr	size	mode	name	status	src	score	note
 001f2780	9c	arm	FUN_001f2780	todo			
 001f281c	ac	arm	FUN_001f281c	todo			
 001f28c8	84	arm	FUN_001f28c8	todo			
-001f294c	c0	arm	FUN_001f294c	todo			
+001f294c	c0	arm	cmp_write_str	todo			
 001f2a0c	94	arm	FUN_001f2a0c	todo			
 001f2aa0	8c	arm	FUN_001f2aa0	todo			
 001f2b2c	a4	arm	FUN_001f2b2c	todo			
@@ -5491,7 +5491,7 @@ addr	size	mode	name	status	src	score	note
 001f4e00	7c	arm	FUN_001f4e00	todo			
 001f4e7c	13c	arm	FUN_001f4e7c	todo			
 001f4fb8	180	arm	FUN_001f4fb8	todo			
-001f5138	198	arm	FUN_001f5138	todo			
+001f5138	198	arm	cmp_read_int	todo			
 001f52d0	1ec	arm	FUN_001f52d0	todo			
 001f54bc	30	arm	FUN_001f54bc	todo			
 001f54ec	30	arm	FUN_001f54ec	todo			
@@ -5514,8 +5514,8 @@ addr	size	mode	name	status	src	score	note
 001f5e48	f4	arm	FUN_001f5e48	todo			
 001f5f3c	80	arm	FUN_001f5f3c	todo			
 001f5fbc	d0	arm	FUN_001f5fbc	todo			
-001f608c	90	arm	FUN_001f608c	todo			
-001f611c	90	arm	mp_read_map	todo			
+001f608c	90	arm	cmp_read_array	todo			
+001f611c	90	arm	cmp_read_map	todo			
 001f61ac	7c	arm	FUN_001f61ac	todo			
 001f6228	88	arm	FUN_001f6228	todo			
 001f62b0	7c	arm	FUN_001f62b0	todo			
@@ -5534,7 +5534,7 @@ addr	size	mode	name	status	src	score	note
 001f6998	94	arm	FUN_001f6998	todo			
 001f6a2c	dc	arm	FUN_001f6a2c	todo			
 001f6b08	94	arm	FUN_001f6b08	todo			
-001f6b9c	103c	arm	FUN_001f6b9c	todo			
+001f6b9c	103c	arm	cmp_read_object	todo			
 001f7bd8	44	arm	FUN_001f7bd8	todo			
 001f7c1c	4c	arm	FUN_001f7c1c	todo			
 001f7c68	4c	arm	FUN_001f7c68	todo			
