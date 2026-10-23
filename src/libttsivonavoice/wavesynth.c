@@ -23,6 +23,8 @@ cst_val *userdata_val(const void *v);
 const unsigned char *val_binary_key(const cst_val *v);
 int track_span(const track *t, int from, int to);
 int wave_crossfade(short *dst, short n, const short *src, short len);
+int ivona_time_usec(void);
+float metrics_add_time(cst_features *metrics, const char *name, int usec);
 
 /* a mark (0x14 bytes) */
 typedef struct wavesynth_mark {
@@ -440,4 +442,78 @@ unsigned char *utt_cache_key(const cst_utterance *u)
     HMAC_Final(&ctx, out, &len);
     HMAC_CTX_cleanup(&ctx);
     return out;
+}
+
+/* 0x630c8 arm: checks the HMAC-SHA256 that ends data (over ad and the ciphertext) and
+ * decrypts the AES-256-CBC ciphertext (IV first) with key; *n gets the plaintext size in
+ * 8-byte records. NULL (and *n = 0) on failure. */
+unsigned char *cache_decrypt(const unsigned char *data, unsigned int size, const void *ad, int adlen,
+                             unsigned int *n, const unsigned char *key, cst_features *m)
+{
+    int maclen = EVP_MD_size(EVP_sha256());
+    int t0 = m ? ivona_time_usec() : 0;
+    const EVP_CIPHER *cipher;
+    EVP_CIPHER_CTX *c;
+    unsigned char *out;
+    unsigned int len;
+    int r, bs, total;
+
+    if (data != NULL && size > (unsigned int)maclen) {
+        {
+            unsigned char *mac = cst_safe_alloc(maclen, 1);
+            int body = size - maclen;
+            const EVP_MD *md = EVP_sha256();
+            HMAC_CTX ctx;
+
+            HMAC_CTX_init(&ctx);
+            HMAC_Init_ex(&ctx, cache_key_secret, cache_key_secret_len, md, NULL);
+            HMAC_Update(&ctx, ad, adlen);
+            HMAC_Update(&ctx, data, body);
+            HMAC_Final(&ctx, mac, &len);
+            HMAC_CTX_cleanup(&ctx);
+            r = memcmp(mac, data + size - len, len);
+            cst_free(mac);
+        }
+        if (r == 0) {
+            int outl;
+
+            cipher = EVP_aes_256_cbc();
+            bs = EVP_CIPHER_block_size(cipher);
+            size = size - bs - len;
+            out = cst_safe_alloc(size, 1);
+            c = EVP_CIPHER_CTX_new();
+            if (c == NULL) {
+                cst_free(out);
+                *n = 0;
+                return NULL;
+            }
+            if (EVP_DecryptInit_ex(c, cipher, NULL, key, data) != 1) {
+                cst_free(out);
+                EVP_CIPHER_CTX_free(c);
+                *n = 0;
+                return NULL;
+            }
+            if (EVP_DecryptUpdate(c, out, &outl, data + bs, size) != 1) {
+                cst_free(out);
+                EVP_CIPHER_CTX_free(c);
+                *n = 0;
+                return NULL;
+            }
+            total = outl;
+            if (EVP_DecryptFinal_ex(c, out + outl, &outl) != 1) {
+                cst_free(out);
+                EVP_CIPHER_CTX_free(c);
+                *n = 0;
+                return NULL;
+            }
+            total += outl;
+            EVP_CIPHER_CTX_free(c);
+            *n = (unsigned int)total / 8;
+            if (m)
+                metrics_add_time(m, "diphone_graph_cache_decrypt_time", ivona_time_usec() - t0);
+            return out;
+        }
+    }
+    *n = 0;
+    return NULL;
 }
