@@ -1221,23 +1221,23 @@ addr	size	mode	name	status	src	score	note
 00057fdc	b8	arm	uni_translit	todo			
 00058094	2e8	arm	FUN_00058094	todo			
 0005837c	d74	arm	uni_tolower	todo			
-000590f0	44	arm	FUN_000590f0	todo			
-00059134	40	arm	FUN_00059134	todo			
-00059174	58	arm	FUN_00059174	todo			
-000591cc	b0	arm	FUN_000591cc	todo			
-0005927c	18	arm	FUN_0005927c	todo			
-00059294	2c	arm	FUN_00059294	todo			
-000592c0	8c	arm	FUN_000592c0	todo			
-0005934c	10	arm	FUN_0005934c	todo			
-0005935c	10	arm	FUN_0005935c	todo			
-0005936c	40	arm	FUN_0005936c	todo			
-000593ac	50	arm	FUN_000593ac	todo			
-000593fc	9c	arm	FUN_000593fc	todo			
-00059498	40	arm	FUN_00059498	todo			
-000594d8	44	arm	FUN_000594d8	todo			
-0005951c	20	arm	FUN_0005951c	todo			
-0005953c	34	arm	FUN_0005953c	todo			
-00059570	14	arm	FUN_00059570	todo			
+000590f0	44	arm	strv_len	matched	src/libttsivonavoice/utf8_iter.c	100	
+00059134	40	arm	utf8_iter_init	matched	src/libttsivonavoice/utf8_iter.c	100	
+00059174	58	arm	utf8_iter_next	matched	src/libttsivonavoice/utf8_iter.c	100	
+000591cc	b0	arm	utf8_iter_prev	wip	src/libttsivonavoice/utf8_iter.c	68.8	
+0005927c	18	arm	utf8_iter_next_char	matched	src/libttsivonavoice/utf8_iter.c	100	
+00059294	2c	arm	utf8_iter_init_char	matched	src/libttsivonavoice/utf8_iter.c	100	
+000592c0	8c	arm	utf8_iter_move	matched	src/libttsivonavoice/utf8_iter.c	100	
+0005934c	10	arm	utf8_iter_bytes_left	matched	src/libttsivonavoice/utf8_iter.c	100	
+0005935c	10	arm	utf8_iter_chars_left	matched	src/libttsivonavoice/utf8_iter.c	100	
+0005936c	40	arm	utf8_iter_find_any	matched	src/libttsivonavoice/utf8_iter.c	100	
+000593ac	50	arm	utf8_iter_find	matched	src/libttsivonavoice/utf8_iter.c	100	
+000593fc	9c	arm	utf8_iter_find_last	matched	src/libttsivonavoice/utf8_iter.c	100	
+00059498	40	arm	utf8_iter_skip_any	matched	src/libttsivonavoice/utf8_iter.c	100	
+000594d8	44	arm	utf8_iter_seek	wip	src/libttsivonavoice/utf8_iter.c	64.7	
+0005951c	20	arm	utf8_iter_seek_char	matched	src/libttsivonavoice/utf8_iter.c	100	
+0005953c	34	arm	utf8_iter_copy_next	matched	src/libttsivonavoice/utf8_iter.c	100	
+00059570	14	arm	utf8_iter_cut	matched	src/libttsivonavoice/utf8_iter.c	100	
 00059584	16c	arm	utf8_decode_char	wip	src/libttsivonavoice/utf8.c	7.6	
 000596f0	14	arm	utf8_decode	matched	src/libttsivonavoice/utf8.c	100	
 00059704	6c	arm	utf8_strchr	matched	src/libttsivonavoice/utf8.c	100	
