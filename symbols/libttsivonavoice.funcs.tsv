@@ -463,13 +463,13 @@ addr	size	mode	name	status	src	score	note
 00038b1c	64	arm	FUN_00038b1c	todo			
 00038b80	208	arm	tts_dict_load	todo			
 00038d88	64	arm	FUN_00038d88	todo			
-00038dec	c	arm	FUN_00038dec	todo			
-00038df8	74	arm	FUN_00038df8	todo			
-00038e6c	368	arm	FUN_00038e6c	todo			
-000391d4	44	arm	tts_dict_num_entries	todo			
-00039218	194	arm	tts_dict_insert	todo			
-000393ac	e4	arm	tts_dict_remove	todo			
-00039490	20	arm	tts_dict_cleanup	matched	src/libttsivonavoice/calib_arm.c	100	
+00038dec	c	arm	dict_new	matched	src/libttsivonavoice/dict.c	100	
+00038df8	74	arm	dict_free	matched	src/libttsivonavoice/dict.c	100	
+00038e6c	368	arm	dict_add	wip	src/libttsivonavoice/dict.c	58.7	
+000391d4	44	arm	tts_dict_num_entries	matched	src/libttsivonavoice/dict.c	100	
+00039218	194	arm	tts_dict_insert	matched	src/libttsivonavoice/dict.c	100	
+000393ac	e4	arm	tts_dict_remove	matched	src/libttsivonavoice/dict.c	100	
+00039490	20	arm	tts_dict_cleanup	matched	src/libttsivonavoice/dict.c	100	
 000394b0	10	arm	tts_vendor_tag	matched	src/libttsivonavoice/tts_error.c	100	
 000394c0	10	arm	tts_errno	matched	src/libttsivonavoice/tts_error.c	100	
 000394d0	11c	arm	tts_errmsg	matched	src/libttsivonavoice/tts_error.c	100	
@@ -642,7 +642,7 @@ addr	size	mode	name	status	src	score	note
 00046040	a8	arm	FUN_00046040	todo			
 000460e8	c4	arm	FUN_000460e8	todo			
 000461ac	b4	arm	FUN_000461ac	todo			
-00046260	28	arm	FUN_00046260	todo			
+00046260	28	arm	ivona_ustr_free	todo			
 00046288	18	arm	FUN_00046288	todo			
 000462a0	114	arm	FUN_000462a0	todo			
 000463b4	f0	arm	FUN_000463b4	todo			
@@ -711,7 +711,7 @@ addr	size	mode	name	status	src	score	note
 00048720	ec	arm	FUN_00048720	todo			
 0004880c	c	arm	FUN_0004880c	todo			
 00048818	3c	arm	FUN_00048818	todo			
-00048854	34	arm	FUN_00048854	todo			
+00048854	34	arm	ivona_ustr_decode	todo			
 00048888	34	arm	charset_supported	todo			
 000488bc	c88	arm	FUN_000488bc	todo			
 00049544	90	arm	FUN_00049544	todo			
@@ -1007,12 +1007,12 @@ addr	size	mode	name	status	src	score	note
 000536ec	30	arm	FUN_000536ec	todo			
 0005371c	4c	arm	FUN_0005371c	todo			
 00053768	68	arm	FUN_00053768	todo			
-000537d0	44	arm	FUN_000537d0	todo			
-00053814	f8	arm	FUN_00053814	todo			
-0005390c	4c	arm	cst_vnsprintf	todo			
-00053958	10	arm	cst_vasprintf	todo			
-00053968	30	arm	FUN_00053968	todo			
-00053998	30	arm	FUN_00053998	todo			
+000537d0	44	arm	cst_strcount	matched	src/libttsivonavoice/flite/cst_string.c	100	
+00053814	f8	arm	cst_strreplace	matched	src/libttsivonavoice/flite/cst_string.c	100	
+0005390c	4c	arm	cst_vnsprintf	matched	src/libttsivonavoice/flite/cst_string.c	100	
+00053958	10	arm	cst_vasprintf	matched	src/libttsivonavoice/flite/cst_string.c	100	
+00053968	30	arm	cst_nsprintf	matched	src/libttsivonavoice/flite/cst_string.c	100	
+00053998	30	arm	cst_asprintf	matched	src/libttsivonavoice/flite/cst_string.c	100	
 000539c8	90	arm	FUN_000539c8	todo			
 00053a58	6c	arm	FUN_00053a58	todo			
 00053ac4	5c	arm	FUN_00053ac4	todo			

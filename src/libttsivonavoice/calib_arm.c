@@ -22,19 +22,6 @@ int FUN_000355dc(struct Handle *h)
     return h->obj->unkc == 0;
 }
 
-extern void *FUN_00038df8(void *p);
-extern void *FUN_00038dec(void *p);
-
-struct Dict { int unk[4]; void *entries; };
-
-/* 0x39490 arm: exported; frees every dictionary entry and resets the list. */
-void tts_dict_cleanup(struct Dict *d)
-{
-    if (d == NULL)
-        return;
-    d->entries = FUN_00038dec(FUN_00038df8(d->entries));
-}
-
 extern int get_param_val(void *a, void *b, int c);
 extern int FUN_0004e680(int x);
 

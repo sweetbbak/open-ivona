@@ -70,4 +70,13 @@ char *cst_string_before(const char *s,const char *c);
 cst_string *cst_downcase(const cst_string *str);
 cst_string *cst_upcase(const cst_string *str);
 
+/* IVONA additions (flite/cst_string.c) */
+#include <stdarg.h>
+int cst_strcount(const char *s, const char *sub);
+char *cst_strreplace(const char *from, const char *to, const char *s);
+char *cst_vnsprintf(size_t n, const char *fmt, va_list ap);
+char *cst_vasprintf(const char *fmt, va_list ap);
+char *cst_nsprintf(size_t n, const char *fmt, ...);
+char *cst_asprintf(const char *fmt, ...);
+
 #endif
