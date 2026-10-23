@@ -21,16 +21,43 @@ addr	size	name	note
 0021f2a0	8	val_int_2	
 0021f2a8	8	val_int_1	
 0021f2b0	8	val_int_0	
+0021f2b8	4	cst_val_type_dynamic_voxdbs	
+0021f2bc	4	cst_val_type_binary_key	
+0021f2c0	4	cst_val_type_breaths_stats	
+0021f2c4	4	cst_val_type_acoustic_covariances	
+0021f2c8	4	cst_val_type_dnn_models	
+0021f2cc	4	cst_val_type_ffunc2	
+0021f2d0	4	cst_val_type_word_embeddings	
 0021f2d4	4	cst_val_type_vector	
+0021f2d8	4	cst_val_type_phone_acoustic_data	
+0021f2dc	4	cst_val_type_float_ptr	
+0021f2e0	4	cst_val_type_synth_module_callback	
 0021f2e4	4	cst_val_type_metric	
+0021f2e8	4	cst_val_type_lang_dat_core_data	
+0021f2ec	4	cst_val_type_tokenizer_expand_str_func	
+0021f2f0	4	cst_val_type_blacklist	
+0021f2f4	4	cst_val_type_join_cost_func	
+0021f2f8	4	cst_val_type_string_tokenizer_new_func	
 0021f2fc	4	cst_val_type_valfunc	
+0021f300	4	cst_val_type_zdur_cart	
+0021f304	4	cst_val_type_allwordposfunc	
+0021f308	4	cst_val_type_xsampafunc	
+0021f30c	4	cst_val_type_phonefunc	
 0021f310	4	cst_val_type_features	
 0021f314	0	cst_val_type_itemfunc	learned from src/libttsivonavoice/flite/cst_item.c
+0021f318	4	cst_val_type_userdata	
+0021f31c	4	cst_val_type_audiotag	
+0021f320	4	cst_val_type_wavesynth	
+0021f324	4	cst_val_type_diphonedb	
+0021f328	4	cst_val_type_dur_stats	
+0021f32c	4	cst_val_type_lexicon	
+0021f330	4	cst_val_type_phoneset	
 0021f334	0	cst_val_type_cart	learned from src/libttsivonavoice/flite/cst_cart.c
 0021f338	4	cst_val_type_item	
 0021f33c	0	cst_val_type_relation	learned from src/libttsivonavoice/flite/cst_item.c
 0021f340	0	cst_val_type_ffunc	learned from src/libttsivonavoice/flite/cst_ffeature.c
 0021f344	0	cst_val_type_uttfunc	learned from src/libttsivonavoice/flite/cst_utterance.c
+0021f348	4	cst_val_type_track	
 0021f34c	0	cst_val_type_wave	learned from src/libttsivonavoice/flite/cst_wave.c
 0021f350	0	cst_val_type_utterance	learned from src/libttsivonavoice/flite/cst_item.c
 00229400	0	_pcre_OP_lengths	named from library relocation
@@ -128,6 +155,7 @@ addr	size	name	note
 00261a9c	0	SKP_Silk_type_offset_CDF	named from library relocation
 00261ab4	0	SKP_Silk_sign_CDF	named from library relocation
 00261afc	0	SKP_Silk_LSFCosTab_FIX_Q12	named from library relocation
+00266fe0	0	female_breath_covariances	
 00267004	8	val_string_19	
 0026700c	8	val_string_18	
 00267014	8	val_string_17	

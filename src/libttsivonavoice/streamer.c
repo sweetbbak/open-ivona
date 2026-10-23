@@ -16,6 +16,7 @@
 #include "tts_instance.h"
 #include "tts_internal.h"
 #include "tts_metrics.h"
+#include "tts_synth.h"
 #include "tts_voice.h"
 
 typedef struct ivona_ustr {
@@ -94,19 +95,6 @@ void delete_val(cst_val *v);
 void feat_set_features(cst_features *f, const char *name, const cst_features *v);
 void license_release(void *license);
 
-/* a mark the backend attached to synthesized audio */
-typedef struct synth_mark {
-    int unk_0;
-    const char *phone;      /* +0x04 */
-    int sample;             /* +0x08: offset in the wave */
-    unsigned int flags;     /* +0x0c: SYNTH_MARK_* */
-    cst_item *item;         /* +0x10: its segment/word item */
-} synth_mark;
-
-#define SYNTH_MARK_PHONE    0x01
-#define SYNTH_MARK_WORD     0x04
-#define SYNTH_MARK_WORD_END 0x10
-#define SYNTH_MARK_PAUSE    0x20
 
 /* an SSML <mark> waiting for its text position */
 typedef struct ssml_mark {
@@ -115,7 +103,6 @@ typedef struct ssml_mark {
     int end;
 } ssml_mark;
 
-synth_mark *val_synth_mark(const cst_val *v);
 ssml_mark *mark_queue_pop(void *q, int pos);
 const char *phone_viseme(const char *phone);
 cst_features *utt_take_metrics(cst_utterance *utt);
@@ -339,7 +326,7 @@ tts_wave *streamer_marks(tts_streamer *st, cst_wave *w, const cst_val *marks)
     tts_wave *tw = cst_safe_calloc(1, sizeof(tts_wave));
     stream_chunk *chunk;
     const cst_val *p;
-    synth_mark *m;
+    audiotag *m;
     ssml_mark *sm;
     const char *v;
     int first, lim, start, end, sample;
@@ -350,7 +337,7 @@ tts_wave *streamer_marks(tts_streamer *st, cst_wave *w, const cst_val *marks)
     tw->num_samples = w->num_samples;
     first = 0;
     for (p = marks; p; p = val_cdr(p)) {
-        m = val_synth_mark(val_car(p));
+        m = val_audiotag(val_car(p));
         if (m->item == NULL || !item_feat_present(m->item, "start_pos"))
             continue;
         first = item_feat_int(m->item, "start_pos");
@@ -366,11 +353,11 @@ tts_wave *streamer_marks(tts_streamer *st, cst_wave *w, const cst_val *marks)
         memset(s->last_span, 0, sizeof(s->last_span));
     }
     for (p = marks; p; p = val_cdr(p)) {
-        m = val_synth_mark(val_car(p));
+        m = val_audiotag(val_car(p));
         s = st->data;
         if (m->sample < 0 || m->sample > (int)tw->num_samples)
             continue;
-        if (m->flags & SYNTH_MARK_WORD) {
+        if (m->flags & AUDIOTAG_WORD) {
             start = item_feat_int(m->item, "start_pos");
             end = item_feat_int(m->item, "end_pos");
             if (start >= 0 && end >= 0) {
@@ -392,7 +379,7 @@ tts_wave *streamer_marks(tts_streamer *st, cst_wave *w, const cst_val *marks)
                 s->last_end = end;
             }
         }
-        if (m->flags & SYNTH_MARK_WORD_END) {
+        if (m->flags & AUDIOTAG_WORD_END) {
             start = item_feat_int(m->item, "end_pos");
             sample = m->sample;
             while ((sm = mark_queue_pop(s->marks, start)) != NULL) {
@@ -403,11 +390,11 @@ tts_wave *streamer_marks(tts_streamer *st, cst_wave *w, const cst_val *marks)
                               sm->start, sm->end, sample);
             }
         }
-        if (m->flags & SYNTH_MARK_PHONE) {
+        if (m->flags & AUDIOTAG_PHONE) {
             v = phone_viseme(m->phone);
             if (v)
                 wave_add_mark(tw, TTS_MARK_VISEME, v, 0, 0, m->sample);
-        } else if (m->flags & SYNTH_MARK_PAUSE)
+        } else if (m->flags & AUDIOTAG_PAUSE)
             wave_add_mark(tw, TTS_MARK_VISEME, "sil", 0, 0, m->sample);
     }
     return tw;

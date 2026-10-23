@@ -9,6 +9,7 @@
 /* returned by a voice library's register_voice() */
 typedef struct voice_reg {
     cst_features *features;
+    void *lang_data;        /* +0x04: the language's core data part (voice_reg_set_language) */
 } voice_reg;
 
 /* tts_voice.voice_feats */

@@ -774,7 +774,7 @@ addr	size	mode	name	status	src	score	note
 0004cdcc	350	arm	FUN_0004cdcc	todo			
 0004d11c	368	arm	FUN_0004d11c	todo			
 0004d484	368	arm	FUN_0004d484	todo			
-0004d7ec	168	arm	FUN_0004d7ec	todo			
+0004d7ec	168	arm	voice_reg_init	todo			
 0004d954	58	arm	val_relation	matched	src/libttsivonavoice/flite/cst_item.c	100	flite strings(1) 0%
 0004d9ac	18	arm	relation_val	matched	src/libttsivonavoice/flite/cst_item.c	100	
 0004d9c4	58	arm	val_item	matched	src/libttsivonavoice/flite/cst_item.c	100	flite strings(1) 0%
@@ -860,27 +860,27 @@ addr	size	mode	name	status	src	score	note
 0004fc3c	2c	arm	cst_rateconv_leadout	matched	src/libttsivonavoice/flite/rateconv.c	100	flite order 100%
 0004fc68	3b0	arm	new_rateconv	matched	src/libttsivonavoice/flite/rateconv.c	100	flite strings(1) 100%
 00050018	2c	arm	delete_rateconv	matched	src/libttsivonavoice/flite/rateconv.c	100	flite order 100%
-00050044	58	arm	val_synth_mark	todo			
-0005009c	18	arm	FUN_0005009c	todo			
-000500b4	c	arm	FUN_000500b4	todo			
-000500c0	1c	arm	FUN_000500c0	todo			
-000500dc	4	arm	val_delete_audiotag	todo			
-000500e0	94	arm	voice_reg_fixup	todo			
-00050174	58	arm	FUN_00050174	todo			
-000501cc	18	arm	FUN_000501cc	todo			
-000501e4	94	arm	lang_desc_find	todo			
-00050278	b4	arm	FUN_00050278	todo			
-0005032c	bc	arm	FUN_0005032c	todo			
-000503e8	34	arm	FUN_000503e8	todo			
-0005041c	1c	arm	FUN_0005041c	todo			
-00050438	60	arm	FUN_00050438	todo			
-00050498	60	arm	FUN_00050498	todo			
-000504f8	58	arm	utt_synth_frontend	todo			
+00050044	58	arm	val_audiotag	matched	src/libttsivonavoice/synth.c	100	
+0005009c	18	arm	audiotag_val	matched	src/libttsivonavoice/synth.c	100	
+000500b4	c	arm	new_audiotag	matched	src/libttsivonavoice/synth.c	100	
+000500c0	1c	arm	delete_audiotag	matched	src/libttsivonavoice/synth.c	100	
+000500dc	4	arm	val_delete_audiotag	matched	src/libttsivonavoice/synth.c	100	
+000500e0	94	arm	voice_reg_fixup	wip	src/libttsivonavoice/synth.c	30.0	
+00050174	58	arm	val_lang_dat_core_data	matched	src/libttsivonavoice/synth.c	100	
+000501cc	18	arm	lang_dat_core_data_val	matched	src/libttsivonavoice/synth.c	100	
+000501e4	94	arm	lang_desc_find	wip	src/libttsivonavoice/synth.c	89.2	
+00050278	b4	arm	voice_reg_set_language	matched	src/libttsivonavoice/synth.c	100	
+0005032c	bc	arm	item_lang_data	wip	src/libttsivonavoice/synth.c	49.1	
+000503e8	34	arm	lang_core_init	wip	src/libttsivonavoice/synth.c	84.6	
+0005041c	1c	arm	lang_core_free	matched	src/libttsivonavoice/synth.c	100	
+00050438	60	arm	utt_from_text	matched	src/libttsivonavoice/synth.c	100	
+00050498	60	arm	utt_from_phones	matched	src/libttsivonavoice/synth.c	100	
+000504f8	58	arm	utt_synth_frontend	wip	src/libttsivonavoice/synth.c	81.8	
 00050550	520	arm	utt_synth_wave	todo			
-00050a70	4c	arm	utt_rewind	todo			
-00050abc	3c	arm	FUN_00050abc	todo			
-00050af8	38	arm	FUN_00050af8	todo			
-00050b30	38	arm	FUN_00050b30	todo			
+00050a70	4c	arm	utt_rewind	matched	src/libttsivonavoice/synth.c	100	
+00050abc	3c	arm	voice_reg_set_lexicon	matched	src/libttsivonavoice/synth.c	100	
+00050af8	38	arm	synth_text	matched	src/libttsivonavoice/synth.c	100	
+00050b30	38	arm	synth_phones	matched	src/libttsivonavoice/synth.c	100	
 00050b68	58	arm	FUN_00050b68	todo			
 00050bc0	18	arm	FUN_00050bc0	todo			
 00050bd8	14	arm	FUN_00050bd8	todo			
@@ -1305,9 +1305,9 @@ addr	size	mode	name	status	src	score	note
 0005cf88	58	arm	FUN_0005cf88	todo			
 0005cfe0	18	arm	FUN_0005cfe0	todo			
 0005cff8	58	arm	FUN_0005cff8	todo			
-0005d050	18	arm	FUN_0005d050	todo			
+0005d050	18	arm	acoustic_covariances_val	todo			
 0005d068	58	arm	FUN_0005d068	todo			
-0005d0c0	1c	arm	FUN_0005d0c0	todo			
+0005d0c0	1c	arm	breaths_stats_val	todo			
 0005d0dc	4	arm	val_delete_float_ptr	todo			
 0005d0e0	70	arm	FUN_0005d0e0	todo			
 0005d150	58	arm	FUN_0005d150	todo			
@@ -1390,7 +1390,7 @@ addr	size	mode	name	status	src	score	note
 00062984	70	arm	FUN_00062984	todo			
 000629f4	c	arm	FUN_000629f4	todo			
 00062a00	4	arm	FUN_00062a00	todo			
-00062a04	58	arm	FUN_00062a04	todo			
+00062a04	58	arm	val_streamer_pos	todo			
 00062a5c	18	arm	FUN_00062a5c	todo			
 00062a74	24	arm	FUN_00062a74	todo			
 00062a98	6c	arm	FUN_00062a98	todo			
@@ -1456,17 +1456,17 @@ addr	size	mode	name	status	src	score	note
 00065da8	60c	arm	FUN_00065da8	todo			
 000663b4	1cc	arm	FUN_000663b4	todo			
 00066580	20	arm	FUN_00066580	todo			
-000665a0	38	arm	FUN_000665a0	todo			
+000665a0	38	arm	utt_set_input	todo			
 000665d8	10	arm	FUN_000665d8	todo			
 000665e8	90	arm	FUN_000665e8	todo			
-00066678	80	arm	FUN_00066678	todo			
+00066678	80	arm	utt_set_voice	todo			
 000666f8	58	arm	FUN_000666f8	todo			
 00066750	1ac	arm	FUN_00066750	todo			
-000668fc	10	arm	FUN_000668fc	todo			
-0006690c	14	arm	FUN_0006690c	todo			
-00066920	14	arm	FUN_00066920	todo			
+000668fc	10	arm	utt_text_frontend	todo			
+0006690c	14	arm	utt_frontend	todo			
+00066920	14	arm	utt_phones_frontend	todo			
 00066934	18	arm	FUN_00066934	todo			
-0006694c	198	arm	FUN_0006694c	todo			
+0006694c	198	arm	lexicon_from_pls	todo			
 00066ae4	68	arm	in_lex	todo			flite strings(1) 12%
 00066b4c	58	arm	FUN_00066b4c	todo			
 00066ba4	18	arm	FUN_00066ba4	todo			

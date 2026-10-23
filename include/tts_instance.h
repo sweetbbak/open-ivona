@@ -12,7 +12,7 @@ typedef struct res_cache res_cache;
  * (NULL-name terminated), copied per loaded language */
 typedef struct tts_lang_desc {
     const char *name;
-    const char *codes;                /* +0x04: language codes, as for cst_member_string */
+    const char *const *codes;         /* +0x04: language codes (NULL-terminated) */
     ivona_vector *parts;              /* +0x08: loaded data files (lang_part *, cache data) */
     void (*part_init)(void *part);    /* +0x0c */
     void (*part_fini)(void *part);    /* +0x10 */
