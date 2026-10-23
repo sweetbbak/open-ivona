@@ -42,3 +42,6 @@ units:
   # too). utt_cache_key uses OpenSSL's HMAC (headers from `./dc vendor build openssl`, which
   # libmatch needs anyway)
   src/libttsivonavoice/wavesynth.c: {add: [-fno-inline, -fno-strict-aliasing, -Ibuild/vendor/openssl-1.0.2h/include], remove: [-fstrict-aliasing]}
+  # -O3 -fno-inline-functions: cst_relation_name_id's lookup loop is completely unrolled
+  # (as in cst_ffeature.c); every other function compiles the same as at -O2
+  src/libttsivonavoice/flite/cst_utterance.c: {add: [-O3, -fno-inline-functions], remove: [-O2]}

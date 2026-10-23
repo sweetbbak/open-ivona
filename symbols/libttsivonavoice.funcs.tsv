@@ -832,9 +832,9 @@ addr	size	mode	name	status	src	score	note
 0004e460	50	arm	utt_relation_create	matched	src/libttsivonavoice/flite/cst_utterance.c	100	
 0004e4b0	20	arm	utt_relation_present	matched	src/libttsivonavoice/flite/cst_utterance.c	100	
 0004e4d0	40	arm	utt_relation	matched	src/libttsivonavoice/flite/cst_utterance.c	100	
-0004e510	28	arm	cst_relation_id_name	todo			
-0004e538	140	arm	cst_relation_name_id	todo			
-0004e678	8	arm	FUN_0004e678	todo			
+0004e510	28	arm	cst_relation_id_name	matched	src/libttsivonavoice/flite/cst_utterance.c	100	
+0004e538	140	arm	cst_relation_name_id	matched	src/libttsivonavoice/flite/cst_utterance.c	100	
+0004e678	8	arm	cst_relation_count	matched	src/libttsivonavoice/flite/cst_utterance.c	100	
 0004e680	58	arm	val_wave	todo			flite order 100%
 0004e6d8	18	arm	wave_val	matched	src/libttsivonavoice/flite/cst_wave.c	100	flite order 83%
 0004e6f0	24	arm	new_wave	matched	src/libttsivonavoice/flite/cst_wave.c	100	flite order 100%

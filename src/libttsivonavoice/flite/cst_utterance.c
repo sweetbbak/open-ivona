@@ -116,3 +116,36 @@ cst_relation *utt_relation(cst_utterance *u, int id)
     cst_dbgmsg("Relation: %s not present in utterance\n", cst_relation_id_name(id));
     cst_error();
 }
+
+/* IVONA: relation names by id (0 unused) */
+const char *cst_relation_id_names[11] = {
+    NULL, "Token", "Word", "Phrase", "SylStructure", "Syllable", "Segment", "Unit",
+    "PhrPun", "IntnPhrase", "ProsodicWord"
+};
+
+/* 0x4e510 arm */
+const char *cst_relation_id_name(int id)
+{
+    if ((unsigned int)(id - 1) > 9)
+        return NULL;
+    return cst_relation_id_names[id];
+}
+
+/* 0x4e538 arm: relation id by name, 0 if unknown. */
+int cst_relation_name_id(const char *name)
+{
+    int i;
+
+    if (name == NULL)
+        return 0;
+    for (i = 1; i < 11; i++)
+        if (strcmp(cst_relation_id_names[i], name) == 0)
+            return i;
+    return 0;
+}
+
+/* 0x4e678 arm */
+int cst_relation_count(void)
+{
+    return 11;
+}
