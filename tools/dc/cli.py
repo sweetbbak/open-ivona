@@ -308,6 +308,10 @@ def cmd_check(a):
         if not os.path.exists(path("symbols", stem + ".funcs.tsv")):
             continue
         b = Binary(stem)
+        from .libmatch import overlapping_rows
+        for f in overlapping_rows(b.funcs):
+            print(f"{RED}{stem}: table row {f.name} at {f.addr:#x} overlaps another row{RESET}")
+            bad += 1
         srcs = sorted({f.src for f in b.funcs if f.src and not f.src.startswith("lib:")})
         errs = build.compile_units(b, srcs, quiet=True) if srcs else {}
         objs = {}

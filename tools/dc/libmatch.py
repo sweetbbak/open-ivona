@@ -47,6 +47,7 @@ def _masked(code: bytes, relocs) -> bytes:
 def libmatch(stem: str, libs: dict[str, str], verbose: bool = False) -> None:
     load_aliases(libs)
     b = Binary(stem)
+    _drop_overlaps(b)
     _drop_vanished(b, libs)
     by_size = defaultdict(list)  # (mode, span size) -> functions
     for f in b.funcs:
@@ -169,6 +170,9 @@ def libmatch(stem: str, libs: dict[str, str], verbose: bool = False) -> None:
                 b.__dict__.pop("names", None)
             if verbose:
                 print(f"signature hit {a:#x} {h[2]} failed full verification")
+    for a, (row, rem) in splits.items():  # tentative splits whose prefix never verified
+        if a not in verified:
+            b.funcs = [r for r in b.funcs if r is not rem]
     b.save()
     by_lib = defaultdict(int)
     for a, h in verified.items():
@@ -195,6 +199,27 @@ def table_name(obj, sym: str, member: str) -> str:
     if any(x.name == sym and x.bind == "STB_LOCAL" and x.defined and x.type == "STT_FUNC" for x in obj.syms):
         return match.qualified(sym, member)
     return sym
+
+
+def overlapping_rows(funcs: list[Func]) -> list[Func]:
+    """Rows that start inside an earlier row's span (or repeat its address)."""
+    out, end = [], -1
+    for f in sorted(funcs, key=lambda r: (r.addr, -r.size)):
+        if f.addr < end:
+            out.append(f)
+        else:
+            end = f.addr + f.size
+    return out
+
+
+def _drop_overlaps(b: Binary) -> None:
+    """Leftovers of interrupted tentative splits: auto-named todo rows inside another row."""
+    bad = [f for f in overlapping_rows(b.funcs) if f.status == "todo" and f.name.startswith("FUN_")]
+    if bad:
+        ids = {id(f) for f in bad}
+        b.funcs = [f for f in b.funcs if id(f) not in ids]
+        b.save()
+        print(f"dropped {len(bad)} rows overlapping other rows")
 
 
 def _drop_vanished(b: Binary, libs: dict[str, str]) -> None:

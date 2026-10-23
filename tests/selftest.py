@@ -202,6 +202,17 @@ def main() -> int:
     else:
         print("ok   libmatch offers a row's prefix up to an inner prologue (under-split rows)")
 
+    # Table integrity: rows starting inside another row (or repeating its address) are flagged.
+    from dc.libmatch import overlapping_rows
+    rows = [Func(0x100, 0x20, "arm", "a"), Func(0x108, 0x18, "arm", "FUN_00000108"),
+            Func(0x120, 8, "arm", "b"), Func(0x120, 8, "arm", "FUN_00000120"), Func(0x128, 4, "arm", "c")]
+    got = sorted((f.addr, f.name) for f in overlapping_rows(rows))
+    if got != [(0x108, "FUN_00000108"), (0x120, "FUN_00000120")]:
+        fails += 1
+        print(f"FAIL: overlapping_rows gave {got}")
+    else:
+        print("ok   overlapping or repeated table rows are detected")
+
     # Mutations: build the *target* differently; candidates from the clean build must fail in
     # exactly the functions whose code or referenced data changed.
     mutations = [
