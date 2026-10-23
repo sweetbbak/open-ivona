@@ -50,7 +50,6 @@ void FUN_00036abc(void *addon);
 void *FUN_00036f88(const void *data, int size);
 void *FUN_00036fc4(const char *path);
 int FUN_00048084(void *license, void *key);
-void FUN_00042a50(void *p);
 void FUN_00047cec(void *p);
 
 int tts_unload_all_languages(tts_instance *tts);
@@ -105,7 +104,7 @@ int tts_attach_addon(tts_instance *tts, void *obj)
 static inline void resource_release(tts_resource *a)
 {
     if (a->magic == TTS_RESOURCE_MAGIC) {
-        FUN_00042a50(a->cert);
+        cert_free(a->cert);
         FUN_00047cec(a->license);
         a->magic = 0;
         a->cert = NULL;
@@ -161,13 +160,13 @@ const tts_certificate *tts_load_certificate(tts_instance *tts, const char *cert_
         goto out;
 
     if (cert_status(cert)) {
-        FUN_00042a50(cert);
+        cert_free(cert);
         tts_set_error(TTS_STATUS_CERTIFICATE_EXPIRED);
         return NULL;
     }
     res = resource_new(cert);
     if (res == NULL) {
-        FUN_00042a50(cert);     /* sic: already freed by resource_new */
+        cert_free(cert);     /* sic: already freed by resource_new */
         return NULL;
     }
 
@@ -192,7 +191,7 @@ const tts_certificate *tts_load_certificate(tts_instance *tts, const char *cert_
     }
     vector_push(tts->resources, &entry);
 
-    FUN_00042a50(tts->certificate);
+    cert_free(tts->certificate);
     tts->certificate = NULL;
     if (vector_size(tts->resources) > 1) {
         for (i = 0; i < vector_size(tts->resources); i++) {
@@ -202,7 +201,7 @@ const tts_certificate *tts_load_certificate(tts_instance *tts, const char *cert_
             if (tts->certificate)
                 FUN_00043e84(tts->certificate, c);
             else
-                tts->certificate = FUN_000439ac(c);
+                tts->certificate = cert_copy(c);
         }
     }
     return (const tts_certificate *)res;
@@ -495,7 +494,7 @@ int tts_destroy(tts_instance *tts)
         tts_unload_addon(tts, *(void **)vector_at(tts->addons_list, i));
     vector_free(tts->addons_list);
     tts_unload_all_languages(tts);
-    FUN_00042a50(tts->certificate);
+    cert_free(tts->certificate);
     vector_free(tts->resources);
     vector_free(tts->modules);
     vector_free(tts->languages);

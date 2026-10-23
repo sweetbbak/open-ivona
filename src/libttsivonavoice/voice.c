@@ -37,7 +37,6 @@ void tts_remove_module(tts_instance *tts, void *module);
 int lang_load_part(tts_lang_desc *desc, tts_instance *tts, const char *path);
 void lang_desc_free(tts_lang_desc *desc, tts_instance *tts);
 
-int cert_allows_voice(tts_cert_data *cert, const char *lector, const char *lang_codes, int custom);
 tts_lang_desc *lang_desc_find(tts_lang_desc *table, const char *code);
 void voice_reg_fixup(voice_reg *reg);
 void voice_attach_language(voice_reg *reg, tts_lang_desc *lang,

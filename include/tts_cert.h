@@ -7,21 +7,24 @@
 /* parsed certificate (layout partly known) */
 typedef struct tts_cert_data {
     struct cst_features_struct *attrs;  /* certificate attributes ("Extension-Metrics", ...) */
-    char unk_4[0xc];
+    int unk_4;
+    long long expires;            /* +0x08: -1 for never */
     long long issued;             /* +0x10 */
     float max_speed;              /* +0x18: streamer speed limit, -1 for none */
     int license_id;               /* +0x1c: -1 when the certificate carries no license */
     int id;                       /* +0x20 */
-    int unk_24;
+    struct strlist *voices;       /* +0x24: allowed voices ("name", "all", "all:custom", "aLl:<lang>") */
     int ssml;                     /* +0x28: SSML input is licensed */
     unsigned int key;             /* +0x2c: obfuscates voice parameter values */
 } tts_cert_data;
 tts_cert_data *FUN_00042ab0(const char *text);
-int cert_status(tts_cert_data *cert);
+int cert_free(tts_cert_data *c);
+tts_cert_data *cert_copy(const tts_cert_data *c);
+int cert_status(const tts_cert_data *cert);
+int cert_allows_voice(const tts_cert_data *c, const char *lector, const char *lang_codes, int custom);
 void *FUN_00047d80(int key);
 int FUN_00043c64(tts_cert_data *a, tts_cert_data *b);
 void FUN_00043e84(void *merged, tts_cert_data *c);
-void *FUN_000439ac(tts_cert_data *c);
 
 void *tts_get_certificate(tts_instance *tts);
 

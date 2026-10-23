@@ -124,8 +124,6 @@ void ivona_mutex_unlock(pthread_mutex_t *m);
 
 void *tts_get_certificate(tts_instance *tts);
 void *tts_find_license(tts_instance *tts);
-int cert_status(tts_cert_data *cert);
-int cert_allows_voice(tts_cert_data *cert, const char *lector, const char *lang_codes, int custom);
 
 /* a chunk of the input queued for synthesis (vector element) */
 typedef struct stream_chunk {

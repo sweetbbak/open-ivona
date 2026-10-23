@@ -588,11 +588,11 @@ addr	size	mode	name	status	src	score	note
 00042180	204	arm	FUN_00042180	todo			
 00042384	214	arm	FUN_00042384	todo			
 00042598	4b8	arm	FUN_00042598	todo			
-00042a50	60	arm	FUN_00042a50	todo			
+00042a50	60	arm	cert_free	matched	src/libttsivonavoice/cert.c	100	
 00042ab0	efc	arm	FUN_00042ab0	todo			
-000439ac	c0	arm	FUN_000439ac	todo			
-00043a6c	78	arm	cert_status	todo			
-00043ae4	180	arm	cert_allows_voice	todo			
+000439ac	c0	arm	cert_copy	wip	src/libttsivonavoice/cert.c	85.4	
+00043a6c	78	arm	cert_status	matched	src/libttsivonavoice/cert.c	100	
+00043ae4	180	arm	cert_allows_voice	matched	src/libttsivonavoice/cert.c	100	
 00043c64	220	arm	FUN_00043c64	todo			
 00043e84	33c	arm	FUN_00043e84	todo			
 000441c0	20	arm	FUN_000441c0	todo			
