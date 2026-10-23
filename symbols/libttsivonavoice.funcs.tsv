@@ -297,7 +297,7 @@ addr	size	mode	name	status	src	score	note
 0002777c	b8	arm	FUN_0002777c	todo			
 00027834	2c	arm	FUN_00027834	todo			
 00027860	30	arm	audio_chunk_free	todo			
-00027890	90	arm	FUN_00027890	todo			
+00027890	90	arm	chunk_utterance	todo			
 00027920	b0c	arm	FUN_00027920	todo			
 0002842c	8	arm	FUN_0002842c	todo			
 00028434	2c	arm	FUN_00028434	todo			
@@ -327,7 +327,7 @@ addr	size	mode	name	status	src	score	note
 0002a618	2fc	arm	FUN_0002a618	todo			
 0002a914	2d0	arm	FUN_0002a914	todo			
 0002abe4	c	arm	mark_queue_init	todo			
-0002abf0	54	arm	FUN_0002abf0	todo			
+0002abf0	54	arm	mark_queue_pop	todo			
 0002ac44	4	arm	FUN_0002ac44	todo			
 0002ac48	8	arm	FUN_0002ac48	todo			
 0002ac50	40	arm	FUN_0002ac50	todo			
@@ -361,14 +361,14 @@ addr	size	mode	name	status	src	score	note
 0002e084	ce0	arm	FUN_0002e084	todo			
 0002ed64	16c	arm	synth_iter_new	todo			
 0002eed0	48	arm	synth_iter_free	todo			
-0002ef18	11f8	arm	FUN_0002ef18	todo			
+0002ef18	11f8	arm	synth_iter_next	todo			
 00030110	394	arm	FUN_00030110	todo			
 000304a4	50	arm	FUN_000304a4	todo			
 000304f4	104	arm	FUN_000304f4	todo			
 000305f8	44	arm	FUN_000305f8	todo			
 0003063c	4d8	arm	FUN_0003063c	todo			
 00030b14	838	arm	FUN_00030b14	todo			
-0003134c	8	arm	FUN_0003134c	todo			
+0003134c	8	arm	synth_iter_ctx	todo			
 00031354	34	arm	FUN_00031354	todo			
 00031388	50	arm	FUN_00031388	todo			
 000313d8	a0	arm	FUN_000313d8	todo			
@@ -549,14 +549,14 @@ addr	size	mode	name	status	src	score	note
 0003dc84	6c	arm	wavedict_set	matched	src/libttsivonavoice/streamer.c	100	
 0003dcf0	1c	arm	wavedict_get	matched	src/libttsivonavoice/streamer.c	100	
 0003dd0c	2bc	arm	streamer_set_text	wip	src/libttsivonavoice/streamer.c	43.2	
-0003dfc8	5f4	arm	streamer_marks	todo			
+0003dfc8	5f4	arm	streamer_marks	wip	src/libttsivonavoice/streamer.c	65.1	
 0003e5bc	2d0	arm	tts_streamer_start	wip	src/libttsivonavoice/streamer.c	66.8	
 0003e88c	38c	arm	tts_streamer_add_voice	wip	src/libttsivonavoice/streamer.c	99.1	
 0003ec18	c0	arm	tts_streamer_stop	matched	src/libttsivonavoice/streamer.c	100	
-0003ecd8	5d8	arm	tts_streamer_synth0	todo			
-0003f2b0	98	arm	tts_wave_delete	todo			
-0003f348	cfc	arm	tts_streamer_synth	todo			
-00040044	1a0	arm	tts_streamer_jump	todo			
+0003ecd8	5d8	arm	tts_streamer_synth0	wip	src/libttsivonavoice/streamer.c	50.1	
+0003f2b0	98	arm	tts_wave_delete	wip	src/libttsivonavoice/streamer.c	68.4	
+0003f348	cfc	arm	tts_streamer_synth	wip	src/libttsivonavoice/streamer.c	19.5	
+00040044	1a0	arm	tts_streamer_jump	wip	src/libttsivonavoice/streamer.c	80.8	
 000401e4	b8	arm	tts_get_input_warning	todo			
 0004029c	ec	arm	lang_find_part	wip	src/libttsivonavoice/voice.c	86.7	
 00040388	18	arm	lang_part_data	matched	src/libttsivonavoice/voice.c	100	
@@ -581,7 +581,7 @@ addr	size	mode	name	status	src	score	note
 00041ae8	1fc	arm	FUN_00041ae8	todo			
 00041ce4	10	arm	FUN_00041ce4	todo			
 00041cf4	c0	arm	FUN_00041cf4	todo			
-00041db4	128	arm	FUN_00041db4	todo			
+00041db4	128	arm	phone_viseme	todo			
 00041edc	8	arm	FUN_00041edc	todo			
 00041ee4	9c	arm	FUN_00041ee4	todo			
 00041f80	200	arm	FUN_00041f80	todo			
@@ -692,15 +692,15 @@ addr	size	mode	name	status	src	score	note
 00047bcc	120	arm	FUN_00047bcc	todo			
 00047cec	94	arm	FUN_00047cec	todo			
 00047d80	bc	arm	FUN_00047d80	todo			
-00047e3c	248	arm	FUN_00047e3c	todo			
+00047e3c	248	arm	license_check	todo			
 00048084	1cc	arm	FUN_00048084	todo			
 00048250	108	arm	license_release	todo			
 00048358	50	arm	FUN_00048358	todo			
 000483a8	24	arm	rate_conv_new	todo			
 000483cc	c	arm	rate_conv_free	todo			
-000483d8	18	arm	FUN_000483d8	todo			
+000483d8	18	arm	rate_conv_reset	todo			
 000483f0	58	arm	FUN_000483f0	todo			
-00048448	b4	arm	FUN_00048448	todo			
+00048448	b4	arm	rate_conv_add	todo			
 000484fc	1c	arm	FUN_000484fc	todo			
 00048518	c	arm	FUN_00048518	todo			
 00048524	c	arm	FUN_00048524	todo			
@@ -860,7 +860,7 @@ addr	size	mode	name	status	src	score	note
 0004fc3c	2c	arm	cst_rateconv_leadout	matched	src/libttsivonavoice/flite/rateconv.c	100	flite order 100%
 0004fc68	3b0	arm	new_rateconv	matched	src/libttsivonavoice/flite/rateconv.c	100	flite strings(1) 100%
 00050018	2c	arm	delete_rateconv	matched	src/libttsivonavoice/flite/rateconv.c	100	flite order 100%
-00050044	58	arm	FUN_00050044	todo			
+00050044	58	arm	val_synth_mark	todo			
 0005009c	18	arm	FUN_0005009c	todo			
 000500b4	c	arm	FUN_000500b4	todo			
 000500c0	1c	arm	FUN_000500c0	todo			
@@ -875,9 +875,9 @@ addr	size	mode	name	status	src	score	note
 0005041c	1c	arm	FUN_0005041c	todo			
 00050438	60	arm	FUN_00050438	todo			
 00050498	60	arm	FUN_00050498	todo			
-000504f8	58	arm	FUN_000504f8	todo			
-00050550	520	arm	FUN_00050550	todo			
-00050a70	4c	arm	FUN_00050a70	todo			
+000504f8	58	arm	utt_synth_frontend	todo			
+00050550	520	arm	utt_synth_wave	todo			
+00050a70	4c	arm	utt_rewind	todo			
 00050abc	3c	arm	FUN_00050abc	todo			
 00050af8	38	arm	FUN_00050af8	todo			
 00050b30	38	arm	FUN_00050b30	todo			
