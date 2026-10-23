@@ -1217,10 +1217,10 @@ addr	size	mode	name	status	src	score	note
 00057df8	8	arm	strlist_free_ptr	matched	src/libttsivonavoice/strutil.c	100	
 00057e00	48	arm	ivona_time_msec	matched	src/libttsivonavoice/strutil.c	100	
 00057e48	44	arm	ivona_time_usec	matched	src/libttsivonavoice/strutil.c	100	
-00057e8c	150	arm	FUN_00057e8c	todo			
-00057fdc	b8	arm	FUN_00057fdc	todo			
+00057e8c	150	arm	uni_decode	todo			
+00057fdc	b8	arm	uni_translit	todo			
 00058094	2e8	arm	FUN_00058094	todo			
-0005837c	d74	arm	FUN_0005837c	todo			
+0005837c	d74	arm	uni_tolower	todo			
 000590f0	44	arm	FUN_000590f0	todo			
 00059134	40	arm	FUN_00059134	todo			
 00059174	58	arm	FUN_00059174	todo			
@@ -1238,34 +1238,34 @@ addr	size	mode	name	status	src	score	note
 0005951c	20	arm	FUN_0005951c	todo			
 0005953c	34	arm	FUN_0005953c	todo			
 00059570	14	arm	FUN_00059570	todo			
-00059584	16c	arm	FUN_00059584	todo			
-000596f0	14	arm	utf8_decode	todo			
-00059704	6c	arm	utf8_strchr	todo			
-00059770	54	arm	FUN_00059770	todo			
-000597c4	24	arm	FUN_000597c4	todo			
-000597e8	54	arm	FUN_000597e8	todo			
-0005983c	24	arm	FUN_0005983c	todo			
-00059860	c0	arm	utf8_strspn	todo			
-00059920	c0	arm	FUN_00059920	todo			
-000599e0	100	arm	FUN_000599e0	todo			
-00059ae0	50	arm	FUN_00059ae0	todo			
-00059b30	190	arm	FUN_00059b30	todo			
-00059cc0	50	arm	utf8_charlen	todo			split from FUN_00059b30 (leaf after its literal pool)
-00059d10	3c	arm	FUN_00059d10	todo			
-00059d4c	38	arm	FUN_00059d4c	todo			
-00059d84	48	arm	FUN_00059d84	todo			
-00059dcc	68	arm	FUN_00059dcc	todo			
-00059e34	24	arm	FUN_00059e34	todo			
-00059e58	30	arm	FUN_00059e58	todo			
-00059e88	18	arm	FUN_00059e88	todo			
-00059ea0	b8	arm	FUN_00059ea0	todo			
-00059f58	bc	arm	FUN_00059f58	todo			
-0005a014	88	arm	FUN_0005a014	todo			
-0005a09c	38	arm	FUN_0005a09c	todo			
-0005a0d4	ac	arm	FUN_0005a0d4	todo			
-0005a180	1c	arm	FUN_0005a180	todo			
-0005a19c	f4	arm	utf8_rtrim	todo			
-0005a290	1bc	arm	FUN_0005a290	todo			
+00059584	16c	arm	utf8_decode_char	wip	src/libttsivonavoice/utf8.c	7.6	
+000596f0	14	arm	utf8_decode	matched	src/libttsivonavoice/utf8.c	100	
+00059704	6c	arm	utf8_strchr	matched	src/libttsivonavoice/utf8.c	100	
+00059770	54	arm	utf8_strrchr	matched	src/libttsivonavoice/utf8.c	100	
+000597c4	24	arm	utf8_strchr_str	matched	src/libttsivonavoice/utf8.c	100	
+000597e8	54	arm	utf8_strchr_single	matched	src/libttsivonavoice/utf8.c	100	
+0005983c	24	arm	utf8_strrchr_str	matched	src/libttsivonavoice/utf8.c	100	
+00059860	c0	arm	utf8_strspn	matched	src/libttsivonavoice/utf8.c	100	
+00059920	c0	arm	utf8_strcspn	matched	src/libttsivonavoice/utf8.c	100	
+000599e0	100	arm	utf8_substr	wip	src/libttsivonavoice/utf8.c	47.5	
+00059ae0	50	arm	utf8_last_char	matched	src/libttsivonavoice/utf8.c	100	
+00059b30	190	arm	utf8_split	wip	src/libttsivonavoice/utf8.c	59.0	
+00059cc0	50	arm	utf8_charlen	matched	src/libttsivonavoice/utf8.c	100	split from FUN_00059b30 (leaf after its literal pool)
+00059d10	3c	arm	utf8_char_bytes	matched	src/libttsivonavoice/utf8.c	100	
+00059d4c	38	arm	utf8_strlen	matched	src/libttsivonavoice/utf8.c	100	
+00059d84	48	arm	utf8_strlen_gt	matched	src/libttsivonavoice/utf8.c	100	
+00059dcc	68	arm	utf8_strlen_eq	matched	src/libttsivonavoice/utf8.c	100	
+00059e34	24	arm	utf8_encode_z	matched	src/libttsivonavoice/utf8.c	100	
+00059e58	30	arm	utf8_copy_char	matched	src/libttsivonavoice/utf8.c	100	
+00059e88	18	arm	utf8_copy_char_z	matched	src/libttsivonavoice/utf8.c	100	
+00059ea0	b8	arm	utf8_to_ascii	wip	src/libttsivonavoice/utf8.c	68.8	
+00059f58	bc	arm	utf8_strpbrk	matched	src/libttsivonavoice/utf8.c	100	
+0005a014	88	arm	utf8_offset	wip	src/libttsivonavoice/utf8.c	52.9	
+0005a09c	38	arm	utf8_byte_offset	matched	src/libttsivonavoice/utf8.c	100	
+0005a0d4	ac	arm	utf8_lower_n	matched	src/libttsivonavoice/utf8.c	100	
+0005a180	1c	arm	utf8_lower	matched	src/libttsivonavoice/utf8.c	100	
+0005a19c	f4	arm	utf8_rtrim	wip	src/libttsivonavoice/utf8.c	40.6	
+0005a290	1bc	arm	utf8_map	wip	src/libttsivonavoice/utf8.c	34.3	
 0005a44c	58	arm	val_vector	matched	src/libttsivonavoice/vector.c	100	
 0005a4a4	18	arm	vector_val	matched	src/libttsivonavoice/vector.c	100	
 0005a4bc	44	arm	vector_new	matched	src/libttsivonavoice/vector.c	100	
