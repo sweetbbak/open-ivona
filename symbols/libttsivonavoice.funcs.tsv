@@ -1347,7 +1347,7 @@ addr	size	mode	name	status	src	score	note
 0005e4f0	58	arm	val_diphonedb	matched	src/libttsivonavoice/voxdb.c	100	
 0005e548	18	arm	diphonedb_val	matched	src/libttsivonavoice/voxdb.c	100	
 0005e560	68	arm	diphonedb_unit_index	matched	src/libttsivonavoice/voxdb.c	100	
-0005e5c8	290	arm	diphonedb_unit_decode	wip	src/libttsivonavoice/voxdb.c	71.1	
+0005e5c8	290	arm	diphonedb_unit_decode	matched	src/libttsivonavoice/voxdb.c	100	
 0005e858	98	arm	vox_file_name	wip	src/libttsivonavoice/voxdb.c	90.0	
 0005e8f0	48	arm	vox_db_free	matched	src/libttsivonavoice/voxdb.c	100	
 0005e938	57c	arm	vox_db_open	wip	src/libttsivonavoice/voxdb.c	22.4	
@@ -1358,28 +1358,28 @@ addr	size	mode	name	status	src	score	note
 0005f334	38	arm	delete_diphonedb	matched	src/libttsivonavoice/voxdb.c	100	
 0005f36c	4	arm	val_delete_diphonedb	matched	src/libttsivonavoice/voxdb.c	100	
 0005f370	36c	arm	FUN_0005f370	todo			
-0005f6dc	2c	arm	diphonedb_unit_flag	todo			
+0005f6dc	2c	arm	diphonedb_unit_flag	matched	src/libttsivonavoice/voxdb.c	100	
 0005f708	464	arm	FUN_0005f708	todo			
-0005fb6c	30	arm	FUN_0005fb6c	todo			
-0005fb9c	24	arm	FUN_0005fb9c	todo			
-0005fbc0	24	arm	FUN_0005fbc0	todo			
-0005fbe4	60	arm	FUN_0005fbe4	todo			
-0005fc44	48	arm	FUN_0005fc44	todo			
-0005fc8c	68	arm	FUN_0005fc8c	todo			
-0005fcf4	64	arm	FUN_0005fcf4	todo			
+0005fb6c	30	arm	utt_diphonedb_extra	matched	src/libttsivonavoice/voxdb.c	100	
+0005fb9c	24	arm	select_cand_cmp_cost	matched	src/libttsivonavoice/voxdb.c	100	
+0005fbc0	24	arm	select_cand_cmp_8	todo			
+0005fbe4	60	arm	vox_join_cost	wip	src/libttsivonavoice/voxdb.c	50.0	
+0005fc44	48	arm	unit_selector_new	matched	src/libttsivonavoice/voxdb.c	100	
+0005fc8c	68	arm	unit_selector_free	wip	src/libttsivonavoice/voxdb.c	92.3	
+0005fcf4	64	arm	unit_selector_add_segment	matched	src/libttsivonavoice/voxdb.c	100	
 0005fd58	160	arm	FUN_0005fd58	todo			
-0005feb8	24	arm	FUN_0005feb8	todo			
-0005fedc	20	arm	FUN_0005fedc	todo			
+0005feb8	24	arm	select_segment_resize	matched	src/libttsivonavoice/voxdb.c	100	
+0005fedc	20	arm	select_segment_sort	matched	src/libttsivonavoice/voxdb.c	100	
 0005fefc	1088	arm	FUN_0005fefc	todo			
 00060f84	400	arm	FUN_00060f84	todo			
 00061384	84	arm	FUN_00061384	todo			
-00061408	1c	arm	FUN_00061408	todo			
-00061424	44	arm	FUN_00061424	todo			
-00061468	20	arm	FUN_00061468	todo			
-00061488	50	arm	FUN_00061488	todo			
-000614d8	58	arm	FUN_000614d8	todo			
-00061530	9c	arm	FUN_00061530	todo			
-000615cc	4	arm	val_delete_dynamic_voxdbs	todo			
+00061408	1c	arm	dynamic_voxdbs_new	matched	src/libttsivonavoice/voxdb.c	100	
+00061424	44	arm	dynamic_voxdbs_find	matched	src/libttsivonavoice/voxdb.c	100	
+00061468	20	arm	phone_is_breaths	matched	src/libttsivonavoice/voxdb.c	100	
+00061488	50	arm	dynamic_voxdbs_has_unit	matched	src/libttsivonavoice/voxdb.c	100	
+000614d8	58	arm	val_dynamic_voxdbs	matched	src/libttsivonavoice/voxdb.c	100	
+00061530	9c	arm	feats_have_breath_units	matched	src/libttsivonavoice/voxdb.c	100	
+000615cc	4	arm	val_delete_dynamic_voxdbs	matched	src/libttsivonavoice/voxdb.c	100	
 000615d0	18	arm	FUN_000615d0	todo			
 000615e8	58	arm	FUN_000615e8	todo			
 00061640	18	arm	FUN_00061640	todo			

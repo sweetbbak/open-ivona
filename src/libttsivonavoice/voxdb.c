@@ -3,11 +3,13 @@
  * decoder, unit record decoding and unit selection. Compiled without inlining (see config).
  */
 #include <stdio.h>
+#include <stdlib.h>
 #include <string.h>
 #include "cst_alloc.h"
 #include "cst_file.h"
 #include "cst_string.h"
 #include "cst_val.h"
+#include "cst_utterance.h"
 #include "cst_val_defs.h"
 
 #define VOX_MAGIC_CDXV 0x56584443
@@ -138,10 +140,44 @@ typedef struct vox_unit {
     const vox_phone *ph54;              /* +0x54 */
     unsigned char f58, f59;
     unsigned char content38, content40, content48;      /* +0x5a */
+    unsigned char unk_5d[3];
     unsigned char unk_60[0x28];         /* +0x60 */
     void *p88, *p8c, *p90, *p94;        /* +0x88 */
     unsigned int f98;                   /* +0x98 */
 } vox_unit;
+
+/* a unit candidate for one segment (24 bytes) */
+typedef struct select_cand {
+    int unk_0[2];
+    unsigned int unk_8;
+    unsigned int cost;          /* +0x0c */
+    int unk_10[2];
+} select_cand;
+
+/* one segment of a unit selection (0x158 bytes) */
+typedef struct select_segment {
+    unsigned char unk_0[0x144];
+    select_cand *cands;         /* +0x144 */
+    int n_cands;                /* +0x148 */
+    unsigned char unk_14c[0xc];
+} select_segment;
+
+/* the extra unit databases of a voice */
+typedef struct dynamic_voxdbs {
+    diphonedb *a;
+    diphonedb *b;
+} dynamic_voxdbs;
+
+typedef struct unit_selector {
+    cst_utterance *utt;
+    dynamic_voxdbs *dynamic;    /* +0x04 */
+    int unk_8[4];
+    select_segment *segs;       /* +0x18 */
+    int n_segs;                 /* +0x1c */
+    int unk_20[4];
+} unit_selector;
+
+float acoustic_stub_1(const void *a, const void *b, int x);
 
 int pcm_unit_decode();
 int vorbis_unit_open(vox_decoder *d);
@@ -155,6 +191,7 @@ void silk_unit_close(vox_decoder *d);
 int silk_unit_decode();
 
 CST_VAL_USER_TYPE_DCLS(diphonedb, diphonedb)
+CST_VAL_USER_TYPE_DCLS(dynamic_voxdbs, dynamic_voxdbs)
 CST_VAL_REGISTER_TYPE_NODEL(diphonedb, diphonedb)
 
 /* 0x5e560 arm: index of the unit named name, or -1. */
@@ -180,6 +217,7 @@ int diphonedb_unit_index(const diphonedb *d, const char *name)
 vox_unit *diphonedb_unit_decode(const diphonedb *d, const vox_unit_rec *r, vox_unit *u)
 {
     const unsigned char *p = d->unit_data + r->data, *q;
+    unsigned char c;
 
     u->f98 = d->sec13 ? d->sec13[r - d->units] : 0;
     memset(u->unk_60, 0, sizeof u->unk_60);
@@ -199,12 +237,13 @@ vox_unit *diphonedb_unit_decode(const diphonedb *d, const vox_unit_rec *r, vox_u
     if (d->sec12)
         memcpy(u->f28, p + 0x11, 5);
     u->f1b = u->f1a >> 4;
-    u->f1e = u->f1d >> 4;
     u->f1a &= 0xf;
+    u->f1e = u->f1d >> 4;
     u->f1d &= 0xf;
     u->ph30 = &d->phones[(signed char)p[0xc]];
-    u->f35 = p[0xd] >> 4;
-    u->f34 = p[0xd] & 0xf;
+    c = p[0xd];
+    u->f35 = c >> 4;
+    u->f34 = c & 0xf;
     u->f36 = p[0xe];
     q = p + (unsigned short)(p[0xf] | p[0x10] << 8);
     u->ph38 = &d->phones[(signed char)q[0]];
@@ -571,4 +610,167 @@ void delete_diphonedb(diphonedb *d)
 void val_delete_diphonedb(void *v)
 {
     delete_diphonedb(v);
+}
+
+/* 0x5f6dc arm */
+int diphonedb_unit_flag(const dynamic_voxdbs *dv, int x)
+{
+    const unsigned int *u = (const unsigned int *)dv->a->units;
+
+    if (u == NULL || *u == 0)
+        return 0;
+    return x == 3;
+}
+
+/* 0x5fb6c arm */
+vox_db_extra *utt_diphonedb_extra(const cst_utterance *utt)
+{
+    const cst_val *v = feat_val(utt->features, "diphonedb");
+    diphonedb *d = v ? val_diphonedb(v) : NULL;
+
+    return &d->extra;
+}
+
+/* 0x5fb9c arm */
+static int select_cand_cmp_cost(const void *a, const void *b)
+{
+    unsigned int x = ((const select_cand *)a)->cost, y = ((const select_cand *)b)->cost;
+
+    if (x < y)
+        return -1;
+    return x > y;
+}
+
+/* 0x5fbc0 arm */
+static int select_cand_cmp_8(const void *a, const void *b)
+{
+    unsigned int x = ((const select_cand *)a)->unk_8, y = ((const select_cand *)b)->unk_8;
+
+    if (x < y)
+        return -1;
+    return x > y;
+}
+
+/* 0x5fbe4 arm: acoustic join cost between units a|b and c|d. */
+unsigned int vox_join_cost(const vox_unit *a, const vox_unit *b, const vox_unit *c,
+                           const vox_unit *d)
+{
+    if (*(const int *)(c->unk_60 + 4) != 0 || *(const int *)(d->unk_60 + 4) != 0)
+        return acoustic_stub_1(a->unk_60, c->unk_60, 1) + acoustic_stub_1(b->unk_60, d->unk_60, 0);
+    return 0;
+}
+
+/* 0x5fc44 arm */
+unit_selector *unit_selector_new(cst_utterance *utt)
+{
+    unit_selector *s = cst_safe_calloc(1, sizeof(unit_selector));
+
+    if (utt) {
+        s->utt = utt;
+        s->dynamic = val_dynamic_voxdbs(feat_val(utt->features, "dynamic_voxdbs"));
+    }
+    return s;
+}
+
+/* 0x5fc8c arm */
+void unit_selector_free(unit_selector *s)
+{
+    int i;
+
+    if (s == NULL)
+        return;
+    for (i = 0; i < s->n_segs; i++) {
+        select_segment *seg = &s->segs[i];
+
+        if (seg->cands)
+            cst_free(seg->cands);
+    }
+    cst_free(s->segs);
+    cst_free(s);
+}
+
+/* 0x5fcf4 arm: appends a cleared segment. */
+select_segment *unit_selector_add_segment(unit_selector *s)
+{
+    if (s == NULL)
+        return NULL;
+    s->n_segs++;
+    s->segs = cst_safe_realloc(s->segs, s->n_segs, sizeof(select_segment));
+    memset(&s->segs[s->n_segs - 1], 0, sizeof(select_segment));
+    return &s->segs[s->n_segs - 1];
+}
+
+/* 0x5feb8 arm */
+void select_segment_resize(select_segment *seg, int n)
+{
+    seg->cands = cst_safe_realloc(seg->cands, n, sizeof(select_cand));
+    seg->n_cands = n;
+}
+
+/* 0x5fedc arm: sorts the candidates by cost. */
+void select_segment_sort(select_segment *seg)
+{
+    qsort(seg->cands, seg->n_cands, sizeof(select_cand), select_cand_cmp_cost);
+}
+
+/* 0x61408 arm */
+dynamic_voxdbs *dynamic_voxdbs_new(diphonedb *a)
+{
+    dynamic_voxdbs *dv = cst_safe_calloc(1, sizeof(dynamic_voxdbs));
+
+    dv->a = a;
+    return dv;
+}
+
+/* 0x61424 arm: the database with the given key, or NULL. */
+diphonedb *dynamic_voxdbs_find(const dynamic_voxdbs *dv, int key)
+{
+    if (dv == NULL)
+        return NULL;
+    if (dv->a && dv->a->key == key)
+        return dv->a;
+    if (dv->b == NULL)
+        return NULL;
+    return dv->b->key == key ? dv->b : NULL;
+}
+
+/* 0x61468 arm */
+int phone_is_breaths(const char *name)
+{
+    return strcmp(name, "breaths") == 0;
+}
+
+/* 0x61488 arm: whether either database has a unit named name. */
+int dynamic_voxdbs_has_unit(const dynamic_voxdbs *dv, const char *name)
+{
+    if (dv->a && diphonedb_unit_index(dv->a, name) != -1)
+        return 1;
+    if (dv->b == NULL)
+        return 0;
+    return diphonedb_unit_index(dv->b, name) != -1;
+}
+
+CST_VAL_REGISTER_TYPE_NODEL(dynamic_voxdbs, dynamic_voxdbs)
+
+/* 0x61530 arm: whether the voice's databases have breath units. */
+int feats_have_breath_units(const cst_features *f)
+{
+    const dynamic_voxdbs *dv;
+
+    if (f == NULL || !feat_present(f, "dynamic_voxdbs"))
+        return 0;
+    dv = val_dynamic_voxdbs(feat_val(f, "dynamic_voxdbs"));
+    if (dv == NULL)
+        return 0;
+    if (dv->a && diphonedb_unit_index(dv->a, "pau-brth") != -1)
+        return 1;
+    if (dv->b == NULL)
+        return 0;
+    return diphonedb_unit_index(dv->b, "pau-brth") != -1;
+}
+
+/* 0x615cc arm */
+void val_delete_dynamic_voxdbs(void *v)
+{
+    cst_free(v);
 }

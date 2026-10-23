@@ -17,7 +17,7 @@ void *hash_get(hash *h, const void *key, size_t len);
 cst_item *item_traverse(const cst_item *item, ...);
 
 int ivona_rand(int *seed);
-int *FUN_0005fb6c(const cst_utterance *utt);
+int *utt_diphonedb_extra(const cst_utterance *utt);
 
 #define ITEM_TRAVERSE_PREV 0x103
 #define ITEM_TRAVERSE_PARENT 0x106
@@ -397,7 +397,7 @@ float item_set_breath_acoustic_data(cst_item *item)
         p->streams = (acoustic_stream *)breath_streams;
         p->unk_c = breath_unk;
         p->det = covs[0][0];
-        p->n_frames = *FUN_0005fb6c(utt);
+        p->n_frames = *utt_diphonedb_extra(utt);
     }
     data = cst_safe_alloc(acoustic_streams_frame_size(p->streams, p->n_streams, p->n_frames),
                           sizeof(float));
