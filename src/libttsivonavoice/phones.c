@@ -152,9 +152,7 @@ int ph_is_syllabic(const cst_phoneset *ps, const cst_val *p)
     if (strcmp("+", phone_feature_base(ps, p, "vc")) == 0)
         return 1;
     s = phone_name(p);
-    if (strchr("lmn", s[0]) == NULL)
-        return 0;
-    if (s[1] == 'x')
+    if (strchr("lmn", s[0]) && s[1] == 'x')
         return 1;
     return 0;
 }
@@ -278,7 +276,7 @@ cst_val *phones_strip_stress_range(cst_val *from, const cst_val *to)
     for (p = from; ; ) {
         phone_strip_stress(p);
         p = (cst_val *)val_cdr(p);
-        if (p == to || p == NULL)
+        if (to == p || p == NULL)
             break;
     }
     return from;
@@ -296,14 +294,12 @@ cst_val *phones_keep_first_stress_range(cst_val *from, const cst_val *to)
     cst_val *p;
     int n = 0;
 
-    if (from == to || from == NULL)
-        return from;
-    for (p = from; ; ) {
-        if (phone_stress(p) && ++n != 1)
-            phone_strip_stress(p);
-        p = (cst_val *)val_cdr(p);
-        if (p == to || p == NULL)
-            break;
+    for (p = from; to != p && p; p = (cst_val *)val_cdr(p)) {
+        if (phone_stress(p)) {
+            n++;
+            if (n != 1)
+                phone_strip_stress(p);
+        }
     }
     return from;
 }

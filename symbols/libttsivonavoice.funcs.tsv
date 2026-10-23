@@ -1584,7 +1584,7 @@ addr	size	mode	name	status	src	score	note
 000713c4	38	arm	phone_is_silence	matched	src/libttsivonavoice/phones.c	100	
 000713fc	34	arm	ph_is_vowel	matched	src/libttsivonavoice/phones.c	100	
 00071430	34	arm	ph_is_long	matched	src/libttsivonavoice/phones.c	100	
-00071464	7c	arm	ph_is_syllabic	wip	src/libttsivonavoice/phones.c	60.6	
+00071464	7c	arm	ph_is_syllabic	matched	src/libttsivonavoice/phones.c	100	
 000714e0	34	arm	ph_is_glide	matched	src/libttsivonavoice/phones.c	100	
 00071514	34	arm	ph_is_nasal	matched	src/libttsivonavoice/phones.c	100	
 00071548	34	arm	ph_is_short	matched	src/libttsivonavoice/phones.c	100	
@@ -1596,9 +1596,9 @@ addr	size	mode	name	status	src	score	note
 000716fc	40	arm	phones_have_stress	matched	src/libttsivonavoice/phones.c	100	
 0007173c	58	arm	phones_find_stress	wip	src/libttsivonavoice/phones.c	77.3	
 00071794	110	arm	phones_stress_syllable	wip	src/libttsivonavoice/phones.c	23.0	
-000718a4	44	arm	phones_strip_stress_range	wip	src/libttsivonavoice/phones.c	82.4	
+000718a4	44	arm	phones_strip_stress_range	wip	src/libttsivonavoice/phones.c	88.2	
 000718e8	8	arm	phones_strip_stress	matched	src/libttsivonavoice/phones.c	100	
-000718f0	64	arm	phones_keep_first_stress_range	wip	src/libttsivonavoice/phones.c	70.4	
+000718f0	64	arm	phones_keep_first_stress_range	wip	src/libttsivonavoice/phones.c	76.0	
 00071954	8	arm	phones_keep_first_stress	matched	src/libttsivonavoice/phones.c	100	
 0007195c	1ac	arm	FUN_0007195c	todo			
 00071b08	84	arm	FUN_00071b08	todo			
