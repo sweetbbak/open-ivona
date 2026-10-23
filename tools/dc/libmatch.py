@@ -161,6 +161,7 @@ def libmatch(stem: str, libs: dict[str, str], verbose: bool = False) -> None:
         b.save()
         print(f"verified {n_nb} more by object order next to verified neighbours")
     n_bad = _placement_pass(b, libs)
+    n_bad += _island_pass(b, libs)
     n_bad += _final_pass(b, libs)
     if n_bad:
         b.save()
@@ -268,6 +269,47 @@ def _placement_pass(b: Binary, libs: dict[str, str]) -> int:
                 f.name = f"FUN_{f.addr:08x}"
                 n += 1
     return n
+
+
+def island_rows(rows: list[tuple[int, str, str]]) -> set[int]:
+    """rows: (addr, library, member) of verified library functions in address order. A static
+    archive's code is one contiguous block, so identical code from the wrong library (tiny -O0
+    setters are byte-identical across OpenSSL and Expat) shows up as a lone row: its member has
+    no adjacent row, both nearest verified neighbours come from one other library, and it lies
+    inside that library's main range (central 95% of its rows) but outside its own."""
+    by_lib: dict[str, list[int]] = defaultdict(list)
+    for a, lib, _ in rows:
+        by_lib[lib].append(a)
+
+    def main_range(lib: str) -> tuple[int, int]:
+        v = by_lib[lib]
+        k = len(v) // 40
+        return v[k], v[len(v) - 1 - k]
+    ranges = {lib: main_range(lib) for lib in by_lib}
+    out = set()
+    for i in range(1, len(rows) - 1):
+        a, lib, member = rows[i]
+        prev, nxt = rows[i - 1], rows[i + 1]
+        if (prev[1], prev[2]) == (lib, member) or (nxt[1], nxt[2]) == (lib, member):
+            continue
+        other = prev[1]
+        if other == lib or nxt[1] != other:
+            continue
+        lo, hi = ranges[other]
+        own_lo, own_hi = ranges[lib]
+        if lo <= a <= hi and not own_lo <= a <= own_hi:
+            out.add(a)
+    return out
+
+
+def _island_pass(b: Binary, libs: dict[str, str]) -> int:
+    rows = sorted((f.addr, *f.src.split(":")[1:3]) for f in b.funcs
+                  if f.status == "lib" and f.src.startswith("lib:"))
+    bad = island_rows(rows)
+    for f in b.funcs:
+        if f.addr in bad and f.src.split(":")[1] in libs:
+            f.status, f.score, f.src, f.note, f.name = "todo", "", "", "", f"FUN_{f.addr:08x}"
+    return len(bad)
 
 
 def _final_pass(b: Binary, libs: dict[str, str]) -> int:

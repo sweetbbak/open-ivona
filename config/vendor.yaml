@@ -25,13 +25,14 @@ curl:
   prepare: autoconf
   config_h: lib/curl_config.h
   # --disable-ipv6: global_init, inlined into curl_easy_init (0x1cbbf8), calls no Curl_ipv6works;
-  # --disable-unix-sockets: Curl_failf (0x1d91ec) finds state.buffer at 0x61c;
-  # cookies/crypto-auth: Curl_close (0x1da15c) calls neither Curl_flush_cookies nor the digest
-  # cleanup, and there are no Set-Cookie/nonce/realm strings; proxy: no SOCKS strings at all;
-  # ftp/telnet/tftp/smb: their scheme names are missing from .rodata (DICT FILE GOPHER HTTP IMAP
-  # POP3 RTSP SMTP remain).
-  configure: [--disable-shared, --enable-static, --disable-ipv6, --disable-unix-sockets,
-              --disable-cookies, --disable-crypto-auth, --disable-proxy, --disable-ftp,
+  # --disable-crypto-auth: Curl_close (0x1da15c) has no Curl_digest_cleanup call, no nonce/realm
+  # strings; unix sockets stay enabled (their dupstring slot replaces STRING_SERVICE_NAME, so
+  # Curl_failf finds state.buffer at 0x61c and Curl_close set.wildcardmatch at 0x46c);
+  # cookies: Curl_close calls no Curl_flush_cookies and there are no Set-Cookie strings; proxy:
+  # no SOCKS strings at all; ftp/telnet/tftp/smb: their scheme names are missing from .rodata
+  # (DICT FILE GOPHER HTTP IMAP POP3 RTSP SMTP remain).
+  configure: [--disable-shared, --enable-static, --disable-ipv6, --disable-crypto-auth,
+              --disable-cookies, --disable-proxy, --disable-ftp,
               --disable-telnet, --disable-tftp, --disable-smb, --without-ssl, --without-zlib, --without-libidn2,
               --without-libpsl, --without-librtmp, --without-libssh2, --without-nghttp2,
               --without-gssapi, --without-ca-bundle, --without-ca-path]

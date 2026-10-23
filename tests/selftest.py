@@ -155,6 +155,21 @@ def main() -> int:
     else:
         print("ok   libmatch drops pairings that disagree with their object's data placement")
 
+    # libmatch: a lone row from another library amid one library's code is a mis-attribution.
+    from dc.libmatch import island_rows
+    rows = sorted([(a, "openssl", f"o{a // 40}") for a in range(0, 400, 4)]     # openssl block
+                  + [(a, "expat", "xmlparse") for a in range(400, 800, 4) if a != 600]  # expat block
+                  + [(600, "openssl", "o3"),                                        # stray setter
+                     (804, "curl", "url"), (808, "curl", "url"), (900, "curl", "easy")])
+    rows = [r for r in rows if r[0] != 700] + [(700, "curl", "url"), (702, "curl", "url")]
+    rows.sort()
+    got = island_rows(rows)
+    if got != {600}:  # the curl pair inside expat's block is two adjacent rows of one object: kept
+        fails += 1
+        print(f"FAIL: island_rows gave {sorted(got)}")
+    else:
+        print("ok   libmatch drops a lone row of another library inside a library's block")
+
     # libmatch merged spans may start at a prologue (a function the splitter cut at a jump table).
     from dc.libmatch import _has_prologue
 
