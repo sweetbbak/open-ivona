@@ -1605,7 +1605,7 @@ addr	size	mode	name	status	src	score	note
 00071b8c	288	arm	FUN_00071b8c	todo			
 00071e14	c	arm	lex_entry_cmp	matched	src/libttsivonavoice/phones.c	100	
 00071e20	120	arm	lex_lookup_index	wip	src/libttsivonavoice/phones.c	88.9	
-00071f40	84	arm	lex_lower_bound_name	wip	src/libttsivonavoice/phones.c	52.9	
+00071f40	84	arm	lex_lower_bound_name	wip	src/libttsivonavoice/phones.c	55.9	
 00071fc4	14	arm	lex_has_entry	matched	src/libttsivonavoice/phones.c	100	
 00071fd8	fc	arm	lex_lookup_pos_all	wip	src/libttsivonavoice/phones.c	59.4	
 000720d4	20	arm	lex_lookup_data	matched	src/libttsivonavoice/phones.c	100	

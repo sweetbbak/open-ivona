@@ -413,14 +413,16 @@ const char *lex_lower_bound_name(const lex_table *t, const char *name)
         c = strcmp(name, s);
         if (c == 0)
             return s;
-        if (c > 0)
-            lo = mid + 1;
-        else
+        if (c < 0)
             hi = mid;
+        else
+            lo = mid + 1;
     }
     if (lo == n)
-        return NULL;
-    return t->entries[lo]->name;
+        s = NULL;
+    else
+        s = t->entries[lo]->name;
+    return s;
 }
 
 /* 0x71fc4 arm */
