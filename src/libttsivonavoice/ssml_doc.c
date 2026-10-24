@@ -56,7 +56,8 @@ typedef struct ssml_lexicon {
 /* an <audio> of the document */
 typedef struct ssml_audio {
     char *src;
-    int unk_4[3];
+    int unk_4[2];
+    int pos;                    /* +0x0c: text position */
 } ssml_audio;
 
 typedef struct ssml_doc {
@@ -678,4 +679,32 @@ ssml_lexicon *ssml_add_inline_lexicon(ssml_doc *d, dom_elem *e, const char *data
     tts_msg_free(msgs);
     vector_push(d->lexicons, &lex);
     return d->lexicons->count ? vector_at(d->lexicons, d->lexicons->count - 1) : NULL;
+}
+
+/* the marks of a document in text order, consumed as synthesis passes them */
+typedef struct mark_queue {
+    ivona_vector *marks;        /* of ssml_audio */
+    size_t next;
+} mark_queue;
+
+/* 0x2abe4 arm */
+void mark_queue_init(mark_queue *q, ivona_vector *marks)
+{
+    q->marks = marks;
+    q->next = 0;
+}
+
+/* 0x2abf0 arm: the next mark if it is at or before pos */
+ssml_audio *mark_queue_pop(mark_queue *q, int pos)
+{
+    ssml_audio *m;
+
+    if (q->marks && q->next < vector_size(q->marks)) {
+        m = vector_get(q->marks, q->next);
+        if (m->pos <= pos) {
+            q->next++;
+            return m;
+        }
+    }
+    return NULL;
 }

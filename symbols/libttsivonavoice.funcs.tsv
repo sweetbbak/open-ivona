@@ -325,8 +325,8 @@ addr	size	mode	name	status	src	score	note
 0002a42c	1ec	arm	FUN_0002a42c	todo			
 0002a618	2fc	arm	FUN_0002a618	todo			
 0002a914	2d0	arm	FUN_0002a914	todo			
-0002abe4	c	arm	mark_queue_init	todo			
-0002abf0	54	arm	mark_queue_pop	todo			
+0002abe4	c	arm	mark_queue_init	matched	src/libttsivonavoice/ssml_doc.c	100	
+0002abf0	54	arm	mark_queue_pop	matched	src/libttsivonavoice/ssml_doc.c	100	
 0002ac44	4	arm	FUN_0002ac44	todo			
 0002ac48	8	arm	FUN_0002ac48	todo			
 0002ac50	40	arm	FUN_0002ac50	todo			
