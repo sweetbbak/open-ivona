@@ -21,7 +21,8 @@ typedef struct tts_lang_desc {
 /* a loaded language data file (res_cache data) */
 typedef struct lang_part {
     const char *name;
-    int unk_4[3];
+    void *lexicons;             /* +0x04: NULL-terminated lex_source chain (PRM lexicons) */
+    int unk_8[2];
     unsigned char data[1];      /* +0x10: handed to the language/voice library */
 } lang_part;
 

@@ -317,8 +317,8 @@ addr	size	mode	name	status	src	score	note
 00029888	98	arm	ssml_apply_internal_pls	matched	src/libttsivonavoice/ssml_doc.c	100	
 00029920	98	arm	ssml_apply_external_pls	matched	src/libttsivonavoice/ssml_doc.c	100	
 000299b8	40	arm	dom_set_dict_pos	matched	src/libttsivonavoice/ssml_doc.c	100	
-000299f8	1cc	arm	ssml_apply_dict	wip	src/libttsivonavoice/ssml_doc.c	66.7	
-00029bc4	398	arm	FUN_00029bc4	todo			
+000299f8	1cc	arm	ssml_apply_dict	wip	src/libttsivonavoice/ssml_doc.c	71.1	
+00029bc4	398	arm	ssml_apply_prm	wip	src/libttsivonavoice/ssml_doc.c	56.9	
 00029f5c	210	arm	FUN_00029f5c	todo			
 0002a16c	f8	arm	FUN_0002a16c	todo			
 0002a264	1c8	arm	FUN_0002a264	todo			

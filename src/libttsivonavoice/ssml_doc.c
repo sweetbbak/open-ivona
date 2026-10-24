@@ -82,6 +82,7 @@ ivona_vector *pls_apply(void *lexicons, const ivona_ustr *text, int in_subdoc, c
                         int external);
 float metrics_add_time(cst_features *metrics, const char *name, int usec);
 void *tts_get_certificate(tts_instance *tts);
+lang_part *voice_lang_part(tts_voice *v, const char *name);
 
 /* lex_apply.c */
 typedef struct lex_applier lex_applier;
@@ -478,18 +479,14 @@ void dom_set_dict_pos(dom_elem *e, unsigned int pos)
             dom_set_dict_pos((dom_elem *)c, pos);
 }
 
-/* 0x299f8 arm: applies the voice's user dictionaries to a text node (stage 4 -> 5). Pieces
- * still to go through later dictionaries stay at stage 4. */
-void ssml_apply_dict(ssml_doc *d, tts_voice *v, dom_text *t)
+/* applies a lexicon chain to a text node at the given stage, leaving it at the next one.
+ * Pieces still to go through later lexicons of the chain stay at the stage. */
+static inline void ssml_apply_lexicons(ssml_doc *d, void *chain, tts_instance *tts, dom_text *t,
+                                       int stage)
 {
-    int t0 = d->metrics ? ivona_time_usec() : 0;
-    tts_dict_entry **dict = v->dict;
-    tts_instance *tts = v->tts;
-    cst_features *m;
-
-    if (t->state == 4) {
+    if (t->state == stage) {
         tts_cert_data *cert = tts_get_certificate(tts);
-        lex_applier *ap = lex_applier_new(dict, cert ? cert->ssml : 0, t->text, t->dict_pos,
+        lex_applier *ap = lex_applier_new(chain, cert ? cert->ssml : 0, t->text, t->dict_pos,
                                           d->metrics);
         lex_piece p;
         dom_node *cur;
@@ -509,15 +506,19 @@ void ssml_apply_dict(ssml_doc *d, tts_voice *v, dom_text *t)
                         dom_insert_after(cur, &n->n);
                         cur = &n->n;
                     }
-                    n->dict_pos = p.next == INT_MAX ? 0 : p.next;
-                    n->state = p.next == INT_MAX ? 5 : 4;
+                    {
+                        int done = p.next == INT_MAX;
+
+                        n->dict_pos = done ? 0 : p.next;
+                        n->state = stage + done;
+                    }
                     n->text = p.text;
                     p.text = NULL;
                 } else {
-                    dom_elem *e = ssml_parse_subdoc(d, p.text, 4);
+                    dom_elem *e = ssml_parse_subdoc(d, p.text, stage);
 
                     if (cur->type == DOM_TEXT && ((dom_text *)cur)->text->len == 0) {
-                        ((dom_text *)cur)->state = 5;
+                        ((dom_text *)cur)->state = stage + 1;
                         ((dom_text *)cur)->dict_pos = 0;
                     }
                     if (e) {
@@ -531,10 +532,36 @@ void ssml_apply_dict(ssml_doc *d, tts_voice *v, dom_text *t)
             }
         } else {
             t->dict_pos = 0;
-            t->state = 5;
+            t->state = stage + 1;
         }
         lex_applier_free(ap);
     }
+}
+
+/* 0x299f8 arm: applies the voice's user dictionaries to a text node (stage 4 -> 5). */
+void ssml_apply_dict(ssml_doc *d, tts_voice *v, dom_text *t)
+{
+    int t0 = d->metrics ? ivona_time_usec() : 0;
+    cst_features *m;
+
+    ssml_apply_lexicons(d, v->dict, v->tts, t, 4);
     if ((m = d->metrics) != NULL)
         metrics_add_time(m, "ssml_apply_dict_time", ivona_time_usec() - t0);
+}
+
+/* 0x29bc4 arm: applies the PRM lexicons of the voice (stage 5 -> 6), then those of the
+ * language of the text (6 -> 7). */
+void ssml_apply_prm(ssml_doc *d, tts_voice *v, dom_text *t)
+{
+    lang_part *lp = voice_lang_part(v, dom_inherited_attr(t->n.parent,
+                                       "http://www.w3.org/XML/1998/namespace^lang"));
+    void *none = NULL;
+    int t0 = d->metrics ? ivona_time_usec() : 0;
+    lang_part *vox = VOICE_DATA(v)->vox;
+    cst_features *m;
+
+    ssml_apply_lexicons(d, vox ? vox->lexicons : &none, v->tts, t, 5);
+    ssml_apply_lexicons(d, lp ? lp->lexicons : &none, v->tts, t, 6);
+    if ((m = d->metrics) != NULL)
+        metrics_add_time(m, "ssml_apply_prm_time", ivona_time_usec() - t0);
 }
