@@ -92,3 +92,116 @@ int lang_tags_match(const char *a, const char *list)
         return 4;
     return best;
 }
+
+/* ------------------------------------------------------------------------------------------ */
+/* lang.dat */
+
+#include "ivona_vector.h"
+#include "tts_internal.h"
+
+typedef struct isef_file isef_file;
+isef_file *isef_open(const char *path);
+void isef_free(isef_file *f);
+const char *isef_path(const isef_file *f);
+int isef_find(const isef_file *f, const char *name, const char **data, size_t *size);
+
+typedef struct textstream textstream;
+textstream *textstream_from_mem(const void *data, size_t len);
+void textstream_close(textstream *ts);
+typedef struct linereader linereader;
+linereader *linereader_new(textstream *ts, const char *encoding);
+void linereader_free(linereader *lr);
+int linereader_next(linereader *lr);
+char *linereader_line(const linereader *lr);
+
+typedef struct pls_lexicon pls_lexicon;
+void pls_lexicon_free(pls_lexicon *l);
+pls_lexicon *pls_lexicon_from_data(const char *data, size_t size, const char *arg, void *ctx);
+
+/* 0x229d4 arm */
+static void lexicon_ptr_free(void *p, size_t size)
+{
+    pls_lexicon_free(*(pls_lexicon **)p);
+}
+
+/* 0x2285c arm: the lexicons named in list (one "section[=arg]" per line), from the sections of
+ * lang.dat f; NULL if one is missing or broken. */
+ivona_vector *lang_dat_lexicons(const isef_file *f, const char *list, size_t len, void *ctx)
+{
+    ivona_vector *v = vector_new(sizeof(pls_lexicon *), NULL, lexicon_ptr_free);
+    textstream *ts = textstream_from_mem(list, len);
+    linereader *lr;
+    const char *data;
+    size_t size;
+    pls_lexicon *lex;
+    char *line, *arg;
+    int err = 0;
+
+    if (ts == NULL)
+        return v;
+    lr = linereader_new(ts, "ASCII");
+    while (linereader_next(lr)) {
+        if (err) {
+            linereader_free(lr);
+            textstream_close(ts);
+            vector_free(v);
+            return NULL;
+        }
+        line = linereader_line(lr);
+        arg = strchr(line, '=');
+        if (arg)
+            *arg++ = '\0';
+        if (!isef_find(f, line, &data, &size)) {
+            if (line[0]) {
+                tts_set_errorf(TTS_STATUS_INTERNAL_ERROR, "Section \"%s\" not found in lang.dat", line);
+                err = -1;
+            }
+        } else if ((lex = pls_lexicon_from_data(data, size, arg, ctx)) != NULL)
+            vector_push(v, &lex);
+        else
+            err = -1;
+        cst_free(line);
+    }
+    linereader_free(lr);
+    textstream_close(ts);
+    if (err) {
+        vector_free(v);
+        return NULL;
+    }
+    return v;
+}
+
+#define IVONA_VERSION "1.6.101.3"
+
+/* 0x229dc arm: 0 if lang.dat f is for this engine version, 3 if it has no version, 2 if it is
+ * another (1 for no file). */
+int lang_dat_check_version(const isef_file *f)
+{
+    const char *version = NULL, *config = NULL;
+    size_t vlen, clen;
+
+    if (f == NULL)
+        return 1;
+    if (!isef_find(f, "ivona_version", &version, &vlen)
+        || !isef_find(f, "lex_config", &config, &clen)) {
+        tts_set_errorf(TTS_STATUS_LOAD_VOICE_ERROR,
+                       "wrong file structure: ivona_version or lex_config keys were not present in %s file",
+                       isef_path(f));
+        return 3;
+    }
+    if (vlen == 9 && clen == 0 && strncmp(version, IVONA_VERSION, 9) == 0)
+        return 0;
+    tts_set_errorf((enum tts_status)12, "%s version mismatch: Expected %s (%s); Got %.*s (%.*s)",
+                   isef_path(f), IVONA_VERSION, "", vlen, version, clen, config);
+    return 2;
+}
+
+/* 0x22b08 arm */
+int vox_file_check(const char *path)
+{
+    isef_file *f = isef_open(path);
+    int r = lang_dat_check_version(f);
+
+    isef_free(f);
+    return r;
+}

@@ -229,10 +229,10 @@ addr	size	mode	name	status	src	score	note
 0002243c	f0	arm	isef_next	wip	src/libttsivonavoice/isef.c	49.2	
 0002252c	290	arm	lang_tag_match	wip	src/libttsivonavoice/lang_tag.c	52.9	
 000227bc	a0	arm	lang_tags_match	wip	src/libttsivonavoice/lang_tag.c	46.3	
-0002285c	178	arm	FUN_0002285c	todo			
-000229d4	8	arm	FUN_000229d4	todo			
-000229dc	12c	arm	FUN_000229dc	todo			
-00022b08	24	arm	vox_file_check	todo			
+0002285c	178	arm	lang_dat_lexicons	wip	src/libttsivonavoice/lang_tag.c	50.0	
+000229d4	8	arm	lexicon_ptr_free	matched	src/libttsivonavoice/lang_tag.c	100	
+000229dc	12c	arm	lang_dat_check_version	matched	src/libttsivonavoice/lang_tag.c	100	
+00022b08	24	arm	vox_file_check	matched	src/libttsivonavoice/lang_tag.c	100	
 00022b2c	57c	arm	FUN_00022b2c	todo			
 000230a8	24	arm	FUN_000230a8	todo			
 000230cc	4c	arm	FUN_000230cc	todo			
@@ -281,7 +281,7 @@ addr	size	mode	name	status	src	score	note
 00025854	3c4	arm	FUN_00025854	todo			
 00025c18	ccc	arm	FUN_00025c18	todo			
 000268e4	3d0	arm	pls_lexicon_parse	todo			
-00026cb4	84	arm	FUN_00026cb4	todo			
+00026cb4	84	arm	pls_lexicon_from_data	todo			
 00026d38	14	arm	FUN_00026d38	todo			
 00026d4c	270	arm	FUN_00026d4c	todo			
 00026fbc	1f4	arm	FUN_00026fbc	todo			
