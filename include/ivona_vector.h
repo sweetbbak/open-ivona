@@ -22,6 +22,9 @@ CST_VAL_USER_TYPE_DCLS(vector, ivona_vector)
 
 ivona_vector *vector_new(size_t elem_size, ivona_vector_copy_fn copy, ivona_vector_destroy_fn destroy);
 void vector_reserve(ivona_vector *v, size_t n);
+ivona_vector *vector_from_array(const void *data, size_t elem_size, size_t n,
+                                ivona_vector_copy_fn copy, ivona_vector_destroy_fn destroy);
+void vector_free_ptr(void *p);
 ivona_vector *vector_append_vector(ivona_vector *v, const ivona_vector *src);
 ivona_vector *vector_copy(const ivona_vector *src);
 void vector_insert(ivona_vector *v, size_t idx, const void *elem);

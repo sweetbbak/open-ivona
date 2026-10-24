@@ -347,7 +347,7 @@ addr	size	mode	name	status	src	score	note
 0002d320	1b8	arm	FUN_0002d320	todo			
 0002d4d8	9c	arm	FUN_0002d4d8	todo			
 0002d574	1a8	arm	FUN_0002d574	todo			
-0002d71c	18	arm	FUN_0002d71c	todo			
+0002d71c	18	arm	say_as_info_flag	todo			
 0002d734	64	arm	FUN_0002d734	todo			
 0002d798	e0	arm	FUN_0002d798	todo			
 0002d878	108	arm	FUN_0002d878	todo			
@@ -373,7 +373,7 @@ addr	size	mode	name	status	src	score	note
 000313d8	a0	arm	FUN_000313d8	todo			
 00031478	18	arm	FUN_00031478	todo			
 00031490	3c	arm	FUN_00031490	todo			
-000314cc	8	arm	FUN_000314cc	todo			
+000314cc	8	arm	synth_chunk_free_ptr	matched	src/libttsivonavoice/synth_iter.c	100	
 000314d4	14c	arm	FUN_000314d4	todo			
 00031620	134	arm	FUN_00031620	todo			
 00031754	224	arm	FUN_00031754	todo			
@@ -384,13 +384,13 @@ addr	size	mode	name	status	src	score	note
 000327cc	3c0	arm	FUN_000327cc	todo			
 00032b8c	1d0	arm	FUN_00032b8c	todo			
 00032d5c	bc	arm	FUN_00032d5c	todo			
-00032e18	980	arm	FUN_00032e18	todo			
-00033798	4c	arm	FUN_00033798	todo			
-000337e4	54	arm	synth_ctx_copy	todo			
-00033838	24	arm	synth_ctx_free	todo			
-0003385c	1f4	arm	FUN_0003385c	todo			
-00033a50	24	arm	FUN_00033a50	todo			
-00033a74	6c	arm	FUN_00033a74	todo			
+00032e18	980	arm	synth_state_flush	todo			
+00033798	4c	arm	synth_ctx_new	matched	src/libttsivonavoice/synth_iter.c	100	
+000337e4	54	arm	synth_ctx_copy	matched	src/libttsivonavoice/synth_iter.c	100	
+00033838	24	arm	synth_ctx_free	matched	src/libttsivonavoice/synth_iter.c	100	
+0003385c	1f4	arm	utt_builder_new	wip	src/libttsivonavoice/synth_iter.c	88.0	
+00033a50	24	arm	utt_builder_free	matched	src/libttsivonavoice/synth_iter.c	100	
+00033a74	6c	arm	synth_state_free	matched	src/libttsivonavoice/synth_iter.c	100	
 00033ae0	154	arm	FUN_00033ae0	todo			
 00033c34	90	arm	FUN_00033c34	todo			
 00033cc4	180	arm	FUN_00033cc4	todo			
@@ -408,26 +408,26 @@ addr	size	mode	name	status	src	score	note
 00034b10	48	arm	FUN_00034b10	todo			
 00034b58	318	arm	FUN_00034b58	todo			
 00034e70	100	arm	FUN_00034e70	todo			
-00034f70	44	arm	FUN_00034f70	todo			
-00034fb4	24	arm	FUN_00034fb4	todo			
-00034fd8	c	arm	FUN_00034fd8	todo			
-00034fe4	48	arm	FUN_00034fe4	todo			
-0003502c	28	arm	FUN_0003502c	todo			
-00035054	170	arm	FUN_00035054	todo			
-000351c4	c	arm	FUN_000351c4	todo			
-000351d0	9c	arm	FUN_000351d0	todo			
-0003526c	bc	arm	FUN_0003526c	todo			
-00035328	180	arm	FUN_00035328	todo			
-000354a8	38	arm	FUN_000354a8	todo			
-000354e0	a0	arm	FUN_000354e0	todo			
-00035580	30	arm	FUN_00035580	todo			
-000355b0	2c	arm	FUN_000355b0	todo			
+00034f70	44	arm	synth_state_pop_flags	matched	src/libttsivonavoice/synth_iter.c	100	
+00034fb4	24	arm	synth_state_push_flags	matched	src/libttsivonavoice/synth_iter.c	100	
+00034fd8	c	arm	synth_state_flags	matched	src/libttsivonavoice/synth_iter.c	100	
+00034fe4	48	arm	synth_state_pop_prosody	matched	src/libttsivonavoice/synth_iter.c	100	
+0003502c	28	arm	synth_state_push_prosody	matched	src/libttsivonavoice/synth_iter.c	100	
+00035054	170	arm	synth_state_new	matched	src/libttsivonavoice/synth_iter.c	100	
+000351c4	c	arm	synth_state_prosody	matched	src/libttsivonavoice/synth_iter.c	100	
+000351d0	9c	arm	synth_state_push_unk_1c	matched	src/libttsivonavoice/synth_iter.c	100	
+0003526c	bc	arm	synth_state_pop_unk_1c	matched	src/libttsivonavoice/synth_iter.c	100	
+00035328	180	arm	synth_state_push_say_as	matched	src/libttsivonavoice/synth_iter.c	100	
+000354a8	38	arm	synth_state_push_no_say_as	matched	src/libttsivonavoice/synth_iter.c	100	
+000354e0	a0	arm	synth_state_pop_say_as	wip	src/libttsivonavoice/synth_iter.c	55.3	
+00035580	30	arm	synth_state_pop_no_say_as	matched	src/libttsivonavoice/synth_iter.c	100	
+000355b0	2c	arm	synth_state_say_as_flag	matched	src/libttsivonavoice/synth_iter.c	100	
 000355dc	14	arm	FUN_000355dc	matched	src/libttsivonavoice/calib_arm.c	100	
-000355f0	34	arm	FUN_000355f0	todo			
-00035624	34	arm	FUN_00035624	todo			
-00035658	48	arm	FUN_00035658	todo			
-000356a0	c	arm	FUN_000356a0	todo			
-000356ac	2c	arm	FUN_000356ac	todo			
+000355f0	34	arm	synth_state_push_lang	matched	src/libttsivonavoice/synth_iter.c	100	
+00035624	34	arm	synth_state_pop_lang	matched	src/libttsivonavoice/synth_iter.c	100	
+00035658	48	arm	synth_state_set_voice	matched	src/libttsivonavoice/synth_iter.c	100	
+000356a0	c	arm	synth_state_set_unk_14	matched	src/libttsivonavoice/synth_iter.c	100	
+000356ac	2c	arm	synth_state_set_unk_1c	matched	src/libttsivonavoice/synth_iter.c	100	
 000356d8	190	arm	FUN_000356d8	todo			
 00035868	9b8	arm	token_info_from_item	todo			
 00036220	34	arm	token_info_free	todo			
@@ -1293,8 +1293,8 @@ addr	size	mode	name	status	src	score	note
 0005aa38	58	arm	vector_remove_ptr	matched	src/libttsivonavoice/vector.c	100	
 0005aa90	10	arm	vector_get	matched	src/libttsivonavoice/vector.c	100	
 0005aaa0	b4	arm	vector_equal	wip	src/libttsivonavoice/vector.c	95.6	
-0005ab54	5c	arm	FUN_0005ab54	todo			
-0005abb0	8	arm	FUN_0005abb0	todo			
+0005ab54	5c	arm	vector_from_array	matched	src/libttsivonavoice/vector.c	100	
+0005abb0	8	arm	vector_free_ptr	matched	src/libttsivonavoice/vector.c	100	
 0005abb8	c0	arm	utf8_encode	todo			
 0005ac78	10c	arm	FUN_0005ac78	todo			
 0005ad84	950	arm	FUN_0005ad84	todo			

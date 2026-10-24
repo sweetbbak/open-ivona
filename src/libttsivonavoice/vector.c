@@ -249,3 +249,22 @@ int vector_equal(const ivona_vector *a, const ivona_vector *b, ivona_vector_cmp_
     }
     return 1;
 }
+
+/* 0x5ab54: a vector holding copies of the n elements at data */
+ivona_vector *vector_from_array(const void *data, size_t elem_size, size_t n,
+                                ivona_vector_copy_fn copy, ivona_vector_destroy_fn destroy)
+{
+    ivona_vector *v = vector_new(elem_size, copy, destroy);
+    size_t i;
+
+    vector_reserve(v, n);
+    for (i = 0; i < n; i++)
+        vector_push(v, (const char *)data + i * elem_size);
+    return v;
+}
+
+/* 0x5abb0: destroy function for elements that are vectors */
+void vector_free_ptr(void *p)
+{
+    vector_free(*(ivona_vector **)p);
+}
