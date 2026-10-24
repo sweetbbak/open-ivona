@@ -716,7 +716,7 @@ addr	size	mode	name	status	src	score	note
 000488bc	c88	arm	ustr_to_charset	todo			
 00049544	90	arm	charset_detect	matched	src/libttsivonavoice/charset.c	100	
 000495d4	58	arm	str_to_ascii	matched	src/libttsivonavoice/charset.c	100	
-0004962c	210	arm	FUN_0004962c	todo			
+0004962c	210	arm	utt_split_tokens	wip	src/libttsivonavoice/utt_split.c	28.4	
 0004983c	68	arm	tts_msg_new	matched	src/libttsivonavoice/tts_msg.c	100	
 000498a4	28	arm	tts_msg_free	matched	src/libttsivonavoice/tts_msg.c	100	
 000498cc	1c	arm	tts_msg_last	matched	src/libttsivonavoice/tts_msg.c	100	
