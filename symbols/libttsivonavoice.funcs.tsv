@@ -367,16 +367,16 @@ addr	size	mode	name	status	src	score	note
 000305f8	44	arm	FUN_000305f8	todo			
 0003063c	4d8	arm	FUN_0003063c	todo			
 00030b14	838	arm	FUN_00030b14	todo			
-0003134c	8	arm	synth_iter_ctx	todo			
-00031354	34	arm	FUN_00031354	todo			
-00031388	50	arm	FUN_00031388	todo			
-000313d8	a0	arm	FUN_000313d8	todo			
-00031478	18	arm	FUN_00031478	todo			
-00031490	3c	arm	FUN_00031490	todo			
+0003134c	8	arm	synth_iter_ctx	matched	src/libttsivonavoice/synth_iter.c	100	
+00031354	34	arm	parse_uint_or_minus1	matched	src/libttsivonavoice/synth_iter.c	100	
+00031388	50	arm	voice_age	wip	src/libttsivonavoice/synth_iter.c	90.0	
+000313d8	a0	arm	voice_age_class	matched	src/libttsivonavoice/synth_iter.c	100	
+00031478	18	arm	voice_age_matches	matched	src/libttsivonavoice/synth_iter.c	100	
+00031490	3c	arm	str_pair_free	matched	src/libttsivonavoice/synth_iter.c	100	
 000314cc	8	arm	synth_chunk_free_ptr	matched	src/libttsivonavoice/synth_iter.c	100	
 000314d4	14c	arm	FUN_000314d4	todo			
 00031620	134	arm	FUN_00031620	todo			
-00031754	224	arm	utt_builder_item_added	todo			
+00031754	224	arm	utt_builder_item_added	wip	src/libttsivonavoice/synth_iter.c	43.1	
 00031978	270	arm	utt_builder_check_size	todo			
 00031be8	234	arm	FUN_00031be8	todo			
 00031e1c	51c	arm	FUN_00031e1c	todo			
@@ -427,7 +427,7 @@ addr	size	mode	name	status	src	score	note
 00035624	34	arm	synth_state_pop_lang	matched	src/libttsivonavoice/synth_iter.c	100	
 00035658	48	arm	synth_state_set_voice	matched	src/libttsivonavoice/synth_iter.c	100	
 000356a0	c	arm	synth_state_set_unk_14	matched	src/libttsivonavoice/synth_iter.c	100	
-000356ac	2c	arm	synth_state_set_unk_1c	matched	src/libttsivonavoice/synth_iter.c	100	
+000356ac	2c	arm	synth_state_set_lang	matched	src/libttsivonavoice/synth_iter.c	100	
 000356d8	190	arm	FUN_000356d8	todo			
 00035868	9b8	arm	token_info_from_item	todo			
 00036220	34	arm	token_info_free	todo			

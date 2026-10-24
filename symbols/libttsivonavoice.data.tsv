@@ -370,6 +370,7 @@ addr	size	name	note
 00275248	4	cst_log_level	
 0027524c	4	cache_key_secret_len	wavesynth.c
 00275300	0	default_pctx	named from library relocation
+002757b4	80	voice_age_classes	
 00275804	0	cst_relation_id_names	
 00275830	2c	item_traverse_names	cst_ffeature.c
 00275930	0	rand_ssleay_meth	named from library relocation

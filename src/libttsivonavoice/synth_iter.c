@@ -3,6 +3,7 @@
  * (flags, prosody, voice), the stacks they are saved on, and the utterance being built.
  */
 #include <string.h>
+#include <strings.h>
 #include "cst_alloc.h"
 #include "cst_string.h"
 #include "cst_error.h"
@@ -48,11 +49,22 @@ typedef struct say_as_info {
 
 int say_as_info_flag(const say_as_info *sa);
 
+/* language core data */
+typedef struct lang_core {
+    const char *code;
+    int unk_4[4];
+    cst_features *features;     /* +0x14 */
+    cst_features *params;       /* +0x18 */
+} lang_core;
+
+const char *utf8_last_char(const char *s);
+const char *utf8_strchr_str(const char *s, const char *ch);
+
 /* the context text is read in (copied into every chunk) */
 typedef struct synth_ctx {
     int unk_0[6];
     tts_voice *voice;           /* +0x18 */
-    int unk_1c;
+    lang_core *lang;            /* +0x1c: of the text, NULL for the voice's */
     int flags;                  /* +0x20 */
     prosody prosody;            /* +0x24 */
     ivona_vector *digit_groups; /* +0x30: of int, for say-as characters/serial */
@@ -120,10 +132,125 @@ static inline void *vector_last_ptr(const ivona_vector *v)
     return v->count ? *(void **)vector_at(v, v->count - 1) : NULL;
 }
 
+typedef struct synth_iter synth_iter;
+
+/* 0x3134c arm */
+strlist *synth_iter_ctx(synth_iter *it)
+{
+    return ((strlist **)it)[0x2c / 4];
+}
+
+/* 0x31354 arm: the decimal number s, or -1 */
+int parse_uint_or_minus1(const char *s)
+{
+    unsigned long v;
+
+    if (!cst_parse_uint_n(s, strlen(s), &v))
+        return -1;
+    return v;
+}
+
+/* 0x31388 arm: the voice_age feature. In the target the call to feat_string is not a sibcall
+ * (engine code never tail-calls feat_string/get_param_string, Flite code does: the engine's
+ * prototypes for them probably differed). */
+const char *voice_age(tts_voice *v)
+{
+    cst_features *f = VOICE_FEATURES(v);
+
+    if (!feat_present(f, "voice_age"))
+        return "Unspecified";
+    return feat_string(f, "voice_age");
+}
+
+/* voice age classes: by name or by years (-1: open) */
+typedef struct age_class {
+    int mask;
+    const char *name;
+    int min;
+    int max;
+} age_class;
+
+age_class voice_age_classes[] = {
+    { 1, "child", 1, 15 },
+    { 2, "teen", 9, 19 },
+    { 4, "adult", 18, -1 },
+    { 8, "senior", 45, -1 },
+    { 0, 0, -1, -1 },
+};
+
+/* 0x313d8 arm: the classes (mask) an age ("adult", "30") belongs to */
+int voice_age_class(const char *age)
+{
+    const age_class *c;
+    int mask = 0;
+
+    for (c = voice_age_classes; c->mask; c++) {
+        int n;
+
+        if (strcasecmp(c->name, age) == 0
+            || ((n = parse_uint_or_minus1(age)) != -1 && (c->min == -1 || n >= c->min)
+                && (c->max == -1 || n <= c->max)))
+            mask |= c->mask;
+    }
+    return mask;
+}
+
+/* 0x31478 arm */
+int voice_age_matches(tts_voice *v, int mask)
+{
+    return voice_age_class(voice_age(v)) & mask;
+}
+
+/* 0x31490 arm (it clears the first pointer twice) */
+void str_pair_free(char **p)
+{
+    if (p[0]) {
+        cst_free(p[0]);
+        p[0] = NULL;
+    }
+    if (p[1]) {
+        cst_free(p[1]);
+        p[0] = NULL;
+    }
+}
+
 /* 0x314cc arm */
 static void synth_chunk_free_ptr(void *p)
 {
     synth_chunk_free(*(synth_chunk **)p);
+}
+
+/* the language of the context */
+static inline lang_core *ctx_lang(const synth_ctx *c)
+{
+    return c->lang ? c->lang : VOICE_DATA(c->voice)->reg->lang_data;
+}
+
+/* whether s ends in one of the characters of set */
+static inline int ends_in(const synth_ctx *c, const char *s, const char *set)
+{
+    size_t n;
+
+    if (s == NULL || (n = strlen(s)) == 0)
+        return 0;
+    if (strcmp(get_param_string(ctx_lang(c)->features, "encoding", ""), "UTF-8") == 0)
+        return utf8_strchr_str(set, utf8_last_char(s)) != NULL;
+    return strchr(set, s[n - 1]) != NULL;
+}
+
+/* 0x31754 arm: gives the token before a break a pause if its punctuation has none */
+void utt_builder_item_added(synth_ctx *c, cst_item *prev)
+{
+    const char *punc;
+
+    if (prev == NULL)
+        return;
+    punc = item_feat_string(prev, "punc");
+    if (ends_in(c, punc, get_param_string(ctx_lang(c)->features, "hard_punc", ".!?")))
+        return;
+    if (ends_in(c, punc, get_param_string(ctx_lang(c)->features, "soft_punc", ",:;")))
+        return;
+    item_set_string(prev, "punc", ",");
 }
 
 /* 0x33798 arm */
@@ -138,7 +265,7 @@ synth_ctx *synth_ctx_new(tts_voice *v)
     c->unk_0[3] = 0;
     c->unk_0[4] = 0;
     c->unk_0[5] = 0;
-    c->unk_1c = 0;
+    c->lang = NULL;
     c->digit_groups = NULL;
     c->unk_34 = NULL;
     c->unk_38 = 0;
@@ -528,10 +655,10 @@ void synth_state_set_unk_14(synth_state *s, int x)
 }
 
 /* 0x356ac arm */
-void synth_state_set_unk_1c(synth_state *s, int x)
+void synth_state_set_lang(synth_state *s, lang_core *l)
 {
-    if (s->ctx->unk_1c == x)
+    if (s->ctx->lang == l)
         return;
     synth_state_flush(s);
-    s->ctx->unk_1c = x;
+    s->ctx->lang = l;
 }
