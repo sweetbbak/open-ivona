@@ -22,6 +22,9 @@ void wavedict_clear(cst_features *d);
 void wavedict_free(cst_features *d);
 typedef struct pls_lexicon pls_lexicon;
 void pls_lexicon_free(pls_lexicon *l);
+pls_lexicon *pls_lexicon_parse(const char *data, size_t size, const char *lang, tts_msg **msgs,
+                               int level);
+const char *dom_get_attr(const dom_elem *e, const char *name);
 ivona_ustr *ustr_transcode(const ivona_ustr *s, const char *encoding, int *state, size_t *pos);
 int utf8_encode(unsigned int c, char *out);
 int utf8_decode(const char *s, int *len);
@@ -36,8 +39,12 @@ int cst_parse_uint_n(const char *s, size_t n, unsigned long *out);
 typedef struct ssml_lexicon {
     char *uri;
     char *id;
-    char *type;
-    int unk_c[7];
+    char *lang;                 /* +0x08 */
+    int line;                   /* +0x0c: of the element */
+    int unk_10;
+    int column;                 /* +0x14 */
+    int unk_18[3];
+    int is_inline;              /* +0x24 */
     pls_lexicon *lexicon;       /* +0x28 */
 } ssml_lexicon;
 
@@ -110,7 +117,7 @@ static void ssml_lexicon_free(void *p, size_t size)
 
     cst_free(l->uri);
     cst_free(l->id);
-    cst_free(l->type);
+    cst_free(l->lang);
     pls_lexicon_free(l->lexicon);
 }
 
@@ -564,4 +571,37 @@ void ssml_apply_prm(ssml_doc *d, tts_voice *v, dom_text *t)
     ssml_apply_lexicons(d, lp ? lp->lexicons : &none, v->tts, t, 6);
     if ((m = d->metrics) != NULL)
         metrics_add_time(m, "ssml_apply_prm_time", ivona_time_usec() - t0);
+}
+
+/* 0x29f5c arm: adds the lexicon given inline in element e (data, size bytes) to the
+ * document; its parse warnings become document warnings. */
+ssml_lexicon *ssml_add_inline_lexicon(ssml_doc *d, dom_elem *e, const char *data, size_t size)
+{
+    const char *id = dom_get_attr(e, "http://www.w3.org/XML/1998/namespace^id");
+    ssml_lexicon lex;
+    tts_msg *msgs, *w, **tail;
+
+    if (d->unk_14 != 10 && id == NULL) {
+        tail = d->warnings ? &tts_msg_last(d->warnings)->next : &d->warnings;
+        *tail = tts_msg_new(e->span.start, e->n.index, 5,
+                            "Missing attribute \"%s\" in element \"%s\"", "xml:id", e->name);
+        return NULL;
+    }
+    memset(&lex, 0, sizeof lex);
+    lex.uri = cst_strdup("");
+    lex.id = cst_strdup(id);
+    lex.lang = cst_strdup(dom_inherited_attr(e, "http://www.w3.org/XML/1998/namespace^lang"));
+    lex.line = e->span.start;
+    lex.unk_10 = e->unk_28;
+    lex.column = e->n.index;
+    lex.is_inline = 1;
+    lex.lexicon = pls_lexicon_parse(data, size, lex.lang, &msgs, 0);
+    for (w = msgs; w; w = w->next) {
+        tail = d->warnings ? &tts_msg_last(d->warnings)->next : &d->warnings;
+        *tail = tts_msg_new(w->line + e->span.end, lex.column + w->column - 1, w->code,
+                            "Warning in inline lexicon \"%s\": %s", lex.id, w->text);
+    }
+    tts_msg_free(msgs);
+    vector_push(d->lexicons, &lex);
+    return d->lexicons->count ? vector_at(d->lexicons, d->lexicons->count - 1) : NULL;
 }
