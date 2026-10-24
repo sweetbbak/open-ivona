@@ -1027,14 +1027,14 @@ addr	size	mode	name	status	src	score	note
 00053e78	40	arm	cst_parse_signed_suffix	matched	src/libttsivonavoice/flite/cst_string.c	100	
 00053eb8	14	arm	cst_parse_number	matched	src/libttsivonavoice/flite/cst_string.c	100	
 00053ecc	38	arm	cst_parse_signed_number	matched	src/libttsivonavoice/flite/cst_string.c	100	
-00053f04	ec	arm	FUN_00053f04	todo			
-00053ff0	e8	arm	FUN_00053ff0	todo			
-000540d8	e8	arm	FUN_000540d8	todo			
-000541c0	68	arm	FUN_000541c0	todo			
-00054228	44	arm	cst_strn_cmp	todo			
-0005426c	30	arm	FUN_0005426c	todo			
-0005429c	2c	arm	FUN_0005429c	todo			
-000542c8	44	arm	FUN_000542c8	todo			
+00053f04	ec	arm	cst_parse_hex	matched	src/libttsivonavoice/flite/cst_string.c	100	
+00053ff0	e8	arm	cst_parse_hex_n	matched	src/libttsivonavoice/flite/cst_string.c	100	
+000540d8	e8	arm	cst_parse_uint_n	matched	src/libttsivonavoice/flite/cst_string.c	100	
+000541c0	68	arm	cst_parse_int_n	matched	src/libttsivonavoice/flite/cst_string.c	100	
+00054228	44	arm	cst_strn_cmp	matched	src/libttsivonavoice/flite/cst_string.c	100	
+0005426c	30	arm	cst_strn_cmp_str	matched	src/libttsivonavoice/flite/cst_string.c	100	
+0005429c	2c	arm	cst_str_cmpn	matched	src/libttsivonavoice/flite/cst_string.c	100	
+000542c8	44	arm	cst_strcmp_null	wip	src/libttsivonavoice/flite/cst_string.c	76.5	
 0005430c	c	arm	ascii_charlen	matched	src/libttsivonavoice/flite/cst_tokenstream.c	100	
 00054318	10	arm	ascii_decode	matched	src/libttsivonavoice/flite/cst_tokenstream.c	100	
 00054328	c	arm	ascii_encode	matched	src/libttsivonavoice/flite/cst_tokenstream.c	100	

@@ -1,4 +1,5 @@
 /* Flite cst_string.c as modified by IVONA. */
+#include <errno.h>
 #include <ctype.h>
 #include <stdarg.h>
 #include <stdio.h>
@@ -691,4 +692,105 @@ int cst_parse_signed_number(const char *s, float *out)
     if (!strchr("+-", *s))
         return 0;
     return cst_parse_number(s, out);
+}
+
+#define CST_NUM_MAX 32
+
+/* strtoul of the n bytes at s, all of which must be digits of base (at most 32 after leading
+ * zeros) */
+static inline int cst_parse_ulong_n(const char *s, size_t n, int base, unsigned long *out)
+{
+    char buf[CST_NUM_MAX + 4];
+    char *end = NULL;
+    unsigned long v;
+
+    while (n > 1 && s[0] == '0') {
+        n--;
+        s++;
+    }
+    if (n > CST_NUM_MAX)
+        return 0;
+    strncpy(buf, s, n);
+    buf[n] = '\0';
+    errno = 0;
+    v = strtoul(buf, &end, base);
+    if (errno != 0 || s == end || *end != '\0')
+        return 0;
+    if (out)
+        *out = v;
+    return 1;
+}
+
+/* 0x53f04 arm */
+int cst_parse_hex(const char *s, unsigned long *out)
+{
+    return cst_parse_ulong_n(s, strlen(s), 16, out);
+}
+
+/* 0x53ff0 arm */
+int cst_parse_hex_n(const char *s, size_t n, unsigned long *out)
+{
+    return cst_parse_ulong_n(s, n, 16, out);
+}
+
+/* 0x540d8 arm */
+int cst_parse_uint_n(const char *s, size_t n, unsigned long *out)
+{
+    return cst_parse_ulong_n(s, n, 10, out);
+}
+
+/* 0x541c0 arm */
+int cst_parse_int_n(const char *s, size_t n, long *out)
+{
+    unsigned long v = 0;
+    int r;
+
+    if (s[0] == '-') {
+        r = cst_parse_uint_n(s + 1, n - 1, &v);
+        if (out)
+            *out = -v;
+    } else {
+        r = cst_parse_uint_n(s, n, &v);
+        if (out)
+            *out = v;
+    }
+    return r;
+}
+
+/* 0x54228 arm: compares n-byte strings */
+int cst_strn_cmp(const char *a, size_t na, const char *b, size_t nb)
+{
+    int r = strncmp(a, b, na < nb ? na : nb);
+
+    if (r != 0)
+        return r;
+    if (nb > na)
+        return -1;
+    return nb < na;
+}
+
+/* 0x5426c arm */
+int cst_strn_cmp_str(const char *a, size_t na, const char *b)
+{
+    return cst_strn_cmp(a, na, b, strlen(b));
+}
+
+/* 0x5429c arm */
+int cst_str_cmpn(const char *a, const char *b, size_t nb)
+{
+    return cst_strn_cmp(a, strlen(a), b, nb);
+}
+
+/* 0x542c8 arm: strcmp with NULL before everything */
+int cst_strcmp_null(const char *a, const char *b)
+{
+    int an = a == NULL, bn = b == NULL;
+
+    if (an & bn)
+        return 0;
+    if (an)
+        return -1;
+    if (bn)
+        return 1;
+    return strcmp(a, b);
 }
