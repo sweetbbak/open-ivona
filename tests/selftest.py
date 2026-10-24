@@ -124,6 +124,13 @@ def main() -> int:
         print(f"FAIL: symbol_for gave {got}")
     else:
         print("ok   address comments map C++ identifiers to mangled symbols")
+    got = [symbol_for(i, {"walk.isra.0", "f.constprop.1.isra.2", "g.part.0", "g.part.1"})
+           for i in ("walk", "f", "g", "wal")]
+    if got != ["walk.isra.0", "f.constprop.1.isra.2", None, None]:
+        fails += 1
+        print(f"FAIL: symbol_for clones gave {got}")
+    else:
+        print("ok   address comments map static functions to their GCC clones")
 
     # Splitter: entries inside verified functions are fragments and must be dropped.
     from dc.inventory import inside_verified

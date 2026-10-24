@@ -8,42 +8,11 @@
 #include "cst_val.h"
 #include "ivona_util.h"
 #include "ivona_ustr.h"
+#include "dom.h"
 
 /* xml.c */
 char *xml_escape(const char *s, size_t n);
 char *xml_escape_str(const char *s);
-
-#define DOM_TEXT 1
-
-typedef struct dom_elem dom_elem;
-
-typedef struct dom_node {
-    dom_elem *parent;
-    struct dom_node *next;
-    int index;                  /* +0x08 */
-    int type;                   /* +0x0c: DOM_TEXT or an element type */
-} dom_node;
-
-typedef struct dom_text {
-    dom_node n;
-    ivona_ustr *text;           /* +0x10 */
-    int unk_14;
-    int unk_18;
-} dom_text;
-
-struct dom_elem {
-    dom_node n;
-    dom_node *first;            /* +0x10 */
-    char *name;                 /* +0x14 */
-    cst_features *attrs;        /* +0x18: keys owned */
-    int unk_1c[5];
-};
-
-typedef struct dom_doc {
-    dom_elem *root;
-    char *name;                 /* +0x04 */
-    cst_features *pi;           /* +0x08: keys owned */
-} dom_doc;
 
 void dom_element_free(dom_elem *e);
 
@@ -101,7 +70,7 @@ dom_text *dom_text_new(void)
     t->n.parent = NULL;
     t->n.next = NULL;
     t->text = NULL;
-    t->unk_14 = 0;
+    t->state = 0;
     t->unk_18 = 0;
     return t;
 }
@@ -119,7 +88,7 @@ dom_elem *dom_element_new(const char *name, int type)
     e->unk_1c[0] = 0;
     e->unk_1c[3] = 0;
     e->unk_1c[2] = 0;
-    e->unk_1c[4] = 0;
+    e->in_subdoc = 0;
     return e;
 }
 

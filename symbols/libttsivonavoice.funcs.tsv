@@ -300,7 +300,7 @@ addr	size	mode	name	status	src	score	note
 00027920	b0c	arm	FUN_00027920	todo			
 0002842c	8	arm	ssml_audio_free	matched	src/libttsivonavoice/ssml_doc.c	100	
 00028434	2c	arm	ssml_lexicon_free	matched	src/libttsivonavoice/ssml_doc.c	100	
-00028460	1b4	arm	FUN_00028460	todo			
+00028460	1b4	arm	dom_mark_subdoc.isra.0	wip	src/libttsivonavoice/ssml_doc.c	1.8	
 00028614	598	arm	FUN_00028614	todo			
 00028bac	94	arm	ssml_doc_new	matched	src/libttsivonavoice/ssml_doc.c	100	
 00028c40	58	arm	ssml_doc_free	matched	src/libttsivonavoice/ssml_doc.c	100	
@@ -308,11 +308,11 @@ addr	size	mode	name	status	src	score	note
 00028d04	30	arm	ssml_doc_set_voice	matched	src/libttsivonavoice/ssml_doc.c	100	
 00028d34	268	arm	ssml_doc_prepare	todo			
 00028f9c	30	arm	ssml_doc_set_encoding	matched	src/libttsivonavoice/ssml_doc.c	100	
-00028fcc	dc	arm	FUN_00028fcc	todo			
-000290a8	3b0	arm	FUN_000290a8	todo			
-00029458	50	arm	FUN_00029458	todo			
-000294a8	40	arm	FUN_000294a8	todo			
-000294e8	15c	arm	FUN_000294e8	todo			
+00028fcc	dc	arm	ssml_text_decode	matched	src/libttsivonavoice/ssml_doc.c	100	
+000290a8	3b0	arm	ssml_text_expand	wip	src/libttsivonavoice/ssml_doc.c	35.7	
+00029458	50	arm	ssml_expand_tree	matched	src/libttsivonavoice/ssml_doc.c	100	
+000294a8	40	arm	dom_set_text_state	matched	src/libttsivonavoice/ssml_doc.c	100	
+000294e8	15c	arm	ssml_parse_subdoc	matched	src/libttsivonavoice/ssml_doc.c	100	
 00029644	244	arm	FUN_00029644	todo			
 00029888	98	arm	FUN_00029888	todo			
 00029920	98	arm	FUN_00029920	todo			
@@ -337,7 +337,7 @@ addr	size	mode	name	status	src	score	note
 0002b3d0	1bc	arm	FUN_0002b3d0	todo			
 0002b58c	3f0	arm	FUN_0002b58c	todo			
 0002b97c	62c	arm	ssml_parse	todo			
-0002bfa8	8	arm	FUN_0002bfa8	todo			
+0002bfa8	8	arm	ssml_parse_fragment	todo			
 0002bfb0	74	arm	FUN_0002bfb0	todo			
 0002c024	fc	arm	FUN_0002c024	todo			
 0002c120	c88	arm	FUN_0002c120	todo			
@@ -651,7 +651,7 @@ addr	size	mode	name	status	src	score	note
 000465cc	104	arm	ustr_append_ustr	wip	src/libttsivonavoice/ustr.c	68.2	
 000466d0	3c	arm	ustr_sub	matched	src/libttsivonavoice/ustr.c	100	
 0004670c	7c	arm	ustr_equal	wip	src/libttsivonavoice/ustr.c	41.7	
-00046788	444	arm	FUN_00046788	todo			
+00046788	444	arm	ustr_transcode	todo			
 00046bcc	78	arm	text_has_breaks	wip	src/libttsivonavoice/ustr.c	90.0	
 00046c44	74	arm	text_ends_with_breaks	wip	src/libttsivonavoice/ustr.c	65.5	
 00046cb8	40	arm	ivona_time_cmp	wip	src/libttsivonavoice/ivona_sys.c	56.2	

@@ -174,9 +174,14 @@ def addr_comment_names(text: str) -> list[tuple[int, str]]:
 def symbol_for(ident: str, defined: set[str] | None) -> str | None:
     """The object symbol a source identifier defines: itself (C, extern "C") or a C++ mangled
     name whose last name component is it (_Z<len><ident>... or ...<len><ident>[C1/D1...]E...).
-    None when ambiguous or absent."""
+    A static function GCC cloned (`ident.isra.0`, `.constprop.N`, `.part.N`) maps to its
+    clone, which is the symbol the code lives in. None when ambiguous or absent."""
     if defined is None or ident in defined:
         return ident
+    clones = [s for s in defined
+              if re.fullmatch(rf"{re.escape(ident)}(?:\.(?:isra|constprop|part)\.\d+)+", s)]
+    if clones:
+        return clones[0] if len(clones) == 1 else None
     tag = f"{len(ident)}{ident}"
     cands = sorted(s for s in defined if s.startswith("_Z" + tag) or s.startswith("_ZL" + tag) or
                    re.search(rf"{tag}(?:[CD][0-3])?E", s))
