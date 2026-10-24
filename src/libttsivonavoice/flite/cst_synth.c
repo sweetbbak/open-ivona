@@ -912,6 +912,44 @@ cst_utterance *default_lexical_insertion(cst_utterance *u)
     return lexical_insertion_words(u, relation_head(utt_relation(u, REL_WORD)), NULL);
 }
 
+#define REL_SYLLABLE 5
+
+void item_delete_range(cst_item *from, cst_item *to);
+
+/* 0x69a30 arm: the X-SAMPA of word w into out; w's syllables, segments and SylStructure item
+ * are deleted. */
+void word_to_xsampa(cst_item *w, cst_features *f, strbuf *out)
+{
+    cst_item *ws = item_as(w, REL_SYLSTRUCTURE);
+    cst_item *fsyl = item_daughter(ws);
+    cst_item *lsyl = item_last_daughter(ws);
+    cst_item *first = item_as(item_daughter(fsyl), REL_SEGMENT);
+    cst_item *last = item_as(item_last_daughter(lsyl), REL_SEGMENT);
+    cst_item *sfirst = item_as(fsyl, REL_SYLLABLE);
+    cst_item *slast = item_as(lsyl, REL_SYLLABLE);
+    const cst_val *v;
+    const void *rules = NULL;
+    const stress_info *si = NULL;
+    cst_item *s;
+    char *x;
+
+    v = feat_val(f, "xivona_to_xsampa_rules");
+    if (v)
+        rules = val_userdata(v);
+    v = feat_val(f, "xivona_stress_info");
+    if (v)
+        si = val_userdata(v);
+    strbuf_clear(out);
+    for (s = first; s && s != item_next(last); s = item_next(s)) {
+        x = xivona_to_xsampa(s, rules, si);
+        strbuf_append_str(out, x);
+        cst_free(x);
+    }
+    item_delete_range(sfirst, item_next(slast));
+    item_delete_range(first, item_next(last));
+    delete_item(ws);
+}
+
 /* 0x6a078 arm: appends a segment named name after the last segment of the last word of w
  * that has one. (Declared int without a value, which keeps the last call from being a
  * sibcall.) */
@@ -946,7 +984,9 @@ cst_featvalpair *feat_find_featpair(const cst_features *f, const char *name);
 const char *cst_relation_id_name(int id);
 void item_rename_relation(cst_item *i, const char *from, const char *to);
 typedef struct dnn_models {
-    int unk[3];
+    void *unk_0;
+    void *duration;             /* +0x04 */
+    void *unk_8;
     void *phrasing;             /* +0x0c */
 } dnn_models;
 dnn_models *voice_dnn_models(cst_utterance *u);
@@ -1029,9 +1069,35 @@ cst_utterance *default_intonation(cst_utterance *u)
     return u;
 }
 
-/* 0x6a9e0 arm: empty (its address is taken somewhere) */
-void FUN_0006a9e0(void)
+/* 0x6a9e0 arm: leaves durations to the DNN acoustic model */
+cst_utterance *duration_none(cst_utterance *u)
 {
+    return u;
+}
+
+cst_utterance *cart_duration(cst_utterance *u);
+dnn_models *val_dnn_models(const cst_val *v);
+
+/* 0x6af2c arm: CART durations unless a DNN predicts them (hybrid mode, a DNN-forced token or
+ * "isf_dnn_apply_force"). */
+cst_utterance *duration_select(cst_utterance *u)
+{
+    cst_item *t;
+
+    if ((get_param_int(u->features, "disable_hybrid", 0) == 0
+         && feat_present(u->features, "dnn_models")
+         && dnn_stub_44(val_dnn_models(feat_val(u->features, "dnn_models"))->duration))
+        || feat_present(u->features, "acoustic_feats_file")) {
+        if (feat_present(u->features, "isf_dnn_apply_force")
+            && feat_int(u->features, "isf_dnn_apply_force"))
+            return duration_none(u);
+        if (strlist_contains(u->unk_14, "hybrid"))
+            return duration_none(u);
+        for (t = relation_head(utt_relation(u, REL_TOKEN)); t; t = item_next(t))
+            if (item_feat_present(t, "tts_apply_dnn") && item_feat_int(t, "tts_apply_dnn"))
+                return duration_none(u);
+    }
+    return cart_duration(u);
 }
 
 /* 0x6b084 arm: text analysis of phone input: each token is one word of the given phones. */
