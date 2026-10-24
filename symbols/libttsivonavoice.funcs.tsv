@@ -732,30 +732,30 @@ addr	size	mode	name	status	src	score	note
 00049d64	1c	arm	FUN_00049d64	todo			
 00049d80	f4	arm	FUN_00049d80	todo			
 00049e74	5f0	arm	text_is_ssml	todo			
-0004a464	194	arm	FUN_0004a464	todo			
-0004a5f8	c	arm	dom_new	todo			
-0004a604	3c	arm	dom_text_new	todo			
-0004a640	5c	arm	dom_element_new	todo			
-0004a69c	3c	arm	FUN_0004a69c	todo			
-0004a6d8	5c	arm	FUN_0004a6d8	todo			
-0004a734	a8	arm	FUN_0004a734	todo			
-0004a7dc	5c	arm	FUN_0004a7dc	todo			
-0004a838	1c	arm	FUN_0004a838	todo			
-0004a854	50	arm	FUN_0004a854	todo			
-0004a8a4	30	arm	FUN_0004a8a4	todo			
-0004a8d4	28	arm	FUN_0004a8d4	todo			
-0004a8fc	6c	arm	FUN_0004a8fc	todo			
-0004a968	20	arm	FUN_0004a968	todo			
-0004a988	78	arm	FUN_0004a988	todo			
-0004aa00	34	arm	dom_append_child	todo			
-0004aa34	10	arm	FUN_0004aa34	todo			
-0004aa44	54	arm	dom_set_attr	todo			
-0004aa98	14	arm	FUN_0004aa98	todo			
-0004aaac	54	arm	FUN_0004aaac	todo			
-0004ab00	3c	arm	FUN_0004ab00	todo			
-0004ab3c	34	arm	FUN_0004ab3c	todo			
-0004ab70	10	arm	FUN_0004ab70	todo			
-0004ab80	58	arm	FUN_0004ab80	todo			
+0004a464	194	arm	dom_write_element	todo			
+0004a5f8	c	arm	dom_new	matched	src/libttsivonavoice/dom.c	100	
+0004a604	3c	arm	dom_text_new	matched	src/libttsivonavoice/dom.c	100	
+0004a640	5c	arm	dom_element_new	matched	src/libttsivonavoice/dom.c	100	
+0004a69c	3c	arm	dom_prev_sibling	matched	src/libttsivonavoice/dom.c	100	
+0004a6d8	5c	arm	dom_text_free	matched	src/libttsivonavoice/dom.c	100	
+0004a734	a8	arm	dom_element_free	matched	src/libttsivonavoice/dom.c	100	
+0004a7dc	5c	arm	dom_free	matched	src/libttsivonavoice/dom.c	100	
+0004a838	1c	arm	dom_node_free	matched	src/libttsivonavoice/dom.c	100	
+0004a854	50	arm	dom_remove_preceding	wip	src/libttsivonavoice/dom.c	85.0	
+0004a8a4	30	arm	dom_remove_following	matched	src/libttsivonavoice/dom.c	100	
+0004a8d4	28	arm	dom_element_clear	matched	src/libttsivonavoice/dom.c	100	
+0004a8fc	6c	arm	dom_set_pi	matched	src/libttsivonavoice/dom.c	100	
+0004a968	20	arm	dom_last_child	matched	src/libttsivonavoice/dom.c	100	
+0004a988	78	arm	dom_element_unwrap	matched	src/libttsivonavoice/dom.c	100	
+0004aa00	34	arm	dom_append_child	matched	src/libttsivonavoice/dom.c	100	
+0004aa34	10	arm	dom_insert_after	matched	src/libttsivonavoice/dom.c	100	
+0004aa44	54	arm	dom_set_attr	matched	src/libttsivonavoice/dom.c	100	
+0004aa98	14	arm	dom_get_attr	wip	src/libttsivonavoice/dom.c	20.0	
+0004aaac	54	arm	dom_find_attr_up	matched	src/libttsivonavoice/dom.c	100	
+0004ab00	3c	arm	dom_inherited_attr	matched	src/libttsivonavoice/dom.c	100	
+0004ab3c	34	arm	dom_element_dump	matched	src/libttsivonavoice/dom.c	100	
+0004ab70	10	arm	dom_dump	matched	src/libttsivonavoice/dom.c	100	
+0004ab80	58	arm	dom_to_string	matched	src/libttsivonavoice/dom.c	100	
 0004abd8	328	arm	FUN_0004abd8	todo			
 0004af00	1c	arm	FUN_0004af00	todo			
 0004af1c	1c	arm	FUN_0004af1c	todo			
