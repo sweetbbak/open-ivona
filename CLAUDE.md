@@ -161,6 +161,9 @@ Read README.md first. The rules below are what keeps the project deterministic.
     The rule behind it: ARM refuses a sibcall when the caller's and callee's return-value
     locations differ (void vs int, pointer vs `long long`/`float`). A lone `bl f; pop` wrapper
     (`dom_get_attr`) needs such a mismatch.
+  - Two induction pointers into one table (`[r7, #0xc]!` plus `[r5, #-0xc]`) where you get one
+    usually mean the loop body is an inlined static helper taking the element pointer
+    (`apply_synth_module` inside `apply_synth_method`).
   - `if (a && b) { ... }` and `if (!b || !a) return;` emit the `cmp`/`cmpne` pair in different
     orders. Try both when only those two compares are swapped (`ustr_edit_insert_span`).
   - Paired `ldm`/`stm` copies of a few words are struct assignments (`d->extra = db->extra`).

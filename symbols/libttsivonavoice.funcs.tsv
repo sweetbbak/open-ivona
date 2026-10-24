@@ -1457,18 +1457,18 @@ addr	size	mode	name	status	src	score	note
 00065780	5d0	arm	FUN_00065780	todo			
 00065d50	58	arm	FUN_00065d50	todo			
 00065da8	60c	arm	FUN_00065da8	todo			
-000663b4	1cc	arm	FUN_000663b4	todo			
-00066580	20	arm	FUN_00066580	todo			
-000665a0	38	arm	utt_set_input	todo			
-000665d8	10	arm	FUN_000665d8	todo			
-000665e8	90	arm	FUN_000665e8	todo			
-00066678	80	arm	utt_set_voice	todo			
-000666f8	58	arm	FUN_000666f8	todo			
-00066750	1ac	arm	FUN_00066750	todo			
-000668fc	10	arm	utt_text_frontend	todo			
-0006690c	14	arm	utt_frontend	todo			
-00066920	14	arm	utt_phones_frontend	todo			
-00066934	18	arm	FUN_00066934	todo			
+000663b4	1cc	arm	item_print_tree	matched	src/libttsivonavoice/flite/cst_synth.c	100	
+00066580	20	arm	utt_input_text	matched	src/libttsivonavoice/flite/cst_synth.c	100	
+000665a0	38	arm	utt_set_input_text	wip	src/libttsivonavoice/flite/cst_synth.c	50.0	
+000665d8	10	arm	item_print_list	matched	src/libttsivonavoice/flite/cst_synth.c	100	
+000665e8	90	arm	utt_print_relations	matched	src/libttsivonavoice/flite/cst_synth.c	100	
+00066678	80	arm	utt_init	matched	src/libttsivonavoice/flite/cst_synth.c	100	
+000666f8	58	arm	val_synth_module_callback	matched	src/libttsivonavoice/flite/cst_synth.c	100	
+00066750	1ac	arm	apply_synth_method	matched	src/libttsivonavoice/flite/cst_synth.c	100	
+000668fc	10	arm	utt_text_frontend	matched	src/libttsivonavoice/flite/cst_synth.c	100	
+0006690c	14	arm	utt_frontend	matched	src/libttsivonavoice/flite/cst_synth.c	100	
+00066920	14	arm	utt_phones_frontend	matched	src/libttsivonavoice/flite/cst_synth.c	100	
+00066934	18	arm	synth_module_callback_val	matched	src/libttsivonavoice/flite/cst_synth.c	100	
 0006694c	198	arm	lexicon_from_pls	todo			
 00066ae4	68	arm	in_lex	todo			flite strings(1) 12%
 00066b4c	58	arm	FUN_00066b4c	todo			

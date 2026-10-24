@@ -165,8 +165,8 @@ void lang_core_free(lang_core *l)
     delete_features(l->params);
 }
 
-void utt_set_input(cst_utterance *u, const char *text);
-int utt_set_voice(cst_utterance *u, voice_reg *reg);
+void utt_set_input_text(cst_utterance *u, const char *text);
+int utt_init(cst_utterance *u, voice_reg *reg);
 int utt_text_frontend(cst_utterance *u);
 int utt_phones_frontend(cst_utterance *u);
 int utt_frontend(cst_utterance *u);
@@ -176,8 +176,8 @@ cst_utterance *utt_from_text(const char *text, voice_reg *reg, void *engine_a, v
 {
     cst_utterance *u = new_utterance(engine_a, engine_b);
 
-    utt_set_input(u, text);
-    if (utt_set_voice(u, reg) && utt_text_frontend(u))
+    utt_set_input_text(u, text);
+    if (utt_init(u, reg) && utt_text_frontend(u))
         return u;
     delete_utterance(u);
     return NULL;
@@ -188,8 +188,8 @@ cst_utterance *utt_from_phones(const char *phones, voice_reg *reg, void *engine_
 {
     cst_utterance *u = new_utterance(engine_a, engine_b);
 
-    utt_set_input(u, phones);
-    if (utt_set_voice(u, reg) && utt_phones_frontend(u))
+    utt_set_input_text(u, phones);
+    if (utt_init(u, reg) && utt_phones_frontend(u))
         return u;
     delete_utterance(u);
     return NULL;
@@ -198,7 +198,7 @@ cst_utterance *utt_from_phones(const char *phones, voice_reg *reg, void *engine_
 /* 0x504f8 arm: runs the front end on an utterance that has its tokens; NULL (and freed) on error. */
 cst_utterance *utt_synth_frontend(cst_utterance *u, voice_reg *reg)
 {
-    if (utt_relation_present(u, 1) && utt_set_voice(u, reg) && utt_frontend(u))
+    if (utt_relation_present(u, 1) && utt_init(u, reg) && utt_frontend(u))
         return u;
     delete_utterance(u);
     return NULL;
