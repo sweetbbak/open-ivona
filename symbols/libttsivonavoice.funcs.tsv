@@ -286,9 +286,9 @@ addr	size	mode	name	status	src	score	note
 00026d4c	270	arm	prosody_parse_pitch	matched	src/libttsivonavoice/ssml_prosody.c	100	
 00026fbc	1f4	arm	prosody_parse_rate	matched	src/libttsivonavoice/ssml_prosody.c	100	
 000271b0	214	arm	prosody_parse_volume	wip	src/libttsivonavoice/ssml_prosody.c	45.4	
-000273c4	a8	arm	FUN_000273c4	todo			
-0002746c	124	arm	FUN_0002746c	todo			
-00027590	80	arm	FUN_00027590	todo			
+000273c4	a8	arm	prosody_volume	wip	src/libttsivonavoice/ssml_prosody.c	59.5	
+0002746c	124	arm	dict_read_entry	wip	src/libttsivonavoice/dict_mp.c	63.5	
+00027590	80	arm	dict_read	wip	src/libttsivonavoice/dict_mp.c	90.6	
 00027610	b8	arm	FUN_00027610	todo			
 000276c8	5c	arm	FUN_000276c8	todo			
 00027724	10	arm	FUN_00027724	todo			

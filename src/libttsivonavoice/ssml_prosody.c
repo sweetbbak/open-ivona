@@ -175,3 +175,29 @@ int prosody_parse_volume(float *volume, const char *s)
     }
     return 0;
 }
+
+/* 0x273c4 arm: sets the volume from an attribute value; forms deprecated in SSML 1.1 warn,
+ * and are invalid in SSML 1.0 */
+int prosody_volume(prosody *p, const char *s, int version, const char **warn)
+{
+    int r = prosody_parse_volume(&p->volume, s);
+    int is11;
+
+    if (r == 0)
+        return 0;
+    if (r >= 1 && r <= 3) {
+        *warn = NULL;
+        return 1;
+    }
+    is11 = version == SSML_1_1;
+    if (r == 4 && is11) {
+        *warn = "Percentage relative change of prosody volume is deprecated in SSML 1.1";
+        return 1;
+    }
+    if (r == 5 || r == 6) {
+        if (is11)
+            *warn = "Single number as prosody volume is deprecated in SSML 1.1";
+        return is11;
+    }
+    return 0;
+}
