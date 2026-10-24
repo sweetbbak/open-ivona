@@ -227,8 +227,8 @@ addr	size	mode	name	status	src	score	note
 000222bc	8	arm	isef_version	matched	src/libttsivonavoice/isef.c	100	
 000222c4	178	arm	isef_find	wip	src/libttsivonavoice/isef.c	61.7	
 0002243c	f0	arm	isef_next	wip	src/libttsivonavoice/isef.c	49.2	
-0002252c	290	arm	FUN_0002252c	todo			
-000227bc	a0	arm	FUN_000227bc	todo			
+0002252c	290	arm	lang_tag_match	wip	src/libttsivonavoice/lang_tag.c	52.9	
+000227bc	a0	arm	lang_tags_match	wip	src/libttsivonavoice/lang_tag.c	46.3	
 0002285c	178	arm	FUN_0002285c	todo			
 000229d4	8	arm	FUN_000229d4	todo			
 000229dc	12c	arm	FUN_000229dc	todo			
