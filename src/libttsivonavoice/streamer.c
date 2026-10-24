@@ -67,13 +67,13 @@ void *dom_element_new(const char *name, int type);
 void dom_set_attr(void *elem, const char *name, const char *value);
 void dom_append_child(void *elem, void *child);
 
-void *synth_iter_new(ssml_doc *doc, ivona_vector *voices, ivona_vector *chunks, void *audio);
+void *synth_iter_new(ssml_doc *doc, ivona_vector *voices, ivona_vector *chunks, void *strings);
 void synth_iter_free(void *iter);
 int synth_iter_next(void *iter);
 void utt_rewind(cst_utterance *utt, int pos);
 void mark_queue_init(void *q, int arg);
-void *audio_queue_new(void);
-void audio_queue_free(void *q);
+void *strpool_new(void);
+void strpool_free(void *q);
 void audio_chunk_free(void *chunk, size_t size);
 /* paces output to the requested speed (ratelimit.c) */
 typedef struct rate_conv {
@@ -123,7 +123,7 @@ typedef struct stream_chunk {
 
 /* tts_streamer.data */
 typedef struct streamer {
-    void *audio;            /* audio_queue */
+    void *strings;          /* strpool */
     ivona_vector *chunks;   /* +0x04 */
     int pos;                /* +0x08: current chunk */
     cst_utterance *utt;     /* +0x0c */
@@ -296,7 +296,7 @@ int streamer_set_text(streamer *s, const char *text)
     if (ret)
         return ret;
     if (ssml_doc_prepare(s->doc, v)) {
-        s->iter = synth_iter_new(s->doc, s->voices, s->chunks, s->audio);
+        s->iter = synth_iter_new(s->doc, s->voices, s->chunks, s->strings);
         mark_queue_init(s->marks, s->doc->unk_28);
         return 0;
     }
@@ -414,7 +414,7 @@ static inline void streamer_free(streamer *s)
     s->utt = NULL;
     vector_free(s->waves);
     vector_free(s->voices);
-    audio_queue_free(s->audio);
+    strpool_free(s->strings);
     delete_features(s->metrics);
     cst_free(s);
 }
@@ -450,7 +450,7 @@ tts_streamer *tts_streamer_start(tts_voice *v, const char *text, float speed)
     metrics = strcmp(get_param_string(cert->attrs, "Extension-Metrics", ""), "TRUE");
     rate = tts_voice_sample_rate(v);
     s = cst_safe_calloc(1, sizeof(streamer));
-    s->audio = audio_queue_new();
+    s->strings = strpool_new();
     s->chunks = vector_new(0x1c, NULL, audio_chunk_free);
     s->done = 0;
     if (!(speed >= 1.0f) && speed != -1.0f)

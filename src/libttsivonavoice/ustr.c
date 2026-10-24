@@ -9,6 +9,7 @@
 #include "cst_alloc.h"
 #include "cst_string.h"
 #include "ivona_util.h"
+#include "ivona_ustr.h"
 
 /* text streams (textstream.c) */
 typedef struct textstream textstream;
@@ -156,20 +157,6 @@ char *linereader_read_lines(linereader *lr, int n)
     return NULL;
 }
 
-/* input bytes [start, end) */
-typedef struct ustr_span {
-    unsigned int start;
-    unsigned int end;
-} ustr_span;
-
-typedef struct ivona_ustr {
-    char *data;         /* NUL-terminated */
-    size_t len;
-    size_t cap;
-    ustr_span *spans;   /* span of each byte of data */
-    unsigned int start; /* span of the whole string */
-    unsigned int end;
-} ivona_ustr;
 
 int utf8_encode(unsigned int c, char *out);
 

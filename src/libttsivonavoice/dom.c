@@ -1,14 +1,17 @@
 /*
- * A small DOM for SSML input (0x4a5f8..0x4abd8): documents, elements with attributes and
+ * A small DOM for SSML input (0x4a464..0x4abd8): documents, elements with attributes and
  * text nodes holding ustrs.
  */
 #include "cst_alloc.h"
 #include "cst_features.h"
 #include "cst_string.h"
+#include "cst_val.h"
 #include "ivona_util.h"
+#include "ivona_ustr.h"
 
-typedef struct ivona_ustr ivona_ustr;
-void ivona_ustr_free(ivona_ustr *s);
+/* xml.c */
+char *xml_escape(const char *s, size_t n);
+char *xml_escape_str(const char *s);
 
 #define DOM_TEXT 1
 
@@ -42,8 +45,45 @@ typedef struct dom_doc {
     cst_features *pi;           /* +0x08: keys owned */
 } dom_doc;
 
-void dom_write_element(const dom_elem *e, strbuf *sb);
 void dom_element_free(dom_elem *e);
+
+/* 0x4a464 arm: appends e as XML markup. */
+void dom_write_element(const dom_elem *e, strbuf *sb)
+{
+    const cst_featvalpair *a;
+    const dom_node *c;
+    char *s;
+
+    strbuf_append_str(sb, "<");
+    strbuf_append_str(sb, e->name);
+    for (a = e->attrs->head; a; a = a->next) {
+        s = xml_escape_str(val_string(a->val));
+        strbuf_append_str(sb, " ");
+        strbuf_append_str(sb, a->name);
+        strbuf_append_str(sb, "=\"");
+        strbuf_append_str(sb, s);
+        strbuf_append_str(sb, "\"");
+        cst_free(s);
+    }
+    if (e->first == NULL) {
+        strbuf_append_str(sb, "/>");
+        return;
+    }
+    strbuf_append_str(sb, ">");
+    for (c = e->first; c; c = c->next) {
+        if (c->type == DOM_TEXT) {
+            const ivona_ustr *t = ((const dom_text *)c)->text;
+
+            s = xml_escape(t->data, t->len);
+            strbuf_append_str(sb, s);
+            cst_free(s);
+        } else
+            dom_write_element((const dom_elem *)c, sb);
+    }
+    strbuf_append_str(sb, "</");
+    strbuf_append_str(sb, e->name);
+    strbuf_append_str(sb, ">");
+}
 
 /* 0x4a5f8 arm */
 dom_doc *dom_new(void)
@@ -283,10 +323,12 @@ int dom_set_attr(dom_elem *e, const char *name, const char *value)
     }
 }
 
-/* 0x4aa98 arm */
-const char *dom_get_attr(const dom_elem *e, const char *name)
+/* 0x4aa98 arm: the attribute value (left in r0 by get_param_string).
+ * The call is not a sibcall, so the original's return value location differed from a
+ * pointer's (arm_function_ok_for_sibcall compares them); a missing return in a function of
+ * a wider type reproduces that. */
+long long dom_get_attr(const dom_elem *e, const char *name)
 {
-    /* no return statement: the value is whatever get_param_string left in r0 */
     get_param_string(e->attrs, name, NULL);
 }
 

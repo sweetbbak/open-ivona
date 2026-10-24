@@ -675,20 +675,20 @@ addr	size	mode	name	status	src	score	note
 0004717c	1f8	arm	FUN_0004717c	todo			
 00047374	f4	arm	FUN_00047374	todo			
 00047468	238	arm	FUN_00047468	todo			
-000476a0	20	arm	audio_queue_new	todo			
-000476c0	54	arm	audio_queue_free	todo			
-00047714	12c	arm	FUN_00047714	todo			
-00047840	28	arm	FUN_00047840	todo			
-00047868	10	arm	FUN_00047868	todo			
-00047878	8	arm	FUN_00047878	todo			
-00047880	6c	arm	FUN_00047880	todo			
-000478ec	68	arm	FUN_000478ec	todo			
-00047954	74	arm	FUN_00047954	todo			
-000479c8	34	arm	FUN_000479c8	todo			
-000479fc	9c	arm	FUN_000479fc	todo			
-00047a98	80	arm	FUN_00047a98	todo			
-00047b18	28	arm	FUN_00047b18	todo			
-00047b40	8c	arm	FUN_00047b40	todo			
+000476a0	20	arm	strpool_new	matched	src/libttsivonavoice/strpool.c	100	
+000476c0	54	arm	strpool_free	matched	src/libttsivonavoice/strpool.c	100	
+00047714	12c	arm	strpool_add_n	wip	src/libttsivonavoice/strpool.c	39.5	
+00047840	28	arm	strpool_add	matched	src/libttsivonavoice/strpool.c	100	
+00047868	10	arm	ustr_edit_init_out	matched	src/libttsivonavoice/ustr_edit.c	100	
+00047878	8	arm	ustr_edit_init	matched	src/libttsivonavoice/ustr_edit.c	100	
+00047880	6c	arm	ustr_edit_result	matched	src/libttsivonavoice/ustr_edit.c	100	
+000478ec	68	arm	ustr_edit_skip	matched	src/libttsivonavoice/ustr_edit.c	100	
+00047954	74	arm	ustr_edit_copy	matched	src/libttsivonavoice/ustr_edit.c	100	
+000479c8	34	arm	ustr_edit_keep	matched	src/libttsivonavoice/ustr_edit.c	100	
+000479fc	9c	arm	ustr_edit_insert_n	matched	src/libttsivonavoice/ustr_edit.c	100	
+00047a98	80	arm	ustr_edit_insert_span	matched	src/libttsivonavoice/ustr_edit.c	100	
+00047b18	28	arm	ustr_edit_insert	matched	src/libttsivonavoice/ustr_edit.c	100	
+00047b40	8c	arm	ustr_edit_insert_char	matched	src/libttsivonavoice/ustr_edit.c	100	
 00047bcc	120	arm	FUN_00047bcc	todo			
 00047cec	94	arm	FUN_00047cec	todo			
 00047d80	bc	arm	FUN_00047d80	todo			
@@ -721,18 +721,19 @@ addr	size	mode	name	status	src	score	note
 000498a4	28	arm	tts_msg_free	matched	src/libttsivonavoice/tts_msg.c	100	
 000498cc	1c	arm	tts_msg_last	matched	src/libttsivonavoice/tts_msg.c	100	
 000498e8	88	arm	tts_msg_join	matched	src/libttsivonavoice/tts_msg.c	100	
-00049970	2d0	arm	FUN_00049970	todo			
-00049c40	28	arm	FUN_00049c40	todo			
-00049c68	44	arm	FUN_00049c68	todo			
-00049cac	40	arm	FUN_00049cac	todo			
-00049cec	4c	arm	FUN_00049cec	todo			
-00049d38	8	arm	FUN_00049d38	todo			
-00049d40	1c	arm	FUN_00049d40	todo			
-00049d5c	8	arm	FUN_00049d5c	todo			
-00049d64	1c	arm	FUN_00049d64	todo			
-00049d80	f4	arm	FUN_00049d80	todo			
+00049970	1b4	arm	wave_parse_riff	matched	src/libttsivonavoice/xml.c	100	
+00049b24	11c	arm	xml_escape_n	matched	src/libttsivonavoice/xml.c	100	
+00049c40	28	arm	xml_is_space	matched	src/libttsivonavoice/xml.c	100	
+00049c68	44	arm	xml_is_name_start	wip	src/libttsivonavoice/xml.c	82.4	
+00049cac	40	arm	xml_is_name_char	wip	src/libttsivonavoice/xml.c	81.2	
+00049cec	4c	arm	xml_entity_value	matched	src/libttsivonavoice/xml.c	100	
+00049d38	8	arm	xml_escape	matched	src/libttsivonavoice/xml.c	100	
+00049d40	1c	arm	xml_escape_str	matched	src/libttsivonavoice/xml.c	100	
+00049d5c	8	arm	xml_escape_ws	matched	src/libttsivonavoice/xml.c	100	
+00049d64	1c	arm	xml_escape_ws_str	matched	src/libttsivonavoice/xml.c	100	
+00049d80	f4	arm	xml_clean_chars	wip	src/libttsivonavoice/xml.c	53.2	
 00049e74	5f0	arm	text_is_ssml	todo			
-0004a464	194	arm	dom_write_element	todo			
+0004a464	194	arm	dom_write_element	matched	src/libttsivonavoice/dom.c	100	
 0004a5f8	c	arm	dom_new	matched	src/libttsivonavoice/dom.c	100	
 0004a604	3c	arm	dom_text_new	matched	src/libttsivonavoice/dom.c	100	
 0004a640	5c	arm	dom_element_new	matched	src/libttsivonavoice/dom.c	100	
@@ -750,7 +751,7 @@ addr	size	mode	name	status	src	score	note
 0004aa00	34	arm	dom_append_child	matched	src/libttsivonavoice/dom.c	100	
 0004aa34	10	arm	dom_insert_after	matched	src/libttsivonavoice/dom.c	100	
 0004aa44	54	arm	dom_set_attr	matched	src/libttsivonavoice/dom.c	100	
-0004aa98	14	arm	dom_get_attr	wip	src/libttsivonavoice/dom.c	20.0	
+0004aa98	14	arm	dom_get_attr	matched	src/libttsivonavoice/dom.c	100	
 0004aaac	54	arm	dom_find_attr_up	matched	src/libttsivonavoice/dom.c	100	
 0004ab00	3c	arm	dom_inherited_attr	matched	src/libttsivonavoice/dom.c	100	
 0004ab3c	34	arm	dom_element_dump	matched	src/libttsivonavoice/dom.c	100	
