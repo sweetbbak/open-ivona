@@ -261,22 +261,22 @@ addr	size	mode	name	status	src	score	note
 00023cd0	8	arm	lex_ctx_set_ctx	matched	src/libttsivonavoice/lex_ctx.c	100	
 00023cd8	630	arm	FUN_00023cd8	todo			
 00024308	598	arm	FUN_00024308	todo			
-000248a0	8	arm	FUN_000248a0	todo			
-000248a8	58	arm	FUN_000248a8	todo			
-00024900	1c	arm	FUN_00024900	todo			
+000248a0	8	arm	pls_name_cmp	matched	src/libttsivonavoice/pls.c	100	
+000248a8	58	arm	pls_item_clear	matched	src/libttsivonavoice/pls.c	100	
+00024900	1c	arm	pls_entry_destroy	matched	src/libttsivonavoice/pls.c	100	
 0002491c	33c	arm	FUN_0002491c	todo			
 00024c58	6f4	arm	FUN_00024c58	todo			
 0002534c	104	arm	FUN_0002534c	todo			
-00025450	38	arm	FUN_00025450	todo			
-00025488	38	arm	pls_lexicon_free	todo			
-000254c0	24	arm	FUN_000254c0	todo			
-000254e4	8	arm	FUN_000254e4	todo			
-000254ec	24	arm	FUN_000254ec	todo			
-00025510	8	arm	FUN_00025510	todo			
+00025450	38	arm	pls_lexicon_new	matched	src/libttsivonavoice/pls.c	100	
+00025488	38	arm	pls_lexicon_free	matched	src/libttsivonavoice/pls.c	100	
+000254c0	24	arm	pls_lexicon_set_lang	matched	src/libttsivonavoice/pls.c	100	
+000254e4	8	arm	pls_lexicon_lang	matched	src/libttsivonavoice/pls.c	100	
+000254ec	24	arm	pls_lexicon_set_alphabet	matched	src/libttsivonavoice/pls.c	100	
+00025510	8	arm	pls_lexicon_alphabet	matched	src/libttsivonavoice/pls.c	100	
 00025518	238	arm	FUN_00025518	todo			
 00025750	8	arm	FUN_00025750	todo			
 00025758	8	arm	FUN_00025758	todo			
-00025760	50	arm	FUN_00025760	todo			
+00025760	50	arm	pls_text_clear	matched	src/libttsivonavoice/pls.c	100	
 000257b0	a4	arm	FUN_000257b0	todo			
 00025854	3c4	arm	FUN_00025854	todo			
 00025c18	ccc	arm	FUN_00025c18	todo			
