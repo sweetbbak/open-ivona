@@ -1496,7 +1496,7 @@ addr	size	mode	name	status	src	score	note
 00068780	ec	arm	str_unescape_range	wip	src/libttsivonavoice/flite/cst_synth.c	96.6	
 0006886c	4a4	arm	textanalysis_tokens	wip	src/libttsivonavoice/flite/cst_synth.c	65.7	
 00068d10	28	arm	default_textanalysis	matched	src/libttsivonavoice/flite/cst_synth.c	100	
-00068d38	458	arm	phrasing_tokens	todo			
+00068d38	458	arm	phrasing_tokens	wip	src/libttsivonavoice/flite/cst_synth.c	48.0	
 00069190	28	arm	default_phrasing	matched	src/libttsivonavoice/flite/cst_synth.c	100	
 000691b8	850	arm	lexical_insertion_words	todo			
 00069a08	28	arm	default_lexical_insertion	matched	src/libttsivonavoice/flite/cst_synth.c	100	

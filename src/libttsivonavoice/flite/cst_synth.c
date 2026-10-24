@@ -970,7 +970,93 @@ cst_utterance *default_textanalysis(cst_utterance *u)
     return textanalysis_tokens(u, relation_head(utt_relation(u, REL_TOKEN)), NULL);
 }
 
-cst_utterance *phrasing_tokens(cst_utterance *u, cst_item *t, cst_item *end);
+const char *utf8_last_char(const char *s);
+const char *utf8_strchr(const char *s, int c);
+int utf8_decode(const char *s, int *len);
+
+/* 0x68d38 arm: groups the words of tokens [t, end) into phrases, ending a phrase where
+ * "phrase_boundary_func" says, or at sentence (BB) and clause (B) punctuation, spelled tokens
+ * (SB), short pause marks and blank lines; silences and audio clips end phrases too. */
+cst_utterance *phrasing_tokens(cst_utterance *u, cst_item *t, cst_item *end)
+{
+    const cst_val *pbf = feat_val(u->features, "phrase_boundary_func");
+    cst_relation *prel = utt_relation_create(u, REL_PHRASE);
+    cst_item *ph = NULL, *w;
+    lang_core *ld;
+    const cst_val *f, *v;
+    const char *punc, *ws, *p, *b;
+    int c;
+
+    for (; t && t != end; t = item_next(t)) {
+        for (w = item_daughter(t); w; w = item_next(w)) {
+            if (ph == NULL) {
+                ph = relation_append(prel, NULL);
+                item_set_string(ph, "name", "BB");
+            }
+            item_add_daughter(ph, w);
+        }
+        if (ph == NULL)
+            goto reset;
+        ld = item_lang_data(t);
+        f = ld ? feat_val(ld->features, "phrase_boundary_func") : pbf;
+        if (f) {
+            v = val_ffunc(f)(t);
+            if (v == NULL || (b = val_string(v)) == NULL)
+                goto check;
+            goto set;
+        }
+        punc = ffeature_string(item_traverse(t, 0), "punc");
+        if (ffeature_int(item_traverse(t, 0), "spelling_break") == 1) {
+            b = "SB";
+            goto set;
+        }
+        if (punc[0]) {
+            v = feat_val(item_utt(t)->features, "encoding");
+            if (v && strcmp(val_string(v), "UTF-8") == 0) {
+                c = utf8_decode(utf8_last_char(punc), NULL);
+                if (utf8_strchr("?!\u2047\u2048\u2049\uff1f.\u3002\uff0e\u2024\u2025\u2026\u203c!\uff01", c))
+                    b = "BB";
+                else if (utf8_strchr(",\u3001\uff0c;:\u037e\uff1a", c))
+                    b = "B";
+                else
+                    b = NULL;
+            } else {
+                c = (unsigned char)punc[strlen(punc) - 1];
+                if (strchr(".?!", c))
+                    b = "BB";
+                else if (strchr(",;:", c))
+                    b = "B";
+                else
+                    b = NULL;
+            }
+            if (b)
+                goto set;
+        }
+        if (ffeature_int(item_traverse(item_last_daughter(t), 0), "shortPause") == 1) {
+            b = "B";
+            goto set;
+        }
+        ws = ffeature_string(item_traverse(t, 0x100, 0), "whitespace");
+        if ((p = strchr(ws, '\n')) != NULL && strchr(p + 1, '\n') != NULL) {
+            b = "BB";
+            goto set;
+        }
+        v = feat_val(item_utt(t)->features, "encoding");
+        if (v == NULL || strcmp(val_string(v), "UTF-8") != 0)
+            goto check;
+        if (utf8_strchr(ffeature_string(item_traverse(t, 0x100, 0), "whitespace"), 0x2029) == NULL)
+            goto check;
+        b = "BB";
+set:
+        item_set_string(ph, "name", b);
+        ph = NULL;
+check:
+        if (item_feat_present(t, "silence") || item_feat_present(t, "wave"))
+reset:
+            ph = NULL;
+    }
+    return u;
+}
 
 /* 0x69190 arm */
 cst_utterance *default_phrasing(cst_utterance *u)
