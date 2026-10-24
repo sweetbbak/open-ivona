@@ -18,11 +18,12 @@
 #include "cst_val_defs.h"
 #include "cst_string.h"
 #include "cst_tokenstream.h"
+#include "cst_regex.h"
 #include <string.h>
 #include "tts_metrics.h"
 #include "tts_voice.h"
+#include "ivona_util.h"
 
-unsigned long long ivona_time_usec(void);
 cst_relation *val_relation(const cst_val *v);
 
 typedef int (*synth_module_callback)(cst_utterance *u, const char *stage, void *data);
@@ -363,6 +364,200 @@ unsigned int xsampa_mod_flag(const char *s)
     return 0;
 }
 
+/* 0x67568 arm: the suffix of a modifier flag */
+const char *xsampa_mod_name(unsigned int flag)
+{
+    switch (flag) {
+    case 0x1:
+        return "_1";
+    case 0x4:
+        return "_2";
+    case 0x8:
+        return "_3";
+    case 0x10:
+        return "_4";
+    case 0x20:
+        return "_5";
+    case 0x40:
+        return "_6";
+    case 0x80:
+        return "_/";
+    case 0x100:
+        return "_R";
+    case 0x200:
+        return "_R_F";
+    case 0x400:
+        return "_\\";
+    case 0x800:
+        return "_F";
+    case 0x1000:
+        return "_B";
+    case 0x2000:
+        return "_L";
+    case 0x4000:
+        return "_B_L";
+    case 0x8000:
+        return "_M";
+    case 0x10000:
+        return "_H";
+    case 0x20000:
+        return "_H_T";
+    case 0x40000:
+        return "_T";
+    default:
+        return NULL;
+    }
+}
+
+#define REL_PHRASE 3
+#define REL_SYLSTRUCTURE 4
+#define REL_SEGMENT 6
+
+cst_item *item_traverse(const cst_item *item, ...);
+const char *ffeature_string(const cst_item *item, const char *featpath);
+int ffeature_int(const cst_item *item, const char *featpath);
+void FUN_0006dc94(const char *s, int start, int len, const void *rules, int flags, char *out);
+
+/* how syllable stress values are written */
+typedef struct stress_info {
+    int stress;                 /* 0 ends the table */
+    int mark;                   /* 1: primary ("), 2: secondary (%) */
+    unsigned int tone;          /* modifier flag appended to the vowel */
+    int unused;
+} stress_info;
+
+static const stress_info default_stress_info[] = {
+    { 1, 1, 0, 0 },
+    { 2, 2, 0, 0 },
+    { 0, 0, 0, 0 },
+};
+
+static const stress_info *stress_info_find(const stress_info *si, int stress)
+{
+    for (; si->stress; si++)
+        if (si->stress == stress)
+            return si;
+    return NULL;
+}
+
+/* 0x67738 arm: the X-SAMPA of a segment: its IVONA phone rewritten by rules in the context of
+ * its word ("[$$][$][a][b]...[$]"), with syllable and stress marks before it and tone and
+ * glottal stop after it. */
+char *xivona_to_xsampa(cst_item *seg, const void *rules, const stress_info *si)
+{
+    cst_item *ss, *syl, *word, *first, *end, *s;
+    const stress_info *e;
+    strbuf out, ctx;
+    int start, len, st;
+    char *buf;
+
+    ss = item_as(seg, REL_SYLSTRUCTURE);
+    if (si == NULL)
+        si = default_stress_info;
+    if (ss == NULL || rules == NULL)
+        return cst_strdup("");
+    syl = item_parent(ss);
+    word = item_parent(syl);
+    first = item_daughter(item_daughter(word));
+    end = item_next(item_as(item_last_daughter(item_last_daughter(word)), REL_SEGMENT));
+    strbuf_init(&out);
+    strbuf_init(&ctx);
+    if (ss == first)
+        strbuf_append_str(&out, " ");
+    s = item_daughter(item_parent(ss));
+    if (s == ss) {
+        e = stress_info_find(si, item_feat_int(syl, "stress"));
+        if (first != s)
+            strbuf_append_str(&out, ".");
+        if (e) {
+            if (e->mark == 1)
+                strbuf_append_str(&out, "\"");
+            else if (e->mark == 2)
+                strbuf_append_str(&out, "%");
+        }
+    }
+    if (item_prev(item_as(word, REL_PHRASE)) == NULL)
+        strbuf_append_str(&ctx, "[$$]");
+    strbuf_append_str(&ctx, "[$]");
+    for (s = item_as(first, REL_SEGMENT); s && s != seg; s = item_next(s)) {
+        strbuf_append_str(&ctx, "[");
+        strbuf_append_str(&ctx, item_feat_string(s, "name"));
+        strbuf_append_str(&ctx, "]");
+    }
+    start = ctx.len;
+    strbuf_append_str(&ctx, "[");
+    strbuf_append_str(&ctx, item_feat_string(seg, "name"));
+    strbuf_append_str(&ctx, "]");
+    len = ctx.len - start;
+    for (s = item_next(seg); s && s != end; s = item_next(s)) {
+        strbuf_append_str(&ctx, "[");
+        strbuf_append_str(&ctx, item_feat_string(s, "name"));
+        strbuf_append_str(&ctx, "]");
+    }
+    strbuf_append_str(&ctx, "[$]");
+    if (item_next(item_as(word, REL_PHRASE)) == NULL)
+        strbuf_append_str(&ctx, "[$$]");
+    buf = cst_safe_alloc(ctx.len + 1, 1);
+    FUN_0006dc94(ctx.data, start, len, rules, 0, buf);
+    strbuf_append_str(&out, buf);
+    cst_free(buf);
+    if (si != default_stress_info
+        && strcmp("+", ffeature_string(item_traverse(ss, 0), "ph_vc")) == 0) {
+        st = item_feat_int(syl, "stress");
+        for (; si->stress; si++)
+            if (st == si->stress) {
+                if (si->tone)
+                    strbuf_append_str(&out, xsampa_mod_name(si->tone));
+                break;
+            }
+    }
+    if (item_feat_int(item_parent(ss), "glottal_stop_pos")
+        == ffeature_int(item_traverse(seg, 0), "pos_in_syl") + 1)
+        strbuf_append_str(&out, "?");
+    strbuf_release(&ctx);
+    return out.data;
+}
+
+/* 0x67c2c arm: the X-SAMPA of a segment by the utterance's rules */
+char *item_xsampa(cst_item *seg)
+{
+    const cst_val *v;
+    const void *rules = NULL;
+
+    v = feat_val(item_utt(seg)->features, "xivona_to_xsampa_rules");
+    if (v)
+        rules = val_userdata(v);
+    v = feat_val(item_utt(seg)->features, "xivona_stress_info");
+    if (v)
+        return xivona_to_xsampa(seg, rules, val_userdata(v));
+    return xivona_to_xsampa(seg, rules, default_stress_info);
+}
+
+/* 0x67cb4 arm: item_xsampa of a Segment, marked "-" after a retroflex t/d when it is a
+ * sibilant (s S z Z). */
+char *seg_xsampa(cst_item *i)
+{
+    char *s = item_xsampa(item_as(i, REL_SEGMENT));
+    cst_item *p = item_prev(i);
+    cst_regex *re;
+    char *ps, *n;
+
+    if (p && strchr("sSzZ", s[0])) {
+        re = new_cst_regex(" *\\(^\\|[^_]\\)[td]`?$");
+        ps = item_xsampa(p);
+        if (cst_regex_match(re, ps)) {
+            n = cst_safe_alloc(strlen(s) + 2, 1);
+            n[0] = '-';
+            strcpy(n + 1, s);
+            cst_free(s);
+            s = n;
+        }
+        delete_cst_regex(re);
+        cst_free(ps);
+    }
+    return s;
+}
+
 /* 0x67d7c arm: a copy of s with spaces turned into dashes. */
 char *str_dashes(const char *s)
 {
@@ -380,6 +575,21 @@ int lang_is_amazon(const char *lang)
     if (strncmp(lang, "x-amazon", 8) != 0)
         return 0;
     return lang[8] == '\0' || lang[8] == '-';
+}
+
+char *xsampa_word_convert(const char *word, const void *a, const void *b);
+
+/* 0x67dec arm: converts a word; for "x-amazon" languages spaces become dashes first. */
+char *xsampa_word(const char *word, const char *lang, const void *a, const void *b)
+{
+    char *w = NULL;
+    char *r;
+
+    if (lang_is_amazon(lang))
+        word = w = str_dashes(word);
+    r = xsampa_word_convert(word, a, b);
+    cst_free(w);
+    return r;
 }
 
 /* X-SAMPA tokens: a symbol and the modifiers following it */

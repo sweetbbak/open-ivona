@@ -1474,14 +1474,14 @@ addr	size	mode	name	status	src	score	note
 00066b4c	58	arm	val_xsampafunc	matched	src/libttsivonavoice/flite/cst_synth.c	100	
 00066ba4	18	arm	xsampafunc_val	matched	src/libttsivonavoice/flite/cst_synth.c	100	
 00066bbc	28c	arm	xsampa_mod_flag	matched	src/libttsivonavoice/flite/cst_synth.c	100	
-00066e48	720	arm	FUN_00066e48	todo			
-00067568	1d0	arm	FUN_00067568	todo			
-00067738	4f4	arm	FUN_00067738	todo			
-00067c2c	88	arm	FUN_00067c2c	todo			
-00067cb4	c8	arm	FUN_00067cb4	todo			
+00066e48	720	arm	xsampa_word_convert	todo			
+00067568	1d0	arm	xsampa_mod_name	matched	src/libttsivonavoice/flite/cst_synth.c	100	
+00067738	4f4	arm	xivona_to_xsampa	wip	src/libttsivonavoice/flite/cst_synth.c	77.3	
+00067c2c	88	arm	item_xsampa	matched	src/libttsivonavoice/flite/cst_synth.c	100	
+00067cb4	c8	arm	seg_xsampa	matched	src/libttsivonavoice/flite/cst_synth.c	100	
 00067d7c	20	arm	str_dashes	matched	src/libttsivonavoice/flite/cst_synth.c	100	
 00067d9c	50	arm	lang_is_amazon	matched	src/libttsivonavoice/flite/cst_synth.c	100	
-00067dec	58	arm	FUN_00067dec	todo			
+00067dec	58	arm	xsampa_word	matched	src/libttsivonavoice/flite/cst_synth.c	100	
 00067e44	14	arm	xs_tok_init	matched	src/libttsivonavoice/flite/cst_synth.c	100	
 00067e58	4	arm	xs_tok_done	matched	src/libttsivonavoice/flite/cst_synth.c	100	
 00067e5c	138	arm	xs_tok_next	matched	src/libttsivonavoice/flite/cst_synth.c	100	
