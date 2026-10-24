@@ -17,6 +17,9 @@ typedef struct fetcher fetcher;
 fetcher *fetcher_new(void);
 void fetcher_delete(fetcher *f);
 void fetcher_reset(fetcher *f);
+void fetcher_set_referer(fetcher *f, const char *referer);
+void fetcher_set_base(fetcher *f, const char *base);
+void fetcher_set_callback(fetcher *f, void *fetch, void *user);
 cst_features *wavedict_new(void);
 void wavedict_clear(cst_features *d);
 void wavedict_free(cst_features *d);
@@ -25,6 +28,9 @@ void pls_lexicon_free(pls_lexicon *l);
 pls_lexicon *pls_lexicon_parse(const char *data, size_t size, const char *lang, tts_msg **msgs,
                                int level);
 const char *dom_get_attr(const dom_elem *e, const char *name);
+void dom_remove_preceding(dom_node *n);
+void dom_remove_following(dom_node *n);
+dom_node *ssml_find_mark(dom_elem *e, const char *name);
 ivona_ustr *ustr_transcode(const ivona_ustr *s, const char *encoding, int *state, size_t *pos);
 int utf8_encode(unsigned int c, char *out);
 int utf8_decode(const char *s, int *len);
@@ -57,7 +63,8 @@ typedef struct ssml_audio {
 typedef struct ssml_doc {
     fetcher *fetch;
     dom_doc *dom;               /* +0x04 */
-    int unk_8[2];
+    void *audio_attr_fn;        /* +0x08: eng_audio_attributes_function */
+    void *audio_attr_data;      /* +0x0c */
     ivona_vector *lexicons;     /* +0x10: of ssml_lexicon */
     int unk_14;
     char *encoding;             /* +0x18 */
@@ -191,6 +198,48 @@ void ssml_doc_reset(ssml_doc *d)
 void ssml_doc_set_voice(ssml_doc *d, tts_voice *v)
 {
     d->entity_limit = get_param_int(VOICE_FEATURES(v), "eng_xml_entity_expansion_limit", 100);
+}
+
+/* 0x28d34 arm: readies a parsed document for v: default language and base URI, the fetch
+ * and audio attribute callbacks, and the startmark/endmark range. */
+int ssml_doc_prepare(ssml_doc *d, tts_voice *v)
+{
+    dom_doc *dom;
+    dom_node *n;
+    const char *s;
+
+    if (dom_get_attr(d->dom->root, "http://www.w3.org/XML/1998/namespace^lang") == NULL)
+        dom_set_attr(d->dom->root, "http://www.w3.org/XML/1998/namespace^lang",
+                     v->voice->lang_codes);
+    if (d->dom->name == NULL) {
+        s = get_param_string(VOICE_FEATURES(v), "eng_ssml_base_uri", NULL);
+        if (s && *s)
+            d->dom->name = cst_strdup(s);
+    }
+    if (d->dom->name) {
+        fetcher_set_base(d->fetch, d->dom->name);
+        fetcher_set_referer(d->fetch, d->dom->name);
+    }
+    if (feat_present(VOICE_FEATURES(v), "eng_fetch_function")) {
+        void *user = NULL;
+
+        if (feat_present(VOICE_FEATURES(v), "eng_fetch_user_data"))
+            user = val_userdata(feat_val(VOICE_FEATURES(v), "eng_fetch_user_data"));
+        fetcher_set_callback(d->fetch, val_userdata(feat_val(VOICE_FEATURES(v), "eng_fetch_function")),
+                             user);
+    }
+    if (feat_present(VOICE_FEATURES(v), "eng_audio_attributes_function")) {
+        d->audio_attr_fn = val_userdata(feat_val(VOICE_FEATURES(v), "eng_audio_attributes_function"));
+        if (feat_present(VOICE_FEATURES(v), "eng_audio_attributes_user_data"))
+            d->audio_attr_data = val_userdata(feat_val(VOICE_FEATURES(v),
+                                                       "eng_audio_attributes_user_data"));
+    }
+    dom = d->dom;
+    if ((s = dom_get_attr(dom->root, "startmark")) != NULL && (n = ssml_find_mark(dom->root, s)) != NULL)
+        dom_remove_preceding(n);
+    if ((s = dom_get_attr(dom->root, "endmark")) != NULL && (n = ssml_find_mark(dom->root, s)) != NULL)
+        dom_remove_following(n);
+    return 1;
 }
 
 /* 0x28f9c arm */
