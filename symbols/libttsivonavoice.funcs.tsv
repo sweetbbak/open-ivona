@@ -351,7 +351,7 @@ addr	size	mode	name	status	src	score	note
 0002d734	64	arm	say_as_is_speech	matched	src/libttsivonavoice/synth_iter.c	100	
 0002d798	e0	arm	lex_ctx_load_voice	matched	src/libttsivonavoice/synth_iter.c	100	
 0002d878	108	arm	ssml_apply_pls_attr	matched	src/libttsivonavoice/synth_iter.c	100	
-0002d980	18c	arm	FUN_0002d980	todo			
+0002d980	18c	arm	ssml_check_voice_attr_list	wip	src/libttsivonavoice/synth_iter.c	73.0	
 0002db0c	1b4	arm	FUN_0002db0c	todo			
 0002dcc0	ec	arm	FUN_0002dcc0	todo			
 0002ddac	154	arm	FUN_0002ddac	todo			

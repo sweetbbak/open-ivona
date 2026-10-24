@@ -253,6 +253,28 @@ out:
     return ret;
 }
 
+/* 0x2d980 arm: warns about unknown tokens in the attribute attr of a <voice> (e.g.
+ * "required") */
+void ssml_check_voice_attr_list(synth_iter *it, dom_elem *e, const char *attr)
+{
+    const char *v = dom_get_attr(e, attr);
+    strlist *l;
+    char **w;
+
+    if (v == NULL || *v == 0)
+        return;
+    l = strlist_split_ws(v);
+    for (w = l->items; w != l->items + l->count; w++) {
+        if (strcasecmp(*w, "gender") == 0 || strcasecmp(*w, "age") == 0
+            || strcasecmp(*w, "variant") == 0 || strcasecmp(*w, "name") == 0
+            || strcasecmp(*w, "languages") == 0)
+            continue;
+        TTS_MSG_ADD_AT(it->doc->warnings, e->span.start, e->n.index, 6,
+                       "Invalid value of attribute \"%s\"", attr);
+    }
+    strlist_free(l);
+}
+
 /* 0x2dfec arm: the language part for lang, NULL if it is the voice's own */
 void *synth_iter_lang(synth_iter *it, const char *lang)
 {
