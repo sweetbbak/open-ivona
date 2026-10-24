@@ -1489,7 +1489,7 @@ addr	size	mode	name	status	src	score	note
 00067fec	18	arm	zdur_cart_val	matched	src/libttsivonavoice/flite/cst_synth.c	100	
 00068004	1bc	arm	FUN_00068004	todo			
 000681c0	10	arm	int_cmp	matched	src/libttsivonavoice/flite/cst_synth.c	100	
-000681d0	328	arm	FUN_000681d0	todo			
+000681d0	328	arm	item_rename_relation	todo			
 000684f8	154	arm	default_tokenization	matched	src/libttsivonavoice/flite/cst_synth.c	100	flite strings(1) 8%
 0006864c	d8	arm	t2t_tokens	matched	src/libttsivonavoice/flite/cst_synth.c	100	
 00068724	5c	arm	strchr_unescaped	wip	src/libttsivonavoice/flite/cst_synth.c	6.7	
@@ -1505,7 +1505,7 @@ addr	size	mode	name	status	src	score	note
 0006a078	7c	arm	word_append_segment	matched	src/libttsivonavoice/flite/cst_synth.c	100	
 0006a0f4	470	arm	breath_insertion_utt	todo			
 0006a564	54	arm	breath_insertion	matched	src/libttsivonavoice/flite/cst_synth.c	100	
-0006a5b8	294	arm	FUN_0006a5b8	todo			
+0006a5b8	294	arm	default_pause_insertion	wip	src/libttsivonavoice/flite/cst_synth.c	98.8	
 0006a84c	194	arm	default_intonation	matched	src/libttsivonavoice/flite/cst_synth.c	100	
 0006a9e0	4	arm	FUN_0006a9e0	matched	src/libttsivonavoice/flite/cst_synth.c	100	
 0006a9e4	548	arm	FUN_0006a9e4	todo			

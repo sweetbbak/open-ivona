@@ -15,6 +15,7 @@
 #include "cst_relation.h"
 #include "cst_utterance.h"
 #include "cst_val.h"
+#include "cst_error.h"
 #include "cst_val_defs.h"
 #include "cst_string.h"
 #include "cst_tokenstream.h"
@@ -177,7 +178,7 @@ cst_utterance *default_textanalysis(cst_utterance *u);
 cst_utterance *default_phrasing(cst_utterance *u);
 cst_utterance *default_lexical_insertion(cst_utterance *u);
 cst_utterance *FUN_00069b88(cst_utterance *u);
-cst_utterance *FUN_0006a5b8(cst_utterance *u);
+cst_utterance *default_pause_insertion(cst_utterance *u);
 cst_utterance *default_intonation(cst_utterance *u);
 cst_utterance *phones_textanalysis(cst_utterance *u);
 
@@ -189,7 +190,7 @@ static const cst_synth_module text_methods[] = {
     { "phrasing_func", "phrasing_time", default_phrasing },
     { "lettertosound_func", "lettertosound_time", default_lexical_insertion },
     { "change_language_func", "change_language_time", FUN_00069b88 },
-    { "pause_insertion_func", "pause_insertion_time", FUN_0006a5b8 },
+    { "pause_insertion_func", "pause_insertion_time", default_pause_insertion },
     { "postlex_func", "postlex_time", NULL },
     { "intonation_func", "intonation_time", default_intonation },
     { "acoustic_prediction_func", "acoustic_prediction_time", NULL },
@@ -205,7 +206,7 @@ static const cst_synth_module token_methods[] = {
     { "phrasing_func", "phrasing_time", default_phrasing },
     { "lettertosound_func", "lettertosound_time", default_lexical_insertion },
     { "change_language_func", "change_language_time", FUN_00069b88 },
-    { "pause_insertion_func", "pause_insertion_time", FUN_0006a5b8 },
+    { "pause_insertion_func", "pause_insertion_time", default_pause_insertion },
     { "postlex_func", "postlex_time", NULL },
     { "intonation_func", "intonation_time", default_intonation },
     { "acoustic_prediction_func", "acoustic_prediction_time", NULL },
@@ -221,7 +222,7 @@ static const cst_synth_module phones_methods[] = {
     { "phrasing_func", "phrasing_time", default_phrasing },
     { "lettertosound_func", "lettertosound_time", default_lexical_insertion },
     { "change_language_func", "change_language_time", FUN_00069b88 },
-    { "pause_insertion_func", "pause_insertion_time", FUN_0006a5b8 },
+    { "pause_insertion_func", "pause_insertion_time", default_pause_insertion },
     { "postlex_func", "postlex_time", NULL },
     { "intonation_func", "intonation_time", default_intonation },
     { "acoustic_prediction_func", "acoustic_prediction_time", NULL },
@@ -936,6 +937,64 @@ cst_utterance *breath_insertion(cst_utterance *u)
     if (feats_have_breath_units(u->features) && u->unk_14
         && strlist_contains(u->unk_14, "breath_insertion"))
         breath_insertion_utt(u);
+    return u;
+}
+
+#define REL_PHRPUN 8
+
+cst_featvalpair *feat_find_featpair(const cst_features *f, const char *name);
+const char *cst_relation_id_name(int id);
+void item_rename_relation(cst_item *i, const char *from, const char *to);
+typedef struct dnn_models {
+    int unk[3];
+    void *phrasing;             /* +0x0c */
+} dnn_models;
+dnn_models *voice_dnn_models(cst_utterance *u);
+int dnn_stub_44(void *model);
+
+/* 0x6a5b8 arm: keeps the punctuation phrases as PhrPun and rebuilds Phrase from them, with
+ * silence before the first segment and after each phrase. */
+cst_utterance *default_pause_insertion(cst_utterance *u)
+{
+    int nodnn = get_param_int(u->features, "disable_phrasing_dnn", 0);
+    cst_relation *r = utt_relation(u, REL_PHRASE);
+    const char *pname = cst_relation_id_name(r->id);
+    const char *ppname = cst_relation_id_name(REL_PHRPUN);
+    cst_featvalpair *fp = feat_find_featpair(u->relations, pname);
+    cst_relation *nr;
+    cst_item *p, *np, *w, *s;
+    const char *sil;
+    int t0;
+
+    cst_dbgmsg("", val_relation(fp->val), feat_find_featpair(u->relations, ppname));
+    fp->name = ppname;
+    r->id = REL_PHRPUN;
+    for (p = relation_head(r); p; p = item_next(p))
+        item_rename_relation(p, pname, ppname);
+    nr = utt_relation_create(u, REL_PHRASE);
+    if (feat_present(u->features, "phrasing_model") && feat_int(u->features, "phrasing_model") == 1
+        && !nodnn)
+        dnn_stub_44(voice_dnn_models(u)->phrasing);
+    sil = val_string(feat_val(u->features, "silence"));
+    s = relation_head(utt_relation(u, REL_SEGMENT));
+    if (s)
+        s = item_prepend(s, NULL);
+    else
+        s = relation_append(utt_relation(u, REL_SEGMENT), NULL);
+    item_set_string(s, "name", sil);
+    for (p = relation_head(utt_relation(u, REL_PHRPUN)); p; p = item_next(p)) {
+        np = relation_append(nr, NULL);
+        item_set_string(np, "name", item_feat_string(p, "name"));
+        t0 = ivona_time_usec();
+        for (w = item_daughter(p); w; w = item_next(w)) {
+            cst_dbgmsg("", item_parent(item_as(w, REL_TOKEN)));
+            item_add_daughter(np, w);
+            cst_dbgmsg("", item_next(w) ? item_next(item_as(w, REL_TOKEN)) : NULL);
+        }
+        word_append_segment(np, sil);
+        metrics_add_time(get_param_features(u->features, "core_metrics", NULL),
+                         "phrasing_dnn_output_processing_time", ivona_time_usec() - t0);
+    }
     return u;
 }
 
