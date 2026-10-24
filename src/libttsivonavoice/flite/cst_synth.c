@@ -707,6 +707,7 @@ short zdur_cart_duration(const zdur_cart *dc, const cst_item *seg)
     const zdur_node *n;
     const char *f, *val;
     const cst_val *v;
+    char op;
     int r;
     short z;
 
@@ -717,11 +718,12 @@ short zdur_cart_duration(const zdur_cart *dc, const cst_item *seg)
         }
     for (n = dc->nodes; n->feat != 0xff; ) {
         f = dc->names[n->feat];
+        op = f[0];
         val = dc->names[n->value];
         v = ffeature(seg, f + 1);
-        if (f[0] == '<')
+        if (op == '<')
             r = val_float(v) < cst_atof(val);
-        else if (f[0] == '>')
+        else if (op == '>')
             r = val_float(v) > cst_atof(val);
         else if (CST_VAL_TYPE(v) == CST_VAL_TYPE_INT)
             r = val_int(v) == atoi(val);
@@ -733,7 +735,7 @@ short zdur_cart_duration(const zdur_cart *dc, const cst_item *seg)
             n = dc->nodes + n->next;
     }
     z = n->next;
-    return (z * p->stddev + (z > 0 ? 500 : -500)) / 1000 + p->mean;
+    return (z * (short)p->stddev + (z > 0 ? 500 : -500)) / 1000 + p->mean;
 }
 
 /* 0x681d0 arm: renames relation from to to in the relation lists of i and its descendants */
