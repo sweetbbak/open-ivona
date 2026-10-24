@@ -254,3 +254,91 @@ close:
     isef_reader_free(r);
     return f;
 }
+
+/* 0x222ac arm */
+strbuf *isef_header(isef_file *f)
+{
+    return &f->header;
+}
+
+/* 0x222b4 arm */
+const char *isef_path(const isef_file *f)
+{
+    return f->path;
+}
+
+/* 0x222bc arm */
+unsigned int isef_version(const isef_file *f)
+{
+    return f->version;
+}
+
+/* entries of the header and the data: char name[16] (zero padded), be32 size, data */
+#define ISEF_NAME 16
+#define ISEF_ENTRY 0x14
+
+static const char isef_zeros[ISEF_NAME];
+
+static inline int isef_find_in(const char *base, size_t total, const char *name, size_t len,
+                               const char **data, size_t *size)
+{
+    size_t off, n;
+
+    for (off = 0; off + ISEF_ENTRY <= total; off += ISEF_ENTRY + n) {
+        n = be32(base + off + ISEF_NAME);
+        if (memcmp(base + off, name, len) == 0
+            && memcmp(base + off + len, isef_zeros, ISEF_NAME - len) == 0) {
+            *data = base + off + ISEF_ENTRY;
+            *size = n;
+            return 1;
+        }
+    }
+    return 0;
+}
+
+/* 0x222c4 arm: the entry named name, in the header or else in the data */
+int isef_find(const isef_file *f, const char *name, const char **data, size_t *size)
+{
+    size_t len = strlen(name);
+    const char *base = f->header.data;
+    size_t total = f->header.len;
+
+    if (len <= ISEF_NAME
+        && (isef_find_in(base, total, name, len, data, size)
+            || isef_find_in(f->data, f->size, name, len, data, size)))
+        return 1;
+    return 0;
+}
+
+/* 0x2243c arm: the entry after the one whose data is [p, p + n) (the first for p NULL); returns
+ * its name or NULL. */
+const char *isef_next(const isef_file *f, const char *p, size_t n, const char **data, size_t *size)
+{
+    const char *e;
+
+    if (p == NULL) {
+        if (f->header.len >= ISEF_ENTRY)
+            e = f->header.data;
+        else if (f->size >= ISEF_ENTRY)
+            e = f->data;
+        else
+            return NULL;
+    } else if (p > f->header.data && p + n < f->header.data + f->header.len) {
+        if (f->header.len - n + (f->header.data - p) < ISEF_ENTRY)
+            return NULL;
+        e = p + n;
+    } else if (p > f->header.data && p + n == f->header.data + f->header.len) {
+        if (f->size < ISEF_ENTRY)
+            return NULL;
+        e = f->data;
+    } else {
+        if (p <= f->data || p + n >= f->data + f->size)
+            return NULL;
+        if (f->size - n + (f->data - p) < ISEF_ENTRY)
+            return NULL;
+        e = p + n;
+    }
+    *data = e + ISEF_ENTRY;
+    *size = be32(e + ISEF_NAME);
+    return e;
+}
