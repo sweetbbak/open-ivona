@@ -44,11 +44,11 @@ static int g_tts_instance_count;
 
 void *FUN_00022b2c(const char *path, void *arg);
 void lang_data_free(void *data);
-void FUN_00036a3c(void *addon, void *module);
-void FUN_00036a7c(void *addon, void *module);
-void FUN_00036abc(void *addon);
-void *FUN_00036f88(const void *data, int size);
-void *FUN_00036fc4(const char *path);
+void addon_attach(void *addon, void *module);
+void addon_detach(void *addon, void *module);
+void addon_free(void *addon);
+void *addon_load(const void *data, int size);
+void *addon_load_file(const char *path);
 int license_acquire(void *license, void *key);
 void license_free(void *p);
 
@@ -94,7 +94,7 @@ int tts_attach_addon(tts_instance *tts, void *obj)
     ivona_mutex_trylock(tts->modules_lock);
     for (i = 0; i < vector_size(tts->modules); i++) {
         void *module = *(void **)vector_at(tts->modules, i);
-        FUN_00036a3c(obj, module);
+        addon_attach(obj, module);
     }
     ivona_mutex_unlock(tts->modules_lock);
     ivona_mutex_unlock(tts->addons_lock);
@@ -303,7 +303,7 @@ void tts_add_module(tts_instance *tts, void *module)
 
     ivona_mutex_trylock(tts->modules_lock);
     for (i = 0; i < vector_size(tts->addons_list); i++)
-        FUN_00036a3c(*(void **)vector_at(tts->addons_list, i), module);
+        addon_attach(*(void **)vector_at(tts->addons_list, i), module);
     vector_push(tts->modules, &module);
     ivona_mutex_unlock(tts->modules_lock);
 }
@@ -317,7 +317,7 @@ void tts_remove_module(tts_instance *tts, void *module)
     i = vector_size(tts->addons_list);
     while (i != 0) {
         i--;
-        FUN_00036a7c(*(void **)vector_at(tts->addons_list, i), module);
+        addon_detach(*(void **)vector_at(tts->addons_list, i), module);
     }
     for (i = 0; i < vector_size(tts->modules); i++)
         if (*(void **)vector_at(tts->modules, i) == module) {
@@ -421,7 +421,7 @@ void *tts_load_addon(tts_instance *tts, const void *data, int size)
         tts_set_error(TTS_STATUS_INVALID_ARGUMENT);
         return NULL;
     }
-    addon = FUN_00036f88(data, size);
+    addon = addon_load(data, size);
     if (addon == NULL) {
         tts_set_error(TTS_STATUS_FORMAT_ERROR);
         return NULL;
@@ -439,7 +439,7 @@ void *tts_load_addon_file(tts_instance *tts, const char *path)
         tts_set_error(TTS_STATUS_INVALID_ARGUMENT);
         return NULL;
     }
-    addon = FUN_00036fc4(path);
+    addon = addon_load_file(path);
     if (addon == NULL) {
         tts_set_error(TTS_STATUS_FORMAT_ERROR);
         return NULL;
@@ -463,10 +463,10 @@ int tts_unload_addon(tts_instance *tts, void *addon)
         if (*(void **)vector_at(tts->addons_list, i) == addon) {
             ivona_mutex_trylock(tts->modules_lock);
             for (j = 0; j < vector_size(tts->modules); j++)
-                FUN_00036a7c(addon, *(void **)vector_at(tts->modules, j));
+                addon_detach(addon, *(void **)vector_at(tts->modules, j));
             vector_erase(tts->addons_list, i, 1);
             ivona_mutex_unlock(tts->modules_lock);
-            FUN_00036abc(addon);
+            addon_free(addon);
             ok = 1;
             break;
         }

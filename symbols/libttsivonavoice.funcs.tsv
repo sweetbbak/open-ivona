@@ -430,33 +430,33 @@ addr	size	mode	name	status	src	score	note
 000356ac	2c	arm	synth_state_set_lang	matched	src/libttsivonavoice/synth_iter.c	100	
 000356d8	190	arm	FUN_000356d8	todo			
 00035868	9b8	arm	token_info_from_item	todo			
-00036220	34	arm	token_info_free	todo			
+00036220	34	arm	token_info_free	matched	src/libttsivonavoice/token_info.c	100	
 00036254	7e8	arm	token_info_to_item	todo			
-00036a3c	40	arm	FUN_00036a3c	matched	src/libttsivonavoice/calib_arm.c	100	
-00036a7c	40	arm	FUN_00036a7c	todo			
-00036abc	54	arm	FUN_00036abc	todo			
-00036b10	1b4	arm	FUN_00036b10	todo			
-00036cc4	194	arm	FUN_00036cc4	todo			
-00036e58	130	arm	FUN_00036e58	todo			
-00036f88	3c	arm	FUN_00036f88	todo			
-00036fc4	6c	arm	FUN_00036fc4	todo			
+00036a3c	40	arm	addon_attach	matched	src/libttsivonavoice/addon.c	100	
+00036a7c	40	arm	addon_detach	matched	src/libttsivonavoice/addon.c	100	
+00036abc	54	arm	addon_free	matched	src/libttsivonavoice/addon.c	100	
+00036b10	1b4	arm	addon_parse	wip	src/libttsivonavoice/addon.c	46.5	
+00036cc4	194	arm	addon_read_selector	matched	src/libttsivonavoice/addon.c	100	
+00036e58	130	arm	addon_selector_matches	matched	src/libttsivonavoice/addon.c	100	
+00036f88	3c	arm	addon_load	matched	src/libttsivonavoice/addon.c	100	
+00036fc4	6c	arm	addon_load_file	matched	src/libttsivonavoice/addon.c	100	
 00037030	8c	arm	FUN_00037030	todo			
-000370bc	80	arm	FUN_000370bc	todo			
-0003713c	80	arm	FUN_0003713c	todo			
-000371bc	4c	arm	FUN_000371bc	todo			
-00037208	1ac	arm	FUN_00037208	todo			
-000373b4	b4	arm	FUN_000373b4	todo			
-00037468	c8	arm	FUN_00037468	todo			
-00037530	4c	arm	FUN_00037530	todo			
-0003757c	1ac	arm	FUN_0003757c	todo			
-00037728	b0	arm	FUN_00037728	todo			
-000377d8	d8	arm	FUN_000377d8	todo			
-000378b0	4c	arm	FUN_000378b0	todo			
-000378fc	148	arm	FUN_000378fc	todo			
-00037a44	b8	arm	FUN_00037a44	todo			
-00037afc	a8	arm	FUN_00037afc	todo			
-00037ba4	4c	arm	FUN_00037ba4	todo			
-00037bf0	1e0	arm	FUN_00037bf0	todo			
+000370bc	80	arm	unit_blacklists_detach	matched	src/libttsivonavoice/addon.c	100	
+0003713c	80	arm	unit_blacklists_attach	matched	src/libttsivonavoice/addon.c	100	
+000371bc	4c	arm	unit_blacklists_free	matched	src/libttsivonavoice/addon.c	100	
+00037208	1ac	arm	unit_blacklists_parse	wip	src/libttsivonavoice/addon.c	73.8	
+000373b4	b4	arm	word_embeddings_detach	todo			
+00037468	c8	arm	word_embeddings_attach	todo			
+00037530	4c	arm	word_embeddings_free	todo			
+0003757c	1ac	arm	word_embeddings_parse	todo			
+00037728	b0	arm	dnn_models_detach	todo			
+000377d8	d8	arm	dnn_models_attach	todo			
+000378b0	4c	arm	dnn_models_free	todo			
+000378fc	148	arm	dnn_models_parse	todo			
+00037a44	b8	arm	dynamic_voxdbs_detach	todo			
+00037afc	a8	arm	dynamic_voxdbs_attach	todo			
+00037ba4	4c	arm	dynamic_voxdbs_free	todo			
+00037bf0	1e0	arm	dynamic_voxdbs_parse	todo			
 00037dd0	2b4	arm	tts_dict_save	wip	src/libttsivonavoice/dict.c	75.1	
 00038084	268	arm	dict_split_line	matched	src/libttsivonavoice/dict.c	100	
 000382ec	830	arm	dict_parse	wip	src/libttsivonavoice/dict.c	19.8	
