@@ -23,6 +23,7 @@
 #include "tts_metrics.h"
 #include "tts_voice.h"
 #include "ivona_util.h"
+#include "ivona_vector.h"
 
 cst_relation *val_relation(const cst_val *v);
 
@@ -171,7 +172,7 @@ cst_utterance *apply_synth_method(cst_utterance *u, const cst_synth_module meth[
 }
 
 cst_utterance *default_tokenization(cst_utterance *u);
-cst_utterance *FUN_0006864c(cst_utterance *u);
+cst_utterance *t2t_tokens(cst_utterance *u);
 cst_utterance *default_textanalysis(cst_utterance *u);
 cst_utterance *default_phrasing(cst_utterance *u);
 cst_utterance *default_lexical_insertion(cst_utterance *u);
@@ -182,7 +183,7 @@ cst_utterance *phones_textanalysis(cst_utterance *u);
 
 static const cst_synth_module text_methods[] = {
     { "tokenizer_func", "tokenizer_time", default_tokenization },
-    { "t2t_func", "tokenstotokens_time", FUN_0006864c },
+    { "t2t_func", "tokenstotokens_time", t2t_tokens },
     { "text_analysis_func", "text_analysis_time", default_textanalysis },
     { "pos_tagger_func", "pos_tagger_time", NULL },
     { "phrasing_func", "phrasing_time", default_phrasing },
@@ -198,7 +199,7 @@ static const cst_synth_module text_methods[] = {
 /* the same without tokenization (the utterance has its tokens) */
 static const cst_synth_module token_methods[] = {
     { "tokenizer_func", "tokenizer_time", NULL },
-    { "t2t_func", "tokenstotokens_time", FUN_0006864c },
+    { "t2t_func", "tokenstotokens_time", t2t_tokens },
     { "text_analysis_func", "text_analysis_time", default_textanalysis },
     { "pos_tagger_func", "pos_tagger_time", NULL },
     { "phrasing_func", "phrasing_time", default_phrasing },
@@ -214,7 +215,7 @@ static const cst_synth_module token_methods[] = {
 /* input given as phones */
 static const cst_synth_module phones_methods[] = {
     { "tokenizer_func", "tokenizer_time", default_tokenization },
-    { "t2t_func", "tokenstotokens_time", FUN_0006864c },
+    { "t2t_func", "tokenstotokens_time", t2t_tokens },
     { "text_analysis_func", "text_analysis_time", phones_textanalysis },
     { "pos_tagger_func", "pos_tagger_time", NULL },
     { "phrasing_func", "phrasing_time", default_phrasing },
@@ -669,7 +670,7 @@ extern const int cst_val_type_zdur_cart;
 CST_VAL_REGISTER_TYPE_NODEL(zdur_cart, zdur_cart)
 
 /* 0x681c0 arm: qsort order of ints */
-int int_cmp(const void *a, const void *b)
+static int int_cmp(const void *a, const void *b)
 {
     return *(const int *)a - *(const int *)b;
 }
@@ -680,6 +681,71 @@ int int_cmp(const void *a, const void *b)
 #define REL_TOKEN 1
 #define REL_WORD 2
 #define ITEM_DAUGHTERN 0x108
+
+/* tokenizer.c */
+typedef struct tokenizer tokenizer;
+typedef struct token {
+    const char *name;
+    const char *whitespace;
+    const char *prepunctuation;
+    const char *postpunctuation;
+    int start;
+    int end;
+    const char *extra;
+} token;
+tokenizer *string_tokenizer_new_single(const char *text, cst_features *feats, cst_features *params);
+token *tokenizer_get(tokenizer *t);
+void tokenizer_free(tokenizer *t);
+void *item_lang_data(const cst_item *i);
+
+/* 0x684f8 arm: the input text's tokens as the Token relation */
+cst_utterance *default_tokenization(cst_utterance *u)
+{
+    const char *text = utt_input_text(u);
+    cst_relation *r = utt_relation_create(u, REL_TOKEN);
+    tokenizer *tz = string_tokenizer_new_single(text, u->features, u->features);
+    token *t;
+    cst_item *i;
+
+    while ((t = tokenizer_get(tz)) != NULL) {
+        if (t->name[0] == '\0')
+            break;
+        i = relation_append(r, NULL);
+        item_set_string(i, "name", t->name);
+        item_set_string(i, "whitespace", t->whitespace);
+        item_set_string(i, "prepunctuation", t->prepunctuation);
+        item_set_string(i, "punc", t->postpunctuation);
+        item_set_int(i, "file_pos", t->end);
+        item_set_int(i, "end_pos", t->end);
+        if (t->extra)
+            item_set_string(i, "extra", t->extra);
+    }
+    tokenizer_free(tz);
+    return u;
+}
+
+/* 0x6864c arm: runs the "t2t_func" of every language present among the tokens, once each */
+cst_utterance *t2t_tokens(cst_utterance *u)
+{
+    ivona_vector *done = vector_new(sizeof(cst_uttfunc), NULL, NULL);
+    lang_core *ld;
+    const cst_val *v;
+    cst_uttfunc f;
+    cst_item *t;
+
+    for (t = relation_head(utt_relation(u, REL_TOKEN)); t; t = item_next(t)) {
+        ld = item_lang_data(t);
+        if (ld && (v = feat_val(ld->features, "t2t_func")) != NULL) {
+            f = val_uttfunc(v);
+            if (vector_find(done, &f, int_cmp) < 0) {
+                vector_push(done, &f);
+                f(u);
+            }
+        }
+    }
+    vector_free(done);
+    return u;
+}
 
 /* 0x68724 arm: the first c in s not escaped by a backslash */
 char *strchr_unescaped(const char *s, int c)
@@ -693,6 +759,32 @@ char *strchr_unescaped(const char *s, int c)
             s++;
         s++;
     }
+}
+
+/* 0x68780 arm: s[from, to) with backslash escapes removed (a newly allocated string) */
+char *str_unescape_range(const char *s, size_t from, size_t to)
+{
+    strbuf b;
+    char *r;
+    size_t i;
+    int n = 0;
+
+    strbuf_init(&b);
+    strbuf_reserve(&b, to);
+    if (s) {
+        for (i = from; i < to && s[i]; i++) {
+            n++;
+            if (s[i] != '\\') {
+                strbuf_append(&b, s + i, 1);
+                n = 0;
+            } else if (!(n & 1))
+                strbuf_append(&b, s + i, 1);
+        }
+    }
+    r = strbuf_data(&b);
+    if (r == NULL)
+        r = cst_strdup("");
+    return r;
 }
 
 cst_utterance *textanalysis_tokens(cst_utterance *u, cst_item *t, cst_item *end);
