@@ -14,8 +14,21 @@
 #include "ivona_util.h"
 #include "ivona_vector.h"
 #include "tts_voice.h"
+#include "ssml_doc.h"
 
 #define REL_TOKEN 1
+
+typedef struct lex_ctx lex_ctx;
+lex_ctx *lex_ctx_new(void *voice);
+void lex_ctx_free(lex_ctx *c);
+void lex_ctx_set_voice(lex_ctx *c, void *voice);
+void lex_ctx_clear_marks(lex_ctx *c);
+void lex_ctx_push_mark(lex_ctx *c, int mark);
+void lex_ctx_set_ctx(lex_ctx *c, void *ctx);
+tts_lang_desc *tts_language_table(tts_instance *tts);
+tts_lang_desc *lang_desc_find(tts_lang_desc *table, const char *code);
+void *lang_part_data(tts_lang_desc *lang, const char *name);
+const char *dom_get_attr(const dom_elem *e, const char *name);
 
 typedef struct synth_chunk synth_chunk;
 void synth_chunk_free(synth_chunk *c);
@@ -121,6 +134,45 @@ audio_clip_chunk *audio_clip_chunk_new(const synth_ctx *ctx, const char *src, co
 
 static const say_as_info no_say_as = { NULL, 0, 0 };
 
+#define TTS_MSG_ADD_AT(list, line, column, code, ...)                                 \
+    do {                                                                              \
+        tts_msg **tail_ = (list) ? &tts_msg_last(list)->next : &(list);               \
+                                                                                      \
+        *tail_ = tts_msg_new((line), (column), (code), __VA_ARGS__);                  \
+    } while (0)
+
+/* a voice in effect */
+typedef struct voice_frame {
+    tts_voice *voice;
+    int unk_4;
+    int unk_8;
+} voice_frame;
+
+typedef struct synth_iter_src {
+    int unk_0;
+    void **unk_4;
+} synth_iter_src;
+
+/* walks a document's DOM, producing synthesis chunks */
+typedef struct synth_iter {
+    ssml_doc *doc;
+    synth_iter_src *unk_4;      /* +0x04 */
+    float max_break;            /* +0x08: eng_max_ssml_break_time, seconds */
+    ivona_vector *voices;       /* +0x0c: of tts_voice * */
+    synth_state *state;         /* +0x10 */
+    ivona_vector *unk_14;       /* of 12 bytes */
+    ivona_vector *unk_18;       /* of 8 bytes */
+    lex_ctx *lex;               /* +0x1c */
+    int unk_20;
+    int unk_24;
+    ivona_vector *voice_stack;  /* +0x28: of voice_frame */
+    strlist *unk_2c;
+} synth_iter;
+
+void synth_state_set_voice(synth_state *s, tts_voice *v);
+synth_state *synth_state_new(void *a, void *b, tts_voice *v);
+void synth_state_free(synth_state *s);
+
 static inline void *vector_last(const ivona_vector *v)
 {
     return v->count ? vector_at(v, v->count - 1) : NULL;
@@ -132,12 +184,155 @@ static inline void *vector_last_ptr(const ivona_vector *v)
     return v->count ? *(void **)vector_at(v, v->count - 1) : NULL;
 }
 
-typedef struct synth_iter synth_iter;
+/* 0x2d798 arm: the lexicons of v and its PLS lexicons for c */
+void lex_ctx_load_voice(lex_ctx **c, tts_voice *v)
+{
+    lang_part *vox;
+    ivona_vector *marks;
+    lex_ctx *lc;
+    size_t i;
+
+    lex_ctx_clear_marks(*c);
+    lex_ctx_set_voice(*c, v);
+    lc = *c;
+    vox = VOICE_DATA(v)->vox;
+    if (vox && (marks = (ivona_vector *)vox->unk_8[0]) != NULL)
+        for (i = vector_size(marks); i > 0;) {
+            i--;
+            lex_ctx_push_mark(lc, *(int *)vector_at(marks, i));
+        }
+    marks = VOICE_DATA(v)->pls;
+    for (i = vector_size(marks); i > 0;) {
+        i--;
+        lex_ctx_push_mark(*c, ((int *)vector_at(marks, i))[1]);
+    }
+    vox = VOICE_DATA(v)->vox;
+    if (vox)
+        lex_ctx_set_ctx(*c, (void *)vox->unk_8[1]);
+    else
+        lex_ctx_set_ctx(*c, NULL);
+}
+
+/* 0x2d71c arm */
+int say_as_info_flag(const say_as_info *sa)
+{
+    if (sa == NULL)
+        return 0;
+    return sa->unk_8 != 0;
+}
+
+/* 0x2d734 arm: whether the say-as reads its text as speech */
+int say_as_is_speech(const say_as_info *sa)
+{
+    const char *name;
+
+    if (sa == NULL)
+        return 0;
+    name = sa->name;
+    if (name == NULL)
+        return 0;
+    if (strcmp("social-speech", name) == 0)
+        return 1;
+    return strcmp("interjection", name) == 0;
+}
+
+/* 0x2d878 arm: the element's apply-pls attribute (default 1) */
+int ssml_apply_pls_attr(synth_iter *it, dom_elem *e)
+{
+    const char *v = dom_get_attr(e, "apply-pls");
+    int ret = 1;
+
+    if (v == NULL || strcmp("1", v) == 0 || strcmp("true", v) == 0)
+        goto out;
+    if ((ret = strcmp("0", v)) == 0 || (ret = strcmp("false", v)) == 0)
+        goto out;
+    TTS_MSG_ADD_AT(it->doc->warnings, e->span.start, e->n.index, 6,
+                   "Invalid value of attribute \"%s\"", "apply-pls");
+    ret = 1;
+out:
+    return ret;
+}
+
+/* 0x2dfec arm: the language part for lang, NULL if it is the voice's own */
+void *synth_iter_lang(synth_iter *it, const char *lang)
+{
+    size_t n = vector_size(it->voice_stack);
+    tts_voice *v = ((voice_frame *)vector_at(it->voice_stack, n - 1))->voice;
+    const char *code = get_param_string(VOICE_FEATURES(v), "language_code", NULL);
+    tts_lang_desc *desc;
+
+    if (lang == NULL || strcmp(lang, code) == 0)
+        return NULL;
+    desc = VOICE_DATA(v)->lang;
+    if (desc == NULL)
+        desc = lang_desc_find(tts_language_table(v->tts), lang);
+    return lang_part_data(desc, lang);
+}
+
+/* 0x2ed64 arm */
+synth_iter *synth_iter_new(synth_iter_src *a, ivona_vector *voices, ssml_doc *doc, void *b)
+{
+    tts_voice *v = *(tts_voice **)vector_at(voices, 0);
+    synth_iter *it = cst_safe_calloc(1, sizeof(synth_iter));
+    float f;
+
+    it->unk_4 = a;
+    it->voices = voices;
+    it->doc = doc;
+    it->unk_20 = 0;
+    it->state = synth_state_new(doc, b, v);
+    it->unk_14 = vector_new(12, NULL, NULL);
+    it->unk_18 = vector_new(8, NULL, NULL);
+    if (a->unk_4[0]) {
+        struct {
+            void *p;
+            int n;
+        } e;
+
+        e.p = a->unk_4[0];
+        e.n = 0;
+        vector_push(it->unk_18, &e);
+    }
+    it->lex = lex_ctx_new(v);
+    it->unk_24 = 0;
+    it->voice_stack = vector_new(sizeof(voice_frame), NULL, NULL);
+    {
+        voice_frame fr;
+
+        fr.voice = v;
+        fr.unk_4 = 0;
+        fr.unk_8 = 0;
+        vector_push(it->voice_stack, &fr);
+    }
+    synth_state_set_voice(it->state, v);
+    lex_ctx_load_voice(&it->lex, v);
+    f = get_param_int(VOICE_FEATURES(v), "eng_max_ssml_break_time", 1000);
+    if (!(f < 0 || f > 120.000397f))
+        it->max_break = f;
+    else
+        it->max_break = 120.000397f;
+    it->unk_2c = strlist_new();
+    return it;
+}
+
+/* 0x2eed0 arm */
+void synth_iter_free(synth_iter *it)
+{
+    if (it == NULL)
+        return;
+    lex_ctx_free(it->lex);
+    vector_free(it->unk_18);
+    synth_state_free(it->state);
+    vector_free(it->unk_14);
+    vector_free(it->voice_stack);
+    strlist_free(it->unk_2c);
+    cst_free(it);
+}
 
 /* 0x3134c arm */
 strlist *synth_iter_ctx(synth_iter *it)
 {
-    return ((strlist **)it)[0x2c / 4];
+    return it->unk_2c;
 }
 
 /* 0x31354 arm: the decimal number s, or -1 */
