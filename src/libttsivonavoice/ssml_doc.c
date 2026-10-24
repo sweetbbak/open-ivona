@@ -1,6 +1,7 @@
 /*
  * The state of one SSML document being read (0x2842c..0x28fcc).
  */
+#include <limits.h>
 #include <string.h>
 #include "cst_alloc.h"
 #include "cst_features.h"
@@ -9,6 +10,7 @@
 #include "ivona_ustr.h"
 #include "dom.h"
 #include "ivona_vector.h"
+#include "tts_cert.h"
 #include "tts_voice.h"
 
 typedef struct fetcher fetcher;
@@ -59,10 +61,40 @@ typedef struct ssml_doc {
     cst_features *waves;        /* +0x2c */
     tts_msg *warnings;          /* +0x30: pending input warnings */
     tts_msg *warning;           /* +0x34: the one last returned */
-    void *engine;               /* +0x38 */
+    cst_features *metrics;      /* +0x38: timing metrics or NULL */
 } ssml_doc;
 
 int ssml_parse_fragment(ssml_doc *doc, ivona_ustr *text, int a);
+
+/* a piece of text after applying PLS lexicons */
+typedef struct pls_piece {
+    int type;                   /* PLS_PIECE_* */
+    ivona_ustr *text;           /* +0x04: text, or the pronunciation / alias */
+    ivona_ustr *grapheme;       /* +0x08: PLS_PIECE_PHONEME: the text replaced */
+    cst_features *attrs;        /* +0x0c: PLS_PIECE_PHONEME: more <phoneme> attributes */
+} pls_piece;
+
+#define PLS_PIECE_TEXT 0
+#define PLS_PIECE_PHONEME 1
+#define PLS_PIECE_SSML 2
+
+ivona_vector *pls_apply(void *lexicons, const ivona_ustr *text, int in_subdoc, const char *lang,
+                        int external);
+float metrics_add_time(cst_features *metrics, const char *name, int usec);
+void *tts_get_certificate(tts_instance *tts);
+
+/* lex_apply.c */
+typedef struct lex_applier lex_applier;
+typedef struct lex_piece {
+    ivona_ustr *text;
+    int ssml;                   /* text is an SSML fragment */
+    unsigned int next;          /* next dictionary, INT_MAX when done */
+} lex_piece;
+lex_applier *lex_applier_new(void *chain, int ssml, const ivona_ustr *input, unsigned int pos,
+                             void *ctx);
+void lex_applier_free(lex_applier *ap);
+int lex_applier_run(lex_applier *ap);
+int lex_applier_take(lex_applier *ap, lex_piece *out);
 
 /* 0x2842c arm */
 static void ssml_audio_free(void *p, size_t size)
@@ -96,7 +128,7 @@ static void dom_mark_subdoc(dom_elem *e)
 }
 
 /* 0x28bac arm */
-ssml_doc *ssml_doc_new(void *engine)
+ssml_doc *ssml_doc_new(cst_features *metrics)
 {
     ssml_doc *d = cst_safe_calloc(1, sizeof(ssml_doc));
 
@@ -106,7 +138,7 @@ ssml_doc *ssml_doc_new(void *engine)
     d->waves = wavedict_new();
     d->audio = vector_new(sizeof(ssml_audio), (ivona_vector_copy_fn)memcpy, ssml_audio_free);
     d->fetch = fetcher_new();
-    d->engine = engine;
+    d->metrics = metrics;
     d->is_ssml = 1;
     d->version = 2;
     return d;
@@ -319,7 +351,7 @@ void dom_set_text_state(dom_elem *e, int state)
  * are added to d's warnings), its text nodes at the given stage. */
 dom_elem *ssml_parse_subdoc(ssml_doc *d, ivona_ustr *text, int state)
 {
-    ssml_doc *sub = ssml_doc_new(d->engine);
+    ssml_doc *sub = ssml_doc_new(d->metrics);
     dom_elem *root;
     tts_msg *w, **tail;
 
@@ -346,4 +378,163 @@ dom_elem *ssml_parse_subdoc(ssml_doc *d, ivona_ustr *text, int state)
     sub->dom->root = NULL;
     ssml_doc_free(sub);
     return root;
+}
+
+/* 0x29644 arm: replaces a text node by the result of applying the lexicons to it: text nodes,
+ * <phoneme> elements and parsed SSML fragments, all at the given stage. */
+void ssml_apply_pls(void *lexicons, dom_text *t, ssml_doc *d, int state, int external)
+{
+    const char *lang = dom_inherited_attr(t->n.parent, "http://www.w3.org/XML/1998/namespace^lang");
+    ivona_vector *v;
+    pls_piece *p;
+    dom_node *cur;
+
+    v = pls_apply(lexicons, t->text, t->n.parent->in_subdoc != 0, lang ? lang : "", external);
+    if (v) {
+        ustr_clear(t->text);
+        cur = &t->n;
+        for (p = v->data; p != (pls_piece *)v->data + v->count; p++) {
+            if (p->type == PLS_PIECE_TEXT) {
+                dom_text *n;
+
+                if (cur->type == DOM_TEXT && ((dom_text *)cur)->text->len == 0) {
+                    n = (dom_text *)cur;
+                    ivona_ustr_free(n->text);
+                } else {
+                    n = dom_text_new();
+                    n->state = state;
+                    dom_insert_after(cur, &n->n);
+                    cur = &n->n;
+                }
+                n->text = p->text;
+                p->text = NULL;
+            } else {
+                dom_elem *e;
+
+                if (p->type == PLS_PIECE_SSML) {
+                    e = ssml_parse_subdoc(d, p->text, t->state);
+                    if (e == NULL)
+                        continue;
+                } else {
+                    dom_text *n;
+                    cst_featvalpair *a;
+
+                    e = dom_element_new("http://www.w3.org/2001/10/synthesis^phoneme", 13);
+                    n = dom_text_new();
+                    dom_set_attr(e, "ph", p->text->data);
+                    if (p->attrs)
+                        for (a = p->attrs->head; a; a = a->next)
+                            dom_set_attr(e, a->name, val_string(a->val));
+                    n->state = state;
+                    n->text = p->grapheme;
+                    p->grapheme = NULL;
+                    dom_append_child(e, &n->n);
+                    memcpy(&e->span, &p->text->start, sizeof(ustr_span));
+                    e->unk_24 = 0;
+                    e->unk_28 = 0;
+                }
+                dom_insert_after(cur, &e->n);
+                cur = &e->n;
+            }
+        }
+        vector_free(v);
+    }
+    t->state = state;
+}
+
+/* 0x29888 arm */
+void ssml_apply_internal_pls(void *lexicons, dom_text *t, ssml_doc *d)
+{
+    int t0 = d->metrics ? ivona_time_usec() : 0;
+    cst_features *m;
+
+    if (t->state < 4)
+        ssml_apply_pls(lexicons, t, d, 4, 1);
+    if ((m = d->metrics) != NULL)
+        metrics_add_time(m, "ssml_apply_internal_pls_time", ivona_time_usec() - t0);
+}
+
+/* 0x29920 arm */
+void ssml_apply_external_pls(void *lexicons, dom_text *t, ssml_doc *d)
+{
+    int t0 = d->metrics ? ivona_time_usec() : 0;
+    cst_features *m;
+
+    if (t->state < 3)
+        ssml_apply_pls(lexicons, t, d, 3, 0);
+    if ((m = d->metrics) != NULL)
+        metrics_add_time(m, "ssml_apply_external_pls_time", ivona_time_usec() - t0);
+}
+
+/* 0x299b8 arm */
+void dom_set_dict_pos(dom_elem *e, unsigned int pos)
+{
+    dom_node *c;
+
+    for (c = e->first; c; c = c->next)
+        if (c->type == DOM_TEXT)
+            ((dom_text *)c)->dict_pos = pos;
+        else
+            dom_set_dict_pos((dom_elem *)c, pos);
+}
+
+/* 0x299f8 arm: applies the voice's user dictionaries to a text node (stage 4 -> 5). Pieces
+ * still to go through later dictionaries stay at stage 4. */
+void ssml_apply_dict(ssml_doc *d, tts_voice *v, dom_text *t)
+{
+    int t0 = d->metrics ? ivona_time_usec() : 0;
+    tts_dict_entry **dict = v->dict;
+    tts_instance *tts = v->tts;
+    cst_features *m;
+
+    if (t->state == 4) {
+        tts_cert_data *cert = tts_get_certificate(tts);
+        lex_applier *ap = lex_applier_new(dict, cert ? cert->ssml : 0, t->text, t->dict_pos,
+                                          d->metrics);
+        lex_piece p;
+        dom_node *cur;
+
+        if (lex_applier_run(ap)) {
+            ustr_clear(t->text);
+            cur = &t->n;
+            while (lex_applier_take(ap, &p)) {
+                if (p.ssml == 0) {
+                    dom_text *n;
+
+                    if (cur->type == DOM_TEXT && ((dom_text *)cur)->text->len == 0) {
+                        n = (dom_text *)cur;
+                        ivona_ustr_free(n->text);
+                    } else {
+                        n = dom_text_new();
+                        dom_insert_after(cur, &n->n);
+                        cur = &n->n;
+                    }
+                    n->dict_pos = p.next == INT_MAX ? 0 : p.next;
+                    n->state = p.next == INT_MAX ? 5 : 4;
+                    n->text = p.text;
+                    p.text = NULL;
+                } else {
+                    dom_elem *e = ssml_parse_subdoc(d, p.text, 4);
+
+                    if (cur->type == DOM_TEXT && ((dom_text *)cur)->text->len == 0) {
+                        ((dom_text *)cur)->state = 5;
+                        ((dom_text *)cur)->dict_pos = 0;
+                    }
+                    if (e) {
+                        dom_set_dict_pos(e, p.next);
+                        dom_insert_after(cur, &e->n);
+                        cur = &e->n;
+                    }
+                    ivona_ustr_free(p.text);
+                    p.text = NULL;
+                }
+            }
+        } else {
+            t->dict_pos = 0;
+            t->state = 5;
+        }
+        lex_applier_free(ap);
+    }
+    if ((m = d->metrics) != NULL)
+        metrics_add_time(m, "ssml_apply_dict_time", ivona_time_usec() - t0);
 }

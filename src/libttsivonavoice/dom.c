@@ -71,7 +71,7 @@ dom_text *dom_text_new(void)
     t->n.next = NULL;
     t->text = NULL;
     t->state = 0;
-    t->unk_18 = 0;
+    t->dict_pos = 0;
     return t;
 }
 
@@ -84,10 +84,10 @@ dom_elem *dom_element_new(const char *name, int type)
     e->n.index = -1;
     e->name = cst_strdup(name);
     e->attrs = new_features();
-    e->unk_1c[1] = 0;
-    e->unk_1c[0] = 0;
-    e->unk_1c[3] = 0;
-    e->unk_1c[2] = 0;
+    e->span.end = 0;
+    e->span.start = 0;
+    e->unk_28 = 0;
+    e->unk_24 = 0;
     e->in_subdoc = 0;
     return e;
 }

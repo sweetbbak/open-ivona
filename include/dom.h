@@ -21,7 +21,7 @@ typedef struct dom_text {
     dom_node n;
     ivona_ustr *text;           /* +0x10 */
     int state;                  /* +0x14: processing stage (ssml_doc.c) */
-    int unk_18;
+    unsigned int dict_pos;      /* +0x18: next user dictionary to apply */
 } dom_text;
 
 struct dom_elem {
@@ -29,7 +29,9 @@ struct dom_elem {
     dom_node *first;            /* +0x10 */
     char *name;                 /* +0x14 */
     cst_features *attrs;        /* +0x18: keys owned */
-    int unk_1c[4];
+    ustr_span span;             /* +0x1c: input bytes */
+    int unk_24;
+    int unk_28;
     int in_subdoc;              /* +0x2c */
 };
 
@@ -47,5 +49,7 @@ void dom_element_free(dom_elem *e);
 void dom_node_free(dom_node *n);
 void dom_insert_after(dom_node *n, dom_node *new_node);
 void dom_append_child(dom_elem *e, dom_node *child);
+int dom_set_attr(dom_elem *e, const char *name, const char *value);
+const char *dom_inherited_attr(const dom_elem *e, const char *name);
 
 #endif
