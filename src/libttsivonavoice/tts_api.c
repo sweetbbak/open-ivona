@@ -43,7 +43,7 @@ typedef struct tts_resource {     /* a loaded certificate */
 static int g_tts_instance_count;
 
 void *FUN_00022b2c(const char *path, void *arg);
-void FUN_000230cc(void *data);
+void lang_data_free(void *data);
 void FUN_00036a3c(void *addon, void *module);
 void FUN_00036a7c(void *addon, void *module);
 void FUN_00036abc(void *addon);
@@ -70,7 +70,7 @@ void *ivona_dlsym(void *dl, const char *symbol);
 /* 0x3a188 */
 static void lang_cache_free(void *data)
 {
-    FUN_000230cc(data);
+    lang_data_free(data);
 }
 
 /* 0x3a18c */

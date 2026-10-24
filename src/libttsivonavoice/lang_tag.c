@@ -4,6 +4,7 @@
 #include <string.h>
 #include <strings.h>
 #include "cst_alloc.h"
+#include "cst_features.h"
 #include "cst_string.h"
 #include "ivona_util.h"
 
@@ -204,4 +205,51 @@ int vox_file_check(const char *path)
 
     isef_free(f);
     return r;
+}
+
+/* ------------------------------------------------------------------------------------------ */
+/* loaded language data */
+
+tts_dict_entry **dict_new(void);
+void dict_free(tts_dict_entry **dict);
+
+typedef struct lang_core {
+    const char *code;
+    int unk_4[4];
+    cst_features *features;     /* +0x14 */
+    cst_features *params;       /* +0x18 */
+} lang_core;
+void lang_core_init(lang_core *l);
+void lang_core_free(lang_core *l);
+
+typedef struct lang_data {
+    char *code;
+    tts_dict_entry **dict;      /* +0x04 */
+    ivona_vector *unk_8;
+    ivona_vector *unk_c;
+    lang_core core;             /* +0x10: handed to the language library */
+    ivona_vector *lexicons;     /* +0x2c */
+    isef_file *file;            /* +0x30: lang.dat */
+} lang_data;
+
+/* 0x230a8 arm */
+lang_data *lang_data_new(void)
+{
+    lang_data *l = cst_safe_calloc(1, sizeof(lang_data));
+
+    l->dict = dict_new();
+    return l;
+}
+
+/* 0x230cc arm */
+void lang_data_free(lang_data *l)
+{
+    dict_free(l->dict);
+    vector_free(l->unk_8);
+    vector_free(l->unk_c);
+    cst_free(l->code);
+    isef_free(l->file);
+    lang_core_free(&l->core);
+    vector_free(l->lexicons);
+    cst_free(l);
 }
