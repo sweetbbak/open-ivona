@@ -281,7 +281,7 @@ addr	size	mode	name	status	src	score	note
 00025854	3c4	arm	FUN_00025854	todo			
 00025c18	ccc	arm	FUN_00025c18	todo			
 000268e4	3d0	arm	pls_lexicon_parse	todo			
-00026cb4	84	arm	pls_lexicon_from_data	todo			
+00026cb4	84	arm	pls_lexicon_from_data	matched	src/libttsivonavoice/pls.c	100	
 00026d38	14	arm	FUN_00026d38	todo			
 00026d4c	270	arm	FUN_00026d4c	todo			
 00026fbc	1f4	arm	FUN_00026fbc	todo			
@@ -1021,12 +1021,12 @@ addr	size	mode	name	status	src	score	note
 00053ba0	20	arm	cst_ascii_tolower	wip	src/libttsivonavoice/flite/cst_string.c	50.0	
 00053bc0	30	arm	cst_startswith_nocase	matched	src/libttsivonavoice/flite/cst_string.c	100	
 00053bf0	4c	arm	cst_endswith_nocase	matched	src/libttsivonavoice/flite/cst_string.c	100	
-00053c3c	198	arm	FUN_00053c3c	todo			
-00053dd4	5c	arm	FUN_00053dd4	todo			
-00053e30	48	arm	FUN_00053e30	todo			
-00053e78	40	arm	FUN_00053e78	todo			
-00053eb8	14	arm	FUN_00053eb8	todo			
-00053ecc	38	arm	FUN_00053ecc	todo			
+00053c3c	198	arm	cst_parse_float	wip	src/libttsivonavoice/flite/cst_string.c	30.7	
+00053dd4	5c	arm	cst_parse_float_suffix	matched	src/libttsivonavoice/flite/cst_string.c	100	
+00053e30	48	arm	cst_parse_unsigned_suffix	matched	src/libttsivonavoice/flite/cst_string.c	100	
+00053e78	40	arm	cst_parse_signed_suffix	matched	src/libttsivonavoice/flite/cst_string.c	100	
+00053eb8	14	arm	cst_parse_number	matched	src/libttsivonavoice/flite/cst_string.c	100	
+00053ecc	38	arm	cst_parse_signed_number	matched	src/libttsivonavoice/flite/cst_string.c	100	
 00053f04	ec	arm	FUN_00053f04	todo			
 00053ff0	e8	arm	FUN_00053ff0	todo			
 000540d8	e8	arm	FUN_000540d8	todo			

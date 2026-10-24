@@ -113,3 +113,28 @@ void pls_text_clear(pls_text *t)
     cst_free(t->text);
     memset(t, 0, sizeof(pls_text));
 }
+
+#include "ivona_util.h"
+#include "tts_internal.h"
+
+pls_lexicon *pls_lexicon_parse(const char *data, size_t size, void *ctx, tts_msg **msgs, int level);
+
+/* 0x26cb4 arm */
+pls_lexicon *pls_lexicon_from_data(const char *data, size_t size, const char *lang, void *ctx)
+{
+    tts_msg *msgs;
+    pls_lexicon *l = pls_lexicon_parse(data, size, ctx, &msgs, 3);
+    char *s;
+
+    if (l) {
+        if (lang)
+            pls_lexicon_set_lang(l, lang);
+    } else {
+        s = tts_msg_join(msgs);
+        tts_set_errorf(TTS_STATUS_INTERNAL_ERROR, "%s", s);
+        cst_free(s);
+    }
+    if (msgs)
+        tts_msg_free(msgs);
+    return l;
+}

@@ -600,3 +600,95 @@ int cst_endswith_nocase(const char *s, const char *suffix)
         return 0;
     return strncasecmp(s + n - m, suffix, m) == 0;
 }
+
+/* 0x53c3c arm: a decimal number ([+-]digits[.digits]); 0 if s does not start with one */
+int cst_parse_float(const char *s, const char **end, float *out)
+{
+    const char *p = s;
+    float v, scale;
+    int neg = 0, n, m;
+
+    if (*p == '-') {
+        neg = 1;
+        p++;
+    } else if (*p == '+')
+        p++;
+    if ((unsigned int)(*p - '0') <= 9) {
+        v = 0;
+        n = 0;
+        do {
+            v = v * 10.0f + (*p - '0');
+            n++;
+            p++;
+        } while ((unsigned int)(*p - '0') <= 9);
+        if (*p != '.')
+            goto done;
+    } else if (*p == '.') {
+        v = 0;
+        n = 0;
+    } else
+        return 0;
+    p++;
+    m = 0;
+    if ((unsigned int)(*p - '0') <= 9) {
+        scale = 1.0f;
+        do {
+            scale *= 0.1f;
+            m++;
+            v += (*p - '0') * scale;
+            p++;
+        } while ((unsigned int)(*p - '0') <= 9);
+    }
+    if ((m | n) == 0)
+        return 0;
+done:
+    if (neg)
+        v = -v;
+    if (out)
+        *out = v;
+    if (end)
+        *end = p;
+    return 1;
+}
+
+/* 0x53dd4 arm: s is a number followed by exactly suffix */
+int cst_parse_float_suffix(const char *s, const char *suffix, float *out)
+{
+    const char *end = NULL;
+
+    if (!cst_parse_float(s, &end, out))
+        return 0;
+    if (end == s)
+        return 0;
+    return strcmp(end, suffix) == 0;
+}
+
+/* 0x53e30 arm */
+int cst_parse_unsigned_suffix(const char *s, const char *suffix, float *out)
+{
+    if (strchr("+-", *s))
+        return 0;
+    return cst_parse_float_suffix(s, suffix, out);
+}
+
+/* 0x53e78 arm */
+int cst_parse_signed_suffix(const char *s, const char *suffix, float *out)
+{
+    if (!strchr("+-", *s))
+        return 0;
+    return cst_parse_float_suffix(s, suffix, out);
+}
+
+/* 0x53eb8 arm */
+int cst_parse_number(const char *s, float *out)
+{
+    return cst_parse_float_suffix(s, "", out);
+}
+
+/* 0x53ecc arm */
+int cst_parse_signed_number(const char *s, float *out)
+{
+    if (!strchr("+-", *s))
+        return 0;
+    return cst_parse_number(s, out);
+}
