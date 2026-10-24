@@ -787,7 +787,107 @@ char *str_unescape_range(const char *s, size_t from, size_t to)
     return r;
 }
 
-cst_utterance *textanalysis_tokens(cst_utterance *u, cst_item *t, cst_item *end);
+typedef cst_val *(*cst_valfunc)(const cst_val *v);
+cst_valfunc val_valfunc(const cst_val *v);
+char *item_feat_string_opt(const cst_item *i, const char *name);
+cst_features *val_features(const cst_val *v);
+
+/* 0x6886c arm: the words of tokens [t, end): phone and X-SAMPA tokens are one word each, ruby
+ * tokens go through "rubytowords_func", others through the token's language's (or the
+ * utterance's) "tokentowords_func"; "?^" and "?_" endings set a rising or falling end tone. */
+cst_utterance *textanalysis_tokens(cst_utterance *u, cst_item *t, cst_item *end)
+{
+    const cst_val *ttw = feat_val(u->features, "tokentowords_func");
+    const cst_val *mwf = feat_val(u->features, "makewordwithfeats_func");
+    const cst_val *rtw = feat_val(u->features, "rubytowords_func");
+    cst_relation *wrel = utt_relation_create(u, REL_WORD);
+    lang_core *ld;
+    const cst_val *v;
+    cst_val *words, *nl, *w;
+    const cst_val *p;
+    cst_valfunc mf;
+    cst_item *wi;
+    const char *tone;
+    char *name;
+    size_t len;
+
+    for (; t && t != end; t = item_next(t)) {
+        ld = item_lang_data(t);
+        if (item_feat(t, "phones") || item_feat(t, "xsampa")) {
+            name = item_feat_string_opt(t, "name");
+            if (name == NULL)
+                name = "";
+            words = cons_val(string_val(name), NULL);
+        } else {
+            if (item_feat_present(t, "ruby")) {
+                v = ld ? feat_val(ld->features, "rubytowords_func") : rtw;
+                if (v) {
+                    words = val_itemfunc(v)(t);
+                    goto add;
+                }
+            }
+            name = item_feat_string_opt(t, "name");
+            if (name == NULL || name[0] == '\0') {
+                words = NULL;
+                goto next;
+            }
+            len = strlen(name);
+            if (len > 2) {
+                tone = NULL;
+                if (strcmp(name + len - 2, "?^") == 0)
+                    tone = "H";
+                else if (strcmp(name + len - 2, "?_") == 0)
+                    tone = "L";
+                if (tone) {
+                    item_set_string(t, "endtone", tone);
+                    item_set_string(t, "punc", "?");
+                    name[len - 2] = '\0';
+                }
+            }
+            if (ld == NULL) {
+                if (ttw)
+                    words = val_itemfunc(ttw)(t);
+                else
+                    words = cons_val(string_val(name), NULL);
+            } else {
+                v = feat_val(ld->features, "tokentowords_func");
+                if (v == NULL) {
+                    words = NULL;
+                    goto next;
+                }
+                words = val_itemfunc(v)(t);
+            }
+            if (words && mwf) {
+                mf = val_valfunc(mwf);
+                nl = NULL;
+                for (w = words; w; w = (cst_val *)val_cdr(w)) {
+                    v = mf(val_car(w));
+                    if (v == val_car(w))
+                        set_car(w, NULL);
+                    nl = cons_val(v, nl);
+                }
+                delete_val(words);
+                words = val_reverse(nl);
+            }
+        }
+add:
+        for (p = words; p; p = val_cdr(p)) {
+            wi = item_add_daughter(t, NULL);
+            if (cst_val_consp(val_car(p))) {
+                item_set_string(wi, "name", val_string(val_car(val_car(p))));
+                feat_copy_into(val_features(val_cdr(val_car(p))), item_feats(wi));
+            } else
+                item_set_string(wi, "name", val_string(val_car(p)));
+            if (item_feat_string(wi, "name"))
+                relation_append(wrel, wi);
+            else
+                delete_item(wi);
+        }
+next:
+        delete_val(words);
+    }
+    return u;
+}
 
 /* 0x68d10 arm */
 cst_utterance *default_textanalysis(cst_utterance *u)
