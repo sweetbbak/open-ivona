@@ -158,6 +158,11 @@ Read README.md first. The rules below are what keeps the project deterministic.
     out of line (cst_ffeature.c).
   - A missing tail call can come from a non-void function that falls off the end on that path
     (`blacklist_add` returns `val_append(...)` on one path and nothing after `feat_set`).
+    The rule behind it: ARM refuses a sibcall when the caller's and callee's return-value
+    locations differ (void vs int, pointer vs `long long`/`float`). A lone `bl f; pop` wrapper
+    (`dom_get_attr`) needs such a mismatch.
+  - `if (a && b) { ... }` and `if (!b || !a) return;` emit the `cmp`/`cmpne` pair in different
+    orders. Try both when only those two compares are swapped (`ustr_edit_insert_span`).
   - Paired `ldm`/`stm` copies of a few words are struct assignments (`d->extra = db->extra`).
   - An `x & 0xc0`-free continuation test that stays as `tst #0x80` + `cmp #0xbf` needs two
     separate `if`s on a byte local. A single condition gets merged into a range check.
