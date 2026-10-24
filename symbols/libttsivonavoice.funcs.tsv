@@ -298,16 +298,16 @@ addr	size	mode	name	status	src	score	note
 00027860	30	arm	audio_chunk_free	matched	src/libttsivonavoice/utt_chunk.c	100	
 00027890	90	arm	chunk_utterance	matched	src/libttsivonavoice/utt_chunk.c	100	
 00027920	b0c	arm	FUN_00027920	todo			
-0002842c	8	arm	FUN_0002842c	todo			
-00028434	2c	arm	FUN_00028434	todo			
+0002842c	8	arm	ssml_audio_free	matched	src/libttsivonavoice/ssml_doc.c	100	
+00028434	2c	arm	ssml_lexicon_free	matched	src/libttsivonavoice/ssml_doc.c	100	
 00028460	1b4	arm	FUN_00028460	todo			
 00028614	598	arm	FUN_00028614	todo			
-00028bac	94	arm	ssml_doc_new	todo			
-00028c40	58	arm	ssml_doc_free	todo			
-00028c98	6c	arm	ssml_doc_reset	todo			
-00028d04	30	arm	ssml_doc_set_voice	todo			
+00028bac	94	arm	ssml_doc_new	matched	src/libttsivonavoice/ssml_doc.c	100	
+00028c40	58	arm	ssml_doc_free	matched	src/libttsivonavoice/ssml_doc.c	100	
+00028c98	6c	arm	ssml_doc_reset	matched	src/libttsivonavoice/ssml_doc.c	100	
+00028d04	30	arm	ssml_doc_set_voice	matched	src/libttsivonavoice/ssml_doc.c	100	
 00028d34	268	arm	ssml_doc_prepare	todo			
-00028f9c	30	arm	ssml_doc_set_encoding	todo			
+00028f9c	30	arm	ssml_doc_set_encoding	matched	src/libttsivonavoice/ssml_doc.c	100	
 00028fcc	dc	arm	FUN_00028fcc	todo			
 000290a8	3b0	arm	FUN_000290a8	todo			
 00029458	50	arm	FUN_00029458	todo			
