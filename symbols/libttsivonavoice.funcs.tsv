@@ -245,20 +245,20 @@ addr	size	mode	name	status	src	score	note
 000233a0	28	arm	lex_applier_free	matched	src/libttsivonavoice/lex_apply.c	100	
 000233c8	284	arm	lex_applier_run	wip	src/libttsivonavoice/lex_apply.c	44.9	
 0002364c	d8	arm	lex_applier_take	matched	src/libttsivonavoice/lex_apply.c	100	
-00023724	30	arm	FUN_00023724	todo			
-00023754	34	arm	FUN_00023754	todo			
+00023724	30	arm	lex_key_cmp	matched	src/libttsivonavoice/lex_ctx.c	100	
+00023754	34	arm	lex_match_clear	matched	src/libttsivonavoice/lex_ctx.c	100	
 00023788	23c	arm	FUN_00023788	todo			
 000239c4	134	arm	FUN_000239c4	todo			
-00023af8	8	arm	FUN_00023af8	todo			
-00023b00	c4	arm	FUN_00023b00	todo			
-00023bc4	48	arm	FUN_00023bc4	todo			
-00023c0c	2c	arm	FUN_00023c0c	todo			
-00023c38	24	arm	FUN_00023c38	todo			
-00023c5c	24	arm	FUN_00023c5c	todo			
-00023c80	24	arm	FUN_00023c80	todo			
-00023ca4	8	arm	FUN_00023ca4	todo			
-00023cac	24	arm	FUN_00023cac	todo			
-00023cd0	8	arm	FUN_00023cd0	todo			
+00023af8	8	arm	lex_ctx_set_voice	matched	src/libttsivonavoice/lex_ctx.c	100	
+00023b00	c4	arm	lex_ctx_new	matched	src/libttsivonavoice/lex_ctx.c	100	
+00023bc4	48	arm	lex_ctx_free	matched	src/libttsivonavoice/lex_ctx.c	100	
+00023c0c	2c	arm	lex_ctx_push_names	matched	src/libttsivonavoice/lex_ctx.c	100	
+00023c38	24	arm	lex_ctx_pop_names	matched	src/libttsivonavoice/lex_ctx.c	100	
+00023c5c	24	arm	lex_ctx_push_lang	matched	src/libttsivonavoice/lex_ctx.c	100	
+00023c80	24	arm	lex_ctx_pop_lang	matched	src/libttsivonavoice/lex_ctx.c	100	
+00023ca4	8	arm	lex_ctx_clear_marks	matched	src/libttsivonavoice/lex_ctx.c	100	
+00023cac	24	arm	lex_ctx_push_mark	matched	src/libttsivonavoice/lex_ctx.c	100	
+00023cd0	8	arm	lex_ctx_set_ctx	matched	src/libttsivonavoice/lex_ctx.c	100	
 00023cd8	630	arm	FUN_00023cd8	todo			
 00024308	598	arm	FUN_00024308	todo			
 000248a0	8	arm	FUN_000248a0	todo			
