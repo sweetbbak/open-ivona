@@ -8,6 +8,7 @@
 #include "cst_error.h"
 #include "cst_features.h"
 #include "cst_utterance.h"
+#include "cst_wave.h"
 #include "ivona_ustr.h"
 #include "ivona_util.h"
 #include "ivona_vector.h"
@@ -57,7 +58,7 @@ typedef struct synth_ctx {
     ivona_vector *digit_groups; /* +0x30: of int, for say-as characters/serial */
     char *unk_34;
     int unk_38;
-    int unk_3c;
+    int block_id;               /* +0x3c */
     int say_as_depth;           /* +0x40 */
     const say_as_info *say_as;  /* +0x44 */
 } synth_ctx;
@@ -71,8 +72,8 @@ typedef struct utt_builder {
     int unk_10[6];
     utt_chunk chunk;            /* +0x28 */
     cst_relation *tokens;       /* +0x40 */
-    int unk_44;
-    int unk_48;
+    cst_item *last_item;        /* +0x44 */
+    int last_end;               /* +0x48: input offset after the last item */
     unsigned int max_sentence;  /* +0x4c: eng_max_sentence */
     unsigned int max_word;      /* +0x50: eng_max_word */
     float sentence_break;       /* +0x54: extra pause after sentences */
@@ -98,6 +99,13 @@ typedef struct synth_state {
 } synth_state;
 
 void synth_state_flush(synth_state *s);
+cst_item *utt_builder_add_item(synth_ctx *ctx, utt_builder *b, int kind);
+void utt_builder_item_added(synth_ctx *ctx, cst_item *prev);
+int utt_builder_check_size(synth_ctx *ctx, utt_builder *b, int n);
+void utt_chunk_add_span(utt_chunk *c, const ustr_span *s);
+typedef struct audio_clip_chunk audio_clip_chunk;
+audio_clip_chunk *audio_clip_chunk_new(const synth_ctx *ctx, const char *src, const char *alt,
+                                       const ustr_span *span, int flags, const char *mark);
 
 static const say_as_info no_say_as = { NULL, 0, 0 };
 
@@ -180,8 +188,8 @@ utt_builder *utt_builder_new(void *a, void *b, tts_voice *v)
     u->unk_c = 1;
     utt_chunk_init_empty(&u->chunk, (tts_instance **)v, 0, 0);
     u->tokens = utt_relation(u->chunk.utt, REL_TOKEN);
-    u->unk_44 = 0;
-    u->unk_48 = 0;
+    u->last_item = NULL;
+    u->last_end = 0;
     u->max_sentence = get_param_int(VOICE_FEATURES(v), "eng_max_sentence", 0);
     if (u->max_sentence == 0)
         u->max_sentence = 1000;
@@ -221,6 +229,80 @@ void synth_state_free(synth_state *s)
     vector_free(s->say_as_depth_stack);
     vector_free(s->chunks);
     cst_free(s);
+}
+
+/* 0x34104 arm */
+void synth_state_enter_block(synth_state *s)
+{
+    s->ctx->unk_0[2]++;
+}
+
+/* 0x34118 arm */
+void synth_state_leave_block(synth_state *s)
+{
+    s->ctx->unk_0[2]--;
+}
+
+/* 0x3412c arm */
+int synth_state_last_end(synth_state *s)
+{
+    synth_state_flush(s);
+    return s->builder->last_end;
+}
+
+/* 0x34414 arm */
+int synth_state_check_size(synth_state *s, int n)
+{
+    synth_state_flush(s);
+    return utt_builder_check_size(s->ctx, s->builder, n);
+}
+
+/* 0x34434 arm */
+void synth_state_push_block(synth_state *s)
+{
+    synth_state_enter_block(s);
+    vector_push(s->unk_24, &s->unk_20);
+    s->ctx->block_id = s->unk_20;
+    s->unk_20++;
+}
+
+/* 0x34464 arm */
+void synth_state_pop_block(synth_state *s)
+{
+    synth_state_leave_block(s);
+    vector_pop(s->unk_24);
+    s->ctx->block_id = *(int *)vector_last(s->unk_24);
+}
+
+/* 0x34b10 arm */
+void synth_state_add_audio(synth_state *s, const ustr_span *span, const char *src, int flags,
+                           const char *mark, const char *alt)
+{
+    audio_clip_chunk *c = audio_clip_chunk_new(s->ctx, src, alt, span, flags, mark);
+
+    vector_push(s->chunks, &c);
+}
+
+/* 0x34e70 arm: adds a token holding an audio wave */
+void synth_state_add_wave(synth_state *s, const ustr_span *span, cst_wave *w)
+{
+    cst_item *item;
+    utt_builder *b;
+
+    synth_state_flush(s);
+    item = utt_builder_add_item(s->ctx, s->builder, 1);
+    item_set(item, "wave", wave_val(w));
+    item_set_int(item, "start_pos", span->start);
+    item_set_int(item, "end_pos", span->end);
+    item_set_string(item, "name", "");
+    item_set_string(item, "punc", "");
+    b = s->builder;
+    b->last_item = item;
+    b->last_end = span->end;
+    b->unk_10[5]++;
+    b->unk_10[4] = 0;
+    utt_chunk_add_span(&b->chunk, span);
+    utt_builder_item_added(s->ctx, item_prev(item));
 }
 
 /* 0x34f70 arm */
@@ -396,6 +478,12 @@ int synth_state_say_as_flag(synth_state *s)
     return 1;
 }
 
+/* 0x355dc arm */
+int synth_state_unk_c_zero(synth_state *s)
+{
+    return s->ctx->unk_0[3] == 0;
+}
+
 /* 0x355f0 arm */
 void synth_state_push_lang(synth_state *s, const char *lang)
 {
@@ -425,7 +513,7 @@ void synth_state_set_voice(synth_state *s, tts_voice *v)
         return;
     synth_state_flush(s);
     b = s->builder;
-    if (b->unk_44) {
+    if (b->last_item) {
         b->unk_10[3] = 1;
         b->unk_c = 1;
     } else
