@@ -251,6 +251,8 @@ cst_utterance *utt_phones_frontend(cst_utterance *u)
 /* Lexicons and X-SAMPA */
 
 cst_val *phones_from_string(const char *s);
+cst_featvalpair *feat_find_featpair(const cst_features *f, const char *name);
+cst_item *val_item(const cst_val *v);
 
 /* 0x6694c arm: an IVONA_Lexicon file ("IVONA_Lexicon", then lines of word and phone string;
  * "#" comments to the end of the line) as a list of (word . phones). */
@@ -664,7 +666,26 @@ found:
     return 1;
 }
 
-typedef struct zdur_cart zdur_cart;
+/* compact duration CART: z-scores of phone durations */
+typedef struct zdur_phone {
+    unsigned char name;         /* index into names, 0xff ends the table */
+    unsigned char pad;
+    unsigned short mean;
+    unsigned short stddev;
+} zdur_phone;
+
+typedef struct zdur_node {
+    unsigned char feat;         /* index of "<op><feature path>"; 0xff for a leaf */
+    unsigned char value;        /* index of the value compared with */
+    unsigned short next;        /* node if the question fails; a leaf's z-score (x1000) */
+} zdur_node;
+
+typedef struct zdur_cart {
+    const zdur_phone *phones;
+    const char (*names)[64];
+    const zdur_node *nodes;
+} zdur_cart;
+
 extern const int cst_val_type_zdur_cart;
 
 /* 0x67f94 arm, 0x67fec arm */
@@ -674,6 +695,57 @@ CST_VAL_REGISTER_TYPE_NODEL(zdur_cart, zdur_cart)
 static int int_cmp(const void *a, const void *b)
 {
     return *(const int *)a - *(const int *)b;
+}
+
+
+/* 0x68004 arm: the duration of seg in ms */
+short zdur_cart_duration(const zdur_cart *dc, const cst_item *seg)
+{
+    const char *name = item_feat_string(seg, "name");
+    const zdur_phone *p = dc->phones;
+    const zdur_phone *q;
+    const zdur_node *n;
+    const char *f, *val;
+    const cst_val *v;
+    int r;
+    short z;
+
+    for (q = p; q->name != 0xff; q++)
+        if (strcmp(name, dc->names[q->name]) == 0) {
+            p = q;
+            break;
+        }
+    for (n = dc->nodes; n->feat != 0xff; ) {
+        f = dc->names[n->feat];
+        val = dc->names[n->value];
+        v = ffeature(seg, f + 1);
+        if (f[0] == '<')
+            r = val_float(v) < cst_atof(val);
+        else if (f[0] == '>')
+            r = val_float(v) > cst_atof(val);
+        else if (CST_VAL_TYPE(v) == CST_VAL_TYPE_INT)
+            r = val_int(v) == atoi(val);
+        else
+            r = strcmp(val_string(v), val) == 0;
+        if (r)
+            n++;
+        else
+            n = dc->nodes + n->next;
+    }
+    z = n->next;
+    return (z * p->stddev + (z > 0 ? 500 : -500)) / 1000 + p->mean;
+}
+
+/* 0x681d0 arm: renames relation from to to in the relation lists of i and its descendants */
+static inline void item_rename_relation(cst_item *i, const char *from, const char *to)
+{
+    cst_featvalpair *fp = feat_find_featpair(i->contents->relations, from);
+    cst_item *d;
+
+    cst_dbgmsg("", val_item(fp->val), feat_find_featpair(i->contents->relations, to));
+    fp->name = to;
+    for (d = item_daughter(i); d; d = item_next(d))
+        item_rename_relation(d, from, to);
 }
 
 /* ------------------------------------------------------------------------------------------ */
@@ -980,9 +1052,8 @@ cst_utterance *breath_insertion(cst_utterance *u)
 
 #define REL_PHRPUN 8
 
-cst_featvalpair *feat_find_featpair(const cst_features *f, const char *name);
 const char *cst_relation_id_name(int id);
-void item_rename_relation(cst_item *i, const char *from, const char *to);
+static inline void item_rename_relation(cst_item *i, const char *from, const char *to);
 typedef struct dnn_models {
     void *unk_0;
     void *duration;             /* +0x04 */

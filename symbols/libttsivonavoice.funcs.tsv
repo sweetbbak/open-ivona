@@ -1487,9 +1487,9 @@ addr	size	mode	name	status	src	score	note
 00067e5c	138	arm	xs_tok_next	matched	src/libttsivonavoice/flite/cst_synth.c	100	
 00067f94	58	arm	val_zdur_cart	matched	src/libttsivonavoice/flite/cst_synth.c	100	
 00067fec	18	arm	zdur_cart_val	matched	src/libttsivonavoice/flite/cst_synth.c	100	
-00068004	1bc	arm	FUN_00068004	todo			
+00068004	1bc	arm	zdur_cart_duration	wip	src/libttsivonavoice/flite/cst_synth.c	36.0	
 000681c0	10	arm	int_cmp	matched	src/libttsivonavoice/flite/cst_synth.c	100	
-000681d0	328	arm	item_rename_relation	todo			
+000681d0	328	arm	item_rename_relation	matched	src/libttsivonavoice/flite/cst_synth.c	100	
 000684f8	154	arm	default_tokenization	matched	src/libttsivonavoice/flite/cst_synth.c	100	flite strings(1) 8%
 0006864c	d8	arm	t2t_tokens	matched	src/libttsivonavoice/flite/cst_synth.c	100	
 00068724	5c	arm	strchr_unescaped	wip	src/libttsivonavoice/flite/cst_synth.c	6.7	

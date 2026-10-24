@@ -161,6 +161,9 @@ Read README.md first. The rules below are what keeps the project deterministic.
     The rule behind it: ARM refuses a sibcall when the caller's and callee's return-value
     locations differ (void vs int, pointer vs `long long`/`float`). A lone `bl f; pop` wrapper
     (`dom_get_attr`) needs such a mismatch.
+  - A recursive walk unrolled into ~8 nested copies with a real recursive call at the bottom is
+    a `static inline` recursive function (GCC's recursive inlining needs the inline keyword; with
+    `-fpic` a global function is interposable and never inlined). `item_rename_relation`.
   - Two induction pointers into one table (`[r7, #0xc]!` plus `[r5, #-0xc]`) where you get one
     usually mean the loop body is an inlined static helper taking the element pointer
     (`apply_synth_module` inside `apply_synth_method`).
