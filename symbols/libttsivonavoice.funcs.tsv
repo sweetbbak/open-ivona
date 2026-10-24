@@ -668,10 +668,10 @@ addr	size	mode	name	status	src	score	note
 00046ddc	8	arm	ivona_shm_lock	matched	src/libttsivonavoice/ivona_sys.c	100	
 00046de4	8	arm	ivona_shm_unlock	matched	src/libttsivonavoice/ivona_sys.c	100	
 00046dec	2ac	arm	FUN_00046dec	todo			
-00047098	c	arm	FUN_00047098	todo			
-000470a4	30	arm	FUN_000470a4	todo			
-000470d4	58	arm	FUN_000470d4	todo			
-0004712c	50	arm	FUN_0004712c	todo			
+00047098	c	arm	blob_new	matched	src/libttsivonavoice/blob.c	100	
+000470a4	30	arm	blob_free	matched	src/libttsivonavoice/blob.c	100	
+000470d4	58	arm	blob_copy	matched	src/libttsivonavoice/blob.c	100	
+0004712c	50	arm	blob_equal	matched	src/libttsivonavoice/blob.c	100	
 0004717c	1f8	arm	FUN_0004717c	todo			
 00047374	f4	arm	FUN_00047374	todo			
 00047468	238	arm	FUN_00047468	todo			
