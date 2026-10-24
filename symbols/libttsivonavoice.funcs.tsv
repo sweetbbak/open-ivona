@@ -239,12 +239,12 @@ addr	size	mode	name	status	src	score	note
 00023118	8	arm	FUN_00023118	todo			
 00023120	114	arm	FUN_00023120	todo			
 00023234	b0	arm	FUN_00023234	todo			
-000232e4	8	arm	FUN_000232e4	todo			
-000232ec	70	arm	FUN_000232ec	todo			
-0002335c	44	arm	FUN_0002335c	todo			
-000233a0	28	arm	FUN_000233a0	todo			
-000233c8	284	arm	FUN_000233c8	todo			
-0002364c	d8	arm	FUN_0002364c	todo			
+000232e4	8	arm	lex_piece_free	matched	src/libttsivonavoice/lex_apply.c	100	
+000232ec	70	arm	lex_insert_escaped	matched	src/libttsivonavoice/lex_apply.c	100	
+0002335c	44	arm	lex_applier_new	matched	src/libttsivonavoice/lex_apply.c	100	
+000233a0	28	arm	lex_applier_free	matched	src/libttsivonavoice/lex_apply.c	100	
+000233c8	284	arm	lex_applier_run	wip	src/libttsivonavoice/lex_apply.c	44.9	
+0002364c	d8	arm	lex_applier_take	matched	src/libttsivonavoice/lex_apply.c	100	
 00023724	30	arm	FUN_00023724	todo			
 00023754	34	arm	FUN_00023754	todo			
 00023788	23c	arm	FUN_00023788	todo			
@@ -585,8 +585,8 @@ addr	size	mode	name	status	src	score	note
 00041ee4	9c	arm	FUN_00041ee4	todo			
 00041f80	200	arm	FUN_00041f80	todo			
 00042180	204	arm	FUN_00042180	todo			
-00042384	214	arm	FUN_00042384	todo			
-00042598	4b8	arm	FUN_00042598	todo			
+00042384	214	arm	lex_apply_text	todo			
+00042598	4b8	arm	lex_apply_ssml	todo			
 00042a50	60	arm	cert_free	matched	src/libttsivonavoice/cert.c	100	
 00042ab0	efc	arm	FUN_00042ab0	todo			
 000439ac	c0	arm	cert_copy	wip	src/libttsivonavoice/cert.c	85.4	
