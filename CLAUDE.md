@@ -174,3 +174,9 @@ Read README.md first. The rules below are what keeps the project deterministic.
     separate `if`s on a byte local. A single condition gets merged into a range check.
   - A `char` store forces later loads through any `char *` to be repeated. A value loaded once
     and used twice in the binary was read into a local first (`c = p[0xd]; u->a = c >> 4; ...`).
+  - A static function placed among the `.text.unlikely` code near the start of `.text` (with
+    small helpers not inlined into it) is reproduced by `__attribute__((cold))`
+    (`ssml_element_type`).
+  - A chain of small `x == A || x == B` tests that GCC did not merge into range tests, entered at
+    different points by a jump table, is an inline predicate with a fall-through `switch` on
+    another value (`ssml_may_contain`). Inlined with a constant, it leaves just one entry's chain.
