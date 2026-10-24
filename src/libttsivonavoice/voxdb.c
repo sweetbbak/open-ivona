@@ -158,7 +158,7 @@ float metrics_add_time(cst_features *metrics, const char *name, int usec);
 typedef track *(*vox_decode_fn)(vox_decoder *d, const unsigned char *data, unsigned int size);
 typedef int (*vox_decode2_fn)(vox_decoder *d, const unsigned char *data, unsigned int size,
                               int n_packets, short *out, int n_samples);
-cst_val *FUN_00067fec(const unsigned char **tables);
+cst_val *zdur_cart_val(const unsigned char **tables);
 cst_val *dynamic_voxdbs_val(const dynamic_voxdbs *v);
 dynamic_voxdbs *dynamic_voxdbs_new(diphonedb *a);
 
@@ -656,7 +656,7 @@ ok:
     if (!feat_present(f, "zdur_cart")) {
         if (db->sec10 == NULL || db->sec8 == NULL || db->sec9 == NULL)
             goto fail;
-        feat_set(f, "zdur_cart", FUN_00067fec(&db->sec9));
+        feat_set(f, "zdur_cart", zdur_cart_val(&db->sec9));
     }
     if (!feat_present(f, "dynamic_voxdbs")) {
         feat_set(f, "dynamic_voxdbs", dynamic_voxdbs_val(dynamic_voxdbs_new(d)));

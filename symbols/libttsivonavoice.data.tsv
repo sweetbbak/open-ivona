@@ -204,6 +204,8 @@ addr	size	name	note
 0026708c	8	val_string_2	
 00267094	8	val_string_1	
 0026709c	8	val_string_0	
+002670ac	1e0	xsampa_modifiers	
+0026728c	0	xsampa_symbols	
 00267654	6c0	uni_halfwidth_table	uni_case.c
 00267d14	6cc	uni_translit_strs	uni_case.c
 002683e0	0	cst_regex_table	learned from src/libttsivonavoice/flite/cst_cart.c

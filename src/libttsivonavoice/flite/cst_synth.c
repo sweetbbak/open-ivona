@@ -16,6 +16,9 @@
 #include "cst_utterance.h"
 #include "cst_val.h"
 #include "cst_val_defs.h"
+#include "cst_string.h"
+#include "cst_tokenstream.h"
+#include <string.h>
 #include "tts_metrics.h"
 #include "tts_voice.h"
 
@@ -239,4 +242,224 @@ cst_utterance *utt_frontend(cst_utterance *u)
 cst_utterance *utt_phones_frontend(cst_utterance *u)
 {
     return apply_synth_method(u, phones_methods);
+}
+
+/* ------------------------------------------------------------------------------------------ */
+/* Lexicons and X-SAMPA */
+
+cst_val *phones_from_string(const char *s);
+
+/* 0x6694c arm: an IVONA_Lexicon file ("IVONA_Lexicon", then lines of word and phone string;
+ * "#" comments to the end of the line) as a list of (word . phones). */
+cst_val *lexicon_from_pls(const char *filename)
+{
+    cst_tokenstream *ts;
+    const char *tok;
+    char *word;
+    cst_val *phones, *entries = NULL;
+    cst_val *r = NULL;
+    int comment;
+
+    ts = ts_open(filename);
+    if (ts == NULL)
+        return r;
+    ts->p_singlecharsymbols = "#";
+    ts->p_prepunctuationsymbols = "";
+    ts->p_postpunctuationsymbols = "";
+    if (strcmp("IVONA_Lexicon", ts_get(ts)) != 0) {
+        cst_errmsg("IVONA_Lexicon: Missing file header\n");
+        r = NULL;
+        goto out;
+    }
+    comment = 0;
+    while (!ts_eof(ts)) {
+        tok = ts_get(ts);
+        if (tok == NULL || tok[0] == '\0')
+            break;
+        if (strcmp("#", tok) == 0) {
+            comment = 1;
+            continue;
+        }
+        if (comment && strchr(ts->whitespace, '\n') == NULL) {
+            comment = 1;
+            continue;
+        }
+        word = cst_strdup(tok);
+        tok = ts_get(ts);
+        if (tok[0] == '\0' || (phones = phones_from_string(tok)) == NULL) {
+            cst_errmsg("IVONA_Lexicon: Incorrect token at line %d\n", ts->line_number);
+            cst_free(word);
+            delete_val(entries);
+            r = NULL;
+            goto out;
+        }
+        entries = cons_val(cons_val(string_val(word), phones), entries);
+        comment = 0;
+        cst_free(word);
+    }
+    r = val_reverse(entries);
+out:
+    ts_close(ts);
+    return r;
+}
+
+/* 0x66ae4 arm: the entry of word (with part of speech pos) in a lexicon list. */
+const cst_val *in_lex(const cst_val *entries, const char *word, const char *pos)
+{
+    char *wp = cst_safe_alloc(strlen(word) + 2, 1);
+    const cst_val *r;
+
+    sprintf(wp, "%c%s", pos ? pos[0] : '0', word);
+    r = val_assoc_string(wp, entries);
+    cst_free(wp);
+    return r;
+}
+
+typedef char *(*xsampafunc)(const cst_item *i);
+extern const int cst_val_type_xsampafunc;
+
+/* 0x66b4c arm, 0x66ba4 arm */
+CST_VAL_REGISTER_FUNCPTR(xsampafunc, xsampafunc)
+
+/* 0x66bbc arm: the flag of an X-SAMPA tone or diacritic suffix, 0 if unknown. */
+unsigned int xsampa_mod_flag(const char *s)
+{
+    if (strcmp(s, "_1") == 0)
+        return 0x1;
+    if (strcmp(s, "_2") == 0)
+        return 0x4;
+    if (strcmp(s, "_3") == 0)
+        return 0x8;
+    if (strcmp(s, "_4") == 0)
+        return 0x10;
+    if (strcmp(s, "_5") == 0)
+        return 0x20;
+    if (strcmp(s, "_6") == 0)
+        return 0x40;
+    if (strcmp(s, "_/") == 0)
+        return 0x80;
+    if (strcmp(s, "_R") == 0)
+        return 0x100;
+    if (strcmp(s, "_R_F") == 0)
+        return 0x200;
+    if (strcmp(s, "_\\") == 0)
+        return 0x400;
+    if (strcmp(s, "_F") == 0)
+        return 0x800;
+    if (strcmp(s, "_B") == 0)
+        return 0x1000;
+    if (strcmp(s, "_L") == 0)
+        return 0x2000;
+    if (strcmp(s, "_B_L") == 0)
+        return 0x4000;
+    if (strcmp(s, "_M") == 0)
+        return 0x8000;
+    if (strcmp(s, "_H") == 0)
+        return 0x10000;
+    if (strcmp(s, "_H_T") == 0)
+        return 0x20000;
+    if (strcmp(s, "_T") == 0)
+        return 0x40000;
+    return 0;
+}
+
+/* 0x67d7c arm: a copy of s with spaces turned into dashes. */
+char *str_dashes(const char *s)
+{
+    char *r = cst_strdup(s);
+
+    cst_strsubchar(r, ' ', '-');
+    return r;
+}
+
+/* 0x67d9c arm: "x-amazon" or "x-amazon-..." */
+int lang_is_amazon(const char *lang)
+{
+    if (lang == NULL)
+        return 0;
+    if (strncmp(lang, "x-amazon", 8) != 0)
+        return 0;
+    return lang[8] == '\0' || lang[8] == '-';
+}
+
+/* X-SAMPA tokens: a symbol and the modifiers following it */
+typedef struct xsampa_entry {
+    const char *s;
+    unsigned int flags;
+} xsampa_entry;
+
+#define XSAMPA_NMODS 0x3b
+
+extern const xsampa_entry xsampa_symbols[];
+extern const xsampa_entry xsampa_modifiers[];
+
+typedef struct xs_tok {
+    const char *s;
+    int pos;                            /* of the current token */
+    int len;                            /* of its symbol */
+    unsigned char mods[XSAMPA_NMODS];   /* modifiers present */
+    int next;                           /* +0x48 */
+} xs_tok;
+
+/* 0x67e44 arm */
+void xs_tok_init(xs_tok *t, const char *s)
+{
+    t->s = s;
+    t->pos = 0;
+    t->len = 0;
+    t->next = 0;
+}
+
+/* 0x67e58 arm */
+void xs_tok_done(xs_tok *t)
+{
+}
+
+/* 0x67e5c arm: reads the next symbol and its modifiers; 0 at the end. */
+int xs_tok_next(xs_tok *t)
+{
+    const xsampa_entry *e;
+    unsigned int flags;
+    int p, i;
+
+    t->pos = t->next;
+    if (t->s[t->pos] == '\0') {
+        t->len = 0;
+        return 0;
+    }
+    memset(t->mods, 0, XSAMPA_NMODS);
+    for (e = xsampa_symbols; e->s; e++)
+        if (cst_startswith(t->s + t->pos, e->s))
+            goto found;
+    t->next = t->pos + 1;
+    t->len = 1;
+    return 1;
+found:
+    t->len = strlen(e->s);
+    flags = e->flags;
+    p = t->len + t->pos;
+    while (t->s[p]) {
+        for (i = 0; i < XSAMPA_NMODS; i++)
+            if (cst_startswith(t->s + p, xsampa_modifiers[i].s)
+                && (flags & xsampa_modifiers[i].flags))
+                break;
+        if (i == XSAMPA_NMODS)
+            break;
+        t->mods[i] = 1;
+        p += strlen(xsampa_modifiers[i].s);
+    }
+    t->next = p;
+    return 1;
+}
+
+typedef struct zdur_cart zdur_cart;
+extern const int cst_val_type_zdur_cart;
+
+/* 0x67f94 arm, 0x67fec arm */
+CST_VAL_REGISTER_TYPE_NODEL(zdur_cart, zdur_cart)
+
+/* 0x681c0 arm: qsort order of ints */
+int int_cmp(const void *a, const void *b)
+{
+    return *(const int *)a - *(const int *)b;
 }

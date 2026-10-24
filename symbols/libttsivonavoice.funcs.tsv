@@ -725,7 +725,7 @@ addr	size	mode	name	status	src	score	note
 00049b24	11c	arm	xml_escape_n	matched	src/libttsivonavoice/xml.c	100	
 00049c40	28	arm	xml_is_space	matched	src/libttsivonavoice/xml.c	100	
 00049c68	44	arm	xml_is_name_start	wip	src/libttsivonavoice/xml.c	82.4	
-00049cac	40	arm	xml_is_name_char	wip	src/libttsivonavoice/xml.c	81.2	
+00049cac	40	arm	xml_is_name_char	wip	src/libttsivonavoice/xml.c	35.0	
 00049cec	4c	arm	xml_entity_value	matched	src/libttsivonavoice/xml.c	100	
 00049d38	8	arm	xml_escape	matched	src/libttsivonavoice/xml.c	100	
 00049d40	1c	arm	xml_escape_str	matched	src/libttsivonavoice/xml.c	100	
@@ -1469,26 +1469,26 @@ addr	size	mode	name	status	src	score	note
 0006690c	14	arm	utt_frontend	matched	src/libttsivonavoice/flite/cst_synth.c	100	
 00066920	14	arm	utt_phones_frontend	matched	src/libttsivonavoice/flite/cst_synth.c	100	
 00066934	18	arm	synth_module_callback_val	matched	src/libttsivonavoice/flite/cst_synth.c	100	
-0006694c	198	arm	lexicon_from_pls	todo			
-00066ae4	68	arm	in_lex	todo			flite strings(1) 12%
-00066b4c	58	arm	FUN_00066b4c	todo			
-00066ba4	18	arm	FUN_00066ba4	todo			
-00066bbc	28c	arm	FUN_00066bbc	todo			
+0006694c	198	arm	lexicon_from_pls	wip	src/libttsivonavoice/flite/cst_synth.c	81.4	
+00066ae4	68	arm	in_lex	matched	src/libttsivonavoice/flite/cst_synth.c	100	flite strings(1) 12%
+00066b4c	58	arm	val_xsampafunc	matched	src/libttsivonavoice/flite/cst_synth.c	100	
+00066ba4	18	arm	xsampafunc_val	matched	src/libttsivonavoice/flite/cst_synth.c	100	
+00066bbc	28c	arm	xsampa_mod_flag	matched	src/libttsivonavoice/flite/cst_synth.c	100	
 00066e48	720	arm	FUN_00066e48	todo			
 00067568	1d0	arm	FUN_00067568	todo			
 00067738	4f4	arm	FUN_00067738	todo			
 00067c2c	88	arm	FUN_00067c2c	todo			
 00067cb4	c8	arm	FUN_00067cb4	todo			
-00067d7c	20	arm	FUN_00067d7c	todo			
-00067d9c	50	arm	FUN_00067d9c	todo			
+00067d7c	20	arm	str_dashes	matched	src/libttsivonavoice/flite/cst_synth.c	100	
+00067d9c	50	arm	lang_is_amazon	matched	src/libttsivonavoice/flite/cst_synth.c	100	
 00067dec	58	arm	FUN_00067dec	todo			
-00067e44	14	arm	FUN_00067e44	todo			
-00067e58	4	arm	FUN_00067e58	todo			
-00067e5c	138	arm	FUN_00067e5c	todo			
-00067f94	58	arm	FUN_00067f94	todo			
-00067fec	18	arm	FUN_00067fec	todo			
+00067e44	14	arm	xs_tok_init	matched	src/libttsivonavoice/flite/cst_synth.c	100	
+00067e58	4	arm	xs_tok_done	matched	src/libttsivonavoice/flite/cst_synth.c	100	
+00067e5c	138	arm	xs_tok_next	matched	src/libttsivonavoice/flite/cst_synth.c	100	
+00067f94	58	arm	val_zdur_cart	matched	src/libttsivonavoice/flite/cst_synth.c	100	
+00067fec	18	arm	zdur_cart_val	matched	src/libttsivonavoice/flite/cst_synth.c	100	
 00068004	1bc	arm	FUN_00068004	todo			
-000681c0	10	arm	FUN_000681c0	todo			
+000681c0	10	arm	int_cmp	matched	src/libttsivonavoice/flite/cst_synth.c	100	
 000681d0	328	arm	FUN_000681d0	todo			
 000684f8	154	arm	default_tokenization	todo			flite strings(1) 8%
 0006864c	d8	arm	FUN_0006864c	todo			
