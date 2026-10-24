@@ -30,8 +30,7 @@ struct dom_elem {
     char *name;                 /* +0x14 */
     cst_features *attrs;        /* +0x18: keys owned */
     ustr_span span;             /* +0x1c: input bytes */
-    int unk_24;
-    int unk_28;
+    ustr_span end_span;         /* +0x24: input bytes of the end tag */
     int in_subdoc;              /* +0x2c */
 };
 

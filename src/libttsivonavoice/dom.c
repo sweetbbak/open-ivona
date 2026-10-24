@@ -86,8 +86,8 @@ dom_elem *dom_element_new(const char *name, int type)
     e->attrs = new_features();
     e->span.end = 0;
     e->span.start = 0;
-    e->unk_28 = 0;
-    e->unk_24 = 0;
+    e->end_span.end = 0;
+    e->end_span.start = 0;
     e->in_subdoc = 0;
     return e;
 }

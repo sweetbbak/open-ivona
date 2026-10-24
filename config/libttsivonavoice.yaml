@@ -47,3 +47,5 @@ units:
   src/libttsivonavoice/flite/cst_utterance.c: {add: [-O3, -fno-inline-functions], remove: [-O2]}
   # OpenSSL headers (RSA, EVP) for the encrypted file reader
   src/libttsivonavoice/isef.c: {add: [-Ibuild/vendor/openssl-1.0.2h/include]}
+  # Expat's header (expat.h) for the SSML parser
+  src/libttsivonavoice/ssml_parse.c: {add: [-Ibuild/vendor/expat-2.2.0/lib]}

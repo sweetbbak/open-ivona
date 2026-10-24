@@ -12,18 +12,11 @@
 #include "ivona_vector.h"
 #include "tts_cert.h"
 #include "tts_voice.h"
+#include "ssml_doc.h"
 
-typedef struct fetcher fetcher;
-fetcher *fetcher_new(void);
-void fetcher_delete(fetcher *f);
-void fetcher_reset(fetcher *f);
-void fetcher_set_referer(fetcher *f, const char *referer);
-void fetcher_set_base(fetcher *f, const char *base);
-void fetcher_set_callback(fetcher *f, void *fetch, void *user);
 cst_features *wavedict_new(void);
 void wavedict_clear(cst_features *d);
 void wavedict_free(cst_features *d);
-typedef struct pls_lexicon pls_lexicon;
 void pls_lexicon_free(pls_lexicon *l);
 pls_lexicon *pls_lexicon_parse(const char *data, size_t size, const char *lang, tts_msg **msgs,
                                int level);
@@ -40,43 +33,6 @@ size_t cst_strnspn(const char *s, size_t n, const char *accept);
 int cst_parse_hex_n(const char *s, size_t n, unsigned long *out);
 int cst_parse_uint_n(const char *s, size_t n, unsigned long *out);
 
-/* a <lexicon> of the document */
-typedef struct ssml_lexicon {
-    char *uri;
-    char *id;
-    char *lang;                 /* +0x08 */
-    int line;                   /* +0x0c: of the element */
-    int unk_10;
-    int column;                 /* +0x14 */
-    int unk_18[3];
-    int is_inline;              /* +0x24 */
-    pls_lexicon *lexicon;       /* +0x28 */
-} ssml_lexicon;
-
-/* an <audio> of the document */
-typedef struct ssml_audio {
-    char *src;
-    int unk_4[2];
-    int pos;                    /* +0x0c: text position */
-} ssml_audio;
-
-typedef struct ssml_doc {
-    fetcher *fetch;
-    dom_doc *dom;               /* +0x04 */
-    void *audio_attr_fn;        /* +0x08: eng_audio_attributes_function */
-    void *audio_attr_data;      /* +0x0c */
-    ivona_vector *lexicons;     /* +0x10: of ssml_lexicon */
-    int unk_14;
-    char *encoding;             /* +0x18 */
-    int version;                /* +0x1c */
-    int is_ssml;                /* +0x20 */
-    int entity_limit;           /* +0x24 */
-    ivona_vector *audio;        /* +0x28: of ssml_audio */
-    cst_features *waves;        /* +0x2c */
-    tts_msg *warnings;          /* +0x30: pending input warnings */
-    tts_msg *warning;           /* +0x34: the one last returned */
-    cst_features *metrics;      /* +0x38: timing metrics or NULL */
-} ssml_doc;
 
 int ssml_parse_fragment(ssml_doc *doc, ivona_ustr *text, int a);
 
@@ -173,7 +129,7 @@ ssml_doc *ssml_doc_new(cst_features *metrics)
 {
     ssml_doc *d = cst_safe_calloc(1, sizeof(ssml_doc));
 
-    d->unk_14 = 0;
+    d->ssml_version = 0;
     d->dom = NULL;
     d->lexicons = vector_new(sizeof(ssml_lexicon), (ivona_vector_copy_fn)memcpy, ssml_lexicon_free);
     d->waves = wavedict_new();
@@ -208,7 +164,7 @@ void ssml_doc_reset(ssml_doc *d)
     dom_free(d->dom);
     d->dom = NULL;
     vector_clear(d->lexicons);
-    d->unk_14 = 0;
+    d->ssml_version = 0;
     cst_free(d->encoding);
     d->is_ssml = 1;
     d->encoding = NULL;
@@ -513,8 +469,8 @@ void ssml_apply_pls(void *lexicons, dom_text *t, ssml_doc *d, int state, int ext
                     p->grapheme = NULL;
                     dom_append_child(e, &n->n);
                     memcpy(&e->span, &p->text->start, sizeof(ustr_span));
-                    e->unk_24 = 0;
-                    e->unk_28 = 0;
+                    e->end_span.start = 0;
+                    e->end_span.end = 0;
                 }
                 dom_insert_after(cur, &e->n);
                 cur = &e->n;
@@ -656,7 +612,7 @@ ssml_lexicon *ssml_add_inline_lexicon(ssml_doc *d, dom_elem *e, const char *data
     ssml_lexicon lex;
     tts_msg *msgs, *w, **tail;
 
-    if (d->unk_14 != 10 && id == NULL) {
+    if (d->ssml_version != 10 && id == NULL) {
         tail = d->warnings ? &tts_msg_last(d->warnings)->next : &d->warnings;
         *tail = tts_msg_new(e->span.start, e->n.index, 5,
                             "Missing attribute \"%s\" in element \"%s\"", "xml:id", e->name);
@@ -667,7 +623,7 @@ ssml_lexicon *ssml_add_inline_lexicon(ssml_doc *d, dom_elem *e, const char *data
     lex.id = cst_strdup(id);
     lex.lang = cst_strdup(dom_inherited_attr(e, "http://www.w3.org/XML/1998/namespace^lang"));
     lex.line = e->span.start;
-    lex.unk_10 = e->unk_28;
+    lex.unk_10 = e->end_span.end;
     lex.column = e->n.index;
     lex.is_inline = 1;
     lex.lexicon = pls_lexicon_parse(data, size, lex.lang, &msgs, 0);
