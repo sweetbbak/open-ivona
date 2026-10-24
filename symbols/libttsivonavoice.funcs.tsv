@@ -1508,7 +1508,7 @@ addr	size	mode	name	status	src	score	note
 0006a5b8	294	arm	default_pause_insertion	wip	src/libttsivonavoice/flite/cst_synth.c	98.8	
 0006a84c	194	arm	default_intonation	matched	src/libttsivonavoice/flite/cst_synth.c	100	
 0006a9e0	4	arm	duration_none	matched	src/libttsivonavoice/flite/cst_synth.c	100	
-0006a9e4	548	arm	cart_duration	todo			
+0006a9e4	548	arm	cart_duration	wip	src/libttsivonavoice/flite/cst_synth.c	69.3	
 0006af2c	158	arm	duration_select	wip	src/libttsivonavoice/flite/cst_synth.c	32.3	
 0006b084	b0	arm	phones_textanalysis	wip	src/libttsivonavoice/flite/cst_synth.c	86.4	
 0006b134	2c	arm	ivona_is_dir	todo			
@@ -1571,7 +1571,7 @@ addr	size	mode	name	status	src	score	note
 00070ebc	58	arm	phone_feature	matched	src/libttsivonavoice/flite/cst_phoneset.c	100	
 00070f14	10	arm	phone_feature_string	matched	src/libttsivonavoice/flite/cst_phoneset.c	100	
 00070f24	74	arm	item_phoneset	matched	src/libttsivonavoice/flite/cst_phoneset.c	100	
-00070f98	58	arm	FUN_00070f98	todo			
+00070f98	58	arm	val_dur_stats	todo			
 00070ff0	18	arm	FUN_00070ff0	todo			
 00071008	50	arm	named_table_find	wip	src/libttsivonavoice/phones.c	80.0	
 00071058	58	arm	val_phonefunc	matched	src/libttsivonavoice/phones.c	100	

@@ -1151,6 +1151,114 @@ cst_utterance *duration_none(cst_utterance *u)
 cst_utterance *cart_duration(cst_utterance *u);
 dnn_models *val_dnn_models(const cst_val *v);
 
+#include "cst_cart.h"
+
+typedef struct dur_stat {
+    const char *phone;
+    float mean;
+    float stddev;
+} dur_stat;
+
+typedef struct named_entry named_entry;
+const named_entry *named_table_find(const named_entry *const *t, const char *name);
+const dur_stat *const *val_dur_stats(const cst_val *v);
+float item_set_breath_acoustic_data(cst_item *item);
+
+#define PAUSE_MIN 0.01f
+#define PAUSE_MAX 0.050004f
+#define PAUSE_BEFORE_BREATH 0.06f
+
+/* 0x6a9e4 arm: segment durations from the duration CART (or the z-score CART), with pauses set
+ * by phrase break type and breaths by the breath model. */
+cst_utterance *cart_duration(cst_utterance *u)
+{
+    const zdur_cart *zc;
+    const cst_cart *tree;
+    const dur_stat *const *stats;
+    const dur_stat *ds;
+    cst_utterance *uu;
+    cst_item *s, *w;
+    const char *bt;
+    float end = 0, dur, len, base;
+
+    if (feat_present(u->features, "zdur_cart")) {
+        zc = val_zdur_cart(feat_val(u->features, "zdur_cart"));
+        stats = NULL;
+        tree = NULL;
+    } else {
+        tree = val_cart(feat_val(u->features, "dur_cart"));
+        zc = NULL;
+        stats = val_dur_stats(feat_val(u->features, "dur_stats"));
+    }
+    for (s = relation_head(utt_relation(u, REL_SEGMENT)); s; s = item_next(s)) {
+        if (strcmp(item_feat_string(s, "name"), "pau") == 0
+            || strcmp(item_feat_string(s, "name"), "brth") == 0) {
+            if (strcmp(item_feat_string(s, "name"), "brth") == 0)
+                dur = item_set_breath_acoustic_data(s);
+            else {
+                uu = item_utt(s);
+                bt = ffeature_string(item_traverse(item_prev(s), REL_SYLSTRUCTURE, ITEM_PARENT,
+                                                   ITEM_PARENT, REL_PHRASE, ITEM_PARENT, 0), "name");
+                if (item_prev(s) == NULL) {
+                    if (ffeature_int(item_traverse(s, 0x100, REL_SYLSTRUCTURE, ITEM_PARENT,
+                                                   ITEM_PARENT, REL_TOKEN, ITEM_PARENT, 0),
+                                     "no_pause_start") != 0)
+                        dur = PAUSE_BEFORE_BREATH;
+                    else {
+                        dur = get_param_float(uu->features, "pause_start_len", PAUSE_MAX);
+                        if (dur > PAUSE_MAX)
+                            dur = PAUSE_MAX;
+                        else if (dur < PAUSE_MIN)
+                            dur = PAUSE_MIN;
+                    }
+                } else if (strcmp("BB", bt) == 0) {
+                    len = get_param_float(uu->features, "pause_end_len", PAUSE_MAX);
+                    base = get_param_float(uu->features, "pause_base_len", 0.35f);
+                    if (len > PAUSE_MAX)
+                        len = PAUSE_MAX;
+                    if (len < PAUSE_MIN)
+                        len = PAUSE_MIN;
+                    dur = base + len;
+                    if (item_next(s)) {
+                        if (strcmp(item_feat_string(item_next(s), "name"), "brth") == 0)
+                            dur = PAUSE_BEFORE_BREATH;
+                        else
+                            dur += 0.1f;
+                    }
+                    w = item_traverse(item_prev(s), REL_SYLSTRUCTURE, ITEM_PARENT, ITEM_PARENT,
+                                      REL_TOKEN, ITEM_PARENT, 0);
+                    if (item_feat_present(w, "rvd_pause"))
+                        dur = item_feat_float(w, "rvd_pause");
+                } else if (strcmp("SB", bt) == 0)
+                    dur = 0.25f;
+                else {
+                    w = item_traverse(item_prev(s), REL_SYLSTRUCTURE, ITEM_PARENT, ITEM_PARENT,
+                                      REL_TOKEN, ITEM_PARENT, 0);
+                    if (strcmp(item_feat_string(item_prev(s), "name"), "brth") != 0)
+                        dur = 0.2f;
+                    else
+                        dur = PAUSE_BEFORE_BREATH;
+                    if (item_next(s)
+                        && strcmp(item_feat_string(item_next(s), "name"), "brth") == 0)
+                        dur = PAUSE_BEFORE_BREATH;
+                    if (item_feat_present(w, "rvd_pause"))
+                        dur = item_feat_float(w, "rvd_pause");
+                }
+            }
+        } else if (zc)
+            dur = zdur_cart_duration(zc, s) / 1000.0f;
+        else {
+            ds = (const dur_stat *)named_table_find((const named_entry *const *)stats,
+                                                    item_feat_string(s, "name"));
+            dur = val_float(cart_interpret(s, tree)) * ds->stddev + ds->mean;
+        }
+        end += dur;
+        item_set_float(s, "end", end);
+        item_set_float(s, "dur", dur);
+    }
+    return u;
+}
+
 /* 0x6af2c arm: CART durations unless a DNN predicts them (hybrid mode, a DNN-forced token or
  * "isf_dnn_apply_force"). */
 cst_utterance *duration_select(cst_utterance *u)
