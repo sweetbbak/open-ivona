@@ -289,14 +289,14 @@ addr	size	mode	name	status	src	score	note
 000273c4	a8	arm	prosody_volume	wip	src/libttsivonavoice/ssml_prosody.c	59.5	
 0002746c	124	arm	dict_read_entry	wip	src/libttsivonavoice/dict_mp.c	63.5	
 00027590	80	arm	dict_read	wip	src/libttsivonavoice/dict_mp.c	90.6	
-00027610	b8	arm	FUN_00027610	todo			
-000276c8	5c	arm	FUN_000276c8	todo			
-00027724	10	arm	FUN_00027724	todo			
-00027734	48	arm	FUN_00027734	todo			
-0002777c	b8	arm	FUN_0002777c	todo			
-00027834	2c	arm	FUN_00027834	todo			
-00027860	30	arm	audio_chunk_free	todo			
-00027890	90	arm	chunk_utterance	todo			
+00027610	b8	arm	utt_chunk_init	matched	src/libttsivonavoice/utt_chunk.c	100	
+000276c8	5c	arm	utt_chunk_init_empty	matched	src/libttsivonavoice/utt_chunk.c	100	
+00027724	10	arm	utt_chunk_free_utt	matched	src/libttsivonavoice/utt_chunk.c	100	
+00027734	48	arm	utt_chunk_add_span	matched	src/libttsivonavoice/utt_chunk.c	100	
+0002777c	b8	arm	token_chunk_from_utt	matched	src/libttsivonavoice/utt_chunk.c	100	
+00027834	2c	arm	token_list_remove	matched	src/libttsivonavoice/utt_chunk.c	100	
+00027860	30	arm	audio_chunk_free	matched	src/libttsivonavoice/utt_chunk.c	100	
+00027890	90	arm	chunk_utterance	matched	src/libttsivonavoice/utt_chunk.c	100	
 00027920	b0c	arm	FUN_00027920	todo			
 0002842c	8	arm	FUN_0002842c	todo			
 00028434	2c	arm	FUN_00028434	todo			
@@ -429,8 +429,9 @@ addr	size	mode	name	status	src	score	note
 000356a0	c	arm	FUN_000356a0	todo			
 000356ac	2c	arm	FUN_000356ac	todo			
 000356d8	190	arm	FUN_000356d8	todo			
-00035868	9ec	arm	FUN_00035868	todo			
-00036254	7e8	arm	FUN_00036254	todo			
+00035868	9b8	arm	token_info_from_item	todo			
+00036220	34	arm	token_info_free	todo			
+00036254	7e8	arm	token_info_to_item	todo			
 00036a3c	40	arm	FUN_00036a3c	matched	src/libttsivonavoice/calib_arm.c	100	
 00036a7c	40	arm	FUN_00036a7c	todo			
 00036abc	54	arm	FUN_00036abc	todo			
