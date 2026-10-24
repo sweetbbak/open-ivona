@@ -211,18 +211,17 @@ addr	size	mode	name	status	src	score	note
 00021b98	14	thumb	_Unwind_GetLanguageSpecificData	lib	lib:libgcc-thumb:pr-support.o	100	
 00021bac	6	thumb	_Unwind_GetDataRelBase	lib	lib:libgcc-thumb:pr-support.o	100	
 00021bb2	6	thumb	_Unwind_GetTextRelBase	lib	lib:libgcc-thumb:pr-support.o	100	
-00021bb8	4	arm	FUN_00021bb8	todo			
-00021bbc	4	thumb	FUN_00021bbc	todo			
-00021bc0	24	arm	FUN_00021bc0	todo			
-00021be4	58	arm	FUN_00021be4	todo			
-00021c3c	88	arm	FUN_00021c3c	todo			
-00021cc4	28	arm	FUN_00021cc4	todo			
-00021cec	c	arm	FUN_00021cec	todo			
-00021cf8	c	arm	FUN_00021cf8	todo			
-00021d04	4	arm	FUN_00021d04	todo			
-00021d08	38	arm	FUN_00021d08	todo			
-00021d40	30	arm	FUN_00021d40	todo			
-00021d70	53c	arm	FUN_00021d70	todo			
+00021bb8	8	arm	text_chunk_free_data	matched	src/libttsivonavoice/chunk.c	100	
+00021bc0	24	arm	audio_chunk_free_data	matched	src/libttsivonavoice/chunk.c	100	
+00021be4	58	arm	text_chunk_new	matched	src/libttsivonavoice/chunk.c	100	
+00021c3c	88	arm	audio_clip_chunk_new	matched	src/libttsivonavoice/chunk.c	100	
+00021cc4	28	arm	synth_chunk_free	matched	src/libttsivonavoice/chunk.c	100	
+00021cec	c	arm	flag_set	matched	src/libttsivonavoice/chunk.c	100	
+00021cf8	c	arm	flag_clear	matched	src/libttsivonavoice/chunk.c	100	
+00021d04	4	arm	flag_reset	matched	src/libttsivonavoice/chunk.c	100	
+00021d08	38	arm	isef_reader_free	matched	src/libttsivonavoice/isef.c	100	
+00021d40	30	arm	isef_free	matched	src/libttsivonavoice/isef.c	100	
+00021d70	53c	arm	isef_open	wip	src/libttsivonavoice/isef.c	56.3	
 000222ac	8	arm	FUN_000222ac	todo			
 000222b4	8	arm	FUN_000222b4	todo			
 000222bc	8	arm	FUN_000222bc	todo			
@@ -387,8 +386,8 @@ addr	size	mode	name	status	src	score	note
 00032d5c	bc	arm	FUN_00032d5c	todo			
 00032e18	980	arm	FUN_00032e18	todo			
 00033798	4c	arm	FUN_00033798	todo			
-000337e4	54	arm	FUN_000337e4	todo			
-00033838	24	arm	FUN_00033838	todo			
+000337e4	54	arm	synth_ctx_copy	todo			
+00033838	24	arm	synth_ctx_free	todo			
 0003385c	1f4	arm	FUN_0003385c	todo			
 00033a50	24	arm	FUN_00033a50	todo			
 00033a74	6c	arm	FUN_00033a74	todo			
