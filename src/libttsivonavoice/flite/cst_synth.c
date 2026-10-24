@@ -178,7 +178,7 @@ cst_utterance *default_phrasing(cst_utterance *u);
 cst_utterance *default_lexical_insertion(cst_utterance *u);
 cst_utterance *FUN_00069b88(cst_utterance *u);
 cst_utterance *FUN_0006a5b8(cst_utterance *u);
-cst_utterance *FUN_0006a84c(cst_utterance *u);
+cst_utterance *default_intonation(cst_utterance *u);
 cst_utterance *phones_textanalysis(cst_utterance *u);
 
 static const cst_synth_module text_methods[] = {
@@ -191,7 +191,7 @@ static const cst_synth_module text_methods[] = {
     { "change_language_func", "change_language_time", FUN_00069b88 },
     { "pause_insertion_func", "pause_insertion_time", FUN_0006a5b8 },
     { "postlex_func", "postlex_time", NULL },
-    { "intonation_func", "intonation_time", FUN_0006a84c },
+    { "intonation_func", "intonation_time", default_intonation },
     { "acoustic_prediction_func", "acoustic_prediction_time", NULL },
     { NULL, NULL, NULL }
 };
@@ -207,7 +207,7 @@ static const cst_synth_module token_methods[] = {
     { "change_language_func", "change_language_time", FUN_00069b88 },
     { "pause_insertion_func", "pause_insertion_time", FUN_0006a5b8 },
     { "postlex_func", "postlex_time", NULL },
-    { "intonation_func", "intonation_time", FUN_0006a84c },
+    { "intonation_func", "intonation_time", default_intonation },
     { "acoustic_prediction_func", "acoustic_prediction_time", NULL },
     { NULL, NULL, NULL }
 };
@@ -223,7 +223,7 @@ static const cst_synth_module phones_methods[] = {
     { "change_language_func", "change_language_time", FUN_00069b88 },
     { "pause_insertion_func", "pause_insertion_time", FUN_0006a5b8 },
     { "postlex_func", "postlex_time", NULL },
-    { "intonation_func", "intonation_time", FUN_0006a84c },
+    { "intonation_func", "intonation_time", default_intonation },
     { "acoustic_prediction_func", "acoustic_prediction_time", NULL },
     { NULL, NULL, NULL }
 };
@@ -937,6 +937,42 @@ cst_utterance *breath_insertion(cst_utterance *u)
         && strlist_contains(u->unk_14, "breath_insertion"))
         breath_insertion_utt(u);
     return u;
+}
+
+#define ITEM_PARENT 0x106
+
+const cst_val *item_feat_func(const cst_item *i, const char *name);
+
+/* 0x6a84c arm: the end tone of each phrase's last syllable: its token's "endtone" if H or L,
+ * else what "phrasesylendtone_func" says for the phrase, else L. */
+cst_utterance *default_intonation(cst_utterance *u)
+{
+    const cst_val *f = feat_val(u->features, "phrasesylendtone_func");
+    const cst_val *v;
+    cst_val *r;
+    cst_item *p, *syl;
+
+    for (p = relation_head(utt_relation(u, REL_PHRASE)); p; p = item_next(p)) {
+        syl = item_traverse(p, ITEM_DAUGHTERN, REL_SYLSTRUCTURE, ITEM_DAUGHTERN, 0);
+        if (syl == NULL)
+            continue;
+        v = item_feat_func(item_traverse(p, ITEM_DAUGHTERN, REL_TOKEN, ITEM_PARENT, 0), "endtone");
+        if (v && (strcmp(val_string(v), "H") == 0 || strcmp(val_string(v), "L") == 0)) {
+            item_set(syl, "endtone", v);
+            continue;
+        }
+        if (f && (r = val_itemfunc(f)(p)) != NULL) {
+            item_set(syl, "endtone", r);
+            continue;
+        }
+        item_set_string(syl, "endtone", "L");
+    }
+    return u;
+}
+
+/* 0x6a9e0 arm: empty (its address is taken somewhere) */
+void FUN_0006a9e0(void)
+{
 }
 
 /* 0x6b084 arm: text analysis of phone input: each token is one word of the given phones. */

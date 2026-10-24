@@ -1506,7 +1506,8 @@ addr	size	mode	name	status	src	score	note
 0006a0f4	470	arm	breath_insertion_utt	todo			
 0006a564	54	arm	breath_insertion	matched	src/libttsivonavoice/flite/cst_synth.c	100	
 0006a5b8	294	arm	FUN_0006a5b8	todo			
-0006a84c	198	arm	FUN_0006a84c	todo			
+0006a84c	194	arm	default_intonation	matched	src/libttsivonavoice/flite/cst_synth.c	100	
+0006a9e0	4	arm	FUN_0006a9e0	matched	src/libttsivonavoice/flite/cst_synth.c	100	
 0006a9e4	548	arm	FUN_0006a9e4	todo			
 0006af2c	158	arm	FUN_0006af2c	todo			
 0006b084	b0	arm	phones_textanalysis	wip	src/libttsivonavoice/flite/cst_synth.c	86.4	
