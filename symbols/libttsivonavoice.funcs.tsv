@@ -445,18 +445,18 @@ addr	size	mode	name	status	src	score	note
 0003713c	80	arm	unit_blacklists_attach	matched	src/libttsivonavoice/addon.c	100	
 000371bc	4c	arm	unit_blacklists_free	matched	src/libttsivonavoice/addon.c	100	
 00037208	1ac	arm	unit_blacklists_parse	wip	src/libttsivonavoice/addon.c	73.8	
-000373b4	b4	arm	word_embeddings_detach	todo			
-00037468	c8	arm	word_embeddings_attach	todo			
-00037530	4c	arm	word_embeddings_free	todo			
-0003757c	1ac	arm	word_embeddings_parse	todo			
-00037728	b0	arm	dnn_models_detach	todo			
-000377d8	d8	arm	dnn_models_attach	todo			
-000378b0	4c	arm	dnn_models_free	todo			
-000378fc	148	arm	dnn_models_parse	todo			
-00037a44	b8	arm	dynamic_voxdbs_detach	todo			
-00037afc	a8	arm	dynamic_voxdbs_attach	todo			
-00037ba4	4c	arm	dynamic_voxdbs_free	todo			
-00037bf0	1e0	arm	dynamic_voxdbs_parse	todo			
+000373b4	b4	arm	word_embeddings_detach	matched	src/libttsivonavoice/addon.c	100	
+00037468	c8	arm	word_embeddings_attach	matched	src/libttsivonavoice/addon.c	100	
+00037530	4c	arm	word_embeddings_free	matched	src/libttsivonavoice/addon.c	100	
+0003757c	1ac	arm	word_embeddings_parse	wip	src/libttsivonavoice/addon.c	78.5	
+00037728	b0	arm	dnn_models_detach	matched	src/libttsivonavoice/addon.c	100	
+000377d8	d8	arm	dnn_models_attach	matched	src/libttsivonavoice/addon.c	100	
+000378b0	4c	arm	dnn_models_free	matched	src/libttsivonavoice/addon.c	100	
+000378fc	148	arm	dnn_models_parse	wip	src/libttsivonavoice/addon.c	62.4	
+00037a44	b8	arm	dynamic_voxdbs_detach	matched	src/libttsivonavoice/addon.c	100	
+00037afc	a8	arm	dynamic_voxdbs_attach	matched	src/libttsivonavoice/addon.c	100	
+00037ba4	4c	arm	dynamic_voxdbs_free	matched	src/libttsivonavoice/addon.c	100	
+00037bf0	1e0	arm	dynamic_voxdbs_parse	wip	src/libttsivonavoice/addon.c	80.0	
 00037dd0	2b4	arm	tts_dict_save	wip	src/libttsivonavoice/dict.c	75.1	
 00038084	268	arm	dict_split_line	matched	src/libttsivonavoice/dict.c	100	
 000382ec	830	arm	dict_parse	wip	src/libttsivonavoice/dict.c	19.8	

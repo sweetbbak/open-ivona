@@ -46,18 +46,65 @@ typedef struct unit_blacklist {
     int *units;                 /* +0x14: count, then the units */
 } unit_blacklist;
 
-typedef struct addon_list {
-    void *items;
-    unsigned int count;
-} addon_list;
+/* word_embeddings */
+typedef struct word_vectors word_vectors;
+typedef struct word_embeddings word_embeddings;
+word_vectors *word_embeddings_read(mp_reader *r);
+void word_vectors_free(word_vectors *wv);
+word_embeddings *word_embeddings_from(const word_vectors *wv);
+int word_embeddings_add(word_embeddings *we, const word_vectors *wv);
+int word_embeddings_remove(word_embeddings *we, const word_vectors *wv);
+cst_val *word_embeddings_val(const word_embeddings *we);
+word_embeddings *val_word_embeddings(const cst_val *v);
+
+typedef struct embedding_set {
+    addon_selector sel;
+    char *name;                 /* +0x14 */
+    word_vectors *db;           /* +0x18 */
+} embedding_set;
+
+/* dnn_models (the DNN code is stubbed out in this build: dnn_stub.c) */
+typedef struct dnn_model dnn_model;
+typedef struct dnn_models dnn_models;
+dnn_model *dnn_stub_2c(mp_reader *r);
+void dnn_stub_34(dnn_model *m);
+dnn_models *new_dnn_models(void);
+void dnn_models_add(dnn_models *m, dnn_model *d);
+void dnn_models_remove(dnn_models *m, dnn_model *d);
+cst_val *dnn_models_val(const dnn_models *m);
+dnn_models *val_dnn_models(const cst_val *v);
+
+typedef struct dnn_model_set {
+    addon_selector sel;
+    dnn_model *model;           /* +0x14 */
+} dnn_model_set;
+
+/* dynamic_voxdbs */
+typedef struct dynamic_voxdbs {
+    diphonedb *a;
+    diphonedb *b;               /* +0x04: the breaths database */
+} dynamic_voxdbs;
+dynamic_voxdbs *val_dynamic_voxdbs(const cst_val *v);
+int phone_is_breaths(const char *name);
+diphonedb *diphonedb_new(const unsigned char *data);
+void delete_diphonedb(diphonedb *d);
+
+typedef struct voxdb_set {
+    addon_selector sel;
+    int breaths;                /* +0x14: type "breaths" */
+    diphonedb *db;              /* +0x18 */
+} voxdb_set;
 
 typedef struct addon {
     cst_filemap *map;
     unit_blacklist *blacklists; /* +0x04 */
     unsigned int blacklist_count;
-    addon_list embeddings;      /* +0x0c */
-    addon_list dnn_models;      /* +0x14 */
-    addon_list voxdbs;          /* +0x1c */
+    embedding_set *embeddings;  /* +0x0c */
+    unsigned int embedding_count;
+    dnn_model_set *dnn_models;  /* +0x14 */
+    unsigned int dnn_model_count;
+    voxdb_set *voxdbs;          /* +0x1c */
+    unsigned int voxdb_count;
 } addon;
 
 typedef struct addon_module {
@@ -309,18 +356,259 @@ static int unit_blacklists_parse(addon *a, mp_reader *r)
     return 1;
 }
 
-int word_embeddings_parse(addon *a, mp_reader *r);
-void word_embeddings_free(addon *a);
-void word_embeddings_attach(addon *a, tts_voice *v);
-void word_embeddings_detach(addon *a, tts_voice *v);
-int dnn_models_parse(addon *a, mp_reader *r);
-void dnn_models_free(addon *a);
-void dnn_models_attach(addon *a, tts_voice *v);
-void dnn_models_detach(addon *a, tts_voice *v);
-int dynamic_voxdbs_parse(addon *a, mp_reader *r);
-void dynamic_voxdbs_free(addon *a);
-void dynamic_voxdbs_attach(addon *a, tts_voice *v);
-void dynamic_voxdbs_detach(addon *a, tts_voice *v);
+/* 0x373b4 arm */
+static void word_embeddings_detach(addon *a, tts_voice *v)
+{
+    unsigned int i;
+
+    for (i = 0; i < a->embedding_count; i++)
+        if (addon_selector_matches(&a->embeddings[i].sel, v)) {
+            cst_features *f = VOICE_FEATURES(v);
+            word_vectors *db = a->embeddings[i].db;
+
+            if (feat_present(f, "word_embeddings"))
+                word_embeddings_remove(val_word_embeddings(feat_val(f, "word_embeddings")), db);
+        }
+}
+
+/* 0x37468 arm */
+static void word_embeddings_attach(addon *a, tts_voice *v)
+{
+    unsigned int i;
+
+    for (i = 0; i < a->embedding_count; i++)
+        if (addon_selector_matches(&a->embeddings[i].sel, v)) {
+            cst_features *f = VOICE_FEATURES(v);
+            word_vectors *db = a->embeddings[i].db;
+
+            if (!feat_present(f, "word_embeddings"))
+                feat_set(f, "word_embeddings", word_embeddings_val(word_embeddings_from(db)));
+            else
+                word_embeddings_add(val_word_embeddings(feat_val(f, "word_embeddings")), db);
+        }
+}
+
+/* 0x37530 arm */
+static void word_embeddings_free(addon *a)
+{
+    unsigned int i;
+
+    for (i = 0; i < a->embedding_count; i++)
+        word_vectors_free(a->embeddings[i].db);
+    cst_free(a->embeddings);
+}
+
+/* 0x3757c arm: [{"selectors": selector, "name": name, "db": word vectors}...] */
+static int word_embeddings_parse(addon *a, mp_reader *r)
+{
+    unsigned int n, m, i;
+
+    cmp_read_array(r, &n);
+    a->embeddings = cst_safe_alloc(n, sizeof(embedding_set));
+    a->embedding_count = n;
+    for (i = 0; i < n; i++) {
+        embedding_set *e = &a->embeddings[i];
+        int have_sel;
+
+        memset(e, 0, sizeof(embedding_set));
+        if (!cmp_read_map(r, &m))
+            return 0;
+        have_sel = 0;
+        while (m--) {
+            char *key = mp_read_bin(r, NULL, 1);
+
+            if (key == NULL)
+                return 0;
+            if (strcmp(key, "selectors") == 0) {
+                if (!addon_read_selector(r, &e->sel))
+                    return 0;
+                have_sel = 1;
+            } else if (strcmp(key, "name") == 0) {
+                char *name = mp_read_bin(r, NULL, 1);
+
+                if (name == NULL)
+                    return 0;
+                e->name = name;
+            } else if (strcmp(key, "db") == 0) {
+                word_vectors *db = word_embeddings_read(r);
+
+                if (db == NULL)
+                    return 0;
+                e->db = db;
+            } else
+                return 0;
+        }
+        if (!have_sel || e->db == NULL || e->name == NULL)
+            return 0;
+    }
+    return 1;
+}
+
+/* 0x37728 arm */
+static void dnn_models_detach(addon *a, tts_voice *v)
+{
+    unsigned int i;
+
+    for (i = 0; i < a->dnn_model_count; i++)
+        if (addon_selector_matches(&a->dnn_models[i].sel, v)) {
+            cst_features *f = VOICE_FEATURES(v);
+
+            if (feat_present(f, "dnn_models"))
+                dnn_models_remove(val_dnn_models(feat_val(f, "dnn_models")), a->dnn_models[i].model);
+        }
+}
+
+/* 0x377d8 arm */
+static void dnn_models_attach(addon *a, tts_voice *v)
+{
+    unsigned int i;
+
+    for (i = 0; i < a->dnn_model_count; i++)
+        if (addon_selector_matches(&a->dnn_models[i].sel, v)) {
+            cst_features *f = VOICE_FEATURES(v);
+
+            if (!feat_present(f, "dnn_models"))
+                feat_set(f, "dnn_models", dnn_models_val(new_dnn_models()));
+            dnn_models_add(val_dnn_models(feat_val(f, "dnn_models")), a->dnn_models[i].model);
+        }
+}
+
+/* 0x378b0 arm */
+static void dnn_models_free(addon *a)
+{
+    unsigned int i;
+
+    for (i = 0; i < a->dnn_model_count; i++)
+        dnn_stub_34(a->dnn_models[i].model);
+    cst_free(a->dnn_models);
+}
+
+/* 0x378fc arm: [{"selectors": selector, "model": model}...] */
+static int dnn_models_parse(addon *a, mp_reader *r)
+{
+    unsigned int n, m, i;
+
+    cmp_read_array(r, &n);
+    a->dnn_models = cst_safe_alloc(n, sizeof(dnn_model_set));
+    a->dnn_model_count = n;
+    for (i = 0; i < n; i++) {
+        dnn_model_set *d = &a->dnn_models[i];
+
+        memset(d, 0, sizeof(dnn_model_set));
+        if (!cmp_read_map(r, &m))
+            return 0;
+        while (m--) {
+            char *key = mp_read_bin(r, NULL, 1);
+
+            if (key == NULL)
+                return 0;
+            if (strcmp(key, "selectors") == 0) {
+                if (!addon_read_selector(r, &d->sel))
+                    return 0;
+            } else if (strcmp(key, "model") == 0) {
+                dnn_model *model = dnn_stub_2c(r);
+
+                if (model == NULL)
+                    return 0;
+                d->model = model;
+            } else
+                return 0;
+        }
+        if (d->model == NULL)
+            return 0;
+    }
+    return 1;
+}
+
+/* 0x37a44 arm */
+static void dynamic_voxdbs_detach(addon *a, tts_voice *v)
+{
+    unsigned int i;
+
+    for (i = 0; i < a->voxdb_count; i++)
+        if (addon_selector_matches(&a->voxdbs[i].sel, v)) {
+            diphonedb *db = a->voxdbs[i].db;
+            dynamic_voxdbs *dv = val_dynamic_voxdbs(feat_val(VOICE_FEATURES(v), "dynamic_voxdbs"));
+
+            if (dv->b == db && a->voxdbs[i].breaths == 1)
+                dv->b = NULL;
+        }
+}
+
+/* 0x37afc arm */
+static void dynamic_voxdbs_attach(addon *a, tts_voice *v)
+{
+    unsigned int i;
+
+    for (i = 0; i < a->voxdb_count; i++)
+        if (addon_selector_matches(&a->voxdbs[i].sel, v)) {
+            diphonedb *db = a->voxdbs[i].db;
+            dynamic_voxdbs *dv = val_dynamic_voxdbs(feat_val(VOICE_FEATURES(v), "dynamic_voxdbs"));
+
+            if (a->voxdbs[i].breaths == 1)
+                dv->b = db;
+        }
+}
+
+/* 0x37ba4 arm */
+static void dynamic_voxdbs_free(addon *a)
+{
+    unsigned int i;
+
+    for (i = 0; i < a->voxdb_count; i++)
+        delete_diphonedb(a->voxdbs[i].db);
+    cst_free(a->voxdbs);
+}
+
+/* 0x37bf0 arm: [{"selectors": selector, "type": "breaths", "data": voice database}...] */
+static int dynamic_voxdbs_parse(addon *a, mp_reader *r)
+{
+    unsigned int n, m, i;
+
+    cmp_read_array(r, &n);
+    a->voxdbs = cst_safe_alloc(n, sizeof(voxdb_set));
+    a->voxdb_count = n;
+    for (i = 0; i < n; i++) {
+        voxdb_set *d = &a->voxdbs[i];
+        unsigned char *data;
+        unsigned int size;
+        int have_sel;
+
+        memset(d, 0, sizeof(voxdb_set));
+        if (!cmp_read_map(r, &m))
+            return 0;
+        data = NULL;
+        have_sel = 0;
+        while (m--) {
+            char *key = mp_read_bin(r, NULL, 1);
+
+            if (key == NULL)
+                return 0;
+            if (strcmp(key, "selectors") == 0) {
+                int ok = addon_read_selector(r, &d->sel);
+
+                have_sel = 1;
+                if (!ok)
+                    return 0;
+            } else if (strcmp(key, "type") == 0) {
+                char *type = mp_read_bin(r, NULL, 1);
+
+                if (type == NULL)
+                    return 0;
+                d->breaths = phone_is_breaths(type);
+            } else if (strcmp(key, "data") == 0) {
+                if ((data = mp_read_bin(r, &size, 2)) == NULL)
+                    return 0;
+            } else
+                return 0;
+        }
+        if (!have_sel || d->breaths == 0)
+            return 0;
+        if ((d->db = diphonedb_new(data)) == NULL)
+            return 0;
+    }
+    return 1;
+}
 
 addon_module unit_blacklists_module = {
     "unit_blacklists", unit_blacklists_parse, unit_blacklists_free, unit_blacklists_attach,
