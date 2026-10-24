@@ -595,14 +595,14 @@ addr	size	mode	name	status	src	score	note
 00043ae4	180	arm	cert_allows_voice	matched	src/libttsivonavoice/cert.c	100	
 00043c64	220	arm	FUN_00043c64	todo			
 00043e84	33c	arm	FUN_00043e84	todo			
-000441c0	20	arm	FUN_000441c0	todo			
-000441e0	c8	arm	FUN_000441e0	todo			
-000442a8	c	arm	FUN_000442a8	todo			
-000442b4	10	arm	FUN_000442b4	todo			
-000442c4	2c	arm	FUN_000442c4	todo			
-000442f0	10	arm	FUN_000442f0	todo			
-00044300	ba8	arm	charset_table	todo			
-00044ea8	1ac	arm	FUN_00044ea8	todo			
+000441c0	20	arm	charset_dec_8bit	matched	src/libttsivonavoice/charset_dec.c	100	
+000441e0	c8	arm	utf16_decode_char	wip	src/libttsivonavoice/charset_dec.c	96.0	
+000442a8	c	arm	charset_dec_utf8	matched	src/libttsivonavoice/charset_dec.c	100	
+000442b4	10	arm	charset_decode	matched	src/libttsivonavoice/charset_dec.c	100	
+000442c4	2c	arm	utf16_decode	matched	src/libttsivonavoice/charset_dec.c	100	
+000442f0	10	arm	charset_dec_utf16	matched	src/libttsivonavoice/charset_dec.c	100	
+00044300	ba8	arm	charset_table	matched	src/libttsivonavoice/charset_dec.c	100	
+00044ea8	1ac	arm	charset_decoder_init	matched	src/libttsivonavoice/charset_dec.c	100	
 00045054	124	arm	ivona_crc32	matched	src/libttsivonavoice/textstream.c	100	
 00045178	5c	arm	textstream_open	wip	src/libttsivonavoice/textstream.c	91.3	
 000451d4	38	arm	textstream_from_mem	matched	src/libttsivonavoice/textstream.c	100	
@@ -696,26 +696,26 @@ addr	size	mode	name	status	src	score	note
 00048084	1cc	arm	license_acquire	wip	src/libttsivonavoice/license.c	46.8	
 00048250	108	arm	license_release	matched	src/libttsivonavoice/license.c	100	
 00048358	50	arm	license_remove_all	matched	src/libttsivonavoice/license.c	100	
-000483a8	24	arm	rate_conv_new	todo			
-000483cc	c	arm	rate_conv_free	todo			
-000483d8	18	arm	rate_conv_reset	todo			
-000483f0	58	arm	FUN_000483f0	todo			
-00048448	b4	arm	rate_conv_add	todo			
-000484fc	1c	arm	FUN_000484fc	todo			
-00048518	c	arm	FUN_00048518	todo			
-00048524	c	arm	FUN_00048524	todo			
-00048530	90	arm	FUN_00048530	todo			
-000485c0	50	arm	FUN_000485c0	todo			
-00048610	34	arm	FUN_00048610	todo			
-00048644	dc	arm	charset_strlen_func	todo			
-00048720	ec	arm	FUN_00048720	todo			
-0004880c	c	arm	FUN_0004880c	todo			
-00048818	3c	arm	ustr_decode_n	todo			
-00048854	34	arm	ivona_ustr_decode	todo			
-00048888	34	arm	charset_supported	todo			
-000488bc	c88	arm	FUN_000488bc	todo			
-00049544	90	arm	charset_detect	todo			
-000495d4	58	arm	FUN_000495d4	todo			
+000483a8	24	arm	rate_conv_new	matched	src/libttsivonavoice/rate_conv.c	100	
+000483cc	c	arm	rate_conv_free	matched	src/libttsivonavoice/rate_conv.c	100	
+000483d8	18	arm	rate_conv_reset	matched	src/libttsivonavoice/rate_conv.c	100	
+000483f0	58	arm	ivona_sleep_ms	matched	src/libttsivonavoice/rate_conv.c	100	
+00048448	b4	arm	rate_conv_add	matched	src/libttsivonavoice/rate_conv.c	100	
+000484fc	1c	arm	re_iter_new	matched	src/libttsivonavoice/re_iter.c	100	
+00048518	c	arm	re_iter_free	matched	src/libttsivonavoice/re_iter.c	100	
+00048524	c	arm	re_iter_reset	matched	src/libttsivonavoice/re_iter.c	100	
+00048530	90	arm	re_iter_next	matched	src/libttsivonavoice/re_iter.c	100	
+000485c0	50	arm	re_iter_split	matched	src/libttsivonavoice/re_iter.c	100	
+00048610	34	arm	u16_strlen	matched	src/libttsivonavoice/charset.c	100	
+00048644	dc	arm	charset_strlen_func	matched	src/libttsivonavoice/charset.c	100	
+00048720	ec	arm	ustr_decode_into	wip	src/libttsivonavoice/charset.c	56.9	
+0004880c	c	arm	ustr_decode	matched	src/libttsivonavoice/charset.c	100	
+00048818	3c	arm	ustr_decode_n	matched	src/libttsivonavoice/charset.c	100	
+00048854	34	arm	ivona_ustr_decode	matched	src/libttsivonavoice/charset.c	100	
+00048888	34	arm	charset_supported	matched	src/libttsivonavoice/charset.c	100	
+000488bc	c88	arm	ustr_to_charset	todo			
+00049544	90	arm	charset_detect	matched	src/libttsivonavoice/charset.c	100	
+000495d4	58	arm	str_to_ascii	matched	src/libttsivonavoice/charset.c	100	
 0004962c	210	arm	FUN_0004962c	todo			
 0004983c	68	arm	tts_msg_new	matched	src/libttsivonavoice/tts_msg.c	100	
 000498a4	28	arm	tts_msg_free	matched	src/libttsivonavoice/tts_msg.c	100	

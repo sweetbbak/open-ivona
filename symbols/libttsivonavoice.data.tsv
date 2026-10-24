@@ -60,6 +60,30 @@ addr	size	name	note
 0021f348	4	cst_val_type_track	
 0021f34c	0	cst_val_type_wave	learned from src/libttsivonavoice/flite/cst_wave.c
 0021f350	0	cst_val_type_utterance	learned from src/libttsivonavoice/flite/cst_item.c
+00220254	200	charset_cp1258	
+00220454	200	charset_cp1257	
+00220654	200	charset_cp1256	
+00220854	200	charset_cp1255	
+00220a54	200	charset_cp1254	
+00220c54	200	charset_cp1253	
+00220e54	200	charset_cp1252	
+00221054	200	charset_cp1251	
+00221254	200	charset_cp1250	
+00221454	200	charset_iso8859_9	
+00221654	200	charset_iso8859_8	
+00221854	200	charset_iso8859_7	
+00221a54	200	charset_iso8859_6	
+00221c54	200	charset_iso8859_5	
+00221e54	200	charset_iso8859_4	
+00222054	200	charset_iso8859_3	
+00222254	200	charset_iso8859_2	
+00222454	200	charset_iso8859_1	
+00222654	200	charset_iso8859_16	
+00222854	200	charset_iso8859_15	
+00222a54	200	charset_iso8859_14	
+00222c54	200	charset_iso8859_13	
+00222e54	200	charset_iso8859_11	
+00223054	200	charset_iso8859_10	
 0022327c	20	cache_key_secret	wavesynth.c
 00223470	100	uni_translit_index1	uni_case.c
 00223570	2000	uni_translit_index2	uni_case.c
