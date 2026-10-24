@@ -30,7 +30,6 @@ pls_lexicon *pls_lexicon_parse(const char *data, size_t size, const char *lang, 
 const char *dom_get_attr(const dom_elem *e, const char *name);
 void dom_remove_preceding(dom_node *n);
 void dom_remove_following(dom_node *n);
-dom_node *ssml_find_mark(dom_elem *e, const char *name);
 ivona_ustr *ustr_transcode(const ivona_ustr *s, const char *encoding, int *state, size_t *pos);
 int utf8_encode(unsigned int c, char *out);
 int utf8_decode(const char *s, int *len);
@@ -140,6 +139,32 @@ static void dom_mark_subdoc(dom_elem *e)
     for (c = e->first; c; c = c->next)
         if (c->type != DOM_TEXT)
             dom_mark_subdoc((dom_elem *)c);
+}
+
+/* 0x28614 arm: the <mark> element named name below e; NULL if there is none or more than
+ * one. */
+static inline dom_node *ssml_find_mark(dom_elem *e, const char *name)
+{
+    dom_node *c, *r, *found = NULL;
+
+    if (e->n.type == 9) {
+        const char *s = dom_get_attr(e, "name");
+
+        if (s && strcmp(name, s) == 0)
+            return &e->n;
+        return NULL;
+    }
+    for (c = e->first; c; c = c->next) {
+        if (c->type == DOM_TEXT)
+            continue;
+        r = ssml_find_mark((dom_elem *)c, name);
+        if (r) {
+            if (found)
+                return NULL;
+            found = r;
+        }
+    }
+    return found;
 }
 
 /* 0x28bac arm */

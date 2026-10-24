@@ -301,7 +301,7 @@ addr	size	mode	name	status	src	score	note
 0002842c	8	arm	ssml_audio_free	matched	src/libttsivonavoice/ssml_doc.c	100	
 00028434	2c	arm	ssml_lexicon_free	matched	src/libttsivonavoice/ssml_doc.c	100	
 00028460	1b4	arm	dom_mark_subdoc.isra.0	wip	src/libttsivonavoice/ssml_doc.c	1.8	
-00028614	598	arm	ssml_find_mark	todo			
+00028614	598	arm	ssml_find_mark	wip	src/libttsivonavoice/ssml_doc.c	89.0	
 00028bac	94	arm	ssml_doc_new	matched	src/libttsivonavoice/ssml_doc.c	100	
 00028c40	58	arm	ssml_doc_free	matched	src/libttsivonavoice/ssml_doc.c	100	
 00028c98	6c	arm	ssml_doc_reset	matched	src/libttsivonavoice/ssml_doc.c	100	
