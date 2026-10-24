@@ -689,13 +689,13 @@ addr	size	mode	name	status	src	score	note
 00047a98	80	arm	ustr_edit_insert_span	matched	src/libttsivonavoice/ustr_edit.c	100	
 00047b18	28	arm	ustr_edit_insert	matched	src/libttsivonavoice/ustr_edit.c	100	
 00047b40	8c	arm	ustr_edit_insert_char	matched	src/libttsivonavoice/ustr_edit.c	100	
-00047bcc	120	arm	FUN_00047bcc	todo			
-00047cec	94	arm	FUN_00047cec	todo			
-00047d80	bc	arm	FUN_00047d80	todo			
-00047e3c	248	arm	license_check	todo			
-00048084	1cc	arm	FUN_00048084	todo			
-00048250	108	arm	license_release	todo			
-00048358	50	arm	FUN_00048358	todo			
+00047bcc	120	arm	license_attach	wip	src/libttsivonavoice/license.c	58.4	
+00047cec	94	arm	license_free	matched	src/libttsivonavoice/license.c	100	
+00047d80	bc	arm	license_new	matched	src/libttsivonavoice/license.c	100	
+00047e3c	248	arm	license_check	wip	src/libttsivonavoice/license.c	85.6	
+00048084	1cc	arm	license_acquire	wip	src/libttsivonavoice/license.c	46.8	
+00048250	108	arm	license_release	matched	src/libttsivonavoice/license.c	100	
+00048358	50	arm	license_remove_all	matched	src/libttsivonavoice/license.c	100	
 000483a8	24	arm	rate_conv_new	todo			
 000483cc	c	arm	rate_conv_free	todo			
 000483d8	18	arm	rate_conv_reset	todo			

@@ -49,8 +49,8 @@ void FUN_00036a7c(void *addon, void *module);
 void FUN_00036abc(void *addon);
 void *FUN_00036f88(const void *data, int size);
 void *FUN_00036fc4(const char *path);
-int FUN_00048084(void *license, void *key);
-void FUN_00047cec(void *p);
+int license_acquire(void *license, void *key);
+void license_free(void *p);
 
 int tts_unload_all_languages(tts_instance *tts);
 void FUN_000f435c(int x);
@@ -105,7 +105,7 @@ static inline void resource_release(tts_resource *a)
 {
     if (a->magic == TTS_RESOURCE_MAGIC) {
         cert_free(a->cert);
-        FUN_00047cec(a->license);
+        license_free(a->license);
         a->magic = 0;
         a->cert = NULL;
         a->license = NULL;
@@ -132,7 +132,7 @@ static inline tts_resource *resource_new(tts_cert_data *cert)
     if (cert->license_id == -1)
         res->license = NULL;
     else {
-        res->license = FUN_00047d80(cert->id);
+        res->license = license_new(cert->id);
         if (res->license == NULL) {
             resource_release(res);
             cst_free(res);
@@ -404,7 +404,7 @@ void *tts_find_license(tts_instance *tts)
     for (i = 0; i < vector_size(tts->resources); ) {
         r = *(tts_resource **)vector_at(tts->resources, i);
         i++;
-        if (r->cert != NULL && FUN_00048084(r->license, ((void **)r->cert)[7]))
+        if (r->cert != NULL && license_acquire(r->license, ((void **)r->cert)[7]))
             return r->license;
     }
     if (i == 0)

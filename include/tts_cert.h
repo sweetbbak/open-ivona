@@ -22,7 +22,7 @@ int cert_free(tts_cert_data *c);
 tts_cert_data *cert_copy(const tts_cert_data *c);
 int cert_status(const tts_cert_data *cert);
 int cert_allows_voice(const tts_cert_data *c, const char *lector, const char *lang_codes, int custom);
-void *FUN_00047d80(int key);
+void *license_new(int key);
 int FUN_00043c64(tts_cert_data *a, tts_cert_data *b);
 void FUN_00043e84(void *merged, tts_cert_data *c);
 
