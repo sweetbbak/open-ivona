@@ -172,21 +172,21 @@ cst_utterance *apply_synth_method(cst_utterance *u, const cst_synth_module meth[
 
 cst_utterance *default_tokenization(cst_utterance *u);
 cst_utterance *FUN_0006864c(cst_utterance *u);
-cst_utterance *FUN_00068d10(cst_utterance *u);
-cst_utterance *FUN_00069190(cst_utterance *u);
-cst_utterance *FUN_00069a08(cst_utterance *u);
+cst_utterance *default_textanalysis(cst_utterance *u);
+cst_utterance *default_phrasing(cst_utterance *u);
+cst_utterance *default_lexical_insertion(cst_utterance *u);
 cst_utterance *FUN_00069b88(cst_utterance *u);
 cst_utterance *FUN_0006a5b8(cst_utterance *u);
 cst_utterance *FUN_0006a84c(cst_utterance *u);
-cst_utterance *FUN_0006b084(cst_utterance *u);
+cst_utterance *phones_textanalysis(cst_utterance *u);
 
 static const cst_synth_module text_methods[] = {
     { "tokenizer_func", "tokenizer_time", default_tokenization },
     { "t2t_func", "tokenstotokens_time", FUN_0006864c },
-    { "text_analysis_func", "text_analysis_time", FUN_00068d10 },
+    { "text_analysis_func", "text_analysis_time", default_textanalysis },
     { "pos_tagger_func", "pos_tagger_time", NULL },
-    { "phrasing_func", "phrasing_time", FUN_00069190 },
-    { "lettertosound_func", "lettertosound_time", FUN_00069a08 },
+    { "phrasing_func", "phrasing_time", default_phrasing },
+    { "lettertosound_func", "lettertosound_time", default_lexical_insertion },
     { "change_language_func", "change_language_time", FUN_00069b88 },
     { "pause_insertion_func", "pause_insertion_time", FUN_0006a5b8 },
     { "postlex_func", "postlex_time", NULL },
@@ -199,10 +199,10 @@ static const cst_synth_module text_methods[] = {
 static const cst_synth_module token_methods[] = {
     { "tokenizer_func", "tokenizer_time", NULL },
     { "t2t_func", "tokenstotokens_time", FUN_0006864c },
-    { "text_analysis_func", "text_analysis_time", FUN_00068d10 },
+    { "text_analysis_func", "text_analysis_time", default_textanalysis },
     { "pos_tagger_func", "pos_tagger_time", NULL },
-    { "phrasing_func", "phrasing_time", FUN_00069190 },
-    { "lettertosound_func", "lettertosound_time", FUN_00069a08 },
+    { "phrasing_func", "phrasing_time", default_phrasing },
+    { "lettertosound_func", "lettertosound_time", default_lexical_insertion },
     { "change_language_func", "change_language_time", FUN_00069b88 },
     { "pause_insertion_func", "pause_insertion_time", FUN_0006a5b8 },
     { "postlex_func", "postlex_time", NULL },
@@ -215,10 +215,10 @@ static const cst_synth_module token_methods[] = {
 static const cst_synth_module phones_methods[] = {
     { "tokenizer_func", "tokenizer_time", default_tokenization },
     { "t2t_func", "tokenstotokens_time", FUN_0006864c },
-    { "text_analysis_func", "text_analysis_time", FUN_0006b084 },
+    { "text_analysis_func", "text_analysis_time", phones_textanalysis },
     { "pos_tagger_func", "pos_tagger_time", NULL },
-    { "phrasing_func", "phrasing_time", FUN_00069190 },
-    { "lettertosound_func", "lettertosound_time", FUN_00069a08 },
+    { "phrasing_func", "phrasing_time", default_phrasing },
+    { "lettertosound_func", "lettertosound_time", default_lexical_insertion },
     { "change_language_func", "change_language_time", FUN_00069b88 },
     { "pause_insertion_func", "pause_insertion_time", FUN_0006a5b8 },
     { "postlex_func", "postlex_time", NULL },
@@ -672,4 +672,92 @@ CST_VAL_REGISTER_TYPE_NODEL(zdur_cart, zdur_cart)
 int int_cmp(const void *a, const void *b)
 {
     return *(const int *)a - *(const int *)b;
+}
+
+/* ------------------------------------------------------------------------------------------ */
+/* Front end modules */
+
+#define REL_TOKEN 1
+#define REL_WORD 2
+#define ITEM_DAUGHTERN 0x108
+
+/* 0x68724 arm: the first c in s not escaped by a backslash */
+char *strchr_unescaped(const char *s, int c)
+{
+    for (;;) {
+        if (*s == '\0')
+            return NULL;
+        if (*s == c)
+            return (char *)s;
+        if (*s == '\\' && s[1])
+            s++;
+        s++;
+    }
+}
+
+cst_utterance *textanalysis_tokens(cst_utterance *u, cst_item *t, cst_item *end);
+
+/* 0x68d10 arm */
+cst_utterance *default_textanalysis(cst_utterance *u)
+{
+    return textanalysis_tokens(u, relation_head(utt_relation(u, REL_TOKEN)), NULL);
+}
+
+cst_utterance *phrasing_tokens(cst_utterance *u, cst_item *t, cst_item *end);
+
+/* 0x69190 arm */
+cst_utterance *default_phrasing(cst_utterance *u)
+{
+    return phrasing_tokens(u, relation_head(utt_relation(u, REL_TOKEN)), NULL);
+}
+
+cst_utterance *lexical_insertion_words(cst_utterance *u, cst_item *w, cst_item *end);
+
+/* 0x69a08 arm */
+cst_utterance *default_lexical_insertion(cst_utterance *u)
+{
+    return lexical_insertion_words(u, relation_head(utt_relation(u, REL_WORD)), NULL);
+}
+
+/* 0x6a078 arm: appends a segment named name after the last segment of the last word of w
+ * that has one. (Declared int without a value, which keeps the last call from being a
+ * sibcall.) */
+int word_append_segment(cst_item *w, const char *name)
+{
+    cst_item *d, *s;
+
+    for (d = item_last_daughter(w); d; d = item_prev(d)) {
+        s = item_traverse(d, REL_SYLSTRUCTURE, ITEM_DAUGHTERN, ITEM_DAUGHTERN, REL_SEGMENT, 0);
+        if (s) {
+            item_set_string(item_append(s, NULL), "name", name);
+            break;
+        }
+    }
+}
+
+int feats_have_breath_units(const cst_features *f);
+void breath_insertion_utt(cst_utterance *u);
+
+/* 0x6a564 arm */
+cst_utterance *breath_insertion(cst_utterance *u)
+{
+    if (feats_have_breath_units(u->features) && u->unk_14
+        && strlist_contains(u->unk_14, "breath_insertion"))
+        breath_insertion_utt(u);
+    return u;
+}
+
+/* 0x6b084 arm: text analysis of phone input: each token is one word of the given phones. */
+cst_utterance *phones_textanalysis(cst_utterance *u)
+{
+    cst_relation *wrel = utt_relation_create(u, REL_WORD);
+    cst_item *t, *w;
+
+    for (t = relation_head(utt_relation(u, REL_TOKEN)); t; t = item_next(t)) {
+        item_set(t, "phones", phones_from_string(item_feat_string(t, "name")));
+        w = item_add_daughter(t, NULL);
+        item_set_string(w, "name", "");
+        relation_append(wrel, w);
+    }
+    return u;
 }
