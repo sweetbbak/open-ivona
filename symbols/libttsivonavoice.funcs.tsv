@@ -1544,9 +1544,9 @@ addr	size	mode	name	status	src	score	note
 0006dc94	188	arm	FUN_0006dc94	todo			
 0006de1c	3c	arm	FUN_0006de1c	todo			
 0006de58	c8	arm	FUN_0006de58	todo			
-0006df20	6c	arm	FUN_0006df20	todo			
-0006df8c	214	arm	FUN_0006df8c	todo			
-0006e1a0	8	arm	FUN_0006e1a0	todo			
+0006df20	6c	arm	syl_has_syllabic	matched	src/libttsivonavoice/syllabify.c	100	
+0006df8c	214	arm	syl_split	wip	src/libttsivonavoice/syllabify.c	44.4	
+0006e1a0	8	arm	syl_split_default	matched	src/libttsivonavoice/syllabify.c	100	
 0006e1a8	4	arm	cst_regex_init	matched	src/libttsivonavoice/flite/cst_regex.c	100	flite order 100%
 0006e1ac	2c	arm	cst_regex_match	matched	src/libttsivonavoice/flite/cst_regex.c	100	flite calls(2) 100%
 0006e1d8	c	arm	cst_regex_match_return	matched	src/libttsivonavoice/flite/cst_regex.c	100	flite order 100%
