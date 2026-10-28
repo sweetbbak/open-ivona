@@ -1448,16 +1448,16 @@ addr	size	mode	name	status	src	score	note
 0006441c	18	arm	track_span	matched	src/libttsivonavoice/track.c	100	
 00064434	6c	arm	track_frame_at	matched	src/libttsivonavoice/track.c	100	
 000644a0	b8	arm	track_print	matched	src/libttsivonavoice/track.c	100	
-00064558	240	arm	FUN_00064558	todo			
+00064558	240	arm	track_insert_silence	wip	src/libttsivonavoice/track.c	97.9	
 00064798	68	arm	crossfade_weight	matched	src/libttsivonavoice/track.c	100	
-00064800	7c	arm	wave_crossfade	wip	src/libttsivonavoice/track.c	71.0	
-0006487c	4e4	arm	FUN_0006487c	todo			
-00064d60	f8	arm	FUN_00064d60	todo			
-00064e58	790	arm	FUN_00064e58	todo			
-000655e8	198	arm	FUN_000655e8	todo			
-00065780	5d0	arm	FUN_00065780	todo			
-00065d50	58	arm	FUN_00065d50	todo			
-00065da8	60c	arm	FUN_00065da8	todo			
+00064800	7c	arm	wave_crossfade	matched	src/libttsivonavoice/track.c	100	
+0006487c	4e4	arm	track_stretch	wip	src/libttsivonavoice/track.c	94.2	
+00064d60	f8	arm	track_gain	matched	src/libttsivonavoice/track.c	100	
+00064e58	790	arm	track_compress	wip	src/libttsivonavoice/track.c	34.9	
+000655e8	198	arm	track_distort	matched	src/libttsivonavoice/track.c	100	
+00065780	5d0	arm	track_retime	wip	src/libttsivonavoice/track.c	26.0	
+00065d50	58	arm	track_retime_to	matched	src/libttsivonavoice/track.c	100	
+00065da8	60c	arm	track_segment	wip	src/libttsivonavoice/track.c	16.5	
 000663b4	1cc	arm	item_print_tree	matched	src/libttsivonavoice/flite/cst_synth.c	100	
 00066580	20	arm	utt_input_text	matched	src/libttsivonavoice/flite/cst_synth.c	100	
 000665a0	38	arm	utt_set_input_text	matched	src/libttsivonavoice/flite/cst_synth.c	100	
