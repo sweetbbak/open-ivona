@@ -1,9 +1,9 @@
 addr	size	mode	name	status	src	score	note
 00004da0	20	thumb	_ZNSs4_Rep10_M_disposeERKSaIcE.part.11	lib	lib:gnustl-thumb:string-inst.o	100	
 00004dc0	10	arm	__on_dlclose	lib	lib:crtbegin_so:crtbegin_so.o	100	
-00004dd0	3c	thumb	_GLOBAL__sub_I_eh_globals.cc@eh_globals	lib	lib:gnustl-thumb:eh_globals.o	100	
-00004e0c	10	thumb	_GLOBAL__sub_I_eh_alloc.cc@eh_alloc	lib	lib:gnustl-thumb:eh_alloc.o	100	
-00004e1c	50	thumb	_GLOBAL__sub_I_system_error.cc@system_error	lib	lib:gnustl-thumb:system_error.o	100	
+00004dd0	3c	thumb	FUN_00004dd0	todo			
+00004e0c	10	thumb	FUN_00004e0c	todo			
+00004e1c	50	thumb	FUN_00004e1c	todo			
 00004e6c	14	arm	__atexit_handler_wrapper	lib	lib:crtbegin_so:crtbegin_so.o	100	
 00004e80	20	arm	atexit	lib	lib:crtbegin_so:crtbegin_so.o	100	
 00004ea0	20	thumb	_Z16GetVoiceDataFunci	matched	src/libtiver/voice_table.cpp	100	

@@ -66,19 +66,25 @@ hash *hash_new(unsigned int size, void (*free_value)(void *value))
 /* 0x56a54 arm */
 void hash_free(hash *h)
 {
-    hash_entry *e, *next;
     unsigned int i;
+    hash_entry *e, *next;
 
-    if (h == NULL)
+    if (!h)
         return;
-    for (i = 0; i < h->size; i++)
-        for (e = h->buckets[i]; e; e = next) {
-            next = e->next;
-            cst_free(e->key);
-            if (h->free_value)
-                h->free_value(e->value);
-            cst_free(e);
-        }
+    if (__builtin_expect(h->size != 0, 1)) {
+        i = 0;
+        do {
+            e = h->buckets[i];
+            while (e) {
+                next = e->next;
+                cst_free(e->key);
+                if (h->free_value)
+                    h->free_value(e->value);
+                cst_free(e);
+                e = next;
+            }
+        } while (++i < h->size);
+    }
     cst_free(h->buckets);
     cst_free(h);
 }
@@ -86,10 +92,11 @@ void hash_free(hash *h)
 /* 0x56ad0 arm */
 void *hash_get(hash *h, const void *key, size_t len)
 {
+    const size_t l = len;
     hash_entry *e;
 
     for (e = h->buckets[murmur_hash2(key, len) % h->size]; e; e = e->next)
-        if (e->len == len && memcmp(e->key, key, len) == 0)
+        if (l == e->len && memcmp(e->key, key, len) == 0)
             return e->value;
     return NULL;
 }
@@ -97,10 +104,16 @@ void *hash_get(hash *h, const void *key, size_t len)
 /* 0x56b48 arm: adds or replaces (the old value is not freed). */
 void hash_put(hash *h, const void *key, size_t len, void *value)
 {
-    hash_entry **pp, *e;
+    const size_t l = len;
+    unsigned int hval = murmur_hash2(key, len);
+    unsigned int idx = hval % h->size;
+    register hash_entry **buckets asm("r2") = h->buckets;
+    asm("" : "+r"(buckets));
+    hash_entry **pp = &buckets[idx];
+    hash_entry *e;
 
-    for (pp = &h->buckets[murmur_hash2(key, len) % h->size]; (e = *pp) != NULL; pp = &e->next)
-        if (e->len == len && memcmp(e->key, key, len) == 0) {
+    for (; (e = *pp) != NULL; pp = &e->next)
+        if (l == e->len && memcmp(e->key, key, len) == 0) {
             e->value = value;
             return;
         }
@@ -115,10 +128,11 @@ void hash_put(hash *h, const void *key, size_t len, void *value)
 /* 0x56c00 arm */
 int hash_remove(hash *h, const void *key, size_t len)
 {
+    const size_t l = len;
     hash_entry **pp, *e;
 
     for (pp = &h->buckets[murmur_hash2(key, len) % h->size]; (e = *pp) != NULL; pp = &e->next)
-        if (e->len == len && memcmp(e->key, key, len) == 0) {
+        if (l == e->len && memcmp(e->key, key, len) == 0) {
             *pp = e->next;
             cst_free(e->key);
             if (h->free_value)

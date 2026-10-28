@@ -136,12 +136,22 @@ const cst_val *val_car(const cst_val *v)
     cst_error();
 }
 
+cst_val *val_car_mut(const cst_val *v)
+{
+    return (cst_val *)val_car(v);
+}
+
 /* 0x55574 */
 const cst_val *val_cdr(const cst_val *v)
 {
     if (v && cst_val_consp(v))
         return CST_VAL_CDR(v);
     cst_error();
+}
+
+cst_val *val_cdr_mut(const cst_val *v)
+{
+    return (cst_val *)val_cdr(v);
 }
 
 /* 0x555a0: last cons cell of a list */
@@ -405,6 +415,38 @@ const cst_val *set_car(cst_val *v1, const cst_val *v2)
     val_inc_refcount(v1);
     CST_VAL_CAR(v1) = (cst_val *)v2;
     return v1;
+}
+
+/* 0x55da4 */
+cst_val *val_flatten(cst_val *v, int delete_orig)
+{
+    cst_val *head;
+    cst_val *cur;
+    cst_val *last;
+
+    if (cst_val_consp(val_car(v)))
+        head = (cst_val *)val_car(v);
+    else
+        head = cons_val(val_car(v), NULL);
+    cur = (cst_val *)val_cdr(v);
+    set_car(v, NULL);
+    if (cur != NULL) {
+        last = head;
+        do {
+            cst_val *item;
+            last = (cst_val *)val_last(last);
+            if (cst_val_consp(val_car(cur)))
+                item = (cst_val *)val_car(cur);
+            else
+                item = cons_val(val_car(cur), NULL);
+            CST_VAL_CDR(last) = item;
+            set_car(cur, NULL);
+            cur = (cst_val *)val_cdr(cur);
+        } while (cur != NULL);
+    }
+    if (delete_orig)
+        delete_val(v);
+    return head;
 }
 
 /* 0x55e78 */

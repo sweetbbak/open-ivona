@@ -73,16 +73,17 @@ CST_VAL_REGISTER_TYPE_NODEL(lang_dat_core_data, void)
 
 /* 0x501e4 arm: the language with code among its codes (NULL: "english"), in a NULL-name
  * terminated array. */
+__attribute__((optimize("no-crossjumping")))
 tts_lang_desc *lang_desc_find(tts_lang_desc *table, const char *code)
 {
     tts_lang_desc *l;
 
     if (table == NULL || table->name == NULL)
         return NULL;
-    if (code == NULL) {
-        for (l = table; l->name; l++)
-            if (strcmp("english", l->name) == 0)
-                return l;
+    if (__builtin_expect(code == NULL, 0)) {
+        for (; table->name; table++)
+            if (strcmp("english", table->name) == 0)
+                return table;
         return NULL;
     }
     for (l = table; l->name; l++)
@@ -118,7 +119,7 @@ void *item_lang_data(cst_item *i)
     const cst_val *v;
     int rel = i->relation->id;
 
-    if (rel == 5 || rel == 6) {
+    if (__builtin_expect(rel == 5 || rel == 6, 0)) {
         i = item_as(i, 4);
         if (i == NULL)
             return NULL;
@@ -129,7 +130,7 @@ void *item_lang_data(cst_item *i)
             i = item_parent(i);
         if (i == NULL)
             return NULL;
-        if (i->relation->id == 1)
+        if (__builtin_expect(i->relation->id == 1, 1))
             goto found;
     }
     i = item_parent(item_as(i, 1));
@@ -151,6 +152,7 @@ typedef struct lang_core {
 } lang_core;
 
 /* 0x503e8 arm */
+__attribute__((optimize("no-optimize-sibling-calls")))
 void lang_core_init(lang_core *l)
 {
     l->features = new_features();

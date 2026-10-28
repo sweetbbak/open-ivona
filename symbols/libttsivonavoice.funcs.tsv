@@ -226,10 +226,10 @@ addr	size	mode	name	status	src	score	note
 000222b4	8	arm	isef_path	matched	src/libttsivonavoice/isef.c	100	
 000222bc	8	arm	isef_version	matched	src/libttsivonavoice/isef.c	100	
 000222c4	178	arm	isef_find	wip	src/libttsivonavoice/isef.c	61.7	
-0002243c	f0	arm	isef_next	wip	src/libttsivonavoice/isef.c	49.2	
-0002252c	290	arm	lang_tag_match	wip	src/libttsivonavoice/lang_tag.c	52.9	
+0002243c	f0	arm	isef_next	wip	src/libttsivonavoice/isef.c	27.1	
+0002252c	290	arm	lang_tag_match	matched	src/libttsivonavoice/lang_tag.c	100	
 000227bc	a0	arm	lang_tags_match	wip	src/libttsivonavoice/lang_tag.c	46.3	
-0002285c	178	arm	lang_dat_lexicons	wip	src/libttsivonavoice/lang_tag.c	50.0	
+0002285c	178	arm	lang_dat_lexicons	wip	src/libttsivonavoice/lang_tag.c	44.8	
 000229d4	8	arm	lexicon_ptr_free	matched	src/libttsivonavoice/lang_tag.c	100	
 000229dc	12c	arm	lang_dat_check_version	matched	src/libttsivonavoice/lang_tag.c	100	
 00022b08	24	arm	vox_file_check	matched	src/libttsivonavoice/lang_tag.c	100	
@@ -329,18 +329,18 @@ addr	size	mode	name	status	src	score	note
 0002abf0	54	arm	mark_queue_pop	matched	src/libttsivonavoice/ssml_doc.c	100	
 0002ac44	4	arm	ssml_default	matched	src/libttsivonavoice/ssml_parse.c	100	
 0002ac48	8	arm	ssml_end_ns	matched	src/libttsivonavoice/ssml_parse.c	100	
-0002ac50	40	arm	ssml_span.isra.5	matched	src/libttsivonavoice/ssml_parse.c	100	
+0002ac50	40	arm	ssml_span.isra.6	matched	src/libttsivonavoice/ssml_parse.c	100	
 0002ac90	f0	arm	ssml_entity_decl	matched	src/libttsivonavoice/ssml_parse.c	100	
 0002ad80	c4	arm	ssml_start_ns	matched	src/libttsivonavoice/ssml_parse.c	100	
 0002ae44	2a0	arm	ssml_chardata	wip	src/libttsivonavoice/ssml_parse.c	73.1	
 0002b0e4	2ec	arm	ssml_skipped_entity	wip	src/libttsivonavoice/ssml_parse.c	74.7	
 0002b3d0	1bc	arm	ssml_is_amazon	matched	src/libttsivonavoice/ssml_parse.c	100	
-0002b58c	3f0	arm	ssml_end_element	wip	src/libttsivonavoice/ssml_parse.c	10.3	
+0002b58c	3f0	arm	ssml_end_element	wip	src/libttsivonavoice/ssml_parse.c	40.8	
 0002b97c	62c	arm	ssml_parse	wip	src/libttsivonavoice/ssml_parse.c	32.4	
 0002bfa8	8	arm	ssml_parse_fragment	matched	src/libttsivonavoice/ssml_parse.c	100	
-0002bfb0	74	arm	qname_join	wip	src/libttsivonavoice/ssml_parse.c	93.1	
-0002c024	fc	arm	ssml_canonical_name	wip	src/libttsivonavoice/ssml_parse.c	37.9	
-0002c120	c88	arm	ssml_start_element	wip	src/libttsivonavoice/ssml_parse.c	26.1	
+0002bfb0	74	arm	qname_join	matched	src/libttsivonavoice/ssml_parse.c	100	
+0002c024	fc	arm	ssml_canonical_name	matched	src/libttsivonavoice/ssml_parse.c	100	
+0002c120	c88	arm	ssml_start_element	wip	src/libttsivonavoice/ssml_parse.c	26.2	
 0002cda8	1dc	arm	FUN_0002cda8	todo			
 0002cf84	70	arm	FUN_0002cf84	todo			
 0002cff4	32c	arm	FUN_0002cff4	todo			
@@ -758,12 +758,12 @@ addr	size	mode	name	status	src	score	note
 0004ab70	10	arm	dom_dump	matched	src/libttsivonavoice/dom.c	100	
 0004ab80	58	arm	dom_to_string	matched	src/libttsivonavoice/dom.c	100	
 0004abd8	328	arm	FUN_0004abd8	todo			
-0004af00	1c	arm	FUN_0004af00	todo			
-0004af1c	1c	arm	FUN_0004af1c	todo			
-0004af38	44	arm	FUN_0004af38	todo			
-0004af7c	44	arm	FUN_0004af7c	todo			
-0004afc0	468	arm	FUN_0004afc0	todo			
-0004b428	4	arm	FUN_0004b428	todo			
+0004af00	1c	arm	copy_tm_to_TM64	matched	src/libttsivonavoice/time64.c	100	
+0004af1c	1c	arm	copy_TM64_to_tm	matched	src/libttsivonavoice/time64.c	100	
+0004af38	44	arm	fake_localtime_r	matched	src/libttsivonavoice/time64.c	100	
+0004af7c	44	arm	fake_gmtime_r	matched	src/libttsivonavoice/time64.c	100	
+0004afc0	468	arm	mktime64	wip	src/libttsivonavoice/time64.c	42.9	
+0004b428	4	arm	timelocal64	matched	src/libttsivonavoice/time64.c	100	
 0004b42c	bec	arm	FUN_0004b42c	todo			
 0004c018	10	arm	FUN_0004c018	todo			
 0004c028	10	arm	FUN_0004c028	todo			
@@ -869,10 +869,10 @@ addr	size	mode	name	status	src	score	note
 000500e0	94	arm	voice_reg_fixup	wip	src/libttsivonavoice/synth.c	30.0	
 00050174	58	arm	val_lang_dat_core_data	matched	src/libttsivonavoice/synth.c	100	
 000501cc	18	arm	lang_dat_core_data_val	matched	src/libttsivonavoice/synth.c	100	
-000501e4	94	arm	lang_desc_find	wip	src/libttsivonavoice/synth.c	89.2	
+000501e4	94	arm	lang_desc_find	matched	src/libttsivonavoice/synth.c	100	
 00050278	b4	arm	voice_reg_set_language	matched	src/libttsivonavoice/synth.c	100	
-0005032c	bc	arm	item_lang_data	wip	src/libttsivonavoice/synth.c	49.1	
-000503e8	34	arm	lang_core_init	wip	src/libttsivonavoice/synth.c	84.6	
+0005032c	bc	arm	item_lang_data	matched	src/libttsivonavoice/synth.c	100	
+000503e8	34	arm	lang_core_init	matched	src/libttsivonavoice/synth.c	100	
 0005041c	1c	arm	lang_core_free	matched	src/libttsivonavoice/synth.c	100	
 00050438	60	arm	utt_from_text	matched	src/libttsivonavoice/synth.c	100	
 00050498	60	arm	utt_from_phones	matched	src/libttsivonavoice/synth.c	100	
@@ -903,19 +903,19 @@ addr	size	mode	name	status	src	score	note
 00051298	1c	arm	val_delete_word_embeddings	matched	src/libttsivonavoice/wordemb.c	100	
 000512b4	18	arm	word_embeddings_val	matched	src/libttsivonavoice/wordemb.c	100	
 000512cc	3c	arm	new_word_embeddings	matched	src/libttsivonavoice/wordemb.c	100	
-00051308	a0	arm	word_embeddings_add	wip	src/libttsivonavoice/wordemb.c	67.5	
+00051308	a0	arm	word_embeddings_add	matched	src/libttsivonavoice/wordemb.c	100	
 000513a8	24	arm	word_embeddings_from	matched	src/libttsivonavoice/wordemb.c	100	
 000513cc	a0	arm	word_embeddings_remove	matched	src/libttsivonavoice/wordemb.c	100	
 0005146c	94	arm	word_embeddings_lookup	matched	src/libttsivonavoice/wordemb.c	100	
-00051500	158	arm	word_embeddings_read	wip	src/libttsivonavoice/wordemb.c	86.0	
+00051500	158	arm	word_embeddings_read	matched	src/libttsivonavoice/wordemb.c	100	
 00051658	1c	arm	delete_word_embeddings	matched	src/libttsivonavoice/wordemb.c	100	
 00051674	1c	arm	word_vectors_free	matched	src/libttsivonavoice/wordemb.c	100	
 00051690	68	arm	word_embeddings_load	matched	src/libttsivonavoice/wordemb.c	100	
 000516f8	7c	arm	item_word_embedding	matched	src/libttsivonavoice/wordemb.c	100	
-00051774	19c	arm	item_word_embedding_coeff	wip	src/libttsivonavoice/wordemb.c	55.5	
-00051910	44	arm	cst_safe_alloc	wip	src/libttsivonavoice/flite/cst_alloc.c	88.2	
+00051774	19c	arm	item_word_embedding_coeff	matched	src/libttsivonavoice/wordemb.c	100	
+00051910	44	arm	cst_safe_alloc	matched	src/libttsivonavoice/flite/cst_alloc.c	100	
 00051954	4	arm	cst_safe_calloc	matched	src/libttsivonavoice/flite/cst_alloc.c	100	
-00051958	6c	arm	cst_safe_realloc	wip	src/libttsivonavoice/flite/cst_alloc.c	92.6	
+00051958	6c	arm	cst_safe_realloc	matched	src/libttsivonavoice/flite/cst_alloc.c	100	
 000519c4	c	arm	cst_free	matched	src/libttsivonavoice/flite/cst_alloc.c	100	
 000519d0	28	arm	swap_bytes_short	matched	src/libttsivonavoice/flite/cst_endian.c	100	
 000519f8	40	arm	cst_errmsg	matched	src/libttsivonavoice/flite/cst_error.c	100	
@@ -980,7 +980,7 @@ addr	size	mode	name	status	src	score	note
 00052824	40	arm	cst_strsuffixcmp	matched	src/libttsivonavoice/flite/cst_string.c	100	
 00052864	14	arm	cst_startswith	matched	src/libttsivonavoice/flite/cst_string.c	100	
 00052878	14	arm	cst_endswith	matched	src/libttsivonavoice/flite/cst_string.c	100	
-0005288c	50	arm	cst_member_string	todo			flite order 100%
+0005288c	50	arm	cst_member_string	matched	src/libttsivonavoice/flite/cst_string.c	100	flite order 100%
 000528dc	54	arm	cst_member_prefix	matched	src/libttsivonavoice/flite/cst_string.c	100	
 00052930	54	arm	cst_member_suffix	matched	src/libttsivonavoice/flite/cst_string.c	100	
 00052984	3c	arm	cst_strrmchar	wip	src/libttsivonavoice/flite/cst_string.c	62.5	
@@ -995,10 +995,10 @@ addr	size	mode	name	status	src	score	note
 00052c5c	4b8	arm	cst_roman_value	todo			
 00053114	68	arm	cst_roman_to_decimal	matched	src/libttsivonavoice/flite/cst_string.c	100	
 0005317c	28	arm	cst_strsubchar	matched	src/libttsivonavoice/flite/cst_string.c	100	
-000531a4	74	arm	FUN_000531a4	todo			
-00053218	74	arm	FUN_00053218	todo			
-0005328c	50	arm	FUN_0005328c	todo			
-000532dc	150	arm	FUN_000532dc	todo			
+000531a4	74	arm	cst_split_tokens_string	matched	src/libttsivonavoice/flite/cst_string.c	100	
+00053218	74	arm	cst_split_tokens_string_utf8	matched	src/libttsivonavoice/flite/cst_string.c	100	
+0005328c	50	arm	cst_val_strappend	matched	src/libttsivonavoice/flite/cst_string.c	100	
+000532dc	150	arm	cst_join_val	matched	src/libttsivonavoice/flite/cst_string.c	100	
 0005342c	44	arm	cst_assoc_string	matched	src/libttsivonavoice/flite/cst_string.c	100	
 00053470	b0	arm	cst_strtr	wip	src/libttsivonavoice/flite/cst_string.c	58.8	
 00053520	a8	arm	cst_split_val	wip	src/libttsivonavoice/flite/cst_string.c	45.7	
@@ -1093,7 +1093,7 @@ addr	size	mode	name	status	src	score	note
 00055ce4	38	arm	delete_val_list	matched	src/libttsivonavoice/flite/cst_val.c	100	
 00055d1c	44	arm	set_cdr	matched	src/libttsivonavoice/flite/cst_val.c	100	
 00055d60	44	arm	set_car	matched	src/libttsivonavoice/flite/cst_val.c	100	
-00055da4	d4	arm	FUN_00055da4	todo			
+00055da4	d4	arm	val_flatten	matched	src/libttsivonavoice/flite/cst_val.c	100	
 00055e78	58	arm	val_assoc_string	matched	src/libttsivonavoice/flite/cst_val.c	100	
 00055ed0	3c	arm	val_last_n	matched	src/libttsivonavoice/flite/cst_val.c	100	
 00055f0c	64	arm	val_drop_last	matched	src/libttsivonavoice/flite/cst_val.c	100	
@@ -1165,16 +1165,16 @@ addr	size	mode	name	status	src	score	note
 00056938	28	arm	mp_write_str	matched	src/libttsivonavoice/mpack_io.c	100	
 00056960	b4	arm	murmur_hash2	matched	src/libttsivonavoice/hash.c	100	
 00056a14	40	arm	hash_new	matched	src/libttsivonavoice/hash.c	100	
-00056a54	7c	arm	hash_free	wip	src/libttsivonavoice/hash.c	93.5	
-00056ad0	78	arm	hash_get	wip	src/libttsivonavoice/hash.c	96.7	
-00056b48	b8	arm	hash_put	wip	src/libttsivonavoice/hash.c	87.0	
-00056c00	ac	arm	hash_remove	wip	src/libttsivonavoice/hash.c	97.7	
+00056a54	7c	arm	hash_free	matched	src/libttsivonavoice/hash.c	100	
+00056ad0	78	arm	hash_get	matched	src/libttsivonavoice/hash.c	100	
+00056b48	b8	arm	hash_put	matched	src/libttsivonavoice/hash.c	100	
+00056c00	ac	arm	hash_remove	matched	src/libttsivonavoice/hash.c	100	
 00056cac	58	arm	val_metric	matched	src/libttsivonavoice/metrics.c	100	
 00056d04	4	arm	val_delete_metric	matched	src/libttsivonavoice/metrics.c	100	
 00056d08	18	arm	metric_val	matched	src/libttsivonavoice/metrics.c	100	
-00056d20	284	arm	metrics_internal_synth_time	wip	src/libttsivonavoice/metrics.c	73.2	
+00056d20	284	arm	metrics_internal_synth_time	matched	src/libttsivonavoice/metrics.c	100	
 00056fa4	50	arm	utt_take_metrics	matched	src/libttsivonavoice/metrics.c	100	
-00056ff4	288	arm	metrics_new	wip	src/libttsivonavoice/metrics.c	96.9	
+00056ff4	288	arm	metrics_new	matched	src/libttsivonavoice/metrics.c	100	
 0005727c	8c	arm	metrics_add_int	matched	src/libttsivonavoice/metrics.c	100	
 00057308	84	arm	metrics_set_float	matched	src/libttsivonavoice/metrics.c	100	
 0005738c	90	arm	metrics_max_int	matched	src/libttsivonavoice/metrics.c	100	
@@ -1349,16 +1349,16 @@ addr	size	mode	name	status	src	score	note
 0005e548	18	arm	diphonedb_val	matched	src/libttsivonavoice/voxdb.c	100	
 0005e560	68	arm	diphonedb_unit_index	matched	src/libttsivonavoice/voxdb.c	100	
 0005e5c8	290	arm	diphonedb_unit_decode	matched	src/libttsivonavoice/voxdb.c	100	
-0005e858	98	arm	vox_file_name	wip	src/libttsivonavoice/voxdb.c	90.0	
+0005e858	98	arm	vox_file_name	matched	src/libttsivonavoice/voxdb.c	100	
 0005e8f0	48	arm	vox_db_free	matched	src/libttsivonavoice/voxdb.c	100	
-0005e938	57c	arm	vox_db_open	wip	src/libttsivonavoice/voxdb.c	22.4	
-0005eeb4	12c	arm	vox_decoder_new	wip	src/libttsivonavoice/voxdb.c	60.3	
+0005e938	57c	arm	vox_db_open	wip	src/libttsivonavoice/voxdb.c	26.5	
+0005eeb4	12c	arm	vox_decoder_new	wip	src/libttsivonavoice/voxdb.c	39.0	
 0005efe0	3c	arm	vox_decoder_free	matched	src/libttsivonavoice/voxdb.c	100	
-0005f01c	1c8	arm	voxdb_name_match	wip	src/libttsivonavoice/voxdb.c	58.8	
+0005f01c	1c8	arm	voxdb_name_match	matched	src/libttsivonavoice/voxdb.c	100	
 0005f1e4	150	arm	diphonedb_new	matched	src/libttsivonavoice/voxdb.c	100	
 0005f334	38	arm	delete_diphonedb	matched	src/libttsivonavoice/voxdb.c	100	
 0005f36c	4	arm	val_delete_diphonedb	matched	src/libttsivonavoice/voxdb.c	100	
-0005f370	36c	arm	voice_load_diphonedb	wip	src/libttsivonavoice/voxdb.c	25.2	
+0005f370	36c	arm	voice_load_diphonedb	wip	src/libttsivonavoice/voxdb.c	38.3	
 0005f6dc	2c	arm	diphonedb_unit_flag	matched	src/libttsivonavoice/voxdb.c	100	
 0005f708	464	arm	vox_decoder_read_unit	wip	src/libttsivonavoice/voxdb.c	13.3	
 0005fb6c	30	arm	utt_diphonedb_extra	matched	src/libttsivonavoice/voxdb.c	100	
@@ -1403,7 +1403,7 @@ addr	size	mode	name	status	src	score	note
 00062bc0	1b8	arm	wavesynth_add_track	wip	src/libttsivonavoice/wavesynth.c	95.5	
 00062d78	68	arm	wavesynth_add_mark	matched	src/libttsivonavoice/wavesynth.c	100	
 00062de0	e0	arm	wavesynth_add_unit_marks	wip	src/libttsivonavoice/wavesynth.c	43.3	
-00062ec0	204	arm	wavesynth_take	wip	src/libttsivonavoice/wavesynth.c	96.9	
+00062ec0	204	arm	wavesynth_take	wip	src/libttsivonavoice/wavesynth.c	63.6	
 000630c4	4	arm	wavesynth_nop	matched	src/libttsivonavoice/wavesynth.c	100	
 000630c8	27c	arm	cache_decrypt	wip	src/libttsivonavoice/wavesynth.c	66.3	
 00063344	290	arm	FUN_00063344	todo			
@@ -1459,7 +1459,7 @@ addr	size	mode	name	status	src	score	note
 00065da8	60c	arm	FUN_00065da8	todo			
 000663b4	1cc	arm	item_print_tree	matched	src/libttsivonavoice/flite/cst_synth.c	100	
 00066580	20	arm	utt_input_text	matched	src/libttsivonavoice/flite/cst_synth.c	100	
-000665a0	38	arm	utt_set_input_text	wip	src/libttsivonavoice/flite/cst_synth.c	50.0	
+000665a0	38	arm	utt_set_input_text	matched	src/libttsivonavoice/flite/cst_synth.c	100	
 000665d8	10	arm	item_print_list	matched	src/libttsivonavoice/flite/cst_synth.c	100	
 000665e8	90	arm	utt_print_relations	matched	src/libttsivonavoice/flite/cst_synth.c	100	
 00066678	80	arm	utt_init	matched	src/libttsivonavoice/flite/cst_synth.c	100	
@@ -1469,14 +1469,14 @@ addr	size	mode	name	status	src	score	note
 0006690c	14	arm	utt_frontend	matched	src/libttsivonavoice/flite/cst_synth.c	100	
 00066920	14	arm	utt_phones_frontend	matched	src/libttsivonavoice/flite/cst_synth.c	100	
 00066934	18	arm	synth_module_callback_val	matched	src/libttsivonavoice/flite/cst_synth.c	100	
-0006694c	198	arm	lexicon_from_pls	wip	src/libttsivonavoice/flite/cst_synth.c	81.4	
-00066ae4	68	arm	in_lex	matched	src/libttsivonavoice/flite/cst_synth.c	100	flite strings(1) 12%
+0006694c	198	arm	lexicon_from_pls	matched	src/libttsivonavoice/flite/cst_synth.c	100	
+00066ae4	68	arm	val_in_lex	matched	src/libttsivonavoice/flite/cst_synth.c	100	flite strings(1) 12%
 00066b4c	58	arm	val_xsampafunc	matched	src/libttsivonavoice/flite/cst_synth.c	100	
 00066ba4	18	arm	xsampafunc_val	matched	src/libttsivonavoice/flite/cst_synth.c	100	
 00066bbc	28c	arm	xsampa_mod_flag	matched	src/libttsivonavoice/flite/cst_synth.c	100	
 00066e48	720	arm	xsampa_word_convert	todo			
 00067568	1d0	arm	xsampa_mod_name	matched	src/libttsivonavoice/flite/cst_synth.c	100	
-00067738	4f4	arm	xivona_to_xsampa	wip	src/libttsivonavoice/flite/cst_synth.c	77.3	
+00067738	4f4	arm	xivona_to_xsampa	matched	src/libttsivonavoice/flite/cst_synth.c	100	
 00067c2c	88	arm	item_xsampa	matched	src/libttsivonavoice/flite/cst_synth.c	100	
 00067cb4	c8	arm	seg_xsampa	matched	src/libttsivonavoice/flite/cst_synth.c	100	
 00067d7c	20	arm	str_dashes	matched	src/libttsivonavoice/flite/cst_synth.c	100	
@@ -1487,13 +1487,13 @@ addr	size	mode	name	status	src	score	note
 00067e5c	138	arm	xs_tok_next	matched	src/libttsivonavoice/flite/cst_synth.c	100	
 00067f94	58	arm	val_zdur_cart	matched	src/libttsivonavoice/flite/cst_synth.c	100	
 00067fec	18	arm	zdur_cart_val	matched	src/libttsivonavoice/flite/cst_synth.c	100	
-00068004	1bc	arm	zdur_cart_duration	wip	src/libttsivonavoice/flite/cst_synth.c	45.9	
+00068004	1bc	arm	zdur_cart_duration	matched	src/libttsivonavoice/flite/cst_synth.c	100	
 000681c0	10	arm	int_cmp	matched	src/libttsivonavoice/flite/cst_synth.c	100	
 000681d0	328	arm	item_rename_relation	matched	src/libttsivonavoice/flite/cst_synth.c	100	
 000684f8	154	arm	default_tokenization	matched	src/libttsivonavoice/flite/cst_synth.c	100	flite strings(1) 8%
 0006864c	d8	arm	t2t_tokens	matched	src/libttsivonavoice/flite/cst_synth.c	100	
-00068724	5c	arm	strchr_unescaped	wip	src/libttsivonavoice/flite/cst_synth.c	6.7	
-00068780	ec	arm	str_unescape_range	wip	src/libttsivonavoice/flite/cst_synth.c	96.6	
+00068724	5c	arm	strchr_unescaped	matched	src/libttsivonavoice/flite/cst_synth.c	100	
+00068780	ec	arm	str_unescape_range	matched	src/libttsivonavoice/flite/cst_synth.c	100	
 0006886c	4a4	arm	textanalysis_tokens	wip	src/libttsivonavoice/flite/cst_synth.c	65.7	
 00068d10	28	arm	default_textanalysis	matched	src/libttsivonavoice/flite/cst_synth.c	100	
 00068d38	458	arm	phrasing_tokens	wip	src/libttsivonavoice/flite/cst_synth.c	48.0	
@@ -1505,17 +1505,17 @@ addr	size	mode	name	status	src	score	note
 0006a078	7c	arm	word_append_segment	matched	src/libttsivonavoice/flite/cst_synth.c	100	
 0006a0f4	470	arm	breath_insertion_utt	todo			
 0006a564	54	arm	breath_insertion	matched	src/libttsivonavoice/flite/cst_synth.c	100	
-0006a5b8	294	arm	default_pause_insertion	wip	src/libttsivonavoice/flite/cst_synth.c	98.8	
+0006a5b8	294	arm	default_pause_insertion	matched	src/libttsivonavoice/flite/cst_synth.c	100	
 0006a84c	194	arm	default_intonation	matched	src/libttsivonavoice/flite/cst_synth.c	100	
 0006a9e0	4	arm	duration_none	matched	src/libttsivonavoice/flite/cst_synth.c	100	
-0006a9e4	548	arm	cart_duration	wip	src/libttsivonavoice/flite/cst_synth.c	69.3	
-0006af2c	158	arm	duration_select	wip	src/libttsivonavoice/flite/cst_synth.c	32.3	
-0006b084	b0	arm	phones_textanalysis	wip	src/libttsivonavoice/flite/cst_synth.c	86.4	
-0006b134	2c	arm	ivona_is_dir	todo			
-0006b160	28	arm	FUN_0006b160	todo			
-0006b188	20	arm	ivona_rand	todo			
+0006a9e4	548	arm	cart_duration	matched	src/libttsivonavoice/flite/cst_synth.c	100	
+0006af2c	158	arm	duration_select	matched	src/libttsivonavoice/flite/cst_synth.c	100	
+0006b084	b0	arm	phones_textanalysis	matched	src/libttsivonavoice/flite/cst_synth.c	100	
+0006b134	2c	arm	ivona_is_dir	matched	src/libvoice_en_gb_amy/ivona_sys.c	100	
+0006b160	28	arm	ivona_rand_r	matched	src/libvoice_en_gb_amy/ivona_sys.c	100	
+0006b188	20	arm	ivona_rand	matched	src/libvoice_en_gb_amy/ivona_sys.c	100	
 0006b1a8	b8	arm	pcm_unit_decode	todo			
-0006b260	c0	arm	silk_unit_open	wip	src/libttsivonavoice/vox_codec.c	72.9	
+0006b260	c0	arm	silk_unit_open	wip	src/libttsivonavoice/vox_codec.c	85.7	
 0006b320	34	arm	silk_unit_close	matched	src/libttsivonavoice/vox_codec.c	100	
 0006b354	388	arm	silk_unit_decode	wip	src/libttsivonavoice/vox_codec.c	9.2	
 0006b6dc	150	arm	vorbis_unit_open	todo			
@@ -1562,15 +1562,15 @@ addr	size	mode	name	status	src	score	note
 00070acc	18	arm	cart_val	matched	src/libttsivonavoice/flite/cst_cart.c	100	flite order 83%
 00070ae4	104	arm	cart_print_node	matched	src/libttsivonavoice/flite/cst_cart.c	100	
 00070be8	150	arm	cart_interpret	matched	src/libttsivonavoice/flite/cst_cart.c	100	flite order 90%
-00070d38	58	arm	val_phoneset	matched	src/libttsivonavoice/flite/cst_phoneset.c	100	
-00070d90	18	arm	phoneset_val	matched	src/libttsivonavoice/flite/cst_phoneset.c	100	
-00070da8	c	arm	new_phoneset	matched	src/libttsivonavoice/flite/cst_phoneset.c	100	
-00070db4	c	arm	delete_phoneset	matched	src/libttsivonavoice/flite/cst_phoneset.c	100	
-00070dc0	ac	arm	phone_id	matched	src/libttsivonavoice/flite/cst_phoneset.c	100	
-00070e6c	50	arm	phone_feat_id	matched	src/libttsivonavoice/flite/cst_phoneset.c	100	
-00070ebc	58	arm	phone_feature	matched	src/libttsivonavoice/flite/cst_phoneset.c	100	
-00070f14	10	arm	phone_feature_string	matched	src/libttsivonavoice/flite/cst_phoneset.c	100	
-00070f24	74	arm	item_phoneset	matched	src/libttsivonavoice/flite/cst_phoneset.c	100	
+00070d38	58	arm	val_phoneset	matched	src/libvoice_en_gb_amy/cst_phoneset.c	100	
+00070d90	18	arm	phoneset_val	matched	src/libvoice_en_gb_amy/cst_phoneset.c	100	
+00070da8	c	arm	new_phoneset	matched	src/libvoice_en_gb_amy/cst_phoneset.c	100	
+00070db4	c	arm	delete_phoneset	matched	src/libvoice_en_gb_amy/cst_phoneset.c	100	
+00070dc0	ac	arm	phone_id	matched	src/libvoice_en_gb_amy/cst_phoneset.c	100	
+00070e6c	50	arm	phone_feat_id	matched	src/libvoice_en_gb_amy/cst_phoneset.c	100	
+00070ebc	58	arm	phone_feature	matched	src/libvoice_en_gb_amy/cst_phoneset.c	100	
+00070f14	10	arm	phone_feature_string	matched	src/libvoice_en_gb_amy/cst_phoneset.c	100	
+00070f24	74	arm	item_phoneset	matched	src/libvoice_en_gb_amy/cst_phoneset.c	100	
 00070f98	58	arm	val_dur_stats	todo			
 00070ff0	18	arm	FUN_00070ff0	todo			
 00071008	50	arm	named_table_find	wip	src/libttsivonavoice/phones.c	80.0	

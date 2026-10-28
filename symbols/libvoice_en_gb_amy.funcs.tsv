@@ -1,13 +1,13 @@
 addr	size	mode	name	status	src	score	note
-000257c0	ac	arm	FUN_000257c0	todo			
+000257c0	ac	arm	phrase_contains_word	matched	src/libvoice_en_gb_amy/en_text.c	100	
 0002586c	10	arm	__on_dlclose	lib	lib:crtbegin_so:crtbegin_so.o	100	
 0002587c	14	arm	__atexit_handler_wrapper	lib	lib:crtbegin_so:crtbegin_so.o	100	
 00025890	20	arm	atexit	lib	lib:crtbegin_so:crtbegin_so.o	100	
-000258b0	38	arm	register_voice	todo			
-000258e8	4	arm	unregister_voice	todo			
+000258b0	38	arm	register_voice	matched	src/libvoice_en_gb_amy/voice_register.c	100	
+000258e8	4	arm	unregister_voice	matched	src/libvoice_en_gb_amy/voice_register.c	100	
 000258ec	58	arm	val_features	matched	src/libttsivonavoice/flite/cst_features.c	100	flite strings(1) 0%
 00025944	18	arm	features_val	matched	src/libttsivonavoice/flite/cst_features.c	100	flite order 83%
-0002595c	48	arm	feat_find_featpair@cst_features	todo			
+0002595c	48	arm	feat_find_featpair	matched	src/libttsivonavoice/flite/cst_features.c	100	
 000259a4	20	arm	new_features	matched	src/libttsivonavoice/flite/cst_features.c	100	flite order 88%
 000259c4	20	arm	new_features_local	matched	src/libttsivonavoice/flite/cst_features.c	100	flite (callee of a located function)
 000259e4	40	arm	delete_features	matched	src/libttsivonavoice/flite/cst_features.c	100	flite (callee of a located function)
@@ -20,68 +20,70 @@ addr	size	mode	name	status	src	score	note
 00025b24	10	arm	feat_int	matched	src/libttsivonavoice/flite/cst_features.c	100	flite order 75%
 00025b34	10	arm	feat_float	matched	src/libttsivonavoice/flite/cst_features.c	100	flite order 75%
 00025b44	10	arm	feat_string	matched	src/libttsivonavoice/flite/cst_features.c	100	flite order 75%
-00025b54	10	arm	FUN_00025b54	todo			
+00025b54	10	arm	feat_features	matched	src/libttsivonavoice/flite/cst_features.c	100	
 00025b64	24	arm	get_param_int	matched	src/libttsivonavoice/flite/cst_features.c	100	flite order 89%
 00025b88	24	arm	get_param_float	matched	src/libttsivonavoice/flite/cst_features.c	100	flite order 89%
 00025bac	24	arm	get_param_string	matched	src/libttsivonavoice/flite/cst_features.c	100	flite order 89%
-00025bd0	24	arm	FUN_00025bd0	todo			
+00025bd0	24	arm	get_param_features	matched	src/libttsivonavoice/flite/cst_features.c	100	
 00025bf4	18	arm	get_param_val	matched	src/libttsivonavoice/flite/cst_features.c	100	flite (callee of a located function)
 00025c0c	78	arm	feat_set	matched	src/libttsivonavoice/flite/cst_features.c	100	flite (callee of a located function)
 00025c84	28	arm	feat_set_int	matched	src/libttsivonavoice/flite/cst_features.c	100	flite calls(2) 100%
 00025cac	28	arm	feat_set_float	matched	src/libttsivonavoice/flite/cst_features.c	100	flite calls(2) 100%
 00025cd4	28	arm	feat_set_string	matched	src/libttsivonavoice/flite/cst_features.c	100	flite calls(2) 100%
-00025cfc	28	arm	FUN_00025cfc	todo			
-00025d24	50	arm	FUN_00025d24	todo			
-00025d74	110	arm	FUN_00025d74	todo			
-00025e84	d0	arm	FUN_00025e84	todo			
-00025f54	18	arm	FUN_00025f54	todo			
-00025f6c	18	arm	FUN_00025f6c	todo			
-00025f84	44	arm	FUN_00025f84	todo			
-00025fc8	8	arm	fgetc	todo			
-00025fd0	20	arm	FUN_00025fd0	todo			
+00025cfc	28	arm	feat_set_features	matched	src/libttsivonavoice/flite/cst_features.c	100	
+00025d24	50	arm	feat_copy_into	matched	src/libttsivonavoice/flite/cst_features.c	100	
+00025d74	110	arm	feat_print	matched	src/libttsivonavoice/flite/cst_features.c	100	
+00025e84	d0	arm	cst_fopen	matched	src/libttsivonavoice/flite/cst_file_stdio.c	100	
+00025f54	18	arm	cst_fwrite	matched	src/libttsivonavoice/flite/cst_file_stdio.c	100	
+00025f6c	18	arm	cst_fread	matched	src/libttsivonavoice/flite/cst_file_stdio.c	100	
+00025f84	44	arm	cst_filesize	matched	src/libttsivonavoice/flite/cst_file_stdio.c	100	
+00025fc8	4	arm	cst_fgetc	matched	src/libttsivonavoice/flite/cst_file_stdio.c	100	
+00025fcc	4	arm	cst_ftell	matched	src/libttsivonavoice/flite/cst_file_stdio.c	100	
+00025fd0	20	arm	cst_fseek	matched	src/libttsivonavoice/flite/cst_file_stdio.c	100	
 00025ff0	30	arm	cst_fprintf	matched	src/libttsivonavoice/flite/cst_file_stdio.c	100	
-00026020	30	arm	FUN_00026020	todo			
-00026050	4	arm	fclose	todo			
-00026054	58	arm	FUN_00026054	todo			
+00026020	30	arm	cst_sprintf	matched	src/libttsivonavoice/flite/cst_file_stdio.c	100	
+00026050	4	arm	cst_fclose	matched	src/libttsivonavoice/flite/cst_file_stdio.c	100	
+00026054	58	arm	val_valfunc	matched	src/libttsivonavoice/flite/cst_val.c	100	
 000260ac	24	arm	int_val	matched	src/libttsivonavoice/flite/cst_val.c	100	flite order 89%
 000260d0	24	arm	float_val	matched	src/libttsivonavoice/flite/cst_val.c	100	flite order 89%
 000260f4	34	arm	string_val	matched	src/libttsivonavoice/flite/cst_val.c	100	flite order 85%
-00026128	24	arm	FUN_00026128	todo			
+00026128	24	arm	string_val_consume	matched	src/libttsivonavoice/flite/cst_val.c	100	
 0002614c	24	arm	val_new_typed	matched	src/libttsivonavoice/flite/cst_val.c	100	flite order 89%
-00026170	18	arm	FUN_00026170	todo			
+00026170	18	arm	valfunc_val	matched	src/libttsivonavoice/flite/cst_val.c	100	
 00026188	50	arm	val_int	matched	src/libttsivonavoice/flite/cst_val.c	100	flite (callee of a located function)
 000261d8	54	arm	val_float	matched	src/libttsivonavoice/flite/cst_val.c	100	flite (callee of a located function)
-0002622c	5c	arm	val_string	wip	src/libttsivonavoice/flite/cst_val.c	43.5	flite (callee of a located function)
+0002622c	28	arm	val_string	matched	src/libttsivonavoice/flite/cst_val.c	100	flite (callee of a located function)
+00026254	34	arm	val_void	matched	src/libttsivonavoice/flite/cst_val.c	100	
 00026288	10	arm	cst_val_consp	matched	src/libttsivonavoice/flite/cst_val.c	100	flite order 100%
 00026298	28	arm	val_car	matched	src/libttsivonavoice/flite/cst_val.c	100	flite (callee of a located function)
-000262c0	4	arm	FUN_000262c0	todo			
+000262c0	4	arm	val_car_mut	matched	src/libttsivonavoice/flite/cst_val.c	100	
 000262c4	28	arm	val_cdr	matched	src/libttsivonavoice/flite/cst_val.c	100	flite (callee of a located function)
-000262ec	4	arm	FUN_000262ec	todo			
-000262f0	2c	arm	FUN_000262f0	todo			
+000262ec	4	arm	val_cdr_mut	matched	src/libttsivonavoice/flite/cst_val.c	100	
+000262f0	2c	arm	val_last	matched	src/libttsivonavoice/flite/cst_val.c	100	
 0002631c	160	arm	val_print	matched	src/libttsivonavoice/flite/cst_val.c	100	flite strings(1) 80%
 0002647c	28	arm	val_reverse	matched	src/libttsivonavoice/flite/cst_val.c	100	flite order 100%
 000264a4	40	arm	val_append	matched	src/libttsivonavoice/flite/cst_val.c	100	flite order 94%
-000264e4	84	arm	FUN_000264e4	todo			
+000264e4	84	arm	val_append_all	matched	src/libttsivonavoice/flite/cst_val.c	100	
 00026568	30	arm	val_length	matched	src/libttsivonavoice/flite/cst_val.c	100	flite order 92%
 00026598	17c	arm	val_equal	matched	src/libttsivonavoice/flite/cst_val.c	100	flite (callee of a located function)
 00026714	30	arm	val_less	matched	src/libttsivonavoice/flite/cst_val.c	100	flite order 75%
 00026744	30	arm	val_greater	matched	src/libttsivonavoice/flite/cst_val.c	100	flite order 75%
 00026774	4c	arm	val_member	matched	src/libttsivonavoice/flite/cst_val.c	100	flite order 84%
 000267c0	54	arm	val_member_string	matched	src/libttsivonavoice/flite/cst_val.c	100	flite order 86%
-00026814	48	arm	FUN_00026814	todo			
+00026814	48	arm	val_member_int	matched	src/libttsivonavoice/flite/cst_val.c	100	
 0002685c	30	arm	val_inc_refcount	matched	src/libttsivonavoice/flite/cst_val.c	100	flite order 92%
 0002688c	70	arm	cons_val	matched	src/libttsivonavoice/flite/cst_val.c	100	flite order 82%
-000268fc	44	arm	FUN_000268fc	todo			
+000268fc	44	arm	copy_val	matched	src/libttsivonavoice/flite/cst_val.c	100	
 00026940	58	arm	val_dec_refcount	matched	src/libttsivonavoice/flite/cst_val.c	100	flite order 95%
 00026998	9c	arm	delete_val	matched	src/libttsivonavoice/flite/cst_val.c	100	flite (callee of a located function)
 00026a34	38	arm	delete_val_list	matched	src/libttsivonavoice/flite/cst_val.c	100	flite order 71%
-00026a6c	44	arm	FUN_00026a6c	todo			
-00026ab0	44	arm	FUN_00026ab0	todo			
-00026af4	d4	arm	FUN_00026af4	todo			
+00026a6c	44	arm	set_cdr	matched	src/libttsivonavoice/flite/cst_val.c	100	
+00026ab0	44	arm	set_car	matched	src/libttsivonavoice/flite/cst_val.c	100	
+00026af4	d4	arm	val_flatten	matched	src/libttsivonavoice/flite/cst_val.c	100	
 00026bc8	58	arm	val_assoc_string	matched	src/libttsivonavoice/flite/cst_val.c	100	flite order 77%
-00026c20	3c	arm	FUN_00026c20	todo			
-00026c5c	64	arm	FUN_00026c5c	todo			
-00026cc0	38	arm	FUN_00026cc0	todo			
+00026c20	3c	arm	val_last_n	matched	src/libttsivonavoice/flite/cst_val.c	100	
+00026c5c	64	arm	val_drop_last	matched	src/libttsivonavoice/flite/cst_val.c	100	
+00026cc0	38	arm	int_string_val	matched	src/libttsivonavoice/flite/cst_val.c	100	
 00026cf8	4	arm	val_delete_uttfunc	matched	src/libttsivonavoice/flite/cst_val_user.c	100	flite order 100%
 00026cfc	4	arm	val_delete_ffunc	matched	src/libttsivonavoice/flite/cst_val_user.c	100	flite order 100%
 00026d00	4	arm	val_delete_relation	matched	src/libttsivonavoice/flite/cst_val_user.c	100	flite order 100%
@@ -111,62 +113,65 @@ addr	size	mode	name	status	src	score	note
 00026db4	c	arm	userdata_val	matched	src/libttsivonavoice/flite/cst_val_user.c	100	flite order 67%
 00026dc0	50	arm	val_binary_key	matched	src/libttsivonavoice/flite/cst_val_user.c	100	
 00026e10	c	arm	binary_key_val	matched	src/libttsivonavoice/flite/cst_val_user.c	100	
-00026e1c	8	arm	FUN_00026e1c	todo			
-00026e24	c	arm	FUN_00026e24	todo			
-00026e30	4	arm	FUN_00026e30	todo			
-00026e34	8	arm	FUN_00026e34	todo			
-00026e3c	8	arm	FUN_00026e3c	todo			
-00026e44	60	arm	FUN_00026e44	todo			
-00026ea4	24	arm	FUN_00026ea4	todo			
-00026ec8	8	arm	FUN_00026ec8	todo			
-00026ed0	58	arm	FUN_00026ed0	todo			
-00026f28	4	arm	val_delete_dnn_models	todo			
-00026f2c	18	arm	FUN_00026f2c	todo			
-00026f44	60	arm	FUN_00026f44	todo			
-00026fa4	58	arm	FUN_00026fa4	todo			
-00026ffc	4	arm	val_delete_metric	todo			
-00027000	18	arm	FUN_00027000	todo			
-00027018	284	arm	FUN_00027018	todo			
-0002729c	50	arm	FUN_0002729c	todo			
-000272ec	288	arm	FUN_000272ec	todo			
-00027574	8c	arm	FUN_00027574	todo			
-00027600	84	arm	FUN_00027600	todo			
-00027684	90	arm	FUN_00027684	todo			
-00027714	a0	arm	FUN_00027714	todo			
-000277b4	58	arm	FUN_000277b4	todo			
-0002780c	18	arm	FUN_0002780c	todo			
-00027824	44	arm	FUN_00027824	todo			
-00027868	2c	arm	FUN_00027868	todo			
-00027894	78	arm	FUN_00027894	todo			
-0002790c	24	arm	FUN_0002790c	todo			
-00027930	80	arm	FUN_00027930	todo			
-000279b0	54	arm	FUN_000279b0	todo			
-00027a04	88	arm	FUN_00027a04	todo			
-00027a8c	44	arm	FUN_00027a8c	todo			
-00027ad0	94	arm	FUN_00027ad0	todo			
-00027b64	c	arm	FUN_00027b64	todo			
-00027b70	34	arm	FUN_00027b70	todo			
-00027ba4	4	arm	val_delete_vector	todo			
-00027ba8	10	arm	FUN_00027ba8	todo			
-00027bb8	c	arm	FUN_00027bb8	todo			
-00027bc4	60	arm	FUN_00027bc4	todo			
-00027c24	68	arm	FUN_00027c24	todo			
-00027c8c	98	arm	FUN_00027c8c	todo			
-00027d24	18	arm	FUN_00027d24	todo			
-00027d3c	8	arm	FUN_00027d3c	todo			
-00027d44	4c	arm	FUN_00027d44	todo			
-00027d90	10	arm	FUN_00027d90	todo			
-00027da0	58	arm	FUN_00027da0	todo			
-00027df8	10	arm	FUN_00027df8	todo			
-00027e08	b4	arm	FUN_00027e08	todo			
-00027ebc	5c	arm	FUN_00027ebc	todo			
-00027f18	8	arm	FUN_00027f18	todo			
+00026e1c	8	arm	new_dnn_models	matched	src/libvoice_en_gb_amy/dnn_stub.c	100	
+00026e24	8	arm	dnn_stub_2c	matched	src/libvoice_en_gb_amy/dnn_stub.c	100	
+00026e2c	4	arm	dnn_stub_34	matched	src/libvoice_en_gb_amy/dnn_stub.c	100	
+00026e30	4	arm	delete_dnn_models	matched	src/libvoice_en_gb_amy/dnn_stub.c	100	
+00026e34	8	arm	dnn_stub_3c	matched	src/libvoice_en_gb_amy/dnn_stub.c	100	
+00026e3c	8	arm	dnn_stub_44	matched	src/libvoice_en_gb_amy/dnn_stub.c	100	
+00026e44	60	arm	dnn_models_find	matched	src/libvoice_en_gb_amy/dnn_models.c	100	
+00026ea4	24	arm	dnn_models_add	matched	src/libvoice_en_gb_amy/dnn_models.c	100	
+00026ec8	8	arm	dnn_models_remove	matched	src/libvoice_en_gb_amy/dnn_models.c	100	
+00026ed0	58	arm	val_dnn_models	matched	src/libvoice_en_gb_amy/dnn_models.c	100	
+00026f28	4	arm	val_delete_dnn_models	matched	src/libvoice_en_gb_amy/dnn_models.c	100	
+00026f2c	18	arm	dnn_models_val	matched	src/libvoice_en_gb_amy/dnn_models.c	100	
+00026f44	60	arm	voice_dnn_models	matched	src/libvoice_en_gb_amy/dnn_models.c	100	
+00026fa4	58	arm	val_metric	matched	src/libvoice_en_gb_amy/metrics.c	100	
+00026ffc	4	arm	val_delete_metric	matched	src/libvoice_en_gb_amy/metrics.c	100	
+00027000	18	arm	metric_val	matched	src/libvoice_en_gb_amy/metrics.c	100	
+00027018	284	arm	metrics_internal_synth_time	matched	src/libvoice_en_gb_amy/metrics.c	100	
+0002729c	50	arm	utt_take_metrics	matched	src/libvoice_en_gb_amy/metrics.c	100	
+000272ec	288	arm	metrics_new	matched	src/libvoice_en_gb_amy/metrics.c	100	
+00027574	8c	arm	metrics_add_int	matched	src/libvoice_en_gb_amy/metrics.c	100	
+00027600	84	arm	metrics_set_float	matched	src/libvoice_en_gb_amy/metrics.c	100	
+00027684	90	arm	metrics_max_int	matched	src/libvoice_en_gb_amy/metrics.c	100	
+00027714	a0	arm	metrics_add_time	matched	src/libvoice_en_gb_amy/metrics.c	100	
+000277b4	58	arm	val_vector	matched	src/libvoice_en_gb_amy/vector.c	100	
+0002780c	18	arm	vector_val	matched	src/libvoice_en_gb_amy/vector.c	100	
+00027824	44	arm	vector_new	matched	src/libvoice_en_gb_amy/vector.c	100	
+00027868	2c	arm	vector_reserve	matched	src/libvoice_en_gb_amy/vector.c	100	
+00027894	78	arm	vector_append_vector	matched	src/libvoice_en_gb_amy/vector.c	100	
+0002790c	24	arm	vector_copy	matched	src/libvoice_en_gb_amy/vector.c	100	
+00027930	80	arm	vector_insert	matched	src/libvoice_en_gb_amy/vector.c	100	
+000279b0	54	arm	vector_push	matched	src/libvoice_en_gb_amy/vector.c	100	
+00027a04	88	arm	vector_swap	matched	src/libvoice_en_gb_amy/vector.c	100	
+00027a8c	44	arm	vector_reverse	matched	src/libvoice_en_gb_amy/vector.c	100	
+00027ad0	94	arm	vector_erase	wip	src/libvoice_en_gb_amy/vector.c	94.6	
+00027b64	c	arm	vector_clear	matched	src/libvoice_en_gb_amy/vector.c	100	
+00027b70	34	arm	vector_free	matched	src/libvoice_en_gb_amy/vector.c	100	
+00027ba4	4	arm	val_delete_vector	matched	src/libvoice_en_gb_amy/vector.c	100	
+00027ba8	10	arm	vector_pop	matched	src/libvoice_en_gb_amy/vector.c	100	
+00027bb8	c	arm	vector_pop_front	matched	src/libvoice_en_gb_amy/vector.c	100	
+00027bc4	60	arm	vector_find	matched	src/libvoice_en_gb_amy/vector.c	100	
+00027c24	68	arm	vector_bsearch	matched	src/libvoice_en_gb_amy/vector.c	100	
+00027c8c	98	arm	vector_lower_bound	matched	src/libvoice_en_gb_amy/vector.c	100	
+00027d24	18	arm	vector_sort	matched	src/libvoice_en_gb_amy/vector.c	100	
+00027d3c	8	arm	vector_size	matched	src/libvoice_en_gb_amy/vector.c	100	
+00027d44	4c	arm	vector_set	matched	src/libvoice_en_gb_amy/vector.c	100	
+00027d90	10	arm	vector_at	matched	src/libvoice_en_gb_amy/vector.c	100	
+00027da0	58	arm	vector_remove_ptr	matched	src/libvoice_en_gb_amy/vector.c	100	
+00027df8	10	arm	vector_get	matched	src/libvoice_en_gb_amy/vector.c	100	
+00027e08	b4	arm	vector_equal	wip	src/libvoice_en_gb_amy/vector.c	95.6	
+00027ebc	5c	arm	vector_from_array	matched	src/libvoice_en_gb_amy/vector.c	100	
+00027f18	8	arm	vector_free_ptr	matched	src/libvoice_en_gb_amy/vector.c	100	
 00027f20	58	arm	FUN_00027f20	todo			
 00027f78	18	arm	FUN_00027f78	todo			
 00027f90	58	arm	FUN_00027f90	todo			
 00027fe8	18	arm	FUN_00027fe8	todo			
-00028000	70	arm	FUN_00028000	todo			
-00028070	74	arm	FUN_00028070	todo			
+00028000	58	arm	FUN_00028000	todo			
+00028058	18	arm	FUN_00028058	todo			
+00028070	58	arm	FUN_00028070	todo			
+000280c8	1c	arm	FUN_000280c8	todo			
 000280e4	4	arm	val_delete_float_ptr	todo			
 000280e8	70	arm	FUN_000280e8	todo			
 00028158	58	arm	FUN_00028158	todo			
@@ -183,21 +188,21 @@ addr	size	mode	name	status	src	score	note
 00028340	184	arm	FUN_00028340	todo			
 000284c4	14	arm	FUN_000284c4	todo			
 000284d8	544	arm	FUN_000284d8	todo			
-00028a1c	48c	arm	FUN_00028a1c	todo			
+00028a1c	48c	arm	item_set_breath_acoustic_data	todo			
 00028ea8	14	arm	FUN_00028ea8	todo			
 00028ebc	8	arm	FUN_00028ebc	todo			
 00028ec4	8	arm	FUN_00028ec4	todo			
 00028ecc	84	arm	FUN_00028ecc	todo			
-00028f50	58	arm	FUN_00028f50	todo			
+00028f50	58	arm	val_diphonedb	todo			
 00028fa8	18	arm	FUN_00028fa8	todo			
 00028fc0	68	arm	FUN_00028fc0	todo			
 00029028	290	arm	FUN_00029028	todo			
-000292b8	98	arm	FUN_000292b8	todo			
+000292b8	98	arm	vox_file_name	matched	src/libttsivonavoice/voxdb.c	100	
 00029350	48	arm	FUN_00029350	todo			
 00029398	57c	arm	FUN_00029398	todo			
 00029914	12c	arm	FUN_00029914	todo			
 00029a40	3c	arm	FUN_00029a40	todo			
-00029a7c	1c8	arm	FUN_00029a7c	todo			
+00029a7c	1c8	arm	voxdb_name_match	matched	src/libttsivonavoice/voxdb.c	100	
 00029c44	150	arm	FUN_00029c44	todo			
 00029d94	38	arm	FUN_00029d94	todo			
 00029dcc	4	arm	val_delete_diphonedb	todo			
@@ -210,12 +215,13 @@ addr	size	mode	name	status	src	score	note
 0002a65c	20	arm	FUN_0002a65c	todo			
 0002a67c	50	arm	FUN_0002a67c	todo			
 0002a6cc	58	arm	FUN_0002a6cc	todo			
-0002a724	9c	arm	FUN_0002a724	todo			
+0002a724	9c	arm	feats_have_breath_units	todo			
 0002a7c0	4	arm	val_delete_dynamic_voxdbs	todo			
-0002a7c4	18	arm	relation_val	wip	src/libttsivonavoice/flite/cst_item.c	83.3	flite order 83%
+0002a7c4	18	arm	dynamic_voxdbs_val	wip	src/libttsivonavoice/flite/cst_item.c	83.3	flite order 83%
 0002a7dc	c	arm	FUN_0002a7dc	todo			
 0002a7e8	4	arm	FUN_0002a7e8	todo			
-0002a7ec	70	arm	FUN_0002a7ec	todo			
+0002a7ec	58	arm	FUN_0002a7ec	todo			
+0002a844	18	arm	FUN_0002a844	todo			
 0002a85c	24	arm	FUN_0002a85c	todo			
 0002a880	6c	arm	FUN_0002a880	todo			
 0002a8ec	4	arm	val_delete_wavesynth	todo			
@@ -233,20 +239,21 @@ addr	size	mode	name	status	src	score	note
 0002af04	10	arm	FUN_0002af04	todo			
 0002af14	58	arm	val_ffunc	matched	src/libttsivonavoice/flite/cst_ffeature.c	100	flite strings(1) 91%
 0002af6c	18	arm	ffunc_val	matched	src/libttsivonavoice/flite/cst_ffeature.c	100	flite order 67%
-0002af84	58	arm	FUN_0002af84	todo			
-0002afdc	18	arm	FUN_0002afdc	wip	src/libttsivonavoice/flite/cst_item.c	83.3	flite order 83%
-0002aff4	48	arm	FUN_0002aff4	todo			
-0002b03c	7c	arm	FUN_0002b03c	todo			
-0002b0b8	208	arm	FUN_0002b0b8	todo			
-0002b2c0	10	arm	FUN_0002b2c0	todo			
-0002b2d0	10	arm	FUN_0002b2d0	todo			
-0002b2e0	10	arm	FUN_0002b2e0	todo			
-0002b2f0	164	arm	FUN_0002b2f0	todo			
-0002b454	30	arm	FUN_0002b454	todo			
-0002b484	34	arm	FUN_0002b484	todo			
+0002af84	58	arm	val_ffunc2	todo			
+0002afdc	18	arm	ffunc2_val	wip	src/libttsivonavoice/flite/cst_item.c	83.3	flite order 83%
+0002aff4	48	arm	item_traverse_one	todo			
+0002b03c	7c	arm	item_traverse	todo			
+0002b0b8	208	arm	item_feat_func	todo			
+0002b2c0	10	arm	ffeature_string	todo			
+0002b2d0	10	arm	ffeature_int	todo			
+0002b2e0	10	arm	ffeature_float	todo			
+0002b2f0	164	arm	item_path	todo			
+0002b454	30	arm	ff_register	todo			
+0002b484	30	arm	ff_register2	todo			
+0002b4b4	4	arm	ff_unregister	todo			
 0002b4b8	48	arm	ffeature	wip	src/libttsivonavoice/flite/cst_ffeature.c	0.0	flite (callee of a located function)
 0002b500	58	arm	val_relation	matched	src/libttsivonavoice/flite/cst_item.c	100	flite strings(1) 0%
-0002b558	18	arm	FUN_0002b558	todo			
+0002b558	18	arm	relation_val	todo			
 0002b570	58	arm	val_item	matched	src/libttsivonavoice/flite/cst_item.c	100	flite strings(1) 0%
 0002b5c8	18	arm	item_val	matched	src/libttsivonavoice/flite/cst_item.c	100	
 0002b5e0	58	arm	val_utterance	matched	src/libttsivonavoice/flite/cst_item.c	100	flite strings(1) 0%
@@ -259,19 +266,19 @@ addr	size	mode	name	status	src	score	note
 0002b7d0	48	arm	new_item_contents	matched	src/libttsivonavoice/flite/cst_item.c	100	flite order 61%
 0002b818	b4	arm	item_contents_set	matched	src/libttsivonavoice/flite/cst_item.c	100	flite (callee of a located function)
 0002b8cc	44	arm	new_item_relation	matched	src/libttsivonavoice/flite/cst_item.c	100	flite order 88%
-0002b910	44	arm	FUN_0002b910	todo			
+0002b910	44	arm	item_as	todo			
 0002b954	c	arm	item_next	matched	src/libttsivonavoice/flite/cst_item.c	100	flite order 100%
 0002b960	48	arm	FUN_0002b960	todo			
-0002b9a8	40	arm	FUN_0002b9a8	todo			
+0002b9a8	40	arm	item_delete_range	todo			
 0002b9e8	c	arm	item_prev	matched	src/libttsivonavoice/flite/cst_item.c	100	flite order 100%
 0002b9f4	34	arm	FUN_0002b9f4	todo			
-0002ba28	64	arm	FUN_0002ba28	todo			
-0002ba8c	7c	arm	FUN_0002ba8c	todo			
-0002bb08	c	arm	FUN_0002bb08	wip	src/libttsivonavoice/flite/cst_item.c	66.7	flite order 67%
+0002ba28	64	arm	item_append	todo			
+0002ba8c	7c	arm	item_prepend	todo			
+0002bb08	c	arm	item_parent	matched	src/libttsivonavoice/flite/cst_item.c	100	flite order 67%
 0002bb14	c	arm	item_daughter	matched	src/libttsivonavoice/flite/cst_item.c	100	
 0002bb20	34	arm	item_nth_daughter	matched	src/libttsivonavoice/flite/cst_item.c	100	flite order 85%
 0002bb54	30	arm	item_last_daughter	matched	src/libttsivonavoice/flite/cst_item.c	100	flite order 75%
-0002bb84	5c	arm	FUN_0002bb84	todo			
+0002bb84	5c	arm	item_add_daughter	todo			
 0002bbe0	3c	arm	FUN_0002bbe0	todo			
 0002bc1c	10	arm	item_feats	matched	src/libttsivonavoice/flite/cst_item.c	100	flite order 100%
 0002bc2c	18	arm	item_feat_present	matched	src/libttsivonavoice/flite/cst_item.c	100	flite order 67%
@@ -280,7 +287,7 @@ addr	size	mode	name	status	src	score	note
 0002bc74	18	arm	item_feat_int	matched	src/libttsivonavoice/flite/cst_item.c	100	flite order 67%
 0002bc8c	18	arm	item_feat_float	matched	src/libttsivonavoice/flite/cst_item.c	100	flite order 67%
 0002bca4	18	arm	item_feat_string	matched	src/libttsivonavoice/flite/cst_item.c	100	flite (callee of a located function)
-0002bcbc	18	arm	FUN_0002bcbc	todo			
+0002bcbc	18	arm	item_feat_string_or_null	todo			
 0002bcd4	20	arm	item_set	matched	src/libttsivonavoice/flite/cst_item.c	100	flite order 75%
 0002bcf4	20	arm	item_set_int	matched	src/libttsivonavoice/flite/cst_item.c	100	flite order 75%
 0002bd14	20	arm	item_set_float	matched	src/libttsivonavoice/flite/cst_item.c	100	flite order 75%
@@ -292,14 +299,16 @@ addr	size	mode	name	status	src	score	note
 0002be20	54	arm	FUN_0002be20	todo			
 0002be74	58	arm	delete_utterance	matched	src/libttsivonavoice/flite/cst_utterance.c	100	flite calls(4) 91%
 0002becc	4c	arm	FUN_0002becc	todo			
-0002bf18	50	arm	FUN_0002bf18	todo			
+0002bf18	50	arm	utt_relation_create	todo			
 0002bf68	20	arm	FUN_0002bf68	todo			
-0002bf88	68	arm	FUN_0002bf88	todo			
+0002bf88	40	arm	utt_relation	todo			
+0002bfc8	28	arm	FUN_0002bfc8	todo			
 0002bff0	154	arm	FUN_0002bff0	todo			
 0002c144	28	arm	cst_relation_id_name	todo			
 0002c16c	140	arm	FUN_0002c16c	todo			
 0002c2ac	8	arm	FUN_0002c2ac	todo			
-0002c2b4	70	arm	val_track	todo			flite strings(1) 71%
+0002c2b4	58	arm	val_track	todo			flite strings(1) 71%
+0002c30c	18	arm	FUN_0002c30c	todo			
 0002c324	20	arm	FUN_0002c324	todo			
 0002c344	54	arm	FUN_0002c344	todo			
 0002c398	4	arm	val_delete_track	todo			
@@ -314,13 +323,15 @@ addr	size	mode	name	status	src	score	note
 0002c638	6c	arm	FUN_0002c638	todo			
 0002c6a4	b8	arm	FUN_0002c6a4	todo			
 0002c75c	240	arm	FUN_0002c75c	todo			
-0002c99c	70	arm	val_wave	wip	src/libttsivonavoice/flite/cst_wave.c	78.6	flite order 71%
+0002c99c	58	arm	val_wave	matched	src/libttsivonavoice/flite/cst_wave.c	100	flite order 71%
+0002c9f4	18	arm	FUN_0002c9f4	todo			
 0002ca0c	24	arm	new_wave	matched	src/libttsivonavoice/flite/cst_wave.c	100	flite order 89%
 0002ca30	20	arm	delete_wave	matched	src/libttsivonavoice/flite/cst_wave.c	100	flite order 75%
 0002ca50	4	arm	val_delete_wave	matched	src/libttsivonavoice/flite/cst_wave.c	100	flite order 100%
 0002ca54	70	arm	cst_wave_resize	matched	src/libttsivonavoice/flite/cst_wave.c	100	flite calls(2) 78%
 0002cac4	40	arm	FUN_0002cac4	todo			
-0002cb04	16c	arm	FUN_0002cb04	todo			
+0002cb04	11c	arm	FUN_0002cb04	todo			
+0002cc20	50	arm	FUN_0002cc20	todo			
 0002cc70	74	arm	concat_wave	matched	src/libttsivonavoice/flite/cst_wave.c	100	flite order 65%
 0002cce4	68	arm	FUN_0002cce4	todo			
 0002cd4c	7c	arm	FUN_0002cd4c	todo			
@@ -336,226 +347,231 @@ addr	size	mode	name	status	src	score	note
 0002ee18	2c	arm	cst_rateconv_leadout	matched	src/libttsivonavoice/flite/rateconv.c	100	flite order 100%
 0002ee44	3b0	arm	new_rateconv	matched	src/libttsivonavoice/flite/rateconv.c	100	flite strings(1) 85%
 0002f1f4	2c	arm	delete_rateconv	matched	src/libttsivonavoice/flite/rateconv.c	100	flite order 64%
-0002f220	70	arm	FUN_0002f220	todo			
-0002f290	c	arm	FUN_0002f290	todo			
-0002f29c	1c	arm	FUN_0002f29c	todo			
-0002f2b8	4	arm	val_delete_audiotag	todo			
-0002f2bc	70	arm	FUN_0002f2bc	todo			
-0002f32c	94	arm	FUN_0002f32c	todo			
-0002f3c0	b4	arm	FUN_0002f3c0	todo			
-0002f474	bc	arm	FUN_0002f474	todo			
-0002f530	34	arm	FUN_0002f530	todo			
-0002f564	1c	arm	FUN_0002f564	todo			
-0002f580	58	arm	FUN_0002f580	todo			
-0002f5d8	18	arm	FUN_0002f5d8	todo			
-0002f5f0	1bc	arm	FUN_0002f5f0	todo			
-0002f7ac	8	arm	FUN_0002f7ac	todo			
-0002f7b4	58	arm	FUN_0002f7b4	todo			
-0002f80c	1c	arm	val_delete_word_embeddings	todo			
-0002f828	18	arm	FUN_0002f828	todo			
-0002f840	3c	arm	FUN_0002f840	todo			
-0002f87c	a0	arm	FUN_0002f87c	todo			
-0002f91c	24	arm	FUN_0002f91c	todo			
-0002f940	a0	arm	FUN_0002f940	todo			
-0002f9e0	94	arm	FUN_0002f9e0	todo			
-0002fa74	158	arm	FUN_0002fa74	todo			
-0002fbcc	1c	arm	FUN_0002fbcc	todo			
-0002fbe8	1c	arm	FUN_0002fbe8	todo			
-0002fc04	68	arm	FUN_0002fc04	todo			
-0002fc6c	7c	arm	FUN_0002fc6c	todo			
-0002fce8	19c	arm	FUN_0002fce8	todo			
-0002fe84	44	arm	cst_safe_alloc	wip	src/libttsivonavoice/flite/cst_alloc.c	88.2	
-0002fec8	4	arm	FUN_0002fec8	todo			
-0002fecc	6c	arm	FUN_0002fecc	todo			
+0002f220	58	arm	val_audiotag	matched	src/libttsivonavoice/synth.c	100	
+0002f278	18	arm	audiotag_val	matched	src/libttsivonavoice/synth.c	100	
+0002f290	c	arm	new_audiotag	matched	src/libttsivonavoice/synth.c	100	
+0002f29c	1c	arm	delete_audiotag	matched	src/libttsivonavoice/synth.c	100	
+0002f2b8	4	arm	val_delete_audiotag	matched	src/libttsivonavoice/synth.c	100	
+0002f2bc	58	arm	val_lang_dat_core_data	matched	src/libttsivonavoice/synth.c	100	
+0002f314	18	arm	lang_dat_core_data_val	matched	src/libttsivonavoice/synth.c	100	
+0002f32c	94	arm	lang_desc_find	matched	src/libttsivonavoice/synth.c	100	
+0002f3c0	b4	arm	voice_reg_set_language	matched	src/libttsivonavoice/synth.c	100	
+0002f474	bc	arm	item_lang_data	matched	src/libttsivonavoice/synth.c	100	
+0002f530	34	arm	lang_core_init	matched	src/libttsivonavoice/synth.c	100	
+0002f564	1c	arm	lang_core_free	matched	src/libttsivonavoice/synth.c	100	
+0002f580	58	arm	val_zdur_cart	matched	src/libttsivonavoice/flite/cst_synth.c	100	
+0002f5d8	18	arm	zdur_cart_val	matched	src/libttsivonavoice/flite/cst_synth.c	100	
+0002f5f0	1bc	arm	zdur_cart_duration	matched	src/libttsivonavoice/flite/cst_synth.c	100	
+0002f7ac	8	arm	val_vector_elem_free	matched	src/libttsivonavoice/wordemb.c	100	
+0002f7b4	58	arm	val_word_embeddings	matched	src/libttsivonavoice/wordemb.c	100	
+0002f80c	1c	arm	val_delete_word_embeddings	matched	src/libttsivonavoice/wordemb.c	100	
+0002f828	18	arm	word_embeddings_val	matched	src/libttsivonavoice/wordemb.c	100	
+0002f840	3c	arm	new_word_embeddings	matched	src/libttsivonavoice/wordemb.c	100	
+0002f87c	a0	arm	word_embeddings_add	matched	src/libttsivonavoice/wordemb.c	100	
+0002f91c	24	arm	word_embeddings_from	matched	src/libttsivonavoice/wordemb.c	100	
+0002f940	a0	arm	word_embeddings_remove	matched	src/libttsivonavoice/wordemb.c	100	
+0002f9e0	94	arm	word_embeddings_lookup	matched	src/libttsivonavoice/wordemb.c	100	
+0002fa74	158	arm	word_embeddings_read	matched	src/libttsivonavoice/wordemb.c	100	
+0002fbcc	1c	arm	delete_word_embeddings	matched	src/libttsivonavoice/wordemb.c	100	
+0002fbe8	1c	arm	word_vectors_free	matched	src/libttsivonavoice/wordemb.c	100	
+0002fc04	68	arm	word_embeddings_load	matched	src/libttsivonavoice/wordemb.c	100	
+0002fc6c	7c	arm	item_word_embedding	matched	src/libttsivonavoice/wordemb.c	100	
+0002fce8	19c	arm	item_word_embedding_coeff	matched	src/libttsivonavoice/wordemb.c	100	
+0002fe84	44	arm	cst_safe_alloc	matched	src/libttsivonavoice/flite/cst_alloc.c	100	
+0002fec8	4	arm	cst_safe_calloc	matched	src/libttsivonavoice/flite/cst_alloc.c	100	
+0002fecc	6c	arm	cst_safe_realloc	matched	src/libttsivonavoice/flite/cst_alloc.c	100	
 0002ff38	c	arm	cst_free	matched	src/libttsivonavoice/flite/cst_alloc.c	100	
 0002ff44	40	arm	cst_errmsg	matched	src/libttsivonavoice/flite/cst_error.c	100	
-0002ff84	14	arm	FUN_0002ff84	todo			
-0002ff98	c8	arm	FUN_0002ff98	todo			
-00030060	c	arm	FUN_00030060	todo			
-0003006c	44	arm	FUN_0003006c	todo			
-000300b0	1f4	arm	FUN_000300b0	todo			
+0002ff84	14	arm	cst_set_log_level	matched	src/libttsivonavoice/flite/cst_error.c	100	
+0002ff98	c8	arm	cst_mmap_file_range	matched	src/libttsivonavoice/flite/cst_mmap_posix.c	100	
+00030060	c	arm	cst_mmap_file	matched	src/libttsivonavoice/flite/cst_mmap_posix.c	100	
+0003006c	44	arm	cst_munmap_file	matched	src/libttsivonavoice/flite/cst_mmap_posix.c	100	
+000300b0	1f4	arm	cst_read_whole_file	wip	src/libttsivonavoice/flite/cst_mmap_posix.c	36.7	
 000302a4	38	arm	cst_free_whole_file	matched	src/libttsivonavoice/flite/cst_mmap_posix.c	100	flite order 67%
-000302dc	64	arm	FUN_000302dc	todo			
-00030340	30	arm	cst_free_part_file	wip	src/libttsivonavoice/flite/cst_mmap_posix.c	91.7	flite order 62%
-00030370	10	arm	FUN_00030370	todo			
-00030380	8	arm	FUN_00030380	todo			
+000302dc	64	arm	cst_read_part_file	matched	src/libttsivonavoice/flite/cst_mmap_posix.c	100	
+00030340	30	arm	cst_free_part_file	matched	src/libttsivonavoice/flite/cst_mmap_posix.c	100	flite order 62%
+00030370	10	arm	cst_bsearch_str_cmp	matched	src/libttsivonavoice/flite/cst_string.c	100	
+00030380	8	arm	cst_strrchr	matched	src/libttsivonavoice/flite/cst_string.c	100	
 00030388	8	arm	cst_atof	matched	src/libttsivonavoice/flite/cst_string.c	100	
-00030390	28	arm	FUN_00030390	todo			
+00030390	28	arm	cst_strchr	matched	src/libttsivonavoice/flite/cst_string.c	100	
 000303b8	3c	arm	cst_memdup	matched	src/libttsivonavoice/flite/cst_string.c	100	
 000303f4	20	arm	cst_strdup	matched	src/libttsivonavoice/flite/cst_string.c	100	flite (callee of a located function)
-00030414	48	arm	FUN_00030414	todo			
-0003045c	38	arm	FUN_0003045c	todo			
-00030494	44	arm	FUN_00030494	todo			
-000304d8	74	arm	FUN_000304d8	todo			
-0003054c	94	arm	FUN_0003054c	todo			
-000305e0	28	arm	FUN_000305e0	todo			
-00030608	40	arm	FUN_00030608	todo			
-00030648	14	arm	FUN_00030648	todo			
-0003065c	14	arm	FUN_0003065c	todo			
-00030670	50	arm	FUN_00030670	todo			
-000306c0	54	arm	FUN_000306c0	todo			
-00030714	54	arm	FUN_00030714	todo			
-00030768	3c	arm	FUN_00030768	todo			
-000307a4	60	arm	FUN_000307a4	todo			
-00030804	10	arm	FUN_00030804	todo			
-00030814	7c	arm	FUN_00030814	todo			
-00030890	50	arm	FUN_00030890	todo			
-000308e0	50	arm	FUN_000308e0	todo			
-00030930	40	arm	FUN_00030930	todo			
-00030970	bc	arm	FUN_00030970	todo			
-00030a2c	14	arm	FUN_00030a2c	todo			
-00030a40	4b8	arm	FUN_00030a40	todo			
-00030ef8	68	arm	FUN_00030ef8	todo			
-00030f60	28	arm	FUN_00030f60	todo			
-00030f88	74	arm	FUN_00030f88	todo			
-00030ffc	74	arm	FUN_00030ffc	todo			
-00031070	50	arm	FUN_00031070	todo			
-000310c0	150	arm	FUN_000310c0	todo			
-00031210	44	arm	FUN_00031210	todo			
-00031254	b0	arm	FUN_00031254	todo			
-00031304	a8	arm	FUN_00031304	todo			
-000313ac	58	arm	FUN_000313ac	todo			
-00031404	60	arm	FUN_00031404	todo			
-00031464	6c	arm	FUN_00031464	todo			
-000314d0	30	arm	FUN_000314d0	todo			
-00031500	4c	arm	FUN_00031500	todo			
-0003154c	68	arm	FUN_0003154c	todo			
-000315b4	44	arm	FUN_000315b4	todo			
-000315f8	f8	arm	FUN_000315f8	todo			
-000316f0	4c	arm	FUN_000316f0	todo			
-0003173c	10	arm	FUN_0003173c	todo			
-0003174c	30	arm	FUN_0003174c	todo			
-0003177c	30	arm	FUN_0003177c	todo			
-000317ac	90	arm	FUN_000317ac	todo			
-0003183c	6c	arm	FUN_0003183c	todo			
-000318a8	5c	arm	FUN_000318a8	todo			
-00031904	44	arm	FUN_00031904	todo			
-00031948	3c	arm	FUN_00031948	todo			
-00031984	20	arm	FUN_00031984	todo			
-000319a4	30	arm	FUN_000319a4	todo			
+00030414	48	arm	cst_substr	matched	src/libttsivonavoice/flite/cst_string.c	100	
+0003045c	38	arm	cst_strncpy	matched	src/libttsivonavoice/flite/cst_string.c	100	
+00030494	44	arm	cst_string_before	matched	src/libttsivonavoice/flite/cst_string.c	100	
+000304d8	74	arm	cst_downcase	matched	src/libttsivonavoice/flite/cst_string.c	100	
+0003054c	94	arm	cst_upcase	matched	src/libttsivonavoice/flite/cst_string.c	100	
+000305e0	28	arm	cst_strprefixcmp	matched	src/libttsivonavoice/flite/cst_string.c	100	
+00030608	40	arm	cst_strsuffixcmp	matched	src/libttsivonavoice/flite/cst_string.c	100	
+00030648	14	arm	cst_startswith	matched	src/libttsivonavoice/flite/cst_string.c	100	
+0003065c	14	arm	cst_endswith	matched	src/libttsivonavoice/flite/cst_string.c	100	
+00030670	50	arm	cst_member_string	matched	src/libttsivonavoice/flite/cst_string.c	100	
+000306c0	54	arm	cst_member_prefix	matched	src/libttsivonavoice/flite/cst_string.c	100	
+00030714	54	arm	cst_member_suffix	matched	src/libttsivonavoice/flite/cst_string.c	100	
+00030768	3c	arm	cst_strrmchar	wip	src/libttsivonavoice/flite/cst_string.c	62.5	
+000307a4	60	arm	cst_list_find	matched	src/libttsivonavoice/flite/cst_string.c	100	
+00030804	10	arm	cst_list_index	matched	src/libttsivonavoice/flite/cst_string.c	100	
+00030814	7c	arm	cst_find_suffix	wip	src/libttsivonavoice/flite/cst_string.c	50.0	
+00030890	50	arm	cst_startswith_any	matched	src/libttsivonavoice/flite/cst_string.c	100	
+000308e0	50	arm	cst_endswith_any	matched	src/libttsivonavoice/flite/cst_string.c	100	
+00030930	40	arm	cst_sorted_member	matched	src/libttsivonavoice/flite/cst_string.c	100	
+00030970	bc	arm	cst_sorted_prefix	matched	src/libttsivonavoice/flite/cst_string.c	100	
+00030a2c	14	arm	cst_has_sorted_prefix	matched	src/libttsivonavoice/flite/cst_string.c	100	
+00030a40	4b8	arm	cst_roman_value	todo			
+00030ef8	68	arm	cst_roman_to_decimal	matched	src/libttsivonavoice/flite/cst_string.c	100	
+00030f60	28	arm	cst_strsubchar	matched	src/libttsivonavoice/flite/cst_string.c	100	
+00030f88	74	arm	cst_split_tokens_string	matched	src/libttsivonavoice/flite/cst_string.c	100	
+00030ffc	74	arm	cst_split_tokens_string_utf8	matched	src/libttsivonavoice/flite/cst_string.c	100	
+00031070	50	arm	cst_val_strappend	matched	src/libttsivonavoice/flite/cst_string.c	100	
+000310c0	150	arm	cst_join_val	matched	src/libttsivonavoice/flite/cst_string.c	100	
+00031210	44	arm	cst_assoc_string	matched	src/libttsivonavoice/flite/cst_string.c	100	
+00031254	b0	arm	cst_strtr	wip	src/libttsivonavoice/flite/cst_string.c	58.8	
+00031304	a8	arm	cst_split_val	wip	src/libttsivonavoice/flite/cst_string.c	45.7	
+000313ac	58	arm	cst_strcat	todo			
+00031404	60	arm	cst_strncat2	matched	src/libttsivonavoice/flite/cst_string.c	100	
+00031464	6c	arm	cst_strappend	wip	src/libttsivonavoice/flite/cst_string.c	63.0	
+000314d0	30	arm	cst_strndup	matched	src/libttsivonavoice/flite/cst_string.c	100	
+00031500	4c	arm	cst_strnspn	matched	src/libttsivonavoice/flite/cst_string.c	100	
+0003154c	68	arm	cst_strncspn	matched	src/libttsivonavoice/flite/cst_string.c	100	
+000315b4	44	arm	cst_strcount	matched	src/libttsivonavoice/flite/cst_string.c	100	
+000315f8	f8	arm	cst_strreplace	matched	src/libttsivonavoice/flite/cst_string.c	100	
+000316f0	4c	arm	cst_vnsprintf	matched	src/libttsivonavoice/flite/cst_string.c	100	
+0003173c	10	arm	cst_vasprintf	matched	src/libttsivonavoice/flite/cst_string.c	100	
+0003174c	30	arm	cst_nsprintf	matched	src/libttsivonavoice/flite/cst_string.c	100	
+0003177c	30	arm	cst_asprintf	matched	src/libttsivonavoice/flite/cst_string.c	100	
+000317ac	90	arm	cst_skip_space	wip	src/libttsivonavoice/flite/cst_string.c	0.0	
+0003183c	6c	arm	cst_rtrim_n	wip	src/libttsivonavoice/flite/cst_string.c	0.0	
+000318a8	5c	arm	cst_rtrim_dup	wip	src/libttsivonavoice/flite/cst_string.c	0.0	
+00031904	44	arm	cst_ascii_downcase	wip	src/libttsivonavoice/flite/cst_string.c	0.0	
+00031948	3c	arm	cst_ascii_tolower	wip	src/libttsivonavoice/flite/cst_string.c	0.0	
+00031984	20	arm	cst_startswith_nocase	wip	src/libttsivonavoice/flite/cst_string.c	0.0	
+000319a4	30	arm	cst_endswith_nocase	wip	src/libttsivonavoice/flite/cst_string.c	10.0	
 000319d4	4c	arm	FUN_000319d4	todo			
-00031a20	198	arm	FUN_00031a20	todo			
-00031bb8	5c	arm	FUN_00031bb8	todo			
-00031c14	48	arm	FUN_00031c14	todo			
-00031c5c	54	arm	FUN_00031c5c	todo			
-00031cb0	38	arm	FUN_00031cb0	todo			
-00031ce8	ec	arm	FUN_00031ce8	todo			
-00031dd4	e8	arm	FUN_00031dd4	todo			
-00031ebc	e8	arm	FUN_00031ebc	todo			
-00031fa4	68	arm	FUN_00031fa4	todo			
-0003200c	44	arm	FUN_0003200c	todo			
-00032050	30	arm	FUN_00032050	todo			
-00032080	2c	arm	FUN_00032080	todo			
-000320ac	44	arm	FUN_000320ac	todo			
-000320f0	c	arm	FUN_000320f0	todo			
-000320fc	10	arm	FUN_000320fc	todo			
-0003210c	c	arm	FUN_0003210c	todo			
-00032118	4	arm	FUN_00032118	todo			
-0003211c	4	arm	FUN_0003211c	todo			
-00032120	8	arm	FUN_00032120	todo			
-00032128	4	arm	FUN_00032128	todo			
-0003212c	14	arm	FUN_0003212c	todo			
-00032140	1b0	arm	FUN_00032140	todo			
-000322f0	1e4	arm	FUN_000322f0	todo			
-000324d4	20c	arm	FUN_000324d4	todo			
-000326e0	148	arm	set_charclasses	todo			flite strings(3) 0%
-00032828	6c	arm	FUN_00032828	todo			
-00032894	44	arm	FUN_00032894	todo			
-000328d8	c8	arm	FUN_000328d8	todo			
-000329a0	54	arm	FUN_000329a0	todo			
-000329f4	10c	arm	FUN_000329f4	todo			
-00032b00	10c	arm	FUN_00032b00	todo			
-00032c0c	58	arm	FUN_00032c0c	todo			
-00032c64	14	arm	FUN_00032c64	todo			
-00032c78	4cc	arm	FUN_00032c78	todo			
-00033144	6c	arm	FUN_00033144	todo			
-000331b0	54	arm	FUN_000331b0	todo			
-00033204	4	arm	FUN_00033204	todo			
-00033208	10	arm	FUN_00033208	todo			
-00033218	74	arm	FUN_00033218	todo			
-0003328c	78	arm	FUN_0003328c	todo			
-00033304	3c	arm	FUN_00033304	todo			
-00033340	1c	arm	FUN_00033340	todo			
-0003335c	118	arm	FUN_0003335c	todo			
-00033474	98	arm	FUN_00033474	todo			
-0003350c	4c	arm	FUN_0003350c	todo			
-00033558	50	arm	FUN_00033558	todo			
-000335a8	38	arm	FUN_000335a8	todo			
-000335e0	5c	arm	FUN_000335e0	todo			
-0003363c	28	arm	FUN_0003363c	todo			
-00033664	2c	arm	FUN_00033664	todo			
-00033690	b4	arm	FUN_00033690	todo			
-00033744	40	arm	FUN_00033744	todo			
-00033784	7c	arm	FUN_00033784	todo			
-00033800	78	arm	FUN_00033800	todo			
-00033878	b8	arm	FUN_00033878	todo			
-00033930	ac	arm	FUN_00033930	todo			
-000339dc	28	arm	FUN_000339dc	todo			
-00033a04	20	arm	FUN_00033a04	todo			
-00033a24	c	arm	FUN_00033a24	todo			
-00033a30	20	arm	FUN_00033a30	todo			
-00033a50	40	arm	FUN_00033a50	todo			
-00033a90	8	arm	FUN_00033a90	todo			
-00033a98	8	arm	FUN_00033a98	todo			
-00033aa0	34	arm	FUN_00033aa0	todo			
-00033ad4	18	arm	FUN_00033ad4	todo			
-00033aec	28	arm	FUN_00033aec	todo			
-00033b14	54	arm	FUN_00033b14	todo			
-00033b68	28	arm	FUN_00033b68	todo			
-00033b90	68	arm	FUN_00033b90	todo			
-00033bf8	30	arm	FUN_00033bf8	todo			
-00033c28	68	arm	FUN_00033c28	todo			
-00033c90	38	arm	FUN_00033c90	todo			
-00033cc8	1c	arm	FUN_00033cc8	todo			
-00033ce4	60	arm	FUN_00033ce4	todo			
-00033d44	94	arm	FUN_00033d44	todo			
-00033dd8	30	arm	FUN_00033dd8	todo			
-00033e08	48	arm	FUN_00033e08	todo			
-00033e50	44	arm	FUN_00033e50	todo			
-00033e94	40	arm	FUN_00033e94	todo			
-00033ed4	58	arm	FUN_00033ed4	todo			
-00033f2c	b0	arm	FUN_00033f2c	todo			
-00033fdc	18	arm	FUN_00033fdc	todo			
-00033ff4	2c	arm	FUN_00033ff4	todo			
-00034020	8c	arm	FUN_00034020	todo			
-000340ac	10	arm	FUN_000340ac	todo			
-000340bc	10	arm	FUN_000340bc	todo			
-000340cc	40	arm	FUN_000340cc	todo			
-0003410c	50	arm	FUN_0003410c	todo			
-0003415c	9c	arm	FUN_0003415c	todo			
-000341f8	40	arm	FUN_000341f8	todo			
-00034238	44	arm	FUN_00034238	todo			
-0003427c	20	arm	FUN_0003427c	todo			
-0003429c	34	arm	FUN_0003429c	todo			
-000342d0	14	arm	FUN_000342d0	todo			
-000342e4	16c	arm	FUN_000342e4	todo			
-00034450	14	arm	FUN_00034450	todo			
-00034464	6c	arm	FUN_00034464	todo			
-000344d0	54	arm	FUN_000344d0	todo			
-00034524	24	arm	FUN_00034524	todo			
-00034548	54	arm	FUN_00034548	todo			
-0003459c	24	arm	FUN_0003459c	todo			
-000345c0	c0	arm	FUN_000345c0	todo			
-00034680	c0	arm	FUN_00034680	todo			
-00034740	100	arm	FUN_00034740	todo			
-00034840	50	arm	FUN_00034840	todo			
-00034890	1e0	arm	FUN_00034890	todo			
-00034a70	3c	arm	FUN_00034a70	todo			
-00034aac	38	arm	FUN_00034aac	todo			
-00034ae4	48	arm	FUN_00034ae4	todo			
-00034b2c	68	arm	FUN_00034b2c	todo			
-00034b94	24	arm	FUN_00034b94	todo			
-00034bb8	30	arm	FUN_00034bb8	todo			
-00034be8	18	arm	FUN_00034be8	todo			
-00034c00	b8	arm	FUN_00034c00	todo			
-00034cb8	bc	arm	FUN_00034cb8	todo			
-00034d74	88	arm	FUN_00034d74	todo			
-00034dfc	38	arm	FUN_00034dfc	todo			
-00034e34	ac	arm	FUN_00034e34	todo			
-00034ee0	1c	arm	FUN_00034ee0	todo			
-00034efc	f4	arm	FUN_00034efc	todo			
-00034ff0	1bc	arm	FUN_00034ff0	todo			
-000351ac	c0	arm	FUN_000351ac	todo			
+00031a20	198	arm	cst_parse_float	wip	src/libttsivonavoice/flite/cst_string.c	29.8	
+00031bb8	5c	arm	cst_parse_float_suffix	matched	src/libttsivonavoice/flite/cst_string.c	100	
+00031c14	48	arm	cst_parse_unsigned_suffix	matched	src/libttsivonavoice/flite/cst_string.c	100	
+00031c5c	54	arm	cst_parse_signed_suffix	wip	src/libttsivonavoice/flite/cst_string.c	71.4	
+00031cb0	38	arm	cst_parse_number	wip	src/libttsivonavoice/flite/cst_string.c	0.0	
+00031ce8	ec	arm	cst_parse_hex	matched	src/libttsivonavoice/flite/cst_string.c	100	
+00031dd4	e8	arm	cst_parse_hex_n	matched	src/libttsivonavoice/flite/cst_string.c	100	
+00031ebc	e8	arm	cst_parse_uint_n	matched	src/libttsivonavoice/flite/cst_string.c	100	
+00031fa4	68	arm	cst_parse_int_n	matched	src/libttsivonavoice/flite/cst_string.c	100	
+0003200c	44	arm	cst_strn_cmp	matched	src/libttsivonavoice/flite/cst_string.c	100	
+00032050	30	arm	cst_strn_cmp_str	matched	src/libttsivonavoice/flite/cst_string.c	100	
+00032080	2c	arm	cst_str_cmpn	matched	src/libttsivonavoice/flite/cst_string.c	100	
+000320ac	44	arm	cst_strcmp_null	wip	src/libttsivonavoice/flite/cst_string.c	35.3	
+000320f0	c	arm	ascii_charlen	matched	src/libttsivonavoice/flite/cst_tokenstream.c	100	
+000320fc	10	arm	ascii_decode	matched	src/libttsivonavoice/flite/cst_tokenstream.c	100	
+0003210c	c	arm	ascii_encode	matched	src/libttsivonavoice/flite/cst_tokenstream.c	100	
+00032118	4	arm	ts_utf8_encode	matched	src/libttsivonavoice/flite/cst_tokenstream.c	100	
+0003211c	4	arm	ts_utf8_decode	matched	src/libttsivonavoice/flite/cst_tokenstream.c	100	
+00032120	8	arm	ts_utf8_strspn	matched	src/libttsivonavoice/flite/cst_tokenstream.c	100	
+00032128	4	arm	ts_utf8_strchr	matched	src/libttsivonavoice/flite/cst_tokenstream.c	100	
+0003212c	14	arm	ts_utf8_charlen	matched	src/libttsivonavoice/flite/cst_tokenstream.c	100	
+00032140	1b0	arm	ts_unget	wip	src/libttsivonavoice/flite/cst_tokenstream.c	93.5	
+000322f0	1e4	arm	get_token_sub_part	wip	src/libttsivonavoice/flite/cst_tokenstream.c	80.2	
+000324d4	20c	arm	get_token_sub_part_2	wip	src/libttsivonavoice/flite/cst_tokenstream.c	83.8	
+000326e0	148	arm	new_tokenstream	matched	src/libttsivonavoice/flite/cst_tokenstream.c	100	flite strings(3) 0%
+00032828	6c	arm	new_tokenstream_utf8	matched	src/libttsivonavoice/flite/cst_tokenstream.c	100	
+00032894	44	arm	delete_tokenstream	matched	src/libttsivonavoice/flite/cst_tokenstream.c	100	
+000328d8	c8	arm	ts_open_fd	wip	src/libttsivonavoice/flite/cst_tokenstream.c	96.0	
+000329a0	54	arm	ts_open	matched	src/libttsivonavoice/flite/cst_tokenstream.c	100	
+000329f4	10c	arm	ts_open_string	wip	src/libttsivonavoice/flite/cst_tokenstream.c	97.0	
+00032b00	10c	arm	ts_open_string_utf8	wip	src/libttsivonavoice/flite/cst_tokenstream.c	97.0	
+00032c0c	58	arm	ts_close	matched	src/libttsivonavoice/flite/cst_tokenstream.c	100	
+00032c64	14	arm	ts_eof	matched	src/libttsivonavoice/flite/cst_tokenstream.c	100	
+00032c78	470	arm	ts_get	wip	src/libttsivonavoice/flite/cst_tokenstream.c	72.2	
+000330e8	2c	arm	val_string_n	wip	src/libttsivonavoice/flite/cst_val_const.c	81.8	
+00033114	30	arm	val_int_n	wip	src/libttsivonavoice/flite/cst_val_const.c	83.3	
+00033144	6c	arm	cst_bsearch	matched	src/libttsivonavoice/uni.c	100	
+000331b0	54	arm	mp_mem_read	matched	src/libvoice_en_gb_amy/mpack_io.c	100	
+00033204	4	arm	mp_free_elem	matched	src/libvoice_en_gb_amy/mpack_io.c	100	
+00033208	10	arm	mp_file_write	matched	src/libvoice_en_gb_amy/mpack_io.c	100	
+00033218	74	arm	mp_mem_write	matched	src/libvoice_en_gb_amy/mpack_io.c	100	
+0003328c	78	arm	mp_reader_init	matched	src/libvoice_en_gb_amy/mpack_io.c	100	
+00033304	3c	arm	mp_reader_free	matched	src/libvoice_en_gb_amy/mpack_io.c	100	
+00033340	1c	arm	mp_read_int	matched	src/libvoice_en_gb_amy/mpack_io.c	100	
+0003335c	118	arm	mp_read_bin	wip	src/libvoice_en_gb_amy/mpack_io.c	36.0	
+00033474	98	arm	mp_read_str_array	matched	src/libvoice_en_gb_amy/mpack_io.c	100	
+0003350c	4c	arm	mp_writer_open_file	matched	src/libvoice_en_gb_amy/mpack_io.c	100	
+00033558	50	arm	mp_writer_open_mem	matched	src/libvoice_en_gb_amy/mpack_io.c	100	
+000335a8	38	arm	mp_writer_close_file	matched	src/libvoice_en_gb_amy/mpack_io.c	100	
+000335e0	5c	arm	mp_writer_close_mem	matched	src/libvoice_en_gb_amy/mpack_io.c	100	
+0003363c	28	arm	mp_write_str	matched	src/libvoice_en_gb_amy/mpack_io.c	100	
+00033664	2c	arm	ivona_is_dir	matched	src/libvoice_en_gb_amy/ivona_sys.c	100	
+00033690	b4	arm	murmur_hash2	matched	src/libvoice_en_gb_amy/hash.c	100	
+00033744	40	arm	hash_new	matched	src/libvoice_en_gb_amy/hash.c	100	
+00033784	7c	arm	hash_free	matched	src/libvoice_en_gb_amy/hash.c	100	
+00033800	78	arm	hash_get	matched	src/libvoice_en_gb_amy/hash.c	100	
+00033878	b8	arm	hash_put	matched	src/libvoice_en_gb_amy/hash.c	100	
+00033930	ac	arm	hash_remove	matched	src/libvoice_en_gb_amy/hash.c	100	
+000339dc	28	arm	ivona_rand_r	matched	src/libvoice_en_gb_amy/ivona_sys.c	100	
+00033a04	20	arm	ivona_rand	matched	src/libvoice_en_gb_amy/ivona_sys.c	100	
+00033a24	c	arm	strbuf_new	matched	src/libvoice_en_gb_amy/strbuf.c	100	
+00033a30	20	arm	strbuf_free	matched	src/libvoice_en_gb_amy/strbuf.c	100	
+00033a50	40	arm	strbuf_init	matched	src/libvoice_en_gb_amy/strbuf.c	100	
+00033a90	8	arm	strbuf_release	matched	src/libvoice_en_gb_amy/strbuf.c	100	
+00033a98	8	arm	strbuf_data	matched	src/libvoice_en_gb_amy/strbuf.c	100	
+00033aa0	34	arm	strbuf_reserve	matched	src/libvoice_en_gb_amy/strbuf.c	100	
+00033ad4	18	arm	strbuf_clear	matched	src/libvoice_en_gb_amy/strbuf.c	100	
+00033aec	28	arm	strbuf_resize	matched	src/libvoice_en_gb_amy/strbuf.c	100	
+00033b14	54	arm	strbuf_append	matched	src/libvoice_en_gb_amy/strbuf.c	100	
+00033b68	28	arm	strbuf_append_str	matched	src/libvoice_en_gb_amy/strbuf.c	100	
+00033b90	68	arm	strbuf_insert	matched	src/libvoice_en_gb_amy/strbuf.c	100	
+00033bf8	30	arm	strbuf_insert_str	matched	src/libvoice_en_gb_amy/strbuf.c	100	
+00033c28	68	arm	strbuf_erase	matched	src/libvoice_en_gb_amy/strbuf.c	100	
+00033c90	38	arm	strbuf_swap	matched	src/libvoice_en_gb_amy/strbuf.c	100	
+00033cc8	1c	arm	strbuf_truncate	matched	src/libvoice_en_gb_amy/strbuf.c	100	
+00033ce4	60	arm	strbuf_vappendf_n	matched	src/libvoice_en_gb_amy/strbuf.c	100	
+00033d44	94	arm	strbuf_appendf	matched	src/libvoice_en_gb_amy/strbuf.c	100	
+00033dd8	30	arm	strbuf_appendf_n	matched	src/libvoice_en_gb_amy/strbuf.c	100	
+00033e08	48	arm	ivona_time_msec	matched	src/libvoice_en_gb_amy/strbuf.c	100	
+00033e50	44	arm	ivona_time_usec	matched	src/libvoice_en_gb_amy/strbuf.c	100	
+00033e94	40	arm	utf8_iter_init	matched	src/libvoice_en_gb_amy/utf8_iter.c	100	
+00033ed4	58	arm	utf8_iter_next	matched	src/libvoice_en_gb_amy/utf8_iter.c	100	
+00033f2c	b0	arm	utf8_iter_prev	wip	src/libvoice_en_gb_amy/utf8_iter.c	68.8	
+00033fdc	18	arm	utf8_iter_next_char	matched	src/libvoice_en_gb_amy/utf8_iter.c	100	
+00033ff4	2c	arm	utf8_iter_init_char	matched	src/libvoice_en_gb_amy/utf8_iter.c	100	
+00034020	8c	arm	utf8_iter_move	matched	src/libvoice_en_gb_amy/utf8_iter.c	100	
+000340ac	10	arm	utf8_iter_bytes_left	matched	src/libvoice_en_gb_amy/utf8_iter.c	100	
+000340bc	10	arm	utf8_iter_chars_left	matched	src/libvoice_en_gb_amy/utf8_iter.c	100	
+000340cc	40	arm	utf8_iter_find_any	matched	src/libvoice_en_gb_amy/utf8_iter.c	100	
+0003410c	50	arm	utf8_iter_find	matched	src/libvoice_en_gb_amy/utf8_iter.c	100	
+0003415c	9c	arm	utf8_iter_find_last	matched	src/libvoice_en_gb_amy/utf8_iter.c	100	
+000341f8	40	arm	utf8_iter_skip_any	matched	src/libvoice_en_gb_amy/utf8_iter.c	100	
+00034238	44	arm	utf8_iter_seek	wip	src/libvoice_en_gb_amy/utf8_iter.c	64.7	
+0003427c	20	arm	utf8_iter_seek_char	matched	src/libvoice_en_gb_amy/utf8_iter.c	100	
+0003429c	34	arm	utf8_iter_copy_next	matched	src/libvoice_en_gb_amy/utf8_iter.c	100	
+000342d0	14	arm	utf8_iter_cut	matched	src/libvoice_en_gb_amy/utf8_iter.c	100	
+000342e4	16c	arm	utf8_decode_char	wip	src/libvoice_en_gb_amy/utf8.c	7.6	
+00034450	14	arm	utf8_decode	matched	src/libvoice_en_gb_amy/utf8.c	100	
+00034464	6c	arm	utf8_strchr	matched	src/libvoice_en_gb_amy/utf8.c	100	
+000344d0	54	arm	utf8_strrchr	matched	src/libvoice_en_gb_amy/utf8.c	100	
+00034524	24	arm	utf8_strchr_str	matched	src/libvoice_en_gb_amy/utf8.c	100	
+00034548	54	arm	utf8_strchr_single	matched	src/libvoice_en_gb_amy/utf8.c	100	
+0003459c	24	arm	utf8_strrchr_str	matched	src/libvoice_en_gb_amy/utf8.c	100	
+000345c0	c0	arm	utf8_strspn	matched	src/libvoice_en_gb_amy/utf8.c	100	
+00034680	c0	arm	utf8_strcspn	matched	src/libvoice_en_gb_amy/utf8.c	100	
+00034740	100	arm	utf8_substr	wip	src/libvoice_en_gb_amy/utf8.c	47.5	
+00034840	50	arm	utf8_last_char	matched	src/libvoice_en_gb_amy/utf8.c	100	
+00034890	190	arm	utf8_split	wip	src/libvoice_en_gb_amy/utf8.c	59.0	
+00034a20	50	arm	utf8_charlen	matched	src/libvoice_en_gb_amy/utf8.c	100	split from FUN_00034890 (leaf after its literal pool)
+00034a70	3c	arm	utf8_char_bytes	matched	src/libvoice_en_gb_amy/utf8.c	100	
+00034aac	38	arm	utf8_strlen	matched	src/libvoice_en_gb_amy/utf8.c	100	
+00034ae4	48	arm	utf8_strlen_gt	matched	src/libvoice_en_gb_amy/utf8.c	100	
+00034b2c	68	arm	utf8_strlen_eq	matched	src/libvoice_en_gb_amy/utf8.c	100	
+00034b94	24	arm	utf8_encode_z	matched	src/libvoice_en_gb_amy/utf8.c	100	
+00034bb8	30	arm	utf8_copy_char	matched	src/libvoice_en_gb_amy/utf8.c	100	
+00034be8	18	arm	utf8_copy_char_z	matched	src/libvoice_en_gb_amy/utf8.c	100	
+00034c00	b8	arm	utf8_to_ascii	wip	src/libvoice_en_gb_amy/utf8.c	68.8	
+00034cb8	bc	arm	utf8_strpbrk	matched	src/libvoice_en_gb_amy/utf8.c	100	
+00034d74	88	arm	utf8_offset	wip	src/libvoice_en_gb_amy/utf8.c	52.9	
+00034dfc	38	arm	utf8_byte_offset	matched	src/libvoice_en_gb_amy/utf8.c	100	
+00034e34	ac	arm	utf8_lower_n	matched	src/libvoice_en_gb_amy/utf8.c	100	
+00034ee0	1c	arm	utf8_lower	matched	src/libvoice_en_gb_amy/utf8.c	100	
+00034efc	f4	arm	utf8_rtrim	wip	src/libvoice_en_gb_amy/utf8.c	40.6	
+00034ff0	1bc	arm	utf8_map	wip	src/libvoice_en_gb_amy/utf8.c	34.3	
+000351ac	c0	arm	utf8_encode	todo			
 0003526c	b8	arm	FUN_0003526c	todo			
 00035324	c0	arm	FUN_00035324	todo			
 000353e4	34	arm	FUN_000353e4	todo			
@@ -576,7 +592,8 @@ addr	size	mode	name	status	src	score	note
 00036824	24	arm	FUN_00036824	todo			
 00036848	20	arm	FUN_00036848	todo			
 00036868	1088	arm	FUN_00036868	todo			
-000378f0	484	arm	FUN_000378f0	todo			
+000378f0	400	arm	FUN_000378f0	todo			
+00037cf0	84	arm	FUN_00037cf0	todo			
 00037d74	2c	arm	FUN_00037d74	todo			
 00037da0	44	arm	delete_relation	matched	src/libttsivonavoice/flite/cst_relation.c	100	flite (callee of a located function)
 00037de4	c	arm	relation_head	matched	src/libttsivonavoice/flite/cst_relation.c	100	flite order 67%
@@ -584,26 +601,27 @@ addr	size	mode	name	status	src	score	note
 00037dfc	c	arm	FUN_00037dfc	todo			
 00037e08	30	arm	relation_append	matched	src/libttsivonavoice/flite/cst_relation.c	100	flite order 67%
 00037e38	30	arm	relation_prepend	matched	src/libttsivonavoice/flite/cst_relation.c	100	flite order 67%
-00037e68	150	arm	FUN_00037e68	todo			
-00037fb8	b8	arm	FUN_00037fb8	todo			
-00038070	2e8	arm	FUN_00038070	todo			
-00038358	d74	arm	FUN_00038358	todo			
+00037e68	150	arm	uni_decode	wip	src/libttsivonavoice/uni_case.c	50.6	
+00037fb8	b8	arm	uni_translit	matched	src/libttsivonavoice/uni_case.c	100	
+00038070	2e8	arm	uni_fraction	matched	src/libttsivonavoice/uni_case.c	100	
+00038358	d74	arm	uni_tolower	todo			
 000390cc	44	arm	FUN_000390cc	todo			
-00039110	24	arm	FUN_00039110	todo			
-00039134	10	arm	FUN_00039134	todo			
-00039144	58	arm	FUN_00039144	todo			
-0003919c	18	arm	FUN_0003919c	todo			
-000391b4	178	arm	FUN_000391b4	todo			
-0003932c	58	arm	FUN_0003932c	todo			
-00039384	34	arm	FUN_00039384	todo			
-000393b8	5c	arm	FUN_000393b8	todo			
-00039414	11c	arm	FUN_00039414	todo			
-00039530	88	arm	FUN_00039530	todo			
-000395b8	80	arm	FUN_000395b8	todo			
-00039638	80	arm	FUN_00039638	todo			
-000396b8	114	arm	FUN_000396b8	todo			
-000397cc	4	arm	FUN_000397cc	todo			
-000397d0	4	arm	FUN_000397d0	todo			
+00039110	24	arm	blacklist_cmp_sort	matched	src/libvoice_en_gb_amy/blacklist.c	100	
+00039134	10	arm	blacklist_cmp	matched	src/libvoice_en_gb_amy/blacklist.c	100	
+00039144	58	arm	val_blacklist	matched	src/libvoice_en_gb_amy/blacklist.c	100	
+0003919c	18	arm	blacklist_val	matched	src/libvoice_en_gb_amy/blacklist.c	100	
+000391b4	178	arm	blacklist_load_ts	matched	src/libvoice_en_gb_amy/blacklist.c	100	
+0003932c	58	arm	blacklist_load_file	matched	src/libvoice_en_gb_amy/blacklist.c	100	
+00039384	34	arm	blacklist_load_string	matched	src/libvoice_en_gb_amy/blacklist.c	100	
+000393b8	5c	arm	blacklist_add	matched	src/libvoice_en_gb_amy/blacklist.c	100	
+00039414	11c	arm	blacklist_remove	matched	src/libvoice_en_gb_amy/blacklist.c	100	
+00039530	84	arm	blacklists_contain	matched	src/libvoice_en_gb_amy/blacklist.c	100	
+000395b4	4	arm	delete_blacklist	matched	src/libvoice_en_gb_amy/blacklist.c	100	
+000395b8	80	arm	blacklist_plugin_add	matched	src/libvoice_en_gb_amy/blacklist.c	100	
+00039638	80	arm	blacklist_plugin_remove	matched	src/libvoice_en_gb_amy/blacklist.c	100	
+000396b8	114	arm	amy_voice_new	matched	src/libvoice_en_gb_amy/voice_init.c	100	
+000397cc	4	arm	FUN_000397cc	matched	src/libvoice_en_gb_amy/voice_init.c	100	
+000397d0	4	arm	FUN_000397d0	matched	src/libvoice_en_gb_amy/voice_init.c	100	
 000397d4	408	arm	FUN_000397d4	todo			
 00039bdc	18	arm	FUN_00039bdc	todo			
 00039bf4	c8	arm	FUN_00039bf4	todo			
@@ -652,10 +670,10 @@ addr	size	mode	name	status	src	score	note
 00042dbc	2388	arm	FUN_00042dbc	todo			
 00045144	2264	arm	FUN_00045144	todo			
 000473a8	f20	arm	FUN_000473a8	todo			
-000482c8	20	arm	FUN_000482c8	todo			
-000482e8	20	arm	FUN_000482e8	todo			
-00048308	ac	arm	FUN_00048308	todo			
-000483b4	9d4	arm	FUN_000483b4	todo			
+000482c8	20	arm	en_gb_amy_postlex_apply_rules_1	todo			
+000482e8	20	arm	en_gb_amy_postlex_apply_rules_2	todo			
+00048308	ac	arm	en_gb_amy_postlex_apply_rules	todo			
+000483b4	9d4	arm	en_gb_amy_postlex	todo			
 00048d88	210	arm	FUN_00048d88	todo			
 00048f98	4	arm	FUN_00048f98	todo			
 00048f9c	4	arm	FUN_00048f9c	todo			
@@ -736,28 +754,30 @@ addr	size	mode	name	status	src	score	note
 00051d18	820	arm	FUN_00051d18	todo			
 00052538	a20	arm	FUN_00052538	todo			
 00052f58	af4	arm	FUN_00052f58	todo			
-00053a4c	4dc	arm	FUN_00053a4c	todo			
-00053f28	58	arm	val_lexicon	todo			flite strings(1) 91%
-00053f80	18	arm	lexicon_val	todo			flite order 67%
-00053f98	70	arm	FUN_00053f98	todo			
-00054008	c	arm	FUN_00054008	todo			
-00054014	c	arm	FUN_00054014	todo			
-00054020	180	arm	FUN_00054020	todo			
-000541a0	350	arm	FUN_000541a0	todo			
-000544f0	54	arm	FUN_000544f0	todo			
-00054544	1fc	arm	FUN_00054544	todo			
-00054740	418	arm	lts_apply	todo			flite strings(3) 9%
-00054b58	1e4	arm	FUN_00054b58	todo			
-00054d3c	3bc	arm	FUN_00054d3c	todo			
-000550f8	5c	arm	FUN_000550f8	todo			
-00055154	24	arm	FUN_00055154	todo			
-00055178	20	arm	FUN_00055178	todo			
-00055198	b0	arm	FUN_00055198	todo			
-00055248	3c	arm	FUN_00055248	todo			
-00055284	40	arm	FUN_00055284	todo			
-000552c4	9c	arm	FUN_000552c4	todo			
-00055360	ac	arm	FUN_00055360	todo			
-0005540c	77c	arm	FUN_0005540c	todo			
+00053a4c	4dc	arm	lex_lookup_bsearch	matched	src/libvoice_en_gb_amy/cst_lexicon.c	100	
+00053f28	58	arm	val_lexicon	matched	src/libvoice_en_gb_amy/cst_lexicon.c	100	flite strings(1) 91%
+00053f80	18	arm	lexicon_val	matched	src/libvoice_en_gb_amy/cst_lexicon.c	100	flite order 67%
+00053f98	58	arm	val_allwordposfunc	matched	src/libvoice_en_gb_amy/cst_lexicon.c	100	
+00053ff0	18	arm	allwordposfunc_val	matched	src/libvoice_en_gb_amy/cst_lexicon.c	100	
+00054008	c	arm	new_lexicon	matched	src/libvoice_en_gb_amy/cst_lexicon.c	100	
+00054014	c	arm	delete_lexicon	matched	src/libvoice_en_gb_amy/cst_lexicon.c	100	
+00054020	180	arm	in_lex	wip	src/libvoice_en_gb_amy/cst_lexicon.c	94.8	
+000541a0	350	arm	FUN_000541a0	wip	src/libvoice_en_gb_amy/cst_lexicon.c	45.6	
+000544f0	54	arm	FUN_000544f0	matched	src/libvoice_en_gb_amy/cst_lexicon.c	100	
+00054544	1fc	arm	lex_lookup	wip	src/libvoice_en_gb_amy/cst_lexicon.c	43.0	
+00054740	418	arm	lts_apply	wip	src/libvoice_en_gb_amy/cst_lts.c	74.3	flite strings(3) 9%
+00054b58	1e4	arm	postlex_rewrite_phones	wip	src/libvoice_en_gb_amy/cst_postlex.c	81.0	
+00054d3c	3bc	arm	postlex_assimilation	wip	src/libvoice_en_gb_amy/cst_postlex.c	96.2	
+000550f8	5c	arm	postlex_voice_is	matched	src/libvoice_en_gb_amy/cst_postlex.c	100	
+00055154	24	arm	postlex_voice_is_name	matched	src/libvoice_en_gb_amy/cst_postlex.c	100	
+00055178	20	arm	postlex_remove_seg_syl	matched	src/libvoice_en_gb_amy/cst_postlex.c	100	
+00055198	b0	arm	postlex_create_syl	matched	src/libvoice_en_gb_amy/cst_postlex.c	100	
+00055248	3c	arm	postlex_is_consonant	matched	src/libvoice_en_gb_amy/cst_postlex.c	100	
+00055284	40	arm	postlex_is_final_syl	matched	src/libvoice_en_gb_amy/cst_postlex.c	100	
+000552c4	9c	arm	postlex_insert_phone	matched	src/libvoice_en_gb_amy/cst_postlex.c	100	
+00055360	ac	arm	postlex_resyllabify	matched	src/libvoice_en_gb_amy/cst_postlex.c	100	
+0005540c	778	arm	postlex_apply_rules	todo			
+00055b84	4	arm	postlex_noop	matched	src/libvoice_en_gb_amy/cst_postlex.c	100	
 00055b88	2c	arm	cst_regex_match	matched	src/libttsivonavoice/flite/cst_regex.c	100	flite (callee of a located function)
 00055bb4	c	arm	cst_regex_match_return	matched	src/libttsivonavoice/flite/cst_regex.c	100	flite order 100%
 00055bc0	2a4	arm	new_cst_regex	wip	src/libttsivonavoice/flite/cst_regex.c	19.2	flite strings(1) 19%
@@ -769,55 +789,55 @@ addr	size	mode	name	status	src	score	note
 00057fb8	1c	arm	hs_regdelete	matched	src/libttsivonavoice/flite/regexp.c	100	
 00057fd4	270	arm	hs_regcomp	wip	src/libttsivonavoice/flite/regexp.c	20.8	flite strings(2) 21%
 00058244	20c	arm	hs_regexec	wip	src/libttsivonavoice/flite/regexp.c	25.3	flite strings(2) 25%
-00058450	58	arm	val_phoneset	todo			flite order 91%
-000584a8	18	arm	phoneset_val	todo			flite order 83%
-000584c0	c	arm	FUN_000584c0	todo			
-000584cc	c	arm	delete_phoneset	todo			flite order 67%
-000584d8	ac	arm	FUN_000584d8	todo			
-00058584	50	arm	phone_feat_id	todo			flite order 90%
-000585d4	58	arm	phone_feature	todo			flite (callee of a located function)
-0005862c	10	arm	phone_feature_string	todo			flite calls(2) 100%
-0005863c	74	arm	item_phoneset	todo			flite (callee of a located function)
-000586b0	7c	arm	FUN_000586b0	todo			
-0005872c	8	arm	FUN_0005872c	todo			
-00058734	20	arm	FUN_00058734	todo			
-00058754	8	arm	FUN_00058754	todo			
-0005875c	10	arm	FUN_0005875c	todo			
-0005876c	3c	arm	FUN_0005876c	todo			
-000587a8	4c	arm	FUN_000587a8	todo			
-000587f4	10	arm	FUN_000587f4	todo			
-00058804	b4	arm	FUN_00058804	todo			
-000588b8	90	arm	FUN_000588b8	todo			
-00058948	24	arm	FUN_00058948	todo			
-0005896c	70	arm	FUN_0005896c	todo			
-000589dc	70	arm	FUN_000589dc	todo			
-00058a4c	3c	arm	FUN_00058a4c	todo			
-00058a88	68	arm	FUN_00058a88	todo			
-00058af0	88	arm	FUN_00058af0	todo			
+00058450	58	arm	val_phoneset	matched	src/libvoice_en_gb_amy/cst_phoneset.c	100	flite order 91%
+000584a8	18	arm	phoneset_val	matched	src/libvoice_en_gb_amy/cst_phoneset.c	100	flite order 83%
+000584c0	c	arm	new_phoneset	matched	src/libvoice_en_gb_amy/cst_phoneset.c	100	
+000584cc	c	arm	delete_phoneset	matched	src/libvoice_en_gb_amy/cst_phoneset.c	100	flite order 67%
+000584d8	ac	arm	phone_id	matched	src/libvoice_en_gb_amy/cst_phoneset.c	100	
+00058584	50	arm	phone_feat_id	matched	src/libvoice_en_gb_amy/cst_phoneset.c	100	flite order 90%
+000585d4	58	arm	phone_feature	matched	src/libvoice_en_gb_amy/cst_phoneset.c	100	flite (callee of a located function)
+0005862c	10	arm	phone_feature_string	matched	src/libvoice_en_gb_amy/cst_phoneset.c	100	flite calls(2) 100%
+0005863c	74	arm	item_phoneset	matched	src/libvoice_en_gb_amy/cst_phoneset.c	100	flite (callee of a located function)
+000586b0	7c	arm	FUN_000586b0	matched	src/libvoice_en_gb_amy/cst_voice.c	100	
+0005872c	8	arm	FUN_0005872c	matched	src/libvoice_en_gb_amy/cst_voice.c	100	
+00058734	20	arm	FUN_00058734	matched	src/libvoice_en_gb_amy/cst_voice.c	100	
+00058754	8	arm	FUN_00058754	matched	src/libvoice_en_gb_amy/cst_voice.c	100	
+0005875c	10	arm	FUN_0005875c	matched	src/libvoice_en_gb_amy/cst_ffeatures.c	100	
+0005876c	3c	arm	FUN_0005876c	matched	src/libvoice_en_gb_amy/cst_ffeatures.c	100	
+000587a8	4c	arm	FUN_000587a8	matched	src/libvoice_en_gb_amy/cst_ffeatures.c	100	
+000587f4	10	arm	FUN_000587f4	matched	src/libvoice_en_gb_amy/cst_ffeatures.c	100	
+00058804	b4	arm	FUN_00058804	matched	src/libvoice_en_gb_amy/cst_ffeatures.c	100	
+000588b8	90	arm	FUN_000588b8	matched	src/libvoice_en_gb_amy/cst_ffeatures.c	100	
+00058948	24	arm	FUN_00058948	matched	src/libvoice_en_gb_amy/cst_ffeatures.c	100	
+0005896c	70	arm	FUN_0005896c	matched	src/libvoice_en_gb_amy/cst_ffeatures.c	100	
+000589dc	70	arm	FUN_000589dc	matched	src/libvoice_en_gb_amy/cst_ffeatures.c	100	
+00058a4c	3c	arm	FUN_00058a4c	wip	src/libvoice_en_gb_amy/cst_ffeatures.c	70.6	
+00058a88	68	arm	FUN_00058a88	wip	src/libvoice_en_gb_amy/cst_ffeatures.c	66.7	
+00058af0	88	arm	FUN_00058af0	matched	src/libvoice_en_gb_amy/cst_ffeatures.c	100	
 00058b78	3c	arm	FUN_00058b78	todo			
 00058bb4	60	arm	FUN_00058bb4	todo			
 00058c14	38	arm	FUN_00058c14	todo			
 00058c4c	b4	arm	FUN_00058c4c	todo			
 00058d00	54	arm	FUN_00058d00	todo			
 00058d54	8c	arm	FUN_00058d54	todo			
-00058de0	b8	arm	FUN_00058de0	todo			
-00058e98	f4	arm	seg_onset_ctype	todo			flite calls(9) 60%
-00058f8c	10	arm	seg_onset_nasal	todo			flite order 75%
-00058f9c	10	arm	seg_onset_stop	todo			flite order 75%
-00058fac	10	arm	seg_onset_fric	todo			flite order 75%
-00058fbc	f4	arm	FUN_00058fbc	todo			
-000590b0	10	arm	seg_coda_nasal	todo			flite order 75%
-000590c0	10	arm	seg_coda_stop	todo			flite order 75%
-000590d0	10	arm	seg_coda_fric	todo			flite order 75%
-000590e0	58	arm	FUN_000590e0	todo			
-00059138	40	arm	FUN_00059138	todo			
-00059178	40	arm	FUN_00059178	todo			
-000591b8	40	arm	FUN_000591b8	todo			
-000591f8	40	arm	ph_vrnd	todo			flite strings(1) 81%
-00059238	40	arm	ph_vfront	todo			flite strings(1) 81%
-00059278	40	arm	ph_vheight	todo			flite strings(1) 81%
-000592b8	40	arm	ph_cplace	todo			flite order 75%
-000592f8	40	arm	ph_cvox	todo			flite order 75%
+00058de0	b8	arm	FUN_00058de0	matched	src/libvoice_en_gb_amy/cst_ffeatures.c	100	
+00058e98	f4	arm	seg_onset_ctype	matched	src/libvoice_en_gb_amy/cst_ffeatures.c	100	flite calls(9) 60%
+00058f8c	10	arm	seg_onset_nasal	matched	src/libvoice_en_gb_amy/cst_ffeatures.c	100	flite order 75%
+00058f9c	10	arm	seg_onset_stop	matched	src/libvoice_en_gb_amy/cst_ffeatures.c	100	flite order 75%
+00058fac	10	arm	seg_onset_fric	matched	src/libvoice_en_gb_amy/cst_ffeatures.c	100	flite order 75%
+00058fbc	f4	arm	FUN_00058fbc	matched	src/libvoice_en_gb_amy/cst_ffeatures.c	100	
+000590b0	10	arm	seg_coda_nasal	matched	src/libvoice_en_gb_amy/cst_ffeatures.c	100	flite order 75%
+000590c0	10	arm	seg_coda_stop	matched	src/libvoice_en_gb_amy/cst_ffeatures.c	100	flite order 75%
+000590d0	10	arm	seg_coda_fric	matched	src/libvoice_en_gb_amy/cst_ffeatures.c	100	flite order 75%
+000590e0	58	arm	FUN_000590e0	matched	src/libvoice_en_gb_amy/cst_ffeatures.c	100	
+00059138	40	arm	ph_cvox	matched	src/libvoice_en_gb_amy/cst_ffeatures.c	100	
+00059178	40	arm	ph_cplace	matched	src/libvoice_en_gb_amy/cst_ffeatures.c	100	
+000591b8	40	arm	ph_ctype	matched	src/libvoice_en_gb_amy/cst_ffeatures.c	100	
+000591f8	40	arm	ph_vrnd	matched	src/libvoice_en_gb_amy/cst_ffeatures.c	100	flite strings(1) 81%
+00059238	40	arm	ph_vfront	matched	src/libvoice_en_gb_amy/cst_ffeatures.c	100	flite strings(1) 81%
+00059278	40	arm	ph_vheight	matched	src/libvoice_en_gb_amy/cst_ffeatures.c	100	flite strings(1) 81%
+000592b8	40	arm	ph_vlng	matched	src/libvoice_en_gb_amy/cst_ffeatures.c	100	
+000592f8	40	arm	ph_vc	matched	src/libvoice_en_gb_amy/cst_ffeatures.c	100	
 00059338	c8	arm	FUN_00059338	todo			
 00059400	54	arm	seg_onset_glide	todo			flite calls(2) 90%
 00059454	54	arm	FUN_00059454	todo			
@@ -843,117 +863,123 @@ addr	size	mode	name	status	src	score	note
 0005a120	190	arm	FUN_0005a120	todo			
 0005a2b0	194	arm	FUN_0005a2b0	todo			
 0005a444	734	arm	basic_ff_register	todo			flite strings(25) 16%
-0005ab78	58	arm	FUN_0005ab78	todo			
-0005abd0	18	arm	FUN_0005abd0	todo			
-0005abe8	94	arm	FUN_0005abe8	todo			
-0005ac7c	10	arm	FUN_0005ac7c	todo			
-0005ac8c	c0	arm	FUN_0005ac8c	todo			
-0005ad4c	44	arm	FUN_0005ad4c	todo			
-0005ad90	58	arm	FUN_0005ad90	todo			
-0005ade8	70	arm	FUN_0005ade8	todo			
-0005ae58	8c	arm	FUN_0005ae58	todo			
-0005aee4	38	arm	FUN_0005aee4	todo			
-0005af1c	34	arm	FUN_0005af1c	todo			
-0005af50	34	arm	FUN_0005af50	todo			
-0005af84	7c	arm	FUN_0005af84	todo			
-0005b000	34	arm	FUN_0005b000	todo			
-0005b034	34	arm	FUN_0005b034	todo			
-0005b068	34	arm	FUN_0005b068	todo			
-0005b09c	34	arm	FUN_0005b09c	todo			
-0005b0d0	34	arm	FUN_0005b0d0	todo			
-0005b104	34	arm	FUN_0005b104	todo			
-0005b138	78	arm	FUN_0005b138	todo			
-0005b1b0	6c	arm	FUN_0005b1b0	todo			
-0005b21c	40	arm	FUN_0005b21c	todo			
-0005b25c	58	arm	FUN_0005b25c	todo			
-0005b2b4	154	arm	FUN_0005b2b4	todo			
-0005b408	6c	arm	FUN_0005b408	todo			
-0005b474	8	arm	FUN_0005b474	todo			
-0005b47c	1ac	arm	FUN_0005b47c	todo			
-0005b628	84	arm	FUN_0005b628	todo			
-0005b6ac	288	arm	FUN_0005b6ac	todo			
-0005b934	58	arm	FUN_0005b934	todo			
-0005b98c	18	arm	FUN_0005b98c	todo			
-0005b9a4	28c	arm	FUN_0005b9a4	todo			
-0005bc30	720	arm	FUN_0005bc30	todo			
-0005c350	1d0	arm	FUN_0005c350	todo			
-0005c520	4f4	arm	FUN_0005c520	todo			
-0005ca14	88	arm	FUN_0005ca14	todo			
-0005ca9c	c8	arm	FUN_0005ca9c	todo			
-0005cb64	20	arm	FUN_0005cb64	todo			
-0005cb84	50	arm	FUN_0005cb84	todo			
-0005cbd4	58	arm	FUN_0005cbd4	todo			
-0005cc2c	14	arm	FUN_0005cc2c	todo			
-0005cc40	4	arm	FUN_0005cc40	todo			
-0005cc44	138	arm	FUN_0005cc44	todo			
-0005cd7c	10	arm	FUN_0005cd7c	todo			
-0005cd8c	328	arm	FUN_0005cd8c	todo			
-0005d0b4	154	arm	default_tokenization	todo			flite strings(1) 8%
-0005d208	d8	arm	FUN_0005d208	todo			
-0005d2e0	5c	arm	FUN_0005d2e0	todo			
-0005d33c	ec	arm	FUN_0005d33c	todo			
-0005d428	4a4	arm	FUN_0005d428	todo			
-0005d8cc	28	arm	FUN_0005d8cc	todo			
-0005d8f4	458	arm	FUN_0005d8f4	todo			
-0005dd4c	28	arm	FUN_0005dd4c	todo			
-0005dd74	850	arm	FUN_0005dd74	todo			
-0005e5c4	28	arm	FUN_0005e5c4	todo			
-0005e5ec	158	arm	FUN_0005e5ec	todo			
-0005e744	4f0	arm	FUN_0005e744	todo			
-0005ec34	7c	arm	FUN_0005ec34	todo			
-0005ecb0	470	arm	FUN_0005ecb0	todo			
-0005f120	54	arm	FUN_0005f120	todo			
-0005f174	294	arm	FUN_0005f174	todo			
-0005f408	198	arm	FUN_0005f408	todo			
-0005f5a0	548	arm	FUN_0005f5a0	todo			
-0005fae8	158	arm	FUN_0005fae8	todo			
-0005fc40	b0	arm	FUN_0005fc40	todo			
+0005ab78	58	arm	val_phonefunc	matched	src/libvoice_en_gb_amy/phones.c	100	
+0005abd0	18	arm	phonefunc_val	matched	src/libvoice_en_gb_amy/phones.c	100	
+0005abe8	94	arm	phones_from_string	matched	src/libvoice_en_gb_amy/phones.c	100	
+0005ac7c	10	arm	phone_name	matched	src/libvoice_en_gb_amy/phones.c	100	
+0005ac8c	c0	arm	phone_feature_base	matched	src/libvoice_en_gb_amy/phones.c	100	
+0005ad4c	44	arm	phones_insert_sep	matched	src/libvoice_en_gb_amy/phones.c	100	
+0005ad90	58	arm	phone_stress	matched	src/libvoice_en_gb_amy/phones.c	100	
+0005ade8	70	arm	phone_set_stress	matched	src/libvoice_en_gb_amy/phones.c	100	
+0005ae58	8c	arm	phone_strip_stress	matched	src/libvoice_en_gb_amy/phones.c	100	
+0005aee4	38	arm	phone_is_silence	matched	src/libvoice_en_gb_amy/phones.c	100	
+0005af1c	34	arm	ph_is_vowel	matched	src/libvoice_en_gb_amy/phones.c	100	
+0005af50	34	arm	ph_is_long	matched	src/libvoice_en_gb_amy/phones.c	100	
+0005af84	7c	arm	ph_is_syllabic	matched	src/libvoice_en_gb_amy/phones.c	100	
+0005b000	34	arm	ph_is_glide	matched	src/libvoice_en_gb_amy/phones.c	100	
+0005b034	34	arm	ph_is_nasal	matched	src/libvoice_en_gb_amy/phones.c	100	
+0005b068	34	arm	ph_is_short	matched	src/libvoice_en_gb_amy/phones.c	100	
+0005b09c	34	arm	ph_is_fricative	matched	src/libvoice_en_gb_amy/phones.c	100	
+0005b0d0	34	arm	ph_is_stop	matched	src/libvoice_en_gb_amy/phones.c	100	
+0005b104	34	arm	ph_is_liquid	matched	src/libvoice_en_gb_amy/phones.c	100	
+0005b138	78	arm	ph_is_velar_stop	matched	src/libvoice_en_gb_amy/phones.c	100	
+0005b1b0	6c	arm	phones_count_syllables	matched	src/libvoice_en_gb_amy/phones.c	100	
+0005b21c	40	arm	phones_have_stress	matched	src/libvoice_en_gb_amy/phones.c	100	
+0005b25c	58	arm	phones_find_stress	matched	src/libvoice_en_gb_amy/phones.c	100	
+0005b2b4	110	arm	phones_stress_syllable	wip	src/libvoice_en_gb_amy/phones.c	28.8	
+0005b3c4	44	arm	phones_strip_stress_range	wip	src/libvoice_en_gb_amy/phones.c	88.2	
+0005b408	8	arm	phones_strip_stress	matched	src/libvoice_en_gb_amy/phones.c	100	
+0005b410	64	arm	phones_keep_first_stress_range	wip	src/libvoice_en_gb_amy/phones.c	84.0	
+0005b474	8	arm	phones_keep_first_stress	matched	src/libvoice_en_gb_amy/phones.c	100	
+0005b47c	1ac	arm	seg_append_phone	wip	src/libvoice_en_gb_amy/phones.c	72.0	
+0005b628	84	arm	word_phone_string	matched	src/libvoice_en_gb_amy/phones.c	100	
+0005b6ac	288	arm	apply_phone_rules	todo			
+0005b934	58	arm	val_xsampafunc	matched	src/libvoice_en_gb_amy/cst_synth.c	100	
+0005b98c	18	arm	xsampafunc_val	matched	src/libvoice_en_gb_amy/cst_synth.c	100	
+0005b9a4	28c	arm	xsampa_mod_flag	matched	src/libvoice_en_gb_amy/cst_synth.c	100	
+0005bc30	720	arm	xsampa_word_convert	todo			
+0005c350	1d0	arm	xsampa_mod_name	matched	src/libvoice_en_gb_amy/cst_synth.c	100	
+0005c520	4f4	arm	xivona_to_xsampa	matched	src/libvoice_en_gb_amy/cst_synth.c	100	
+0005ca14	88	arm	item_xsampa	matched	src/libvoice_en_gb_amy/cst_synth.c	100	
+0005ca9c	c8	arm	seg_xsampa	matched	src/libvoice_en_gb_amy/cst_synth.c	100	
+0005cb64	20	arm	str_dashes	matched	src/libvoice_en_gb_amy/cst_synth.c	100	
+0005cb84	50	arm	lang_is_amazon	matched	src/libvoice_en_gb_amy/cst_synth.c	100	
+0005cbd4	58	arm	xsampa_word	matched	src/libvoice_en_gb_amy/cst_synth.c	100	
+0005cc2c	14	arm	xs_tok_init	matched	src/libvoice_en_gb_amy/cst_synth.c	100	
+0005cc40	4	arm	xs_tok_done	matched	src/libvoice_en_gb_amy/cst_synth.c	100	
+0005cc44	138	arm	xs_tok_next	matched	src/libvoice_en_gb_amy/cst_synth.c	100	
+0005cd7c	10	arm	int_cmp	matched	src/libvoice_en_gb_amy/cst_synth.c	100	
+0005cd8c	328	arm	item_rename_relation	matched	src/libvoice_en_gb_amy/cst_synth.c	100	
+0005d0b4	154	arm	default_tokenization	matched	src/libvoice_en_gb_amy/cst_synth.c	100	flite strings(1) 8%
+0005d208	d8	arm	t2t_tokens	matched	src/libvoice_en_gb_amy/cst_synth.c	100	
+0005d2e0	5c	arm	strchr_unescaped	matched	src/libvoice_en_gb_amy/cst_synth.c	100	
+0005d33c	ec	arm	str_unescape_range	matched	src/libvoice_en_gb_amy/cst_synth.c	100	
+0005d428	4a4	arm	textanalysis_tokens	todo			
+0005d8cc	28	arm	default_textanalysis	matched	src/libvoice_en_gb_amy/cst_synth.c	100	
+0005d8f4	458	arm	phrasing_tokens	todo			
+0005dd4c	28	arm	default_phrasing	matched	src/libvoice_en_gb_amy/cst_synth.c	100	
+0005dd74	850	arm	lexical_insertion_words	todo			
+0005e5c4	28	arm	default_lexical_insertion	matched	src/libvoice_en_gb_amy/cst_synth.c	100	
+0005e5ec	158	arm	word_to_xsampa	matched	src/libvoice_en_gb_amy/cst_synth.c	100	
+0005e744	4f0	arm	default_change_language	todo			
+0005ec34	7c	arm	word_append_segment	matched	src/libvoice_en_gb_amy/cst_synth.c	100	
+0005ecb0	470	arm	breath_insertion_utt	todo			
+0005f120	54	arm	breath_insertion	matched	src/libvoice_en_gb_amy/cst_synth.c	100	
+0005f174	294	arm	default_pause_insertion	matched	src/libvoice_en_gb_amy/cst_synth.c	100	
+0005f408	194	arm	default_intonation	matched	src/libvoice_en_gb_amy/cst_synth.c	100	
+0005f59c	4	arm	duration_none	matched	src/libvoice_en_gb_amy/cst_synth.c	100	
+0005f5a0	548	arm	cart_duration	matched	src/libvoice_en_gb_amy/cst_synth.c	100	
+0005fae8	158	arm	duration_select	matched	src/libvoice_en_gb_amy/cst_synth.c	100	
+0005fc40	b0	arm	phones_textanalysis	matched	src/libvoice_en_gb_amy/cst_synth.c	100	
 0005fcf0	1c	arm	FUN_0005fcf0	todo			
-0005fd0c	58	arm	FUN_0005fd0c	todo			
-0005fd64	18	arm	FUN_0005fd64	todo			
-0005fd7c	14	arm	FUN_0005fd7c	todo			
-0005fd90	70	arm	FUN_0005fd90	todo			
-0005fe00	2c	arm	FUN_0005fe00	todo			
-0005fe2c	18	arm	FUN_0005fe2c	todo			
-0005fe44	8	arm	FUN_0005fe44	todo			
-0005fe4c	40	arm	FUN_0005fe4c	todo			
-0005fe8c	68	arm	FUN_0005fe8c	todo			
-0005fef4	5c	arm	FUN_0005fef4	todo			
-0005ff50	10	arm	FUN_0005ff50	todo			
-0005ff60	1c	arm	FUN_0005ff60	todo			
-0005ff7c	1e0	arm	FUN_0005ff7c	todo			
-0006015c	140	arm	FUN_0006015c	todo			
-0006029c	148	arm	FUN_0006029c	todo			
-000603e4	64	arm	FUN_000603e4	todo			
-00060448	5c	arm	FUN_00060448	todo			
-000604a4	6c	arm	FUN_000604a4	todo			
-00060510	64	arm	FUN_00060510	todo			
-00060574	50	arm	FUN_00060574	todo			
-000605c4	154	arm	FUN_000605c4	todo			
-00060718	19c	arm	FUN_00060718	todo			
-000608b4	38	arm	FUN_000608b4	todo			
-000608ec	b8	arm	FUN_000608ec	todo			
-000609a4	1e0	arm	FUN_000609a4	todo			
-00060b84	170	arm	FUN_00060b84	todo			
-00060cf4	144	arm	FUN_00060cf4	todo			
-00060e38	1f4	arm	FUN_00060e38	todo			
-0006102c	68	arm	FUN_0006102c	todo			
+0005fd0c	58	arm	val_tokenizer_expand_str_func	matched	src/libvoice_en_gb_amy/tokenizer.c	100	
+0005fd64	18	arm	tokenizer_expand_str_func_val	matched	src/libvoice_en_gb_amy/tokenizer.c	100	
+0005fd7c	14	arm	segment_key_cmp	matched	src/libvoice_en_gb_amy/tokenizer.c	100	
+0005fd90	58	arm	val_string_tokenizer_new_func	matched	src/libvoice_en_gb_amy/tokenizer.c	100	
+0005fde8	18	arm	string_tokenizer_new_func_val	matched	src/libvoice_en_gb_amy/tokenizer.c	100	
+0005fe00	2c	arm	tokenizer_new	matched	src/libvoice_en_gb_amy/tokenizer.c	100	
+0005fe2c	18	arm	tokenizer_next	matched	src/libvoice_en_gb_amy/tokenizer.c	100	
+0005fe44	8	arm	tokenizer_get	matched	src/libvoice_en_gb_amy/tokenizer.c	100	
+0005fe4c	40	arm	tokenizer_free	matched	src/libvoice_en_gb_amy/tokenizer.c	100	
+0005fe8c	68	arm	string_tokenizer_new	matched	src/libvoice_en_gb_amy/tokenizer.c	100	
+0005fef4	5c	arm	string_tokenizer_new_single	matched	src/libvoice_en_gb_amy/tokenizer.c	100	
+0005ff50	10	arm	segments_find	matched	src/libvoice_en_gb_amy/tokenizer.c	100	
+0005ff60	1c	arm	ts_tokenizer_free	matched	src/libvoice_en_gb_amy/tokenizer.c	100	
+0005ff7c	1e0	arm	ts_tokenizer_next	matched	src/libvoice_en_gb_amy/tokenizer.c	100	
+0006015c	140	arm	ts_tokenizer_new	matched	src/libvoice_en_gb_amy/tokenizer.c	100	
+0006029c	140	arm	ts_tokenizer_new_utf8	matched	src/libvoice_en_gb_amy/tokenizer.c	100	
+000603dc	4	arm	en_text_init	matched	src/libvoice_en_gb_amy/en_text.c	100	
+000603e0	4	arm	en_text_deinit	matched	src/libvoice_en_gb_amy/en_text.c	100	
+000603e4	64	arm	punc_last_char	matched	src/libvoice_en_gb_amy/en_text.c	100	
+00060448	5c	arm	punc_last_utf8_char	matched	src/libvoice_en_gb_amy/en_text.c	100	
+000604a4	6c	arm	item_is_phrase_break	matched	src/libvoice_en_gb_amy/en_text.c	100	
+00060510	64	arm	phrase_start_token	matched	src/libvoice_en_gb_amy/en_text.c	100	
+00060574	50	arm	phrase_end_token	matched	src/libvoice_en_gb_amy/en_text.c	100	
+000605c4	154	arm	str_transliterate	matched	src/libvoice_en_gb_amy/en_text.c	100	
+00060718	19c	arm	date_parse	wip	src/libvoice_en_gb_amy/en_text.c	49.1	
+000608b4	38	arm	date_free	matched	src/libvoice_en_gb_amy/en_text.c	100	
+000608ec	b8	arm	time_parse_quotes	matched	src/libvoice_en_gb_amy/en_text.c	100	
+000609a4	1e0	arm	iso8601_duration_validate	matched	src/libvoice_en_gb_amy/en_text.c	100	
+00060b84	170	arm	iso8601_duration_parse	matched	src/libvoice_en_gb_amy/en_text.c	100	
+00060cf4	144	arm	clock_duration_validate	wip	src/libvoice_en_gb_amy/en_text.c	34.5	
+00060e38	1f4	arm	clock_duration_parse	wip	src/libvoice_en_gb_amy/en_text.c	60.6	
+0006102c	68	arm	time_free	matched	src/libvoice_en_gb_amy/en_text.c	100	
 00061094	420	arm	FUN_00061094	todo			
-000614b4	f8	arm	FUN_000614b4	todo			
-000615ac	38	arm	FUN_000615ac	todo			
-000615e4	a8	arm	FUN_000615e4	todo			
-0006168c	7c	arm	FUN_0006168c	todo			
-00061708	80	arm	FUN_00061708	todo			
-00061788	50	arm	FUN_00061788	todo			
-000617d8	50	arm	FUN_000617d8	todo			
-00061828	28	arm	FUN_00061828	todo			
-00061850	28	arm	FUN_00061850	todo			
-00061878	44	arm	FUN_00061878	todo			
-000618bc	28	arm	FUN_000618bc	todo			
+000614b4	f8	arm	duration_parse	matched	src/libvoice_en_gb_amy/en_text.c	100	
+000615ac	38	arm	duration_free	matched	src/libvoice_en_gb_amy/en_text.c	100	
+000615e4	a8	arm	token_single_alpha	wip	src/libvoice_en_gb_amy/en_text.c	28.6	
+0006168c	7c	arm	token_no_punc_prev	matched	src/libvoice_en_gb_amy/en_text.c	100	
+00061708	80	arm	token_no_punc_next	matched	src/libvoice_en_gb_amy/en_text.c	100	
+00061788	50	arm	token_prev_interpret_as	matched	src/libvoice_en_gb_amy/en_text.c	100	
+000617d8	50	arm	token_next_interpret_as	matched	src/libvoice_en_gb_amy/en_text.c	100	
+00061828	28	arm	token_unpunctuated_prev_interpret_as	matched	src/libvoice_en_gb_amy/en_text.c	100	
+00061850	28	arm	token_unpunctuated_next_interpret_as	matched	src/libvoice_en_gb_amy/en_text.c	100	
+00061878	44	arm	strip_leading_zeros	wip	src/libvoice_en_gb_amy/en_text.c	47.1	
+000618bc	28	arm	strip_non_ascii	matched	src/libvoice_en_gb_amy/en_text.c	100	
 000618e4	94	arm	FUN_000618e4	todo			
-00061978	5c	arm	FUN_00061978	todo			
-000619d4	80	arm	FUN_000619d4	todo			
-00061a54	c0	arm	FUN_00061a54	todo			
+00061978	5c	arm	utf8_category_boundary	matched	src/libvoice_en_gb_amy/en_text.c	100	
+000619d4	80	arm	utf8_category_split	matched	src/libvoice_en_gb_amy/en_text.c	100	
+00061a54	c0	arm	utf8_is_letters_except	matched	src/libvoice_en_gb_amy/en_text.c	100	
 00061b14	18	arm	FUN_00061b14	todo			
 00061b2c	34	arm	FUN_00061b2c	todo			
 00061b60	24	arm	FUN_00061b60	todo			
@@ -961,32 +987,33 @@ addr	size	mode	name	status	src	score	note
 00061d30	84	arm	FUN_00061d30	todo			
 00061db4	2d4	arm	FUN_00061db4	todo			
 00062088	28	arm	FUN_00062088	todo			
-000620b0	3c	arm	FUN_000620b0	todo			
-000620ec	78	arm	FUN_000620ec	todo			
-00062164	30	arm	FUN_00062164	todo			
-00062194	10	arm	FUN_00062194	todo			
-000621a4	28	arm	FUN_000621a4	todo			
-000621cc	74	arm	FUN_000621cc	todo			
-00062240	c	arm	FUN_00062240	todo			
-0006224c	7c	arm	FUN_0006224c	todo			
-000622c8	40	arm	FUN_000622c8	todo			
-00062308	24	arm	FUN_00062308	todo			
-0006232c	6c	arm	FUN_0006232c	todo			
-00062398	74	arm	FUN_00062398	todo			
-0006240c	74	arm	FUN_0006240c	todo			
-00062480	20	arm	FUN_00062480	todo			
-000624a0	5c	arm	FUN_000624a0	todo			
-000624fc	28	arm	FUN_000624fc	todo			
-00062524	54	arm	FUN_00062524	todo			
-00062578	54	arm	FUN_00062578	todo			
-000625cc	5c	arm	FUN_000625cc	todo			
-00062628	80	arm	FUN_00062628	todo			
-000626a8	80	arm	FUN_000626a8	todo			
-00062728	c	arm	FUN_00062728	todo			
-00062734	14	arm	FUN_00062734	todo			
-00062748	50	arm	FUN_00062748	todo			
-00062798	8	arm	FUN_00062798	todo			
-000627a0	70	arm	FUN_000627a0	todo			
+000620b0	3c	arm	uni_isspace	matched	src/libvoice_en_gb_amy/uni.c	100	
+000620ec	78	arm	uni_category	matched	src/libvoice_en_gb_amy/uni.c	100	
+00062164	30	arm	uni_cat_is_punct	wip	src/libvoice_en_gb_amy/uni.c	66.7	
+00062194	10	arm	uni_ispunct	matched	src/libvoice_en_gb_amy/uni.c	100	
+000621a4	28	arm	uni_cat_is_text	matched	src/libvoice_en_gb_amy/uni.c	100	
+000621cc	74	arm	uni_str_category	matched	src/libvoice_en_gb_amy/uni.c	100	
+00062240	c	arm	strlist_new	matched	src/libvoice_en_gb_amy/strlist.c	100	
+0006224c	7c	arm	strlist_copy	matched	src/libvoice_en_gb_amy/strlist.c	100	
+000622c8	40	arm	strlist_clear	matched	src/libvoice_en_gb_amy/strlist.c	100	
+00062308	24	arm	strlist_free	matched	src/libvoice_en_gb_amy/strlist.c	100	
+0006232c	6c	arm	strlist_push	matched	src/libvoice_en_gb_amy/strlist.c	100	
+00062398	74	arm	strlist_push_n	matched	src/libvoice_en_gb_amy/strlist.c	100	
+0006240c	74	arm	strlist_split_ws_into	matched	src/libvoice_en_gb_amy/strlist.c	100	
+00062480	20	arm	strlist_split_ws	matched	src/libvoice_en_gb_amy/strlist.c	100	
+000624a0	5c	arm	strlist_split_into	matched	src/libvoice_en_gb_amy/strlist.c	100	
+000624fc	28	arm	strlist_split	matched	src/libvoice_en_gb_amy/strlist.c	100	
+00062524	54	arm	strlist_contains	matched	src/libvoice_en_gb_amy/strlist.c	100	
+00062578	54	arm	strlist_contains_nocase	matched	src/libvoice_en_gb_amy/strlist.c	100	
+000625cc	5c	arm	strlist_print	matched	src/libvoice_en_gb_amy/strlist.c	100	
+00062628	80	arm	strlist_join	matched	src/libvoice_en_gb_amy/strlist.c	100	
+000626a8	80	arm	strlist_compare	matched	src/libvoice_en_gb_amy/strlist.c	100	
+00062728	c	arm	strlist_compare_ptr	matched	src/libvoice_en_gb_amy/strlist.c	100	
+00062734	14	arm	strlist_pop	matched	src/libvoice_en_gb_amy/strlist.c	100	
+00062748	50	arm	strlist_remove	matched	src/libvoice_en_gb_amy/strlist.c	100	
+00062798	8	arm	strlist_free_ptr	matched	src/libvoice_en_gb_amy/strlist.c	100	
+000627a0	58	arm	val_join_cost_func	todo			
+000627f8	18	arm	join_cost_func_val	todo			
 00062810	9c	arm	FUN_00062810	todo			
 000628ac	a80	arm	FUN_000628ac	todo			
 0006332c	234	arm	FUN_0006332c	todo			
@@ -1020,18 +1047,20 @@ addr	size	mode	name	status	src	score	note
 00064d90	c8	arm	FUN_00064d90	todo			
 00064e58	40	arm	FUN_00064e58	todo			
 00064e98	c4	arm	FUN_00064e98	todo			
-00064f5c	70	arm	val_cart	wip	src/libttsivonavoice/flite/cst_cart.c	78.6	flite strings(1) 71%
+00064f5c	58	arm	val_cart	matched	src/libttsivonavoice/flite/cst_cart.c	100	flite strings(1) 71%
+00064fb4	18	arm	FUN_00064fb4	todo			
 00064fcc	104	arm	FUN_00064fcc	todo			
 000650d0	150	arm	cart_interpret	matched	src/libttsivonavoice/flite/cst_cart.c	100	flite calls(6) 82%
-00065220	1cc	arm	FUN_00065220	todo			
-000653ec	20	arm	FUN_000653ec	todo			
-0006540c	38	arm	FUN_0006540c	todo			
-00065444	10	arm	FUN_00065444	todo			
-00065454	90	arm	FUN_00065454	todo			
-000654e4	70	arm	FUN_000654e4	todo			
-00065554	50	arm	FUN_00065554	todo			
-000655a4	198	arm	FUN_000655a4	todo			
-0006573c	68	arm	in_lex	todo			flite strings(1) 11%
+00065220	1cc	arm	item_print_tree	matched	src/libttsivonavoice/flite/cst_synth.c	100	
+000653ec	20	arm	utt_input_text	matched	src/libttsivonavoice/flite/cst_synth.c	100	
+0006540c	38	arm	utt_set_input_text	matched	src/libttsivonavoice/flite/cst_synth.c	100	
+00065444	10	arm	item_print_list	matched	src/libttsivonavoice/flite/cst_synth.c	100	
+00065454	90	arm	utt_print_relations	matched	src/libttsivonavoice/flite/cst_synth.c	100	
+000654e4	58	arm	val_dur_stats	todo			
+0006553c	18	arm	FUN_0006553c	todo			
+00065554	50	arm	named_table_find	todo			
+000655a4	198	arm	lexicon_from_pls	matched	src/libttsivonavoice/flite/cst_synth.c	100	
+0006573c	68	arm	val_in_lex	matched	src/libttsivonavoice/flite/cst_synth.c	100	flite strings(1) 11%
 000657a4	8c	arm	FUN_000657a4	todo			
 00065830	144	arm	FUN_00065830	todo			
 00065974	150	arm	FUN_00065974	todo			
@@ -1048,8 +1077,32 @@ addr	size	mode	name	status	src	score	note
 00068b20	448	arm	FUN_00068b20	todo			
 00068f68	bf0	arm	FUN_00068f68	todo			
 00069b58	3b4	arm	FUN_00069b58	todo			
-00069f0c	c94	arm	FUN_00069f0c	todo			
-0006aba0	540	arm	FUN_0006aba0	todo			
+00069f0c	c5c	arm	FUN_00069f0c	todo			
+0006ab68	38	arm	FUN_0006ab68	todo			
+0006aba0	68	arm	FUN_0006aba0	todo			
+0006ac08	38	arm	FUN_0006ac08	todo			
+0006ac40	38	arm	FUN_0006ac40	todo			
+0006ac78	38	arm	FUN_0006ac78	todo			
+0006acb0	38	arm	FUN_0006acb0	todo			
+0006ace8	38	arm	FUN_0006ace8	todo			
+0006ad20	38	arm	FUN_0006ad20	todo			
+0006ad58	98	arm	FUN_0006ad58	todo			
+0006adf0	4	arm	FUN_0006adf0	todo			
+0006adf4	94	arm	FUN_0006adf4	todo			
+0006ae88	4	arm	FUN_0006ae88	todo			
+0006ae8c	40	arm	FUN_0006ae8c	todo			
+0006aecc	4	arm	FUN_0006aecc	todo			
+0006aed0	40	arm	FUN_0006aed0	todo			
+0006af10	4	arm	FUN_0006af10	todo			
+0006af14	3c	arm	FUN_0006af14	todo			
+0006af50	50	arm	FUN_0006af50	todo			
+0006afa0	14	arm	FUN_0006afa0	todo			
+0006afb4	80	arm	FUN_0006afb4	todo			
+0006b034	58	arm	FUN_0006b034	todo			
+0006b08c	8	arm	FUN_0006b08c	todo			
+0006b094	3c	arm	FUN_0006b094	todo			
+0006b0d0	4	arm	FUN_0006b0d0	todo			
+0006b0d4	c	arm	FUN_0006b0d4	todo			
 0006b0e0	558	arm	FUN_0006b0e0	todo			
 0006b638	15c	arm	FUN_0006b638	todo			
 0006b794	c0	arm	FUN_0006b794	todo			
@@ -1061,9 +1114,32 @@ addr	size	mode	name	status	src	score	note
 0006c280	108	arm	FUN_0006c280	todo			
 0006c388	16c	arm	FUN_0006c388	todo			
 0006c4f4	fe8	arm	FUN_0006c4f4	todo			
-0006d4dc	20c0	arm	FUN_0006d4dc	todo			
-0006f59c	2114	arm	FUN_0006f59c	todo			
-000716b0	231c	arm	FUN_000716b0	todo			
+0006d4dc	a84	arm	FUN_0006d4dc	todo			
+0006df60	b14	arm	FUN_0006df60	todo			
+0006ea74	54	arm	FUN_0006ea74	todo			
+0006eac8	14	arm	FUN_0006eac8	todo			
+0006eadc	14	arm	FUN_0006eadc	todo			
+0006eaf0	aac	arm	FUN_0006eaf0	todo			
+0006f59c	f4	arm	FUN_0006f59c	todo			
+0006f690	bb0	arm	FUN_0006f690	todo			
+00070240	3dc	arm	FUN_00070240	todo			
+0007061c	1094	arm	FUN_0007061c	todo			
+000716b0	d0	arm	FUN_000716b0	todo			
+00071780	c0	arm	FUN_00071780	todo			
+00071840	18	arm	FUN_00071840	todo			
+00071858	14c	arm	FUN_00071858	todo			
+000719a4	74	arm	FUN_000719a4	todo			
+00071a18	3f0	arm	FUN_00071a18	todo			
+00071e08	518	arm	FUN_00071e08	todo			
+00072320	3e8	arm	FUN_00072320	todo			
+00072708	35c	arm	FUN_00072708	todo			
+00072a64	4	arm	FUN_00072a64	todo			
+00072a68	20	arm	FUN_00072a68	todo			
+00072a88	4d4	arm	FUN_00072a88	todo			
+00072f5c	5ec	arm	FUN_00072f5c	todo			
+00073548	454	arm	FUN_00073548	todo			
+0007399c	1c	arm	FUN_0007399c	todo			
+000739b8	14	arm	FUN_000739b8	todo			
 000739cc	8b0	arm	FUN_000739cc	todo			
 0007427c	288	arm	FUN_0007427c	todo			
 00074504	384	arm	FUN_00074504	todo			
@@ -1073,94 +1149,390 @@ addr	size	mode	name	status	src	score	note
 00074e7c	187c	arm	FUN_00074e7c	todo			
 000766f8	104c	arm	FUN_000766f8	todo			
 00077744	2034	arm	FUN_00077744	todo			
-00079778	2054	arm	FUN_00079778	todo			
-0007b7cc	213c	arm	FUN_0007b7cc	todo			
-0007d908	3ef8	arm	FUN_0007d908	todo			
+00079778	ec	arm	FUN_00079778	todo			
+00079864	570	arm	FUN_00079864	todo			
+00079dd4	48c	arm	FUN_00079dd4	todo			
+0007a260	380	arm	FUN_0007a260	todo			
+0007a5e0	354	arm	FUN_0007a5e0	todo			
+0007a934	350	arm	FUN_0007a934	todo			
+0007ac84	370	arm	FUN_0007ac84	todo			
+0007aff4	3e0	arm	FUN_0007aff4	todo			
+0007b3d4	3d8	arm	FUN_0007b3d4	todo			
+0007b7ac	20	arm	FUN_0007b7ac	todo			
+0007b7cc	74	arm	FUN_0007b7cc	todo			
+0007b840	4	arm	FUN_0007b840	todo			
+0007b844	5c	arm	FUN_0007b844	todo			
+0007b8a0	cc	arm	FUN_0007b8a0	todo			
+0007b96c	4d0	arm	FUN_0007b96c	todo			
+0007be3c	1b4	arm	FUN_0007be3c	todo			
+0007bff0	17c	arm	FUN_0007bff0	todo			
+0007c16c	1d0	arm	FUN_0007c16c	todo			
+0007c33c	c	arm	FUN_0007c33c	todo			
+0007c348	518	arm	FUN_0007c348	todo			
+0007c860	c	arm	FUN_0007c860	todo			
+0007c86c	4bc	arm	FUN_0007c86c	todo			
+0007cd28	c	arm	FUN_0007cd28	todo			
+0007cd34	1a0	arm	FUN_0007cd34	todo			
+0007ced4	c	arm	FUN_0007ced4	todo			
+0007cee0	168	arm	FUN_0007cee0	todo			
+0007d048	c	arm	FUN_0007d048	todo			
+0007d054	1bc	arm	FUN_0007d054	todo			
+0007d210	59c	arm	FUN_0007d210	todo			
+0007d7ac	124	arm	FUN_0007d7ac	todo			
+0007d8d0	38	arm	FUN_0007d8d0	todo			
+0007d908	494	arm	FUN_0007d908	todo			
+0007dd9c	238	arm	FUN_0007dd9c	todo			
+0007dfd4	1f8	arm	FUN_0007dfd4	todo			
+0007e1cc	250	arm	FUN_0007e1cc	todo			
+0007e41c	74	arm	FUN_0007e41c	todo			
+0007e490	1f8	arm	FUN_0007e490	todo			
+0007e688	460	arm	FUN_0007e688	todo			
+0007eae8	208	arm	FUN_0007eae8	todo			
+0007ecf0	94	arm	FUN_0007ecf0	todo			
+0007ed84	94	arm	FUN_0007ed84	todo			
+0007ee18	e8	arm	FUN_0007ee18	todo			
+0007ef00	ec	arm	FUN_0007ef00	todo			
+0007efec	74	arm	FUN_0007efec	todo			
+0007f060	128	arm	FUN_0007f060	todo			
+0007f188	238	arm	FUN_0007f188	todo			
+0007f3c0	214	arm	FUN_0007f3c0	todo			
+0007f5d4	208	arm	FUN_0007f5d4	todo			
+0007f7dc	110	arm	FUN_0007f7dc	todo			
+0007f8ec	140	arm	FUN_0007f8ec	todo			
+0007fa2c	2a0	arm	FUN_0007fa2c	todo			
+0007fccc	5d0	arm	FUN_0007fccc	todo			
+0008029c	10	arm	FUN_0008029c	todo			
+000802ac	180	arm	FUN_000802ac	todo			
+0008042c	618	arm	FUN_0008042c	todo			
+00080a44	384	arm	FUN_00080a44	todo			
+00080dc8	2b8	arm	FUN_00080dc8	todo			
+00081080	3b8	arm	FUN_00081080	todo			
+00081438	290	arm	FUN_00081438	todo			
+000816c8	8	arm	FUN_000816c8	todo			
+000816d0	8	arm	FUN_000816d0	todo			
+000816d8	128	arm	FUN_000816d8	todo			
 00081800	1328	arm	FUN_00081800	todo			
 00082b28	670	arm	FUN_00082b28	todo			
-00083198	5ac	arm	FUN_00083198	todo			
-00083744	23c	arm	FUN_00083744	todo			
-00083980	190	arm	FUN_00083980	todo			
-00083b10	1c8	arm	FUN_00083b10	todo			
-00083cd8	1c8	arm	FUN_00083cd8	todo			
-00083ea0	22c	arm	FUN_00083ea0	todo			
-000840cc	1c4	arm	FUN_000840cc	todo			
-00084290	1d8	arm	FUN_00084290	todo			
-00084468	1f0	arm	FUN_00084468	todo			
-00084658	36c	arm	FUN_00084658	todo			
-000849c4	158	arm	FUN_000849c4	todo			
-00084b1c	2dc	arm	FUN_00084b1c	todo			
-00084df8	3ec	arm	FUN_00084df8	todo			
-000851e4	4d4	arm	FUN_000851e4	todo			
-000856b8	490	arm	FUN_000856b8	todo			
-00085b48	9b4	arm	FUN_00085b48	todo			
-000864fc	320	arm	FUN_000864fc	todo			
-0008681c	464	arm	FUN_0008681c	todo			
-00086c80	398	arm	FUN_00086c80	todo			
-00087018	968	arm	FUN_00087018	todo			
-00087980	3e4	arm	FUN_00087980	todo			
-00087d64	214	arm	FUN_00087d64	todo			
-00087f78	6a8	arm	FUN_00087f78	todo			
-00088620	1cc	arm	FUN_00088620	todo			
-000887ec	158	arm	FUN_000887ec	todo			
-00088944	198	arm	FUN_00088944	todo			
-00088adc	150	arm	FUN_00088adc	todo			
-00088c2c	184	arm	FUN_00088c2c	todo			
-00088db0	37c4	arm	FUN_00088db0	todo			
-0008c574	3fc	arm	FUN_0008c574	todo			
-0008c970	3a8	arm	FUN_0008c970	todo			
-0008cd18	3a8	arm	FUN_0008cd18	todo			
-0008d0c0	3f8	arm	FUN_0008d0c0	todo			
-0008d4b8	1748	arm	FUN_0008d4b8	todo			
-0008ec00	3ec	arm	FUN_0008ec00	todo			
-0008efec	950	arm	FUN_0008efec	todo			
-0008f93c	580	arm	FUN_0008f93c	todo			
-0008febc	674	arm	FUN_0008febc	todo			
-00090530	2c0	arm	FUN_00090530	todo			
-000907f0	7a4	arm	FUN_000907f0	todo			
-00090f94	8ac	arm	FUN_00090f94	todo			
-00091840	18ec	arm	FUN_00091840	todo			
-0009312c	55c	arm	FUN_0009312c	todo			
-00093688	388	arm	FUN_00093688	todo			
-00093a10	418	arm	FUN_00093a10	todo			
-00093e28	2c4	arm	FUN_00093e28	todo			
-000940ec	3d8	arm	FUN_000940ec	todo			
-000944c4	1458	arm	FUN_000944c4	todo			
-0009591c	540	arm	FUN_0009591c	todo			
-00095e5c	660	arm	FUN_00095e5c	todo			
-000964bc	2b4	arm	FUN_000964bc	todo			
-00096770	658	arm	FUN_00096770	todo			
-00096dc8	518	arm	FUN_00096dc8	todo			
-000972e0	630	arm	FUN_000972e0	todo			
-00097910	29c	arm	FUN_00097910	todo			
-00097bac	124	arm	FUN_00097bac	todo			
-00097cd0	4154	arm	FUN_00097cd0	todo			
-0009be24	418	arm	FUN_0009be24	todo			
-0009c23c	3a8	arm	FUN_0009c23c	todo			
-0009c5e4	3a8	arm	FUN_0009c5e4	todo			
-0009c98c	1350	arm	FUN_0009c98c	todo			
-0009dcdc	140	arm	FUN_0009dcdc	todo			
-0009de1c	144	arm	FUN_0009de1c	todo			
-0009df60	140	arm	FUN_0009df60	todo			
-0009e0a0	990	arm	FUN_0009e0a0	todo			
-0009ea30	520	arm	FUN_0009ea30	todo			
-0009ef50	5bc	arm	FUN_0009ef50	todo			
-0009f50c	5c8	arm	FUN_0009f50c	todo			
-0009fad4	5a8	arm	FUN_0009fad4	todo			
-000a007c	5a8	arm	FUN_000a007c	todo			
-000a0624	5c0	arm	FUN_000a0624	todo			
-000a0be4	690	arm	FUN_000a0be4	todo			
-000a1274	5c8	arm	FUN_000a1274	todo			
-000a183c	5e0	arm	FUN_000a183c	todo			
-000a1e1c	59c	arm	FUN_000a1e1c	todo			
-000a23b8	928	arm	FUN_000a23b8	todo			
-000a2ce0	cb4	arm	FUN_000a2ce0	todo			
-000a3994	2ffc	arm	FUN_000a3994	todo			
-000a6990	930	arm	FUN_000a6990	todo			
-000a72c0	a68	arm	FUN_000a72c0	todo			
-000a7d28	21f0	arm	FUN_000a7d28	todo			
-000a9f18	1110	arm	FUN_000a9f18	todo			
-000ab028	220	arm	FUN_000ab028	todo			
+00083198	5a8	arm	FUN_00083198	todo			
+00083740	4	arm	FUN_00083740	todo			
+00083744	e0	arm	FUN_00083744	todo			
+00083824	30	arm	FUN_00083824	todo			
+00083854	128	arm	FUN_00083854	todo			
+0008397c	4	arm	FUN_0008397c	todo			
+00083980	64	arm	FUN_00083980	todo			
+000839e4	128	arm	FUN_000839e4	todo			
+00083b0c	4	arm	FUN_00083b0c	todo			
+00083b10	64	arm	FUN_00083b10	todo			
+00083b74	160	arm	FUN_00083b74	todo			
+00083cd4	4	arm	FUN_00083cd4	todo			
+00083cd8	9c	arm	FUN_00083cd8	todo			
+00083d74	128	arm	FUN_00083d74	todo			
+00083e9c	4	arm	FUN_00083e9c	todo			
+00083ea0	74	arm	FUN_00083ea0	todo			
+00083f14	1b4	arm	FUN_00083f14	todo			
+000840c8	4	arm	FUN_000840c8	todo			
+000840cc	78	arm	FUN_000840cc	todo			
+00084144	6c	arm	FUN_00084144	todo			
+000841b0	dc	arm	FUN_000841b0	todo			
+0008428c	4	arm	FUN_0008428c	todo			
+00084290	74	arm	FUN_00084290	todo			
+00084304	160	arm	FUN_00084304	todo			
+00084464	4	arm	FUN_00084464	todo			
+00084468	ac	arm	FUN_00084468	todo			
+00084514	140	arm	FUN_00084514	todo			
+00084654	4	arm	FUN_00084654	todo			
+00084658	368	arm	FUN_00084658	todo			
+000849c0	4	arm	FUN_000849c0	todo			
+000849c4	154	arm	FUN_000849c4	todo			
+00084b18	4	arm	FUN_00084b18	todo			
+00084b1c	4c	arm	FUN_00084b1c	todo			
+00084b68	28c	arm	FUN_00084b68	todo			
+00084df4	4	arm	FUN_00084df4	todo			
+00084df8	1f0	arm	FUN_00084df8	todo			
+00084fe8	1f8	arm	FUN_00084fe8	todo			
+000851e0	4	arm	FUN_000851e0	todo			
+000851e4	218	arm	FUN_000851e4	todo			
+000853fc	2b8	arm	FUN_000853fc	todo			
+000856b4	4	arm	FUN_000856b4	todo			
+000856b8	300	arm	FUN_000856b8	todo			
+000859b8	18c	arm	FUN_000859b8	todo			
+00085b44	4	arm	FUN_00085b44	todo			
+00085b48	264	arm	FUN_00085b48	todo			
+00085dac	74c	arm	FUN_00085dac	todo			
+000864f8	4	arm	FUN_000864f8	todo			
+000864fc	180	arm	FUN_000864fc	todo			
+0008667c	19c	arm	FUN_0008667c	todo			
+00086818	4	arm	FUN_00086818	todo			
+0008681c	30	arm	FUN_0008681c	todo			
+0008684c	1b4	arm	FUN_0008684c	todo			
+00086a00	128	arm	FUN_00086a00	todo			
+00086b28	154	arm	FUN_00086b28	todo			
+00086c7c	4	arm	FUN_00086c7c	todo			
+00086c80	240	arm	FUN_00086c80	todo			
+00086ec0	154	arm	FUN_00086ec0	todo			
+00087014	4	arm	FUN_00087014	todo			
+00087018	22c	arm	FUN_00087018	todo			
+00087244	19c	arm	FUN_00087244	todo			
+000873e0	1f8	arm	FUN_000873e0	todo			
+000875d8	3a4	arm	FUN_000875d8	todo			
+0008797c	4	arm	FUN_0008797c	todo			
+00087980	26c	arm	FUN_00087980	todo			
+00087bec	54	arm	FUN_00087bec	todo			
+00087c40	120	arm	FUN_00087c40	todo			
+00087d60	4	arm	FUN_00087d60	todo			
+00087d64	9c	arm	FUN_00087d64	todo			
+00087e00	174	arm	FUN_00087e00	todo			
+00087f74	4	arm	FUN_00087f74	todo			
+00087f78	4c	arm	FUN_00087f78	todo			
+00087fc4	7c	arm	FUN_00087fc4	todo			
+00088040	5c	arm	FUN_00088040	todo			
+0008809c	580	arm	FUN_0008809c	todo			
+0008861c	4	arm	FUN_0008861c	todo			
+00088620	1c8	arm	FUN_00088620	todo			
+000887e8	4	arm	FUN_000887e8	todo			
+000887ec	154	arm	FUN_000887ec	todo			
+00088940	4	arm	FUN_00088940	todo			
+00088944	194	arm	FUN_00088944	todo			
+00088ad8	4	arm	FUN_00088ad8	todo			
+00088adc	14c	arm	FUN_00088adc	todo			
+00088c28	4	arm	FUN_00088c28	todo			
+00088c2c	180	arm	FUN_00088c2c	todo			
+00088dac	4	arm	FUN_00088dac	todo			
+00088db0	8c	arm	FUN_00088db0	todo			
+00088e3c	58	arm	FUN_00088e3c	todo			
+00088e94	60	arm	FUN_00088e94	todo			
+00088ef4	1f4	arm	FUN_00088ef4	todo			
+000890e8	6c	arm	FUN_000890e8	todo			
+00089154	28	arm	FUN_00089154	todo			
+0008917c	2cc	arm	FUN_0008917c	todo			
+00089448	54	arm	FUN_00089448	todo			
+0008949c	d4	arm	FUN_0008949c	todo			
+00089570	2bc	arm	FUN_00089570	todo			
+0008982c	afc	arm	FUN_0008982c	todo			
+0008a328	1e8	arm	FUN_0008a328	todo			
+0008a510	138	arm	FUN_0008a510	todo			
+0008a648	e8	arm	FUN_0008a648	todo			
+0008a730	3a8	arm	FUN_0008a730	todo			
+0008aad8	398	arm	FUN_0008aad8	todo			
+0008ae70	398	arm	FUN_0008ae70	todo			
+0008b208	398	arm	FUN_0008b208	todo			
+0008b5a0	398	arm	FUN_0008b5a0	todo			
+0008b938	398	arm	FUN_0008b938	todo			
+0008bcd0	4bc	arm	FUN_0008bcd0	todo			
+0008c18c	3e8	arm	FUN_0008c18c	todo			
+0008c574	18	arm	FUN_0008c574	todo			
+0008c58c	3e4	arm	FUN_0008c58c	todo			
+0008c970	18	arm	FUN_0008c970	todo			
+0008c988	390	arm	FUN_0008c988	todo			
+0008cd18	18	arm	FUN_0008cd18	todo			
+0008cd30	390	arm	FUN_0008cd30	todo			
+0008d0c0	18	arm	FUN_0008d0c0	todo			
+0008d0d8	3dc	arm	FUN_0008d0d8	todo			
+0008d4b4	4	arm	FUN_0008d4b4	todo			
+0008d4b8	70	arm	FUN_0008d4b8	todo			
+0008d528	a8	arm	FUN_0008d528	todo			
+0008d5d0	98	arm	FUN_0008d5d0	todo			
+0008d668	84	arm	FUN_0008d668	todo			
+0008d6ec	84	arm	FUN_0008d6ec	todo			
+0008d770	b8	arm	FUN_0008d770	todo			
+0008d828	168	arm	FUN_0008d828	todo			
+0008d990	c0	arm	FUN_0008d990	todo			
+0008da50	dc	arm	FUN_0008da50	todo			
+0008db2c	a8	arm	FUN_0008db2c	todo			
+0008dbd4	30	arm	FUN_0008dbd4	todo			
+0008dc04	18	arm	FUN_0008dc04	todo			
+0008dc1c	784	arm	FUN_0008dc1c	todo			
+0008e3a0	1b4	arm	FUN_0008e3a0	todo			
+0008e554	6a8	arm	FUN_0008e554	todo			
+0008ebfc	4	arm	FUN_0008ebfc	todo			
+0008ec00	3e8	arm	FUN_0008ec00	todo			
+0008efe8	4	arm	FUN_0008efe8	todo			
+0008efec	9c	arm	FUN_0008efec	todo			
+0008f088	604	arm	FUN_0008f088	todo			
+0008f68c	2ac	arm	FUN_0008f68c	todo			
+0008f938	4	arm	FUN_0008f938	todo			
+0008f93c	57c	arm	FUN_0008f93c	todo			
+0008feb8	4	arm	FUN_0008feb8	todo			
+0008febc	564	arm	FUN_0008febc	todo			
+00090420	10c	arm	FUN_00090420	todo			
+0009052c	4	arm	FUN_0009052c	todo			
+00090530	2bc	arm	FUN_00090530	todo			
+000907ec	4	arm	FUN_000907ec	todo			
+000907f0	90	arm	FUN_000907f0	todo			
+00090880	710	arm	FUN_00090880	todo			
+00090f90	4	arm	FUN_00090f90	todo			
+00090f94	748	arm	FUN_00090f94	todo			
+000916dc	54	arm	FUN_000916dc	todo			
+00091730	10c	arm	FUN_00091730	todo			
+0009183c	4	arm	FUN_0009183c	todo			
+00091840	cc	arm	FUN_00091840	todo			
+0009190c	5cc	arm	FUN_0009190c	todo			
+00091ed8	8cc	arm	FUN_00091ed8	todo			
+000927a4	58	arm	FUN_000927a4	todo			
+000927fc	94	arm	FUN_000927fc	todo			
+00092890	38	arm	FUN_00092890	todo			
+000928c8	38	arm	FUN_000928c8	todo			
+00092900	38	arm	FUN_00092900	todo			
+00092938	7f0	arm	FUN_00092938	todo			
+00093128	4	arm	FUN_00093128	todo			
+0009312c	430	arm	FUN_0009312c	todo			
+0009355c	128	arm	FUN_0009355c	todo			
+00093684	4	arm	FUN_00093684	todo			
+00093688	2cc	arm	FUN_00093688	todo			
+00093954	b8	arm	FUN_00093954	todo			
+00093a0c	4	arm	FUN_00093a0c	todo			
+00093a10	2ec	arm	FUN_00093a10	todo			
+00093cfc	128	arm	FUN_00093cfc	todo			
+00093e24	4	arm	FUN_00093e24	todo			
+00093e28	2c0	arm	FUN_00093e28	todo			
+000940e8	4	arm	FUN_000940e8	todo			
+000940ec	2ac	arm	FUN_000940ec	todo			
+00094398	128	arm	FUN_00094398	todo			
+000944c0	4	arm	FUN_000944c0	todo			
+000944c4	4c	arm	FUN_000944c4	todo			
+00094510	770	arm	FUN_00094510	todo			
+00094c80	58	arm	FUN_00094c80	todo			
+00094cd8	8c	arm	FUN_00094cd8	todo			
+00094d64	38	arm	FUN_00094d64	todo			
+00094d9c	38	arm	FUN_00094d9c	todo			
+00094dd4	38	arm	FUN_00094dd4	todo			
+00094e0c	5c	arm	FUN_00094e0c	todo			
+00094e68	ab0	arm	FUN_00094e68	todo			
+00095918	4	arm	FUN_00095918	todo			
+0009591c	204	arm	FUN_0009591c	todo			
+00095b20	338	arm	FUN_00095b20	todo			
+00095e58	4	arm	FUN_00095e58	todo			
+00095e5c	534	arm	FUN_00095e5c	todo			
+00096390	128	arm	FUN_00096390	todo			
+000964b8	4	arm	FUN_000964b8	todo			
+000964bc	188	arm	FUN_000964bc	todo			
+00096644	128	arm	FUN_00096644	todo			
+0009676c	4	arm	FUN_0009676c	todo			
+00096770	654	arm	FUN_00096770	todo			
+00096dc4	4	arm	FUN_00096dc4	todo			
+00096dc8	514	arm	FUN_00096dc8	todo			
+000972dc	4	arm	FUN_000972dc	todo			
+000972e0	504	arm	FUN_000972e0	todo			
+000977e4	128	arm	FUN_000977e4	todo			
+0009790c	4	arm	FUN_0009790c	todo			
+00097910	170	arm	FUN_00097910	todo			
+00097a80	128	arm	FUN_00097a80	todo			
+00097ba8	4	arm	FUN_00097ba8	todo			
+00097bac	4c	arm	FUN_00097bac	todo			
+00097bf8	60	arm	FUN_00097bf8	todo			
+00097c58	78	arm	FUN_00097c58	todo			
+00097cd0	50	arm	FUN_00097cd0	todo			
+00097d20	38	arm	FUN_00097d20	todo			
+00097d58	38	arm	FUN_00097d58	todo			
+00097d90	5c	arm	FUN_00097d90	todo			
+00097dec	4038	arm	FUN_00097dec	todo			
+0009be24	18	arm	FUN_0009be24	todo			
+0009be3c	130	arm	FUN_0009be3c	todo			
+0009bf6c	2d0	arm	FUN_0009bf6c	todo			
+0009c23c	18	arm	FUN_0009c23c	todo			
+0009c254	390	arm	FUN_0009c254	todo			
+0009c5e4	18	arm	FUN_0009c5e4	todo			
+0009c5fc	390	arm	FUN_0009c5fc	todo			
+0009c98c	18	arm	FUN_0009c98c	todo			
+0009c9a4	398	arm	FUN_0009c9a4	todo			
+0009cd3c	15c	arm	FUN_0009cd3c	todo			
+0009ce98	1a4	arm	FUN_0009ce98	todo			
+0009d03c	15c	arm	FUN_0009d03c	todo			
+0009d198	1a4	arm	FUN_0009d198	todo			
+0009d33c	15c	arm	FUN_0009d33c	todo			
+0009d498	30	arm	FUN_0009d498	todo			
+0009d4c8	814	arm	FUN_0009d4c8	todo			
+0009dcdc	18	arm	FUN_0009dcdc	todo			
+0009dcf4	128	arm	FUN_0009dcf4	todo			
+0009de1c	18	arm	FUN_0009de1c	todo			
+0009de34	12c	arm	FUN_0009de34	todo			
+0009df60	18	arm	FUN_0009df60	todo			
+0009df78	128	arm	FUN_0009df78	todo			
+0009e0a0	18	arm	FUN_0009e0a0	todo			
+0009e0b8	148	arm	FUN_0009e0b8	todo			
+0009e200	148	arm	FUN_0009e200	todo			
+0009e348	148	arm	FUN_0009e348	todo			
+0009e490	148	arm	FUN_0009e490	todo			
+0009e5d8	148	arm	FUN_0009e5d8	todo			
+0009e720	148	arm	FUN_0009e720	todo			
+0009e868	30	arm	FUN_0009e868	todo			
+0009e898	194	arm	FUN_0009e898	todo			
+0009ea2c	4	arm	FUN_0009ea2c	todo			
+0009ea30	400	arm	FUN_0009ea30	todo			
+0009ee30	11c	arm	FUN_0009ee30	todo			
+0009ef4c	4	arm	FUN_0009ef4c	todo			
+0009ef50	49c	arm	FUN_0009ef50	todo			
+0009f3ec	11c	arm	FUN_0009f3ec	todo			
+0009f508	4	arm	FUN_0009f508	todo			
+0009f50c	4a8	arm	FUN_0009f50c	todo			
+0009f9b4	11c	arm	FUN_0009f9b4	todo			
+0009fad0	4	arm	FUN_0009fad0	todo			
+0009fad4	488	arm	FUN_0009fad4	todo			
+0009ff5c	11c	arm	FUN_0009ff5c	todo			
+000a0078	4	arm	FUN_000a0078	todo			
+000a007c	488	arm	FUN_000a007c	todo			
+000a0504	11c	arm	FUN_000a0504	todo			
+000a0620	4	arm	FUN_000a0620	todo			
+000a0624	4a0	arm	FUN_000a0624	todo			
+000a0ac4	11c	arm	FUN_000a0ac4	todo			
+000a0be0	4	arm	FUN_000a0be0	todo			
+000a0be4	570	arm	FUN_000a0be4	todo			
+000a1154	11c	arm	FUN_000a1154	todo			
+000a1270	4	arm	FUN_000a1270	todo			
+000a1274	4a8	arm	FUN_000a1274	todo			
+000a171c	11c	arm	FUN_000a171c	todo			
+000a1838	4	arm	FUN_000a1838	todo			
+000a183c	1a4	arm	FUN_000a183c	todo			
+000a19e0	31c	arm	FUN_000a19e0	todo			
+000a1cfc	11c	arm	FUN_000a1cfc	todo			
+000a1e18	4	arm	FUN_000a1e18	todo			
+000a1e1c	43c	arm	FUN_000a1e1c	todo			
+000a2258	15c	arm	FUN_000a2258	todo			
+000a23b4	4	arm	FUN_000a23b4	todo			
+000a23b8	924	arm	FUN_000a23b8	todo			
+000a2cdc	4	arm	FUN_000a2cdc	todo			
+000a2ce0	7a8	arm	FUN_000a2ce0	todo			
+000a3488	bc	arm	FUN_000a3488	todo			
+000a3544	68	arm	FUN_000a3544	todo			
+000a35ac	68	arm	FUN_000a35ac	todo			
+000a3614	37c	arm	FUN_000a3614	todo			
+000a3990	4	arm	FUN_000a3990	todo			
+000a3994	84	arm	FUN_000a3994	todo			
+000a3a18	470	arm	FUN_000a3a18	todo			
+000a3e88	50	arm	FUN_000a3e88	todo			
+000a3ed8	50	arm	FUN_000a3ed8	todo			
+000a3f28	50	arm	FUN_000a3f28	todo			
+000a3f78	28ec	arm	FUN_000a3f78	todo			
+000a6864	128	arm	FUN_000a6864	todo			
+000a698c	4	arm	FUN_000a698c	todo			
+000a6990	804	arm	FUN_000a6990	todo			
+000a7194	128	arm	FUN_000a7194	todo			
+000a72bc	4	arm	FUN_000a72bc	todo			
+000a72c0	9dc	arm	FUN_000a72c0	todo			
+000a7c9c	8c	arm	FUN_000a7c9c	todo			
+000a7d28	98	arm	FUN_000a7d28	todo			
+000a7dc0	4	arm	FUN_000a7dc0	todo			
+000a7dc4	d8	arm	FUN_000a7dc4	todo			
+000a7e9c	3d0	arm	FUN_000a7e9c	todo			
+000a826c	3ec	arm	FUN_000a826c	todo			
+000a8658	398	arm	FUN_000a8658	todo			
+000a89f0	34c	arm	FUN_000a89f0	todo			
+000a8d3c	348	arm	FUN_000a8d3c	todo			
+000a9084	34c	arm	FUN_000a9084	todo			
+000a93d0	348	arm	FUN_000a93d0	todo			
+000a9718	34c	arm	FUN_000a9718	todo			
+000a9a64	348	arm	FUN_000a9a64	todo			
+000a9dac	30	arm	FUN_000a9dac	todo			
+000a9ddc	10	arm	FUN_000a9ddc	todo			
+000a9dec	128	arm	FUN_000a9dec	todo			
+000a9f14	4	arm	FUN_000a9f14	todo			
+000a9f18	fe4	arm	FUN_000a9f18	todo			
+000aaefc	128	arm	FUN_000aaefc	todo			
+000ab024	4	arm	FUN_000ab024	todo			
+000ab028	b8	arm	FUN_000ab028	todo			
+000ab0e0	30	arm	FUN_000ab0e0	todo			
+000ab110	4	arm	FUN_000ab110	todo			
+000ab114	134	arm	FUN_000ab114	todo			
 000ab248	6c	arm	FUN_000ab248	todo			
 000ab2b4	1c6c	arm	FUN_000ab2b4	todo			
 000acf20	28	arm	FUN_000acf20	todo			
@@ -1214,7 +1586,10 @@ addr	size	mode	name	status	src	score	note
 000b0340	d8	arm	FUN_000b0340	todo			
 000b0418	1c4	arm	FUN_000b0418	todo			
 000b05dc	12a4	arm	FUN_000b05dc	todo			
-000b1880	498	arm	FUN_000b1880	todo			
+000b1880	118	arm	FUN_000b1880	todo			
+000b1998	1b8	arm	FUN_000b1998	todo			
+000b1b50	1b8	arm	FUN_000b1b50	todo			
+000b1d08	10	arm	FUN_000b1d08	todo			
 000b1d18	11c	arm	FUN_000b1d18	todo			
 000b1e34	4ac	arm	FUN_000b1e34	todo			
 000b22e0	1b0	arm	FUN_000b22e0	todo			
@@ -1321,7 +1696,20 @@ addr	size	mode	name	status	src	score	note
 000c59bc	fb8	arm	FUN_000c59bc	todo			
 000c6974	27a8	arm	FUN_000c6974	todo			
 000c911c	d70	arm	FUN_000c911c	todo			
-000c9e8c	2400	arm	FUN_000c9e8c	todo			
+000c9e8c	378	arm	FUN_000c9e8c	todo			
+000ca204	760	arm	FUN_000ca204	todo			
+000ca964	4c	arm	FUN_000ca964	todo			
+000ca9b0	e4	arm	FUN_000ca9b0	todo			
+000caa94	300	arm	FUN_000caa94	todo			
+000cad94	f4	arm	FUN_000cad94	todo			
+000cae88	364	arm	FUN_000cae88	todo			
+000cb1ec	588	arm	FUN_000cb1ec	todo			
+000cb774	648	arm	FUN_000cb774	todo			
+000cbdbc	278	arm	FUN_000cbdbc	todo			
+000cc034	44	arm	FUN_000cc034	todo			
+000cc078	158	arm	FUN_000cc078	todo			
+000cc1d0	ac	arm	FUN_000cc1d0	todo			
+000cc27c	10	arm	FUN_000cc27c	todo			
 000cc28c	314	arm	FUN_000cc28c	todo			
 000cc5a0	264	arm	FUN_000cc5a0	todo			
 000cc804	78c	arm	FUN_000cc804	todo			
@@ -1378,7 +1766,7 @@ addr	size	mode	name	status	src	score	note
 000deef8	50	arm	FUN_000deef8	todo			
 000def48	58	arm	FUN_000def48	todo			
 000defa0	58	arm	FUN_000defa0	todo			
-000deff8	58	arm	FUN_000deff8	todo			
+000deff8	58	arm	cmp_init	todo			
 000df050	1c	arm	FUN_000df050	todo			
 000df06c	1c	arm	FUN_000df06c	todo			
 000df088	78	arm	FUN_000df088	todo			
@@ -1414,7 +1802,7 @@ addr	size	mode	name	status	src	score	note
 000dffe0	9c	arm	FUN_000dffe0	todo			
 000e007c	ac	arm	FUN_000e007c	todo			
 000e0128	84	arm	FUN_000e0128	todo			
-000e01ac	c0	arm	FUN_000e01ac	todo			
+000e01ac	c0	arm	cmp_write_str	todo			
 000e026c	94	arm	FUN_000e026c	todo			
 000e0300	8c	arm	FUN_000e0300	todo			
 000e038c	a4	arm	FUN_000e038c	todo			
@@ -1461,7 +1849,7 @@ addr	size	mode	name	status	src	score	note
 000e2660	7c	arm	FUN_000e2660	todo			
 000e26dc	13c	arm	FUN_000e26dc	todo			
 000e2818	180	arm	FUN_000e2818	todo			
-000e2998	198	arm	FUN_000e2998	todo			
+000e2998	198	arm	cmp_read_int	todo			
 000e2b30	1ec	arm	FUN_000e2b30	todo			
 000e2d1c	30	arm	FUN_000e2d1c	todo			
 000e2d4c	30	arm	FUN_000e2d4c	todo			
@@ -1484,8 +1872,8 @@ addr	size	mode	name	status	src	score	note
 000e36a8	f4	arm	FUN_000e36a8	todo			
 000e379c	80	arm	FUN_000e379c	todo			
 000e381c	d0	arm	FUN_000e381c	todo			
-000e38ec	90	arm	FUN_000e38ec	todo			
-000e397c	90	arm	FUN_000e397c	todo			
+000e38ec	90	arm	cmp_read_array	todo			
+000e397c	90	arm	cmp_read_map	todo			
 000e3a0c	7c	arm	FUN_000e3a0c	todo			
 000e3a88	88	arm	FUN_000e3a88	todo			
 000e3b10	7c	arm	FUN_000e3b10	todo			
@@ -1504,7 +1892,7 @@ addr	size	mode	name	status	src	score	note
 000e41f8	94	arm	FUN_000e41f8	todo			
 000e428c	dc	arm	FUN_000e428c	todo			
 000e4368	94	arm	FUN_000e4368	todo			
-000e43fc	103c	arm	FUN_000e43fc	todo			
+000e43fc	103c	arm	cmp_read_object	todo			
 000e5438	44	arm	FUN_000e5438	todo			
 000e547c	4c	arm	FUN_000e547c	todo			
 000e54c8	4c	arm	FUN_000e54c8	todo			
@@ -1747,8 +2135,8 @@ addr	size	mode	name	status	src	score	note
 000f9424	184	arm	FUN_000f9424	todo			
 000f95a8	cfc	arm	FUN_000f95a8	todo			
 000fa2a4	c4	arm	FUN_000fa2a4	todo			
-000fa368	8	arm	FUN_000fa368	todo			
-000fa370	8	arm	FUN_000fa370	todo			
+000fa368	8	arm	strchr	todo			
+000fa370	8	arm	strrchr	todo			
 000fa378	a8	arm	__aeabi_uidiv	lib	lib:libgcc:_udivsi3.o	100	
 000fa420	20	arm	__aeabi_uidivmod	lib	lib:libgcc:_udivsi3.o	100	
 000fa440	8	arm	__aeabi_idiv	todo			
@@ -1757,7 +2145,7 @@ addr	size	mode	name	status	src	score	note
 000fa53c	8	arm	FUN_000fa53c	todo			
 000fa544	4	arm	__aeabi_dsub	todo			
 000fa548	2ac	arm	__aeabi_dadd	lib	lib:libgcc-thumb:_arm_addsubdf3.o	100	
-000fa7f4	24	arm	__floatunsidf	lib	lib:libgcc-thumb:_arm_addsubdf3.o	100	by object order
+000fa7f4	24	arm	__floatunsidf	lib	lib:libgcc-thumb:_arm_addsubdf3.o	100	
 000fa818	28	arm	__aeabi_i2d	lib	lib:libgcc-thumb:_arm_addsubdf3.o	100	
 000fa840	40	arm	__aeabi_f2d	lib	lib:libgcc-thumb:_arm_addsubdf3.o	100	
 000fa880	14	arm	FUN_000fa880	todo			
@@ -1766,35 +2154,35 @@ addr	size	mode	name	status	src	score	note
 000fab60	204	arm	__aeabi_ddiv	lib	lib:libgcc-thumb:_arm_muldivdf3.o	100	
 000fad64	8	arm	FUN_000fad64	todo			
 000fad6c	8	arm	FUN_000fad6c	todo			
-000fad74	88	arm	__cmpdf2	todo			
+000fad74	88	arm	__cmpdf2	lib	lib:libgcc-thumb:_arm_cmpdf2.o	100	
 000fadfc	1c	arm	__aeabi_cdrcmple	todo			
-000fae18	14	arm	__aeabi_cdcmple	lib	lib:libgcc-thumb:_arm_cmpdf2.o	100	by object order
-000fae2c	14	arm	__aeabi_dcmpeq	lib	lib:libgcc-thumb:_arm_cmpdf2.o	100	by object order
+000fae18	14	arm	__aeabi_cdcmple	lib	lib:libgcc-thumb:_arm_cmpdf2.o	100	
+000fae2c	14	arm	__aeabi_dcmpeq	lib	lib:libgcc-thumb:_arm_cmpdf2.o	100	
 000fae40	14	arm	__aeabi_dcmplt	lib	lib:libgcc-thumb:_arm_cmpdf2.o	100	
-000fae54	14	arm	__aeabi_dcmple	lib	lib:libgcc-thumb:_arm_cmpdf2.o	100	by object order
-000fae68	14	arm	__aeabi_dcmpge	lib	lib:libgcc-thumb:_arm_cmpdf2.o	100	by object order
-000fae7c	14	arm	__aeabi_dcmpgt	lib	lib:libgcc-thumb:_arm_cmpdf2.o	100	by object order
+000fae54	14	arm	__aeabi_dcmple	lib	lib:libgcc-thumb:_arm_cmpdf2.o	100	
+000fae68	14	arm	__aeabi_dcmpge	lib	lib:libgcc-thumb:_arm_cmpdf2.o	100	
+000fae7c	14	arm	__aeabi_dcmpgt	lib	lib:libgcc-thumb:_arm_cmpdf2.o	100	
 000fae90	5c	arm	__aeabi_d2iz	lib	lib:libgcc-thumb:_arm_fixdfsi.o	100	
 000faeec	a0	arm	__aeabi_d2f	lib	lib:libgcc-thumb:_arm_truncdfsf2.o	100	
 000faf8c	8	arm	FUN_000faf8c	todo			
-000faf94	4	arm	FUN_000faf94	todo			
-000faf98	190	arm	FUN_000faf98	todo			
+000faf94	4	arm	__aeabi_fsub	todo			
+000faf98	190	arm	__aeabi_fadd	lib	lib:libgcc-thumb:_arm_addsubsf3.o	100	
 000fb128	8	arm	FUN_000fb128	todo			
 000fb130	20	arm	__aeabi_i2f	lib	lib:libgcc-thumb:_arm_addsubsf3.o	100	
 000fb150	10	arm	FUN_000fb150	todo			
 000fb160	7c	arm	FUN_000fb160	todo			
-000fb1dc	18c	arm	FUN_000fb1dc	todo			
+000fb1dc	18c	arm	__aeabi_fmul	todo			
 000fb368	c	arm	FUN_000fb368	todo			
-000fb374	160	arm	FUN_000fb374	todo			
+000fb374	160	arm	__aeabi_fdiv	lib	lib:libgcc-thumb:_arm_muldivsf3.o	100	
 000fb4d4	8	arm	FUN_000fb4d4	todo			
 000fb4dc	8	arm	FUN_000fb4dc	todo			
-000fb4e4	64	arm	__cmpsf2	todo			
+000fb4e4	64	arm	__cmpsf2	lib	lib:libgcc-thumb:_arm_cmpsf2.o	100	
 000fb548	10	arm	__aeabi_cfrcmple	todo			
-000fb558	14	arm	__aeabi_cfcmple	lib	lib:libgcc-thumb:_arm_cmpsf2.o	100	by object order
+000fb558	14	arm	__aeabi_cfcmple	lib	lib:libgcc-thumb:_arm_cmpsf2.o	100	
 000fb56c	14	arm	__aeabi_fcmpeq	lib	lib:libgcc-thumb:_arm_cmpsf2.o	100	
 000fb580	14	arm	__aeabi_fcmplt	lib	lib:libgcc-thumb:_arm_cmpsf2.o	100	
-000fb594	14	arm	__aeabi_fcmple	lib	lib:libgcc-thumb:_arm_cmpsf2.o	100	by object order
-000fb5a8	14	arm	__aeabi_fcmpge	lib	lib:libgcc-thumb:_arm_cmpsf2.o	100	by object order
+000fb594	14	arm	__aeabi_fcmple	lib	lib:libgcc-thumb:_arm_cmpsf2.o	100	
+000fb5a8	14	arm	__aeabi_fcmpge	lib	lib:libgcc-thumb:_arm_cmpsf2.o	100	
 000fb5bc	14	arm	__aeabi_fcmpgt	lib	lib:libgcc-thumb:_arm_cmpsf2.o	100	
 000fb5d0	5c	arm	__aeabi_f2iz	lib	lib:libgcc-thumb:_arm_fixsfsi.o	100	
 000fb62c	54	arm	FUN_000fb62c	todo			
@@ -1816,7 +2204,8 @@ addr	size	mode	name	status	src	score	note
 000fbb8c	a4	arm	__gnu_Unwind_RaiseException	lib	lib:libgcc:unwind-arm.o	100	
 000fbc30	1c	arm	__gnu_Unwind_ForcedUnwind	lib	lib:libgcc:unwind-arm.o	100	
 000fbc4c	74	arm	__gnu_Unwind_Resume	lib	lib:libgcc:unwind-arm.o	100	
-000fbcc0	24	arm	FUN_000fbcc0	todo			
+000fbcc0	20	arm	__gnu_Unwind_Resume_or_Rethrow	lib	lib:libgcc:unwind-arm.o	100	
+000fbce0	4	arm	_Unwind_Complete	lib	lib:libgcc:unwind-arm.o	100	by object order
 000fbce4	20	arm	_Unwind_DeleteException	lib	lib:libgcc:unwind-arm.o	100	
 000fbd04	5c	arm	_Unwind_VRS_Get	lib	lib:libgcc:unwind-arm.o	100	
 000fbd60	28	arm	_Unwind_GetGR@unwind-arm	lib	lib:libgcc:unwind-arm.o	100	

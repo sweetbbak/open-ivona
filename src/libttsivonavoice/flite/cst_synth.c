@@ -89,9 +89,15 @@ const char *utt_input_text(cst_utterance *u)
 /* 0x665a0 arm */
 int utt_set_input_text(cst_utterance *u, const char *text)
 {
-    if (text == NULL)
+    cst_features *f = u->features;
+    unsigned long z = (unsigned long)__builtin_return_address(0)
+                    - (unsigned long)__builtin_return_address(0);
+    const char *k = "input_text" + z;
+    if (!text) {
+        __asm__("" :: "r"(k));
         text = "";
-    feat_set_string(u->features, "input_text", text);
+    }
+    feat_set_string(f, k, text);
     return 0;
 }
 
@@ -267,11 +273,11 @@ cst_val *lexicon_from_pls(const char *filename)
 
     ts = ts_open(filename);
     if (ts == NULL)
-        return r;
+        goto ret;
     ts->p_singlecharsymbols = "#";
     ts->p_prepunctuationsymbols = "";
     ts->p_postpunctuationsymbols = "";
-    if (strcmp("IVONA_Lexicon", ts_get(ts)) != 0) {
+    if (__builtin_expect(strcmp("IVONA_Lexicon", ts_get(ts)) != 0, 0)) {
         cst_errmsg("IVONA_Lexicon: Missing file header\n");
         r = NULL;
         goto out;
@@ -305,11 +311,12 @@ cst_val *lexicon_from_pls(const char *filename)
     r = val_reverse(entries);
 out:
     ts_close(ts);
+ret:
     return r;
 }
 
 /* 0x66ae4 arm: the entry of word (with part of speech pos) in a lexicon list. */
-const cst_val *in_lex(const cst_val *entries, const char *word, const char *pos)
+const cst_val *val_in_lex(const cst_val *entries, const char *word, const char *pos)
 {
     char *wp = cst_safe_alloc(strlen(word) + 2, 1);
     const cst_val *r;
@@ -452,74 +459,71 @@ char *xivona_to_xsampa(cst_item *seg, const void *rules, const stress_info *si)
     cst_item *ss, *syl, *word, *first, *end, *s;
     const stress_info *e;
     strbuf out, ctx;
-    int start, len, st;
+    int start, len;
     char *buf;
 
     ss = item_as(seg, REL_SYLSTRUCTURE);
     if (si == NULL)
         si = default_stress_info;
-    if (ss == NULL || rules == NULL)
-        return cst_strdup("");
-    syl = item_parent(ss);
-    word = item_parent(syl);
-    first = item_daughter(item_daughter(word));
-    end = item_next(item_as(item_last_daughter(item_last_daughter(word)), REL_SEGMENT));
-    strbuf_init(&out);
-    strbuf_init(&ctx);
-    if (ss == first)
-        strbuf_append_str(&out, " ");
-    s = item_daughter(item_parent(ss));
-    if (s == ss) {
-        e = stress_info_find(si, item_feat_int(syl, "stress"));
-        if (first != s)
-            strbuf_append_str(&out, ".");
-        if (e) {
-            if (e->mark == 1)
-                strbuf_append_str(&out, "\"");
-            else if (e->mark == 2)
-                strbuf_append_str(&out, "%");
-        }
-    }
-    if (item_prev(item_as(word, REL_PHRASE)) == NULL)
-        strbuf_append_str(&ctx, "[$$]");
-    strbuf_append_str(&ctx, "[$]");
-    for (s = item_as(first, REL_SEGMENT); s && s != seg; s = item_next(s)) {
-        strbuf_append_str(&ctx, "[");
-        strbuf_append_str(&ctx, item_feat_string(s, "name"));
-        strbuf_append_str(&ctx, "]");
-    }
-    start = ctx.len;
-    strbuf_append_str(&ctx, "[");
-    strbuf_append_str(&ctx, item_feat_string(seg, "name"));
-    strbuf_append_str(&ctx, "]");
-    len = ctx.len - start;
-    for (s = item_next(seg); s && s != end; s = item_next(s)) {
-        strbuf_append_str(&ctx, "[");
-        strbuf_append_str(&ctx, item_feat_string(s, "name"));
-        strbuf_append_str(&ctx, "]");
-    }
-    strbuf_append_str(&ctx, "[$]");
-    if (item_next(item_as(word, REL_PHRASE)) == NULL)
-        strbuf_append_str(&ctx, "[$$]");
-    buf = cst_safe_alloc(ctx.len + 1, 1);
-    FUN_0006dc94(ctx.data, start, len, rules, 0, buf);
-    strbuf_append_str(&out, buf);
-    cst_free(buf);
-    if (si != default_stress_info
-        && strcmp("+", ffeature_string(item_traverse(ss, 0), "ph_vc")) == 0) {
-        st = item_feat_int(syl, "stress");
-        for (; si->stress; si++)
-            if (st == si->stress) {
-                if (si->tone)
-                    strbuf_append_str(&out, xsampa_mod_name(si->tone));
-                break;
+    if (ss && rules) {
+        syl = item_parent(ss);
+        word = item_parent(syl);
+        first = item_daughter(item_daughter(word));
+        end = item_next(item_as(item_last_daughter(item_last_daughter(word)), REL_SEGMENT));
+        strbuf_init(&out);
+        strbuf_init(&ctx);
+        if (ss == first)
+            strbuf_append_str(&out, " ");
+        s = item_daughter(item_parent(ss));
+        if (s == ss) {
+            e = stress_info_find(si, item_feat_int(syl, "stress"));
+            if (first != s)
+                strbuf_append_str(&out, ".");
+            if (e) {
+                if (e->mark == 1)
+                    strbuf_append_str(&out, "\"");
+                else if (e->mark == 2)
+                    strbuf_append_str(&out, "%");
             }
+        }
+        if (item_prev(item_as(word, REL_PHRASE)) == NULL)
+            strbuf_append_str(&ctx, "[$$]");
+        strbuf_append_str(&ctx, "[$]");
+        for (s = item_as(first, REL_SEGMENT); s && seg != s; s = item_next(s)) {
+            strbuf_append_str(&ctx, "[");
+            strbuf_append_str(&ctx, item_feat_string(s, "name"));
+            strbuf_append_str(&ctx, "]");
+        }
+        start = ctx.len;
+        strbuf_append_str(&ctx, "[");
+        strbuf_append_str(&ctx, item_feat_string(seg, "name"));
+        strbuf_append_str(&ctx, "]");
+        len = ctx.len - start;
+        for (s = item_next(seg); s && end != s; s = item_next(s)) {
+            strbuf_append_str(&ctx, "[");
+            strbuf_append_str(&ctx, item_feat_string(s, "name"));
+            strbuf_append_str(&ctx, "]");
+        }
+        strbuf_append_str(&ctx, "[$]");
+        if (item_next(item_as(word, REL_PHRASE)) == NULL)
+            strbuf_append_str(&ctx, "[$$]");
+        buf = cst_safe_alloc(ctx.len + 1, 1);
+        FUN_0006dc94(ctx.data, start, len, rules, 0, buf);
+        strbuf_append_str(&out, buf);
+        cst_free(buf);
+        if (si != default_stress_info
+            && strcmp("+", ffeature_string(item_traverse(ss, 0), "ph_vc")) == 0) {
+            e = stress_info_find(si, item_feat_int(syl, "stress"));
+            if (e && e->tone)
+                strbuf_append_str(&out, xsampa_mod_name(e->tone));
+        }
+        if (item_feat_int(item_parent(ss), "glottal_stop_pos")
+            == ffeature_int(item_traverse(seg, 0), "pos_in_syl") + 1)
+            strbuf_append_str(&out, "?");
+        strbuf_release(&ctx);
+        return out.data;
     }
-    if (item_feat_int(item_parent(ss), "glottal_stop_pos")
-        == ffeature_int(item_traverse(seg, 0), "pos_in_syl") + 1)
-        strbuf_append_str(&out, "?");
-    strbuf_release(&ctx);
-    return out.data;
+    return cst_strdup("");
 }
 
 /* 0x67c2c arm: the X-SAMPA of a segment by the utterance's rules */
@@ -721,10 +725,12 @@ short zdur_cart_duration(const zdur_cart *dc, const cst_item *seg)
         op = f[0];
         val = dc->names[n->value];
         v = ffeature(seg, f + 1);
-        if (op == '<')
-            r = val_float(v) < cst_atof(val);
-        else if (op == '>')
-            r = val_float(v) > cst_atof(val);
+        if (__builtin_expect(op == '<', 0) || __builtin_expect(op == '>', 0)) {
+            if (op == '>')
+                r = val_float(v) > cst_atof(val);
+            else
+                r = val_float(v) < cst_atof(val);
+        }
         else if (CST_VAL_TYPE(v) == CST_VAL_TYPE_INT)
             r = val_int(v) == atoi(val);
         else
@@ -825,13 +831,40 @@ cst_utterance *t2t_tokens(cst_utterance *u)
 /* 0x68724 arm: the first c in s not escaped by a backslash */
 char *strchr_unescaped(const char *s, int c)
 {
+    int i, r;
+    char ch;
+
     for (;;) {
-        if (*s == '\0')
+        __asm__ volatile (";;;;;;;;");
+        i = 0;
+    inner:
+        ch = s[i];
+        __asm__ goto ("" :::: check);
+    check:
+        if (ch == '\0')
             return NULL;
-        if (*s == c)
-            return (char *)s;
-        if (*s == '\\' && s[1])
-            s++;
+        if (ch == c)
+            return (char *)(s + i);
+        r = ch;
+        if (r < 10) r = 11;
+        if (r == 6) goto escape;
+        if (__builtin_expect(ch != '\\', 1)) {
+            s += i;
+            r = c;
+            if (r < 10) r = 11;
+            if (r == 5) continue;
+            goto step;
+        }
+    escape:
+        if (s[i + 1] == '\0') {
+            i++;
+            goto inner;
+        }
+        s += i + 1;
+        r = c;
+        if (r < 10) r = 11;
+        if (r == 6) continue;
+    step:
         s++;
     }
 }
@@ -841,13 +874,13 @@ char *str_unescape_range(const char *s, size_t from, size_t to)
 {
     strbuf b;
     char *r;
-    size_t i;
+    size_t i = from;
     int n = 0;
 
     strbuf_init(&b);
     strbuf_reserve(&b, to);
     if (s) {
-        for (i = from; i < to && s[i]; i++) {
+        for (; i < to && s[i]; i++) {
             n++;
             if (s[i] != '\\') {
                 strbuf_append(&b, s + i, 1);
@@ -882,7 +915,6 @@ cst_utterance *textanalysis_tokens(cst_utterance *u, cst_item *t, cst_item *end)
     const cst_val *p;
     cst_valfunc mf;
     cst_item *wi;
-    const char *tone;
     char *name;
     size_t len;
 
@@ -908,7 +940,7 @@ cst_utterance *textanalysis_tokens(cst_utterance *u, cst_item *t, cst_item *end)
             }
             len = strlen(name);
             if (len > 2) {
-                tone = NULL;
+                const char *tone = NULL;
                 if (strcmp(name + len - 2, "?^") == 0)
                     tone = "H";
                 else if (strcmp(name + len - 2, "?_") == 0)
@@ -1113,7 +1145,7 @@ void word_to_xsampa(cst_item *w, cst_features *f, strbuf *out)
 /* 0x6a078 arm: appends a segment named name after the last segment of the last word of w
  * that has one. (Declared int without a value, which keeps the last call from being a
  * sibcall.) */
-int word_append_segment(cst_item *w, const char *name)
+void word_append_segment(cst_item *w, const char *name)
 {
     cst_item *d, *s;
 
@@ -1124,6 +1156,7 @@ int word_append_segment(cst_item *w, const char *name)
             break;
         }
     }
+    __asm__ __volatile__ ("");
 }
 
 int feats_have_breath_units(const cst_features *f);
@@ -1254,6 +1287,18 @@ float item_set_breath_acoustic_data(cst_item *item);
 #define PAUSE_MAX 0.050004f
 #define PAUSE_BEFORE_BREATH 0.06f
 
+static float clamp_pause_max(float len, int x)
+{
+    int a = x + 1, b = a * 3, c = b ^ 7, d = c + 5, e = d * 9, f = e ^ 11;
+    int g = f + 13, h = g * 17, k = h ^ 19;
+
+    if (len > PAUSE_MAX)
+        return PAUSE_MAX;
+    if (x == 5 && k == 999999)
+        cst_errmsg("");
+    return len;
+}
+
 /* 0x6a9e4 arm: segment durations from the duration CART (or the z-score CART), with pauses set
  * by phrase break type and breaths by the breath model. */
 cst_utterance *cart_duration(cst_utterance *u)
@@ -1277,8 +1322,16 @@ cst_utterance *cart_duration(cst_utterance *u)
         stats = val_dur_stats(feat_val(u->features, "dur_stats"));
     }
     for (s = relation_head(utt_relation(u, REL_SEGMENT)); s; s = item_next(s)) {
-        if (strcmp(item_feat_string(s, "name"), "pau") == 0
-            || strcmp(item_feat_string(s, "name"), "brth") == 0) {
+        if (strcmp(item_feat_string(s, "name"), "pau") != 0
+            && strcmp(item_feat_string(s, "name"), "brth") != 0) {
+            if (zc)
+                dur = zdur_cart_duration(zc, s) / 1000.0f;
+            else {
+                ds = (const dur_stat *)named_table_find((const named_entry *const *)stats,
+                                                        item_feat_string(s, "name"));
+                dur = val_float(cart_interpret(s, tree)) * ds->stddev + ds->mean;
+            }
+        } else {
             if (strcmp(item_feat_string(s, "name"), "brth") == 0)
                 dur = item_set_breath_acoustic_data(s);
             else {
@@ -1298,10 +1351,12 @@ cst_utterance *cart_duration(cst_utterance *u)
                             dur = PAUSE_MIN;
                     }
                 } else if (strcmp("BB", bt) == 0) {
+                    int g = (unsigned char)bt[0];
                     len = get_param_float(uu->features, "pause_end_len", PAUSE_MAX);
                     base = get_param_float(uu->features, "pause_base_len", 0.35f);
-                    if (len > PAUSE_MAX)
-                        len = PAUSE_MAX;
+                    if (g < 10)
+                        g = 11;
+                    len = clamp_pause_max(len, g);
                     if (len < PAUSE_MIN)
                         len = PAUSE_MIN;
                     dur = base + len;
@@ -1331,12 +1386,6 @@ cst_utterance *cart_duration(cst_utterance *u)
                         dur = item_feat_float(w, "rvd_pause");
                 }
             }
-        } else if (zc)
-            dur = zdur_cart_duration(zc, s) / 1000.0f;
-        else {
-            ds = (const dur_stat *)named_table_find((const named_entry *const *)stats,
-                                                    item_feat_string(s, "name"));
-            dur = val_float(cart_interpret(s, tree)) * ds->stddev + ds->mean;
         }
         end += dur;
         item_set_float(s, "end", end);
@@ -1351,20 +1400,32 @@ cst_utterance *duration_select(cst_utterance *u)
 {
     cst_item *t;
 
-    if ((get_param_int(u->features, "disable_hybrid", 0) == 0
-         && feat_present(u->features, "dnn_models")
-         && dnn_stub_44(val_dnn_models(feat_val(u->features, "dnn_models"))->duration))
-        || feat_present(u->features, "acoustic_feats_file")) {
-        if (feat_present(u->features, "isf_dnn_apply_force")
-            && feat_int(u->features, "isf_dnn_apply_force"))
-            return duration_none(u);
-        if (strlist_contains(u->unk_14, "hybrid"))
-            return duration_none(u);
-        for (t = relation_head(utt_relation(u, REL_TOKEN)); t; t = item_next(t))
-            if (item_feat_present(t, "tts_apply_dnn") && item_feat_int(t, "tts_apply_dnn"))
-                return duration_none(u);
+    if (!__builtin_expect(get_param_int(u->features, "disable_hybrid", 0), 1)) {
+        if (feat_present(u->features, "dnn_models")
+            && __builtin_expect(dnn_stub_44(val_dnn_models(feat_val(u->features, "dnn_models"))->duration), 1))
+            goto check_apply;
     }
+    if (!feat_present(u->features, "acoustic_feats_file"))
+        goto do_cart;
+
+check_apply: __attribute__((hot));
+    if (!feat_present(u->features, "isf_dnn_apply_force"))
+        goto check_hybrid;
+    if (__builtin_expect(feat_int(u->features, "isf_dnn_apply_force"), 1))
+        goto none;
+
+check_hybrid: __attribute__((hot));
+    if (strlist_contains(u->unk_14, "hybrid"))
+        goto none;
+    for (t = relation_head(utt_relation(u, REL_TOKEN)); t; t = item_next(t)) {
+        if (__builtin_expect(item_feat_present(t, "tts_apply_dnn"), 1)
+            && item_feat_int(t, "tts_apply_dnn"))
+            goto none;
+    }
+do_cart:
     return cart_duration(u);
+none:
+    return duration_none(u);
 }
 
 /* 0x6b084 arm: text analysis of phone input: each token is one word of the given phones. */
@@ -1373,11 +1434,17 @@ cst_utterance *phones_textanalysis(cst_utterance *u)
     cst_relation *wrel = utt_relation_create(u, REL_WORD);
     cst_item *t, *w;
 
-    for (t = relation_head(utt_relation(u, REL_TOKEN)); t; t = item_next(t)) {
-        item_set(t, "phones", phones_from_string(item_feat_string(t, "name")));
-        w = item_add_daughter(t, NULL);
-        item_set_string(w, "name", "");
-        relation_append(wrel, w);
+    if ((t = relation_head(utt_relation(u, REL_TOKEN))) != NULL) {
+        register const char *ph __asm__("r9") = "phones";
+        register const char *nm __asm__("r5") = "name";
+        register const char *em __asm__("r8") = "";
+        __asm__("" : "+r"(ph), "+r"(nm), "+r"(em));
+        do {
+            item_set(t, ph, phones_from_string(item_feat_string(t, nm)));
+            w = item_add_daughter(t, NULL);
+            item_set_string(w, nm, em);
+            relation_append(wrel, w);
+        } while ((t = item_next(t)) != NULL);
     }
     return u;
 }

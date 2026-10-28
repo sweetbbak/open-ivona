@@ -79,9 +79,8 @@ static inline int ts_getc(cst_tokenstream *ts)
     if (ts->unget) {
         int c = ts->decode(ts->unget + ts->unget_pos, &len);
 
-        ts->unget_pos += len;
         ts->current_char = c;
-        if (ts->unget_pos == ts->unget_len) {
+        if ((ts->unget_pos += len) == ts->unget_len) {
             cst_free(ts->unget);
             ts->unget = NULL;
         }

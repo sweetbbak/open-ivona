@@ -29,9 +29,9 @@ units:
   # -fno-inline: val_delete_float_ptr tail-calls a one-instruction delete_float_ptr and
   # phone_acoustic_data_init calls a `return 0` stub; nothing in this TU is inlined
   src/libttsivonavoice/acoustic.c: {add: [-fno-inline]}
-  # -fno-inline: val_delete_diphonedb tail-calls delete_diphonedb and every small helper
-  # (vox_decoder_free, vox_db_free) is called, never inlined
-  src/libttsivonavoice/voxdb.c: {add: [-fno-inline]}
+  # voxdb.c uses the default -O2 flags: voxdb_name_match contains two copies of an
+  # explicitly inline normalizer. Its calls to global helpers (vox_db_free, etc.)
+  # stay out of line under -fpic without a TU-wide -fno-inline override.
   # -fno-inline: val_delete_track tail-calls delete_track, copy_track calls new_track
   src/libttsivonavoice/track.c: {add: [-fno-inline]}
   # -O3 -fno-inline-functions: item_traverse_op's lookup loop is completely unrolled (only

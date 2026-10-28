@@ -48,6 +48,36 @@ DEF_CONST_VAL_INT(val_int_18,18);
 DEF_CONST_VAL_INT(val_int_19,19);
 
 static const int val_int_const_max = 20;
+
+#ifdef VAL_STRING_CONST_FIRST
+static const cst_val * const val_string_const[] = {
+    VAL_STRING_0, VAL_STRING_1, VAL_STRING_2, VAL_STRING_3, VAL_STRING_4,
+    VAL_STRING_5, VAL_STRING_6, VAL_STRING_7, VAL_STRING_8, VAL_STRING_9,
+    VAL_STRING_10, VAL_STRING_11, VAL_STRING_12, VAL_STRING_13, VAL_STRING_14,
+    VAL_STRING_15, VAL_STRING_16, VAL_STRING_17, VAL_STRING_18, VAL_STRING_19 };
+
+static const cst_val * const val_int_const[] = {
+    VAL_INT_0, VAL_INT_1, VAL_INT_2, VAL_INT_3, VAL_INT_4,
+    VAL_INT_5, VAL_INT_6, VAL_INT_7, VAL_INT_8, VAL_INT_9,
+    VAL_INT_10, VAL_INT_11, VAL_INT_12, VAL_INT_13, VAL_INT_14,
+    VAL_INT_15, VAL_INT_16, VAL_INT_17, VAL_INT_18, VAL_INT_19 };
+
+/* 0x330e8 */
+const cst_val *val_string_n(int n)
+{
+    if (n >= 0 && n < val_int_const_max)  /* yes, *int*: it is the table size */
+        return val_string_const[n];
+    return VAL_STRING_19;
+}
+
+/* 0x33114 */
+const cst_val *val_int_n(int n)
+{
+    if (n >= 0 && n < val_int_const_max)
+        return val_int_const[n];
+    return VAL_INT_19;
+}
+#else
 static const cst_val * const val_int_const[] = {
     VAL_INT_0, VAL_INT_1, VAL_INT_2, VAL_INT_3, VAL_INT_4,
     VAL_INT_5, VAL_INT_6, VAL_INT_7, VAL_INT_8, VAL_INT_9,
@@ -75,3 +105,4 @@ const cst_val *val_string_n(int n)
         return val_string_const[n];
     return VAL_STRING_19;
 }
+#endif

@@ -53,12 +53,13 @@ typedef unsigned char  cst_lts_model;
 
 typedef struct cst_lts_rules_struct {
     char *name;
-    const cst_lts_addr *letter_index;  /* index into model first state */
+    const int *letter_index;  /* index into model first state */
     const cst_lts_model *models;
     const char * const * phone_table;
     int context_window_size;
     int context_extra_feats;
-    const char * const * letter_table;
+    const unsigned char * const * letter_table;
+    int relative_states;
 } cst_lts_rules;
 
 /* Note this is designed to be 6 bytes */

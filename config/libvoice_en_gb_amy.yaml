@@ -12,4 +12,5 @@ flags:
   c: [-std=gnu99]
   cxx: [-fno-exceptions, -fno-rtti, -I/opt/gnustl/include, -I/opt/gnustl/libs/armeabi/include]
 # Per-translation-unit overrides:  src/libtiver/foo.c: {mode: arm, add: [-O3], remove: [-O2]}
-units: {}
+units:
+  src/libttsivonavoice/flite/cst_val_const.c: {add: [-DVAL_STRING_CONST_FIRST]}

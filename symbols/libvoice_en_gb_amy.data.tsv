@@ -1,6 +1,22 @@
 addr	size	name	note
+0010c33c	0	cst_val_type_dnn_models	learned from src/libvoice_en_gb_amy/dnn_models.c
+0010c344	4	cst_val_type_word_embeddings	
+0010c348	0	cst_val_type_vector	learned from src/libvoice_en_gb_amy/vector.c
+0010c358	0	cst_val_type_metric	learned from src/libvoice_en_gb_amy/metrics.c
+0010c35c	4	cst_val_type_lang_dat_core_data	
+0010c360	4	cst_val_type_tokenizer_expand_str_func	
+0010c364	0	cst_val_type_blacklist	learned from src/libvoice_en_gb_amy/blacklist.c
+0010c36c	4	cst_val_type_string_tokenizer_new_func	
+0010c370	4	cst_val_type_valfunc	
+0010c374	4	cst_val_type_zdur_cart	
+0010c378	0	cst_val_type_allwordposfunc	learned from src/libvoice_en_gb_amy/cst_lexicon.c
+0010c37c	4	cst_val_type_xsampafunc	
+0010c380	4	cst_val_type_phonefunc	
 0010c384	0	cst_val_type_features	learned from src/libttsivonavoice/flite/cst_features.c
 0010c388	0	cst_val_type_itemfunc	learned from src/libttsivonavoice/flite/cst_item.c
+0010c390	4	cst_val_type_audiotag	
+0010c3a0	0	cst_val_type_lexicon	learned from src/libvoice_en_gb_amy/cst_lexicon.c
+0010c3a4	0	cst_val_type_phoneset	learned from src/libvoice_en_gb_amy/cst_phoneset.c
 0010c3a8	4	cst_val_type_cart	
 0010c3ac	4	cst_val_type_item	learned from src/libttsivonavoice/flite/cst_item.c
 0010c3b0	4	cst_val_type_relation	
@@ -8,6 +24,56 @@ addr	size	name	note
 0010c3b8	0	cst_val_type_uttfunc	learned from src/libttsivonavoice/flite/cst_utterance.c
 0010c3c0	4	cst_val_type_wave	
 0010c3c4	0	cst_val_type_utterance	learned from src/libttsivonavoice/flite/cst_item.c
+0010c4ac	8	val_int_19	
+0010c4b4	8	val_int_18	
+0010c4bc	8	val_int_17	
+0010c4c4	8	val_int_16	
+0010c4cc	8	val_int_15	
+0010c4d4	8	val_int_14	
+0010c4dc	8	val_int_13	
+0010c4e4	8	val_int_12	
+0010c4ec	8	val_int_11	
+0010c4f4	8	val_int_10	
+0010c4fc	8	val_int_9	
+0010c504	8	val_int_8	
+0010c50c	8	val_int_7	
+0010c514	8	val_int_6	
+0010c51c	8	val_int_5	
+0010c524	8	val_int_4	
+0010c52c	8	val_int_3	
+0010c534	8	val_int_2	
+0010c53c	8	val_int_1	
+0010c544	8	val_int_0	
+0010c634	100	uni_translit_index1	
+0010c734	2000	uni_translit_index2	
+0010e734	2460	uni_translit_index3	
+00390c1c	30	default_stress_info	
 003b900c	0	__exidx_start	named from library relocation
+003ba850	8	val_string_19	
+003ba858	8	val_string_18	
+003ba860	8	val_string_17	
+003ba868	8	val_string_16	
+003ba870	8	val_string_15	
+003ba878	8	val_string_14	
+003ba880	8	val_string_13	
+003ba888	8	val_string_12	
+003ba890	8	val_string_11	
+003ba898	8	val_string_10	
+003ba8a0	8	val_string_9	
+003ba8a8	8	val_string_8	
+003ba8b0	8	val_string_7	
+003ba8b8	8	val_string_6	
+003ba8c0	8	val_string_5	
+003ba8c8	8	val_string_4	
+003ba8d0	8	val_string_3	
+003ba8d8	8	val_string_2	
+003ba8e0	8	val_string_1	
+003ba8e8	8	val_string_0	
+003ba8f0	6c0	uni_halfwidth_table	
+003bafb0	6cc	uni_translit_strs	
+003bb67c	44	amy_lexicon	
+003bbec4	4	amy_voice_params	
 003d6bf4	0	cst_regex_table	learned from src/libttsivonavoice/flite/cst_cart.c
+003d6d50	1e0	xsampa_modifiers	
+003d6f30	3c8	xsampa_symbols	
 003d73a8	0	cst_val_defs	learned from src/libttsivonavoice/flite/cst_val.c

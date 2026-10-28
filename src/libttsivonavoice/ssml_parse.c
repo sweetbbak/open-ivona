@@ -414,16 +414,21 @@ static inline void qname_split(qname *q, const char *name)
     if (sep) {
         const char *local = sep + 1;
         const char *sep2 = strchr(local, '^');
+        size_t uri_len = sep - name;
 
         q->local = local;
-        q->uri_len = sep - name;
+        q->uri_len = uri_len;
         q->uri = name;
         if (sep2) {
             q->local_len = sep2 - local;
             q->prefix = sep2 + 1;
         } else {
-            q->prefix = sep2;
+            q->prefix = NULL;
             q->local_len = strlen(local);
+        }
+        if (q->uri && strncmp(q->uri, IVONA_NS, uri_len) == 0) {
+            q->uri = AMAZON_NS;
+            q->uri_len = strlen(AMAZON_NS);
         }
     } else {
         q->local = name;
@@ -431,10 +436,6 @@ static inline void qname_split(qname *q, const char *name)
         q->uri = NULL;
         q->uri_len = 0;
         q->prefix = NULL;
-    }
-    if (q->uri && strncmp(q->uri, IVONA_NS, q->uri_len) == 0) {
-        q->uri = AMAZON_NS;
-        q->uri_len = strlen(AMAZON_NS);
     }
 }
 
@@ -644,7 +645,7 @@ static char *qname_join(const qname *q)
 
     if (q->uri == NULL)
         return cst_substr(q->local, 0, q->local_len);
-    s = cst_safe_alloc(q->uri_len + q->local_len + 2, 1);
+    s = cst_safe_alloc(q->local_len + q->uri_len + 2, 1);
     cst_strncpy(s, q->uri, q->uri_len);
     s[q->uri_len] = '^';
     cst_strncpy(s + q->uri_len + 1, q->local, q->local_len);

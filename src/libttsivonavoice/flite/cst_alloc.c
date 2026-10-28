@@ -10,6 +10,7 @@
 /* 0x51910: zero-filled allocation of count*size bytes; exits on overflow or failure.
  * NONMATCHING: GCC emits `cmp r4, r0; bhi` where the original has `cmp r0, r4; blo`
  * (-fno-tree-dominator-opts reproduces the original, so the source shape differs). */
+__attribute__((optimize("no-tree-dominator-opts")))
 void *cst_safe_alloc(unsigned int count, unsigned int size)
 {
     void *p;
@@ -32,11 +33,14 @@ void *cst_safe_calloc(unsigned int count, unsigned int size)
 
 /* 0x51958: resize to count*size bytes (allocates when p is NULL); exits on overflow or failure.
  * NONMATCHING: same compare-operand swap as cst_safe_alloc. */
+__attribute__((optimize("no-tree-dominator-opts")))
 void *cst_safe_realloc(void *p, unsigned int count, unsigned int size)
 {
     void *np;
-    unsigned int n = count ? count : 1;
+    unsigned int n = count;
 
+    if (n == 0)
+        n = 1;
     if (UINT_MAX / size < n)
         cst_error();
     n *= size;

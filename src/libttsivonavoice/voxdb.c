@@ -252,24 +252,33 @@ vox_unit *diphonedb_unit_decode(const diphonedb *d, const vox_unit_rec *r, vox_u
     return u;
 }
 
+/* Shared opening/validation prefix in vox_file_name and vox_decoder_new. */
+static inline cst_file vox_file_open(const char *path, vox_header *h)
+{
+    cst_file fp = cst_fopen(path, CST_OPEN_READ | CST_OPEN_BINARY);
+    if (fp) {
+        if (cst_fread(fp, h, sizeof *h, 1) == 1 &&
+            (h->magic == VOX_MAGIC_CDXV ||
+             (h->magic == VOX_MAGIC_DDXV && h->u.ddxv.version == 1))) {
+            h->name[31] = 0;
+            return fp;
+        }
+        fclose(fp);
+    }
+    return NULL;
+}
+
 /* 0x5e858 arm: the voice name in a vox file's header, or NULL. */
 char *vox_file_name(const char *path)
 {
     vox_header h;
-    cst_file fp = cst_fopen(path, CST_OPEN_READ | CST_OPEN_BINARY);
-    char *name = NULL;
-
-    if (fp == NULL)
-        return name;
-    if (cst_fread(fp, &h, sizeof h, 1) == 1 &&
-        (h.magic == VOX_MAGIC_CDXV || (h.magic == VOX_MAGIC_DDXV && h.u.ddxv.version == 1))) {
-        h.name[31] = 0;
-        name = cst_strdup(h.name);
+    cst_file fp = vox_file_open(path, &h);
+    if (fp) {
+        char *name = cst_strdup(h.name);
         cst_fclose(fp);
         return name;
     }
-    fclose(fp);
-    return name;
+    return NULL;
 }
 
 /* 0x5e8f0 arm */
@@ -296,31 +305,22 @@ vox_db *vox_db_open(const unsigned char *data)
     vox_db *db;
 
     memcpy(&h, data, sizeof h);
-    if (h.magic == VOX_MAGIC_CDXV) {
+    if (h.magic != VOX_MAGIC_CDXV) {
+        if (h.magic == VOX_MAGIC_DDXV && h.u.ddxv.version == 1) {
+            n = h.u.ddxv.n_sections;
+            h.name[31] = 0;
+            secs = cst_safe_alloc(n, sizeof(vox_section));
+            memcpy(secs, data + sizeof h, n * sizeof(vox_section));
+        }
+    } else {
         h.name[31] = 0;
         n = 7;
         secs = cst_safe_alloc(n, sizeof(vox_section));
-        secs[0].type = 1;
-        secs[0].e = h.u.cdxv[0];
-        secs[1].type = 2;
-        secs[1].e = h.u.cdxv[1];
-        secs[2].type = 3;
-        secs[2].e = h.u.cdxv[2];
-        secs[3].type = 4;
-        secs[3].e = h.u.cdxv[3];
-        secs[4].type = 5;
-        secs[4].e = h.u.cdxv[4];
-        secs[5].type = 6;
-        secs[5].e = h.u.cdxv[5];
-        secs[6].type = 7;
-        secs[6].e = h.u.cdxv[6];
-    } else if (h.magic != VOX_MAGIC_DDXV || h.u.ddxv.version != 1) {
-        /* not a vox file */
-    } else {
-        n = h.u.ddxv.n_sections;
-        h.name[31] = 0;
-        secs = cst_safe_alloc(n, sizeof(vox_section));
-        memcpy(secs, data + sizeof h, n * sizeof(vox_section));
+        for (i = 0; i < n; i++) {
+            secs[i].type = i + 1;
+            secs[i].e.offset = h.u.cdxv[i].offset;
+            secs[i].e.size = h.u.cdxv[i].size;
+        }
     }
     db = cst_safe_calloc(1, sizeof(vox_db));
     db->name = cst_strdup(h.name);
@@ -409,7 +409,7 @@ vox_db *vox_db_open(const unsigned char *data)
             case 12:
                 db->open = vorbis_ogg_unit_open;
                 db->close = vorbis_ogg_unit_close;
-                db->decode = vorbis_ogg_unit_decode;
+                db->decode2 = vorbis_ogg_unit_decode;
                 return db;
             case 14:
                 db->open = silk_unit_open;
@@ -440,21 +440,17 @@ vox_decoder *vox_decoder_new(const vox_db *db)
     d = cst_safe_calloc(1, sizeof(vox_decoder));
     d->db = db;
     if (db->path) {
-        fp = cst_fopen(db->path, CST_OPEN_READ | CST_OPEN_BINARY);
-        if (fp == NULL)
-            goto nofile;
-        if (cst_fread(fp, &h, sizeof h, 1) != 1 ||
-            !(h.magic == VOX_MAGIC_CDXV || (h.magic == VOX_MAGIC_DDXV && h.u.ddxv.version == 1))) {
-            fclose(fp);
-nofile:
-            d->fp = NULL;
+        fp = vox_file_open(db->path, &h);
+        d->fp = fp;
+        if (fp == NULL) {
             cst_free(d);
             return NULL;
         }
-        h.name[31] = 0;
-        d->fp = fp;
-        if (h.sample_rate != db->sample_rate || h.key != db->key)
-            goto fail;
+        if (h.sample_rate != db->sample_rate || h.key != db->key) {
+            cst_fclose(fp);
+            cst_free(d);
+            return NULL;
+        }
     } else
         d->fp = NULL;
     if (db->open && !db->open(d))
@@ -479,35 +475,20 @@ void vox_decoder_free(vox_decoder *d)
     cst_free(d);
 }
 
-/* a new copy of s without the digits of a "vox@<digits>..." prefix ("vox...") */
-#define VOX_NAME_NORMALIZE(s)                                                         \
-    do {                                                                              \
-        if (!cst_startswith(s, "vox@"))                                               \
-            s = cst_strdup(s);                                                        \
-        else {                                                                        \
-            size_t k_ = strspn(s + 4, "0123456789");                                  \
-            size_t l_ = strlen(s);                                                    \
-            char *t_ = cst_safe_alloc(l_ - k_, 1);                                    \
-            memcpy(t_, s, 3);                                                         \
-            k_ += 4;                                                                  \
-            memcpy(t_ + 3, s + k_, l_ + 1 - k_);                                      \
-            s = t_;                                                                   \
-        }                                                                             \
-    } while (0)
-
-#define VOX_NAME_NORMALIZE2(s)                                                        \
-    do {                                                                              \
-        if (cst_startswith(s, "vox@")) {                                              \
-            size_t k_ = strspn(s + 4, "0123456789");                                  \
-            size_t l_ = strlen(s);                                                    \
-            char *t_ = cst_safe_alloc(l_ - k_, 1);                                    \
-            memcpy(t_, s, 3);                                                         \
-            k_ += 4;                                                                  \
-            memcpy(t_ + 3, s + k_, l_ + 1 - k_);                                      \
-            s = t_;                                                                   \
-        } else                                                                        \
-            s = cst_strdup(s);                                                        \
-    } while (0)
+/* The two identical normalization bodies in voxdb_name_match are inlined. */
+static inline char *voxdb_name_normalize(const char *s)
+{
+    if (cst_startswith(s, "vox@")) {
+        size_t digits = strspn(s + 4, "0123456789");
+        size_t len = strlen(s);
+        char *out = cst_safe_alloc(len - digits, 1);
+        memcpy(out, s, 3);
+        digits += 4;
+        memcpy(out + 3, s + digits, len + 1 - digits);
+        return out;
+    }
+    return cst_strdup(s);
+}
 
 /* 0x5f01c arm: whether vox names a and b refer to the same voice (equal after dropping
  * "@<digits>", or one is the other plus "_..."). A NULL a matches anything. */
@@ -518,8 +499,8 @@ int voxdb_name_match(char *a, char *b)
 
     if (a == NULL || strcmp(a, b) == 0)
         return 1;
-    VOX_NAME_NORMALIZE2(a);
-    VOX_NAME_NORMALIZE(b);
+    a = voxdb_name_normalize(a);
+    b = voxdb_name_normalize(b);
     la = strlen(a);
     lb = strlen(b);
     if (strcmp(a, b) == 0)
@@ -595,6 +576,18 @@ void val_delete_diphonedb(void *v)
     delete_diphonedb(v);
 }
 
+static inline const char *voxdb_checksum_find(int key, const char *checksum)
+{
+    const char *next;
+    for (; checksum; checksum = next ? next + 1 : NULL) {
+        long value = atol(checksum);
+        next = strchr(checksum, ';');
+        if (key == value)
+            break;
+    }
+    return checksum;
+}
+
 /* 0x5f370 arm: loads the voice's unit database from dir (a directory holding
  * <voxdbname>/<checksum>/<voxdbname><format>, or the vox file itself; NULL: the voice name)
  * and sets the voice features that come from it. */
@@ -602,7 +595,7 @@ diphonedb *voice_load_diphonedb(cst_features *f, const char *dir)
 {
     const char *name = get_param_string(f, "name", NULL);
     const char *checksum = get_param_string(f, "checksum", NULL);
-    const char *vname, *fmt, *p, *semi;
+    const char *vname, *fmt, *semi, *dir_checksum;
     char *path;
     cst_filemap *map;
     diphonedb *d;
@@ -614,13 +607,15 @@ diphonedb *voice_load_diphonedb(cst_features *f, const char *dir)
         dir = name;
     else if (ivona_is_dir(dir)) {
         vname = get_param_string(f, "voxdbname", get_param_string(f, "name", NULL));
-        checksum = get_param_string(f, "checksum", NULL);
+        dir_checksum = get_param_string(f, "checksum", NULL);
         fmt = get_param_string(f, "voxdb_format", "22v");
-        if (checksum && vname) {
-            semi = strchr(checksum, ';');
-            k = semi ? semi - checksum : (int)strlen(checksum);
+        if (!dir_checksum || !vname) {
+            path = NULL;
+        } else {
+            semi = strchr(dir_checksum, ';');
+            k = semi ? semi - dir_checksum : (int)strlen(dir_checksum);
             path = cst_safe_alloc(strlen(dir) + 2 * strlen(vname) + strlen(fmt) + 4 + k, 1);
-            sprintf(path, "%s/%s/%.*s/%s%s", dir, vname, k, checksum, vname, fmt);
+            sprintf(path, "%s/%s/%.*s/%s%s", dir, vname, k, dir_checksum, vname, fmt);
         }
         if (path)
             dir = path;
@@ -639,20 +634,7 @@ diphonedb *voice_load_diphonedb(cst_features *f, const char *dir)
         return NULL;
     }
     key = db->key;
-    if (checksum) {
-        for (p = checksum; p;) {
-            long v = atol(p);
-
-            semi = strchr(p, ';');
-            if (v == key)
-                goto ok;
-            if (semi == NULL)
-                break;
-            p = semi + 1;
-        }
-        goto fail;
-    }
-ok:
+    if (checksum == NULL || voxdb_checksum_find(key, checksum)) {
     if (!feat_present(f, "zdur_cart")) {
         if (db->sec10 == NULL || db->sec8 == NULL || db->sec9 == NULL)
             goto fail;
@@ -666,6 +648,7 @@ ok:
     }
     cst_free(path);
     return d;
+    }
 fail:
     delete_diphonedb(d);
     cst_free(path);

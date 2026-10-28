@@ -12,16 +12,18 @@
 static inline unsigned int lang_tag_split(char *s)
 {
     unsigned int n = 1;
-    char *p;
+    int i;
 
-    for (p = s; *p; p++) {
-        if (*p == ':') {
-            *p = '\0';
+    for (i = 0; s[i]; i++) {
+        if (s[i] == ':') {
+            s[i] = '\0';
             break;
         }
-        if (n <= 2 && *p == '-') {
-            *p = '\0';
+        if (n <= 2 && s[i] == '-') {
+            s[i++] = '\0';
             n++;
+            if (!s[i])
+                break;
         }
     }
     return n;
@@ -49,30 +51,34 @@ int lang_tag_match(const char *a, const char *b)
         la = strlen(x);
         lb = strlen(y);
         if (nb > 1 && na > 1) {
+            const char *ra, *rb;
             pa = x + la + 1;
+            ra = strcasecmp(pa, "UK") == 0 ? "GB" : pa;
             pb = y + lb + 1;
-            if (strcasecmp(strcasecmp(pa, "UK") == 0 ? "GB" : pa,
-                           strcasecmp(pb, "UK") == 0 ? "GB" : pb) != 0)
+            rb = strcasecmp(pb, "UK") == 0 ? "GB" : pb;
+            if (strcasecmp(ra, rb) != 0)
                 r = 1;
             else if (nb > 2 && na > 2)
                 r = strcasecmp(pa + strlen(pa) + 1, pb + strlen(pb) + 1) == 0 ? 4 : 2;
             else
                 r = na == nb ? 4 : 2;
         } else
-            r = na == nb ? 4 : 1;
+            r = na != nb ? 1 : 4;
     }
     cst_free(x);
     cst_free(y);
     return r;
 }
 
+#define LANG_MAX(a, b) ((a) < (b) ? (b) : (a))
+
 /* 0x227bc arm: the best match of a against a whitespace separated list of patterns (exact
  * matches count 3, unless all are exact) */
 int lang_tags_match(const char *a, const char *list)
 {
     strlist *l;
-    int best, all, m;
     char **p;
+    int best, all;
 
     if (list == NULL || list[0] == '\0')
         return 4;
@@ -80,12 +86,13 @@ int lang_tags_match(const char *a, const char *list)
     best = 0;
     all = 1;
     for (p = l->items; p != l->items + l->count; p++) {
-        m = lang_tag_match(a, *p);
+        int m = lang_tag_match(a, *p);
+        int score = m == 4 ? 3 : m;
         if (m == 4)
-            m = 3;
+            m = score;
         else
             all = 0;
-        if (best < m)
+        if (best < score)
             best = m;
     }
     strlist_free(l);
@@ -142,15 +149,10 @@ ivona_vector *lang_dat_lexicons(const isef_file *f, const char *list, size_t len
         return v;
     lr = linereader_new(ts, "ASCII");
     while (linereader_next(lr)) {
-        if (err) {
-            linereader_free(lr);
-            textstream_close(ts);
-            vector_free(v);
-            return NULL;
-        }
+        if (err)
+            break;
         line = linereader_line(lr);
-        arg = strchr(line, '=');
-        if (arg)
+        if ((arg = strchr(line, '=')))
             *arg++ = '\0';
         if (!isef_find(f, line, &data, &size)) {
             if (line[0]) {

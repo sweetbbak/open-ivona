@@ -52,23 +52,13 @@ typedef struct lexicon_struct {
     /* This saves 4 bytes per entry for an index */
     unsigned char *data; /* the entries and phone strings */
     int num_bytes;       /* the number of bytes in the data */
-    char **phone_table;
-
-    cst_lts_rules *lts_rule_set;
-
-    int (*syl_boundary)(const cst_item *i,const cst_val *p);
-    
-    cst_val *(*lts_function)(const struct lexicon_struct *l, const char *word, const char *pos);
-
-    char ***addenda;
-    /* ngram frequency table used for packed entries */
-    const char * const *phone_hufftable;
-    const char * const *entry_hufftable;
-
-    cst_utterance *(*postlex)(cst_utterance *u);
-
-    cst_val *lex_addenda;  /* For pronunciations added at run time */
-
+    char **phone_table;          /* 0x10 */
+    cst_lts_rules *lts_rule_set; /* 0x14 */
+    void *addenda;               /* 0x18 */
+    const void *phone_hufftable; /* 0x1c */
+    const char * const *entry_hufftable; /* 0x20 */
+    char *(*word_norm)(const char *word); /* 0x24 */
+    char *(*lts_norm)(const char *word);  /* 0x28 */
 } cst_lexicon;
 
 cst_lexicon *new_lexicon();

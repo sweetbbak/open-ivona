@@ -9,6 +9,7 @@
 #include "cst_alloc.h"
 #include "cst_string.h"
 #include "cst_val.h"
+#include "cst_tokenstream.h"
 #include "ivona_util.h"
 
 /* 0x5259c */
@@ -421,6 +422,102 @@ void cst_strsubchar(char *s, int c, char r)
         *s = r;
 }
 
+/* 0x531a4 arm (IVONA) */
+cst_val *cst_split_tokens_string(const char *string)
+{
+    cst_tokenstream *ts = ts_open_string(string);
+    cst_val *res = NULL;
+
+    ts->p_singlecharsymbols = "";
+    ts->p_prepunctuationsymbols = "";
+    ts->p_postpunctuationsymbols = "";
+    while (!ts_eof(ts)) {
+        const char *tok = ts_get(ts);
+        if (*tok == '\0')
+            break;
+        res = cons_val(string_val(tok), res);
+    }
+    ts_close(ts);
+    return val_reverse(res);
+}
+
+/* 0x53218 arm (IVONA) */
+cst_val *cst_split_tokens_string_utf8(const char *string)
+{
+    cst_tokenstream *ts = ts_open_string_utf8(string);
+    cst_val *res = NULL;
+
+    ts->p_singlecharsymbols = "";
+    ts->p_prepunctuationsymbols = "";
+    ts->p_postpunctuationsymbols = "";
+    while (!ts_eof(ts)) {
+        const char *tok = ts_get(ts);
+        if (*tok == '\0')
+            break;
+        res = cons_val(string_val(tok), res);
+    }
+    ts_close(ts);
+    return val_reverse(res);
+}
+
+/* 0x5328c arm (IVONA) */
+cst_val *cst_val_strappend(cst_val *val, const char *str)
+{
+    if (val != NULL) {
+        char *s = (char *)val->c.a.v.vval;
+        s = cst_safe_realloc(s, strlen(s) + strlen(str) + 1, 1);
+        val->c.a.v.vval = s;
+        strcat(s, str);
+    }
+    return val;
+}
+
+/* 0x532dc arm (IVONA) */
+char *cst_join_val(const cst_val *val, const char *delim)
+{
+    const cst_val *cur;
+    size_t delim_len;
+    size_t len, count;
+    char *res;
+    size_t pos;
+
+    if (val == NULL)
+        return NULL;
+    if (delim == NULL) {
+        delim = "";
+        delim_len = 0;
+    } else {
+        delim_len = strlen(delim);
+    }
+    count = 0;
+    len = 0;
+    for (cur = val; cur != NULL; cur = val_cdr(cur)) {
+        const cst_val *v = val_car(cur);
+        if (v == NULL || v->c.a.type != CST_VAL_TYPE_STRING)
+            continue;
+        count++;
+        len += strlen((const char *)v->c.a.v.vval);
+    }
+    res = cst_safe_alloc(len + 1 + (count - 1) * delim_len, 1);
+    pos = 0;
+    for (cur = val; cur && count; cur = val_cdr(cur)) {
+        const cst_val *v = val_car(cur);
+        size_t slen;
+        if (v == NULL || v->c.a.type != CST_VAL_TYPE_STRING)
+            continue;
+        slen = strlen((const char *)v->c.a.v.vval);
+        memcpy(res + pos, v->c.a.v.vval, slen);
+        pos += slen;
+        if (count > 1) {
+            memcpy(res + pos, delim, delim_len);
+            pos += delim_len;
+        }
+        count--;
+    }
+    res[pos] = '\0';
+    return res;
+}
+
 /* 0x5342c arm (IVONA): value for key in a NULL-terminated array of key/value pairs. */
 const char *cst_assoc_string(const char *const *pairs, const char *key)
 {
@@ -793,4 +890,14 @@ int cst_strcmp_null(const char *a, const char *b)
     if (bn)
         return 1;
     return strcmp(a, b);
+}
+
+/* 0x5288c arm: Membership in a NULL-terminated string list (Amy: 0x30670). */
+int cst_member_string(const char *str, const char * const *slist)
+{
+    int i;
+    for (i = 0; slist[i]; i++)
+        if (strcmp(slist[i], str) == 0)
+            break;
+    return slist[i] != NULL;
 }

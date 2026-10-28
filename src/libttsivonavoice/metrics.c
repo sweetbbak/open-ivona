@@ -48,13 +48,19 @@ static inline float metric_time(cst_features *metrics, const char *name)
 }
 
 /* 0x56d20 arm: "tts_streamer_internal_synth_time": synthesis time minus cache and fetch time. */
+__attribute__((optimize("no-tree-pre")))
 static float metrics_internal_synth_time(cst_features *metrics)
 {
-    return metric_time(metrics, "tts_streamer_synth_time")
-         - metric_time(metrics, "diphone_graph_cache_get_time")
-         - metric_time(metrics, "diphone_graph_cache_put_time")
-         - metric_time(metrics, "fetch_time");
+    register const char *name asm("r5") = "tts_streamer_synth_time";
+    register void *sp_val asm("sp");
+    asm("" : "+r"(name) : "X"(sp_val));
+    float t = metric_get(metrics, name, TTS_METRIC_FLOAT, 1)->v.f;
+    t -= metric_time(metrics, "diphone_graph_cache_get_time");
+    t -= metric_time(metrics, "diphone_graph_cache_put_time");
+    tts_metric_def *m = metric_get(metrics, "fetch_time", TTS_METRIC_FLOAT, 1);
+    return t - m->v.f;
 }
+
 
 /* 0x56fa4 arm: removes and returns the utterance's "core_metrics" set. */
 cst_features *utt_take_metrics(cst_utterance *u)
@@ -73,10 +79,11 @@ cst_features *utt_take_metrics(cst_utterance *u)
 /* 0x56ff4 arm: a metrics set with the standard timings. */
 cst_features *metrics_new(void)
 {
+    register const char *name asm("r5") = "tts_streamer_internal_synth_time";
     cst_features *metrics = new_features();
-    tts_metric_def *m;
+    asm("" : "+r"(name));
+    tts_metric_def *m = metric_get(metrics, name, TTS_METRIC_FLOAT, 1);
 
-    m = metric_get(metrics, "tts_streamer_internal_synth_time", TTS_METRIC_FLOAT, 1);
     m->is_func = 1;
     m->v.ffn = (float (*)(const cst_features *))metrics_internal_synth_time;
     metric_get(metrics, "tts_streamer_synth_time", TTS_METRIC_FLOAT, 1);

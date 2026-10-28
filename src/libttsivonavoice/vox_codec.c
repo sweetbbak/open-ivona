@@ -40,16 +40,11 @@ typedef struct silk_unit_decoder {
     unsigned char key[8];               /* info->key, then each packet's clear tail bytes */
 } silk_unit_decoder;
 
-/* 0x6b260 arm: codec 14 open. 22050 Hz voices are decoded at SILK's 24000 Hz. */
-int silk_unit_open(vox_decoder *d)
+static inline silk_unit_decoder *silk_decoder_new(int rate, int key)
 {
     silk_unit_decoder *s;
-    int key, rate, size, ret;
+    int size;
 
-    if (d == NULL)
-        return 0;
-    rate = d->info->sample_rate;
-    key = d->info->key;
     s = cst_safe_alloc(1, sizeof(silk_unit_decoder));
     if (rate == 22050)
         rate = 24000;
@@ -60,12 +55,19 @@ int silk_unit_open(vox_decoder *d)
         s->key[1] = (key >> 8) & 0xff;
         s->key[2] = (key >> 16) & 0xff;
         s->key[3] = (key >> 24) & 0xff;
-        d->priv = s;
-        return 1;
+        return s;
     }
     cst_free(s);
-    d->priv = NULL;
-    return 0;
+    return NULL;
+}
+
+/* 0x6b260 arm: codec 14 open. 22050 Hz voices are decoded at SILK's 24000 Hz. */
+int silk_unit_open(vox_decoder *d)
+{
+    if (d == NULL)
+        return 0;
+    d->priv = silk_decoder_new(d->info->sample_rate, d->info->key);
+    return d->priv != NULL;
 }
 
 /* 0x6b320 arm: codec 14 close. */

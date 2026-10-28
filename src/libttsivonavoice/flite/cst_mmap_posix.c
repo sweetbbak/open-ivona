@@ -55,42 +55,7 @@ int cst_munmap_file(cst_filemap *fmap)
     return 0;
 }
 
-/* Read a pipe or character device to EOF, in st_blksize (default 1024) chunks. */
-static cst_filemap *read_stream(int fd, size_t blksize)
-{
-    cst_filemap *fmap;
-    size_t len = 0;
-    ssize_t n;
-
-    fmap = cst_alloc(cst_filemap, 1);
-    fmap->fd = fd;
-    fmap->mapsize = blksize ? blksize : 1024;
-    fmap->mem = cst_alloc(char, fmap->mapsize);
-    for (;;) {
-        n = read(fd, (char *)fmap->mem + len, fmap->mapsize - len);
-        if (n == 0)
-            break;
-        if (n < 0) {
-            if (errno == EINTR)
-                continue;
-            close(fmap->fd);
-            cst_free(fmap->mem);
-            cst_free(fmap);
-            return NULL;
-        }
-        len += n;
-        if (fmap->mapsize - len < blksize) {
-            fmap->mapsize *= 2;
-            fmap->mem = cst_realloc(fmap->mem, char, fmap->mapsize);
-        }
-    }
-    fmap->mapsize = len;
-    fmap->mem = cst_realloc(fmap->mem, char, len);
-    return fmap;
-}
-
-/* 0x522cc: read a whole file into memory; "-" is stdin; pipes/character devices are streamed.
- * NONMATCHING: block layout of the streaming error path differs. */
+/* 0x522cc: read a whole file into memory; "-" is stdin; pipes/character devices are streamed. */
 cst_filemap *cst_read_whole_file(const char *path)
 {
     cst_filemap *fmap;
@@ -98,16 +63,18 @@ cst_filemap *cst_read_whole_file(const char *path)
     ssize_t n;
     int fd;
 
-    if (strcmp("-", path) == 0)
+    if (strcmp("-", path) != 0) {
+        if ((fd = open(path, O_RDONLY)) < 0)
+            return NULL;
+    } else {
         fd = 0;
-    else if ((fd = open(path, O_RDONLY)) < 0)
-        return NULL;
+    }
     if (fstat(fd, &buf) < 0) {
         close(fd);
         return NULL;
     }
     if (S_ISFIFO(buf.st_mode) || S_ISCHR(buf.st_mode))
-        return read_stream(fd, buf.st_blksize);
+        goto stream;
 
     fmap = cst_alloc(cst_filemap, 1);
     fmap->mapsize = buf.st_size;
@@ -121,6 +88,38 @@ cst_filemap *cst_read_whole_file(const char *path)
         return NULL;
     }
     return fmap;
+
+stream:
+    {
+        size_t len = 0;
+        size_t blksize = buf.st_blksize;
+
+        fmap = cst_alloc(cst_filemap, 1);
+        fmap->fd = fd;
+        fmap->mapsize = blksize ? blksize : 1024;
+        fmap->mem = cst_alloc(char, fmap->mapsize);
+        for (;;) {
+            n = read(fd, (char *)fmap->mem + len, fmap->mapsize - len);
+            if (n == 0)
+                break;
+            if (n < 0) {
+                if (errno == EINTR)
+                    continue;
+                close(fmap->fd);
+                cst_free(fmap->mem);
+                cst_free(fmap);
+                return NULL;
+            }
+            len += n;
+            if (fmap->mapsize - len < blksize) {
+                fmap->mapsize *= 2;
+                fmap->mem = cst_realloc(fmap->mem, char, fmap->mapsize);
+            }
+        }
+        fmap->mapsize = len;
+        fmap->mem = cst_realloc(fmap->mem, char, len);
+        return fmap;
+    }
 }
 
 /* 0x524c0 */

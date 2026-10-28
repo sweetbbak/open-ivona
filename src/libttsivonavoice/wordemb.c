@@ -83,14 +83,19 @@ word_embeddings *new_word_embeddings(unsigned int count, unsigned int dim)
 int word_embeddings_add(word_embeddings *we, const word_vectors *wv)
 {
     unsigned int i;
+    const unsigned int dim = wv->dim;
     const char *w;
+    unsigned int count;
 
-    if (we->dim != wv->dim) {
-        if (we->count != 0)
-            return 0;
+    if (we->dim == dim)
+        count = we->count;
+    else if (we->count != 0)
+        return 0;
+    else {
+        count = 0;
         we->dim = wv->dim;
     }
-    we->count += wv->count;
+    we->count = count + wv->count;
     for (i = 0; i < wv->count; i++) {
         w = wv->words[i];
         hash_put(we->map, w, strlen(w), wv->vectors + i * wv->dim);
@@ -162,7 +167,13 @@ word_vectors *word_embeddings_read(mp_reader *r)
         else
             goto fail;
     }
-    if (words == NULL || dim == 0 || vectors == NULL || dim * count * sizeof(float) != size)
+    if (words == NULL)
+        goto fail;
+    if (dim == 0)
+        goto fail;
+    if (vectors == NULL)
+        goto fail;
+    if (dim * count * sizeof(float) != size)
         goto fail;
     wv = cst_safe_alloc(1, sizeof(word_vectors));
     wv->words = words;
@@ -217,37 +228,53 @@ const float *item_word_embedding(const cst_item *item)
 }
 
 /* 0x51774 arm: coefficient idx of the word's embedding ("0" if none). */
-const cst_val *item_word_embedding_coeff(const cst_item *item, const char *idx)
+const cst_val *item_word_embedding_coeff(const cst_item *item_in, const char *idx)
 {
+    register const cst_item *item asm("r7") = item_in;
+    asm("" : "+r"(item));
     int i = atoi(idx);
     ivona_vector *coeffs;
-    const cst_val *v;
-    word_embeddings *we;
     const float *f;
-    cst_val *fv;
+    word_embeddings *we;
     unsigned int k;
+    const cst_val *v;
+    cst_features *m;
 
-    if (item_feat_present(item, "word_embedding_coeffs"))
-        coeffs = val_vector(item_feat(item, "word_embedding_coeffs"));
+    register const char *we_name asm("r5") = "word_embedding_coeffs";
+    asm("" : "+r"(we_name));
+
+    if (item_feat_present(item, we_name))
+        coeffs = val_vector(item_feat(item, we_name));
     else {
-        coeffs = NULL;
         v = feat_val(item_utt(item)->features, "word_embeddings");
-        if (v && (we = val_word_embeddings(v)) != NULL) {
-            cst_features *m = get_param_features(item_utt(item)->features, "core_metrics", NULL);
-
-            f = word_embeddings_lookup(we, item_feat_string(item, "name"), m);
-            if (f) {
-                coeffs = vector_new(sizeof(cst_val *), NULL, val_vector_elem_free);
-                vector_reserve(coeffs, we->dim);
-                for (k = 0; k < we->dim; k++) {
-                    fv = float_val(f[k]);
-                    vector_push(coeffs, &fv);
+        if (__builtin_expect(v != NULL, 1) && __builtin_expect((we = val_word_embeddings(v)) != NULL, 1)
+            && (m = get_param_features(item_utt(item)->features, "core_metrics", NULL),
+                f = word_embeddings_lookup(we, item_feat_string(item, "name"), m)) != NULL) {
+            register word_embeddings *we_reg asm("r8") = we;
+            asm("" : "+r"(we_reg));
+            register const float *f_reg asm("r6") = f;
+            asm("" : "+r"(f_reg));
+            coeffs = vector_new(sizeof(cst_val *), NULL, val_vector_elem_free);
+            vector_reserve(coeffs, we_reg->dim);
+            if (we_reg->dim != 0) {
+                cst_val *fv;
+                register cst_val **sp_ptr asm("sb") = &fv;
+                asm("" : "+r"(sp_ptr));
+                for (k = 0; k < we_reg->dim; k++) {
+                    fv = float_val(f_reg[k]);
+                    vector_push(coeffs, sp_ptr);
                 }
             }
+        } else {
+            coeffs = NULL;
         }
-        item_set(item, "word_embedding_coeffs", vector_val(coeffs));
+        register const char *name asm("r4") = "word_embedding_coeffs";
+        asm("" : "+r"(name));
+        item_set(item, name, vector_val(coeffs));
     }
-    if (coeffs && i < (int)vector_size(coeffs))
+    if (coeffs != NULL && i < (int)vector_size(coeffs))
         return *(cst_val **)vector_at(coeffs, i);
     return VAL_STRING_0;
 }
+
+
