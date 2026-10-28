@@ -1,5 +1,6 @@
 /*
- * Syllabification of phone lists (..0x6e1a0): "-" entries separate syllables.
+ * Rule-based rewriting and syllabification of phone lists (..0x6e1a0): "-" entries separate
+ * syllables.
  */
 #include <string.h>
 #include "cst_val.h"
@@ -7,6 +8,85 @@
 
 const char *phone_name(const cst_val *p);
 int ph_is_syllabic(const cst_phoneset *ps, const cst_val *p);
+int phone_is_silence(const cst_phoneset *ps, const cst_val *p);
+cst_val *phones_insert_sep(cst_val *p);
+const char *phone_feature_base(const cst_phoneset *ps, const cst_val *p, const char *feat);
+
+/* A context is a NULL-terminated list of alternatives (character sets). */
+typedef const char *const *str_ctx;
+
+typedef struct str_rewrite_rule {
+    const unsigned char *tag;   /* +0x00: NULL or "" applies everywhere */
+    const str_ctx *left;        /* +0x04: contexts before match, nearest first; NULL ends the table */
+    const char *match;          /* +0x08 */
+    const str_ctx *right;       /* +0x0c: contexts after match */
+    const char *output;         /* +0x10 */
+} str_rewrite_rule;
+
+int FUN_0006db2c(const str_ctx *left, int n, const char *s, unsigned int pos);
+int FUN_0006d794(const str_ctx *right, const char *s);
+
+/* 0x6dc94 arm: rewrites s[start..start+len) into out: at each position the first rule whose
+ * match and contexts fit is applied; characters no rule matches are dropped. */
+void str_rewrite_span(const char *s, unsigned int start, unsigned int len,
+                      const str_rewrite_rule *rules, const char *tag, char *out)
+{
+    unsigned int end = start + len;
+    unsigned int pos = start;
+
+    while (pos < end) {
+        const str_rewrite_rule *r;
+
+        for (r = rules; r->left; r++) {
+            const char *m = r->match;
+            unsigned int n = strlen(m);
+
+            if (r->tag && r->tag[0] && (tag == NULL || strcmp((const char *)r->tag, tag) != 0))
+                continue;
+            if (pos + n > end || strncmp(s + pos, m, n) != 0)
+                continue;
+            if (r->left[0] && r->left[0][0]) {
+                int i = 1;
+
+                while (r->left[i] && r->left[i][0])
+                    i++;
+                if (!FUN_0006db2c(r->left, i, s, pos))
+                    continue;
+            }
+            if (!FUN_0006d794(r->right, s + pos + n))
+                continue;
+            pos += n;
+            n = strlen(r->output);
+            memcpy(out, r->output, n);
+            out += n;
+            break;
+        }
+        if (r->left == NULL)
+            pos++;
+    }
+    *out = '\0';
+}
+
+/* 0x6de1c arm: rewrites all of s into out with the rules tagged tag (or untagged). */
+void str_rewrite(const char *s, const str_rewrite_rule *rules, const char *tag, char *out)
+{
+    str_rewrite_span(s, 0, strlen(s), rules, tag, out);
+}
+
+/* 0x6de58 arm: sonority of a consonant (Flite's cmu_sonority): liquids and glides 4, nasals 3,
+ * voiced fricatives, affricates and plosives 2, others 1. */
+int syl_cons_sonority(const cst_phoneset *ps, const cst_val *p)
+{
+    const char *ctype = phone_feature_base(ps, p, "ctype");
+
+    if (strchr("grl", (unsigned char)ctype[0]))
+        return 4;
+    if (strcmp("n", ctype) == 0)
+        return 3;
+    if (strcmp("+", phone_feature_base(ps, p, "cvox")) == 0 && strchr("fap", (unsigned char)ctype[0]))
+        return 2;
+    return 1;
+}
 
 /* 0x6df20 arm: whether the syllable starting at p has a syllabic phone. */
 int syl_has_syllabic(const cst_phoneset *ps, const cst_val *p)
@@ -17,16 +97,13 @@ int syl_has_syllabic(const cst_phoneset *ps, const cst_val *p)
     return 0;
 }
 
-int phone_is_silence(const cst_phoneset *ps, const cst_val *p);
-cst_val *phones_insert_sep(cst_val *p);
-int FUN_0006de58(const cst_phoneset *ps, const cst_val *p);
 
 /* Sonority of a phone: 5 for syllabic phones and silence. */
 static inline int syl_sonority(const cst_phoneset *ps, const cst_val *p)
 {
     if (ph_is_syllabic(ps, p) || phone_is_silence(ps, p))
         return 5;
-    return FUN_0006de58(ps, p);
+    return syl_cons_sonority(ps, p);
 }
 
 /* Flite's cmu_syl_boundary: whether a syllable (with syllabic phone syl so far) ends after p. */

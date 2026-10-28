@@ -1541,9 +1541,9 @@ addr	size	mode	name	status	src	score	note
 0006d794	f4	arm	FUN_0006d794	todo			
 0006d888	2a4	arm	FUN_0006d888	todo			
 0006db2c	168	arm	FUN_0006db2c	todo			
-0006dc94	188	arm	FUN_0006dc94	todo			
-0006de1c	3c	arm	FUN_0006de1c	todo			
-0006de58	c8	arm	FUN_0006de58	todo			
+0006dc94	188	arm	str_rewrite_span	wip	src/libttsivonavoice/syllabify.c	52.1	
+0006de1c	3c	arm	str_rewrite	matched	src/libttsivonavoice/syllabify.c	100	
+0006de58	c8	arm	syl_cons_sonority	matched	src/libttsivonavoice/syllabify.c	100	
 0006df20	6c	arm	syl_has_syllabic	matched	src/libttsivonavoice/syllabify.c	100	
 0006df8c	214	arm	syl_split	wip	src/libttsivonavoice/syllabify.c	44.4	
 0006e1a0	8	arm	syl_split_default	matched	src/libttsivonavoice/syllabify.c	100	
