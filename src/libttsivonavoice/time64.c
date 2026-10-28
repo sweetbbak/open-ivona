@@ -59,6 +59,7 @@ static const int safe_years_low[SOLAR_CYCLE_LENGTH] = {
     1992, 1993, 1994, 1995,
 };
 
+#define IS_LEAP(n) ((!(((n) + 1900) % 400) || (!(((n) + 1900) % 4) && (((n) + 1900) % 100))) != 0)
 #define IS_LEAP_ABS(n) (!((n) % 400) || (!((n) % 4) && ((n) % 100)))
 
 static int is_exception_century(Year year)
@@ -66,6 +67,51 @@ static int is_exception_century(Year year)
     int is_exception = ((year % 100 == 0) && !(year % 400 == 0));
 
     return is_exception;
+}
+
+/* 0x4abd8 arm */
+Time64_T timegm64(const struct TM *date)
+{
+    Time64_T days = 0;
+    Time64_T seconds = 0;
+    Year year;
+    Year orig_year = (Year)date->tm_year;
+    Year cycles = 0;
+
+    if (orig_year > 100) {
+        cycles = (orig_year - 100) / 400;
+        orig_year -= cycles * 400;
+        days += cycles * days_in_gregorian_cycle;
+    } else if (orig_year < -300) {
+        cycles = (orig_year - 100) / 400;
+        orig_year -= cycles * 400;
+        days += cycles * days_in_gregorian_cycle;
+    }
+
+    if (orig_year > 70) {
+        year = 70;
+        while (year < orig_year) {
+            days += length_of_year[IS_LEAP(year)];
+            year++;
+        }
+    } else if (orig_year < 70) {
+        year = 69;
+        do {
+            days -= length_of_year[IS_LEAP(year)];
+            year--;
+        } while (year >= orig_year);
+    }
+
+    days += julian_days_by_month[IS_LEAP(orig_year)][date->tm_mon];
+    days += date->tm_mday - 1;
+
+    seconds = days * 60 * 60 * 24;
+
+    seconds += date->tm_hour * 60 * 60;
+    seconds += date->tm_min * 60;
+    seconds += date->tm_sec;
+
+    return seconds;
 }
 
 static Year cycle_offset(Year year)
