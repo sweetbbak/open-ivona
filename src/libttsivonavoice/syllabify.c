@@ -15,6 +15,38 @@ const char *phone_feature_base(const cst_phoneset *ps, const cst_val *p, const c
 /* A context is a NULL-terminated list of alternatives (character sets). */
 typedef const char *const *str_ctx;
 
+int str_ctx_match_left_repeat(const str_ctx *left, unsigned int n, const char *s, unsigned int pos);
+
+/* 0x6db2c arm: whether s[..pos) ends with the context sequence left[0..n) (matched from the
+ * end). "*" and "+" after a context repeat it as in str_ctx_match. */
+int str_ctx_match_left(const str_ctx *left, unsigned int n, const char *s, unsigned int pos)
+{
+    const char *const *alt = left[n - 1];
+
+    if (n > 1 && *alt) {
+        if (strcmp(*alt, "*") == 0) {
+            if (n - 2 == 0)
+                return 1;
+            if (str_ctx_match_left(left, n - 2, s, pos))
+                return 1;
+            return str_ctx_match_left_repeat(left, n - 1, s, pos);
+        }
+        if (strcmp(*alt, "+") == 0)
+            return str_ctx_match_left_repeat(left, n - 1, s, pos);
+    }
+    for (; *alt; alt++) {
+        unsigned int len = strlen(*alt);
+
+        if (pos < len || memcmp(s + pos - len, *alt, len) != 0)
+            continue;
+        if (n - 1 == 0)
+            return 1;
+        if (str_ctx_match_left(left, n - 1, s, pos - len))
+            return 1;
+    }
+    return 0;
+}
+
 typedef struct str_rewrite_rule {
     const unsigned char *tag;   /* +0x00: NULL or "" applies everywhere */
     const str_ctx *left;        /* +0x04: contexts before match, nearest first; NULL ends the table */
@@ -23,7 +55,6 @@ typedef struct str_rewrite_rule {
     const char *output;         /* +0x10 */
 } str_rewrite_rule;
 
-int FUN_0006db2c(const str_ctx *left, int n, const char *s, unsigned int pos);
 int str_ctx_match(const str_ctx *ctx, const char *s);
 
 /* 0x6d550 arm: whether s starts with one or more repetitions of ctx[0] followed by ctx + 2.
@@ -92,7 +123,7 @@ void str_rewrite_span(const char *s, unsigned int start, unsigned int len,
 
                 while (r->left[i] && r->left[i][0])
                     i++;
-                if (!FUN_0006db2c(r->left, i, s, pos))
+                if (!str_ctx_match_left(r->left, i, s, pos))
                     continue;
             }
             if (!str_ctx_match(r->right, s + pos + n))
