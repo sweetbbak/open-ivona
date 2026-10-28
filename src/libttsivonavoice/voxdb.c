@@ -927,3 +927,9 @@ cst_val *dynamic_voxdbs_val(const dynamic_voxdbs *v)
 {
     return val_new_typed(cst_val_type_dynamic_voxdbs, (void *)v);
 }
+
+/* a join cost function (vox_join_cost by default) */
+typedef struct join_cost_func join_cost_func;
+extern const int cst_val_type_join_cost_func;
+/* 0x615e8 arm, 0x61640 arm */
+CST_VAL_REGISTER_TYPE_NODEL(join_cost_func, join_cost_func)
