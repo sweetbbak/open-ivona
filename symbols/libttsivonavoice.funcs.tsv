@@ -757,16 +757,17 @@ addr	size	mode	name	status	src	score	note
 0004ab3c	34	arm	dom_element_dump	matched	src/libttsivonavoice/dom.c	100	
 0004ab70	10	arm	dom_dump	matched	src/libttsivonavoice/dom.c	100	
 0004ab80	58	arm	dom_to_string	matched	src/libttsivonavoice/dom.c	100	
-0004abd8	328	arm	timegm64	wip	src/libttsivonavoice/time64.c	69.2	
+0004abd8	328	arm	timegm64	wip	src/libttsivonavoice/time64.c	69.5	
 0004af00	1c	arm	copy_tm_to_TM64	matched	src/libttsivonavoice/time64.c	100	
 0004af1c	1c	arm	copy_TM64_to_tm	matched	src/libttsivonavoice/time64.c	100	
 0004af38	44	arm	fake_localtime_r	matched	src/libttsivonavoice/time64.c	100	
 0004af7c	44	arm	fake_gmtime_r	matched	src/libttsivonavoice/time64.c	100	
 0004afc0	468	arm	mktime64	wip	src/libttsivonavoice/time64.c	43.9	
 0004b428	4	arm	timelocal64	matched	src/libttsivonavoice/time64.c	100	
-0004b42c	bec	arm	FUN_0004b42c	todo			
-0004c018	10	arm	FUN_0004c018	todo			
-0004c028	10	arm	FUN_0004c028	todo			
+0004b42c	844	arm	gmtime64_r	wip	src/libttsivonavoice/time64.c	30.8	
+0004bc70	3a8	arm	localtime64_r	wip	src/libttsivonavoice/time64.c	76.9	
+0004c018	10	arm	localtime64	matched	src/libttsivonavoice/time64.c	100	
+0004c028	10	arm	gmtime64	matched	src/libttsivonavoice/time64.c	100	
 0004c038	18	arm	voice_attach_language	todo			
 0004c050	38c	arm	FUN_0004c050	todo			
 0004c3dc	34c	arm	FUN_0004c3dc	todo			

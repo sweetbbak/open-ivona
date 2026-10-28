@@ -5,6 +5,7 @@
  * (USE_TM64 undefined); the system has no localtime_r/gmtime_r (fake_*_r are used). Asserts
  * are compiled out (NDEBUG).
  */
+#include <errno.h>
 #include <stdint.h>
 #include <string.h>
 #include <time.h>
@@ -59,6 +60,21 @@ static const int safe_years_low[SOLAR_CYCLE_LENGTH] = {
     1992, 1993, 1994, 1995,
 };
 
+#define CHEAT_DAYS (1199145600 / 24 / 60 / 60)
+#define CHEAT_YEARS 108
+
+#define WRAP_TIME64(a, b, m) ((a) = ((a) < 0) ? ((b)--, (a) + (m)) : (a))
+
+/* the system localtime() is used for times it can handle; gmtime() never is */
+#define SYSTEM_LOCALTIME_MAX 2147483647
+#define SYSTEM_LOCALTIME_MIN -2147483647
+#define SHOULD_USE_SYSTEM_LOCALTIME(a) ((a) <= SYSTEM_LOCALTIME_MAX && (a) >= SYSTEM_LOCALTIME_MIN)
+#define SHOULD_USE_SYSTEM_GMTIME(a) (0)
+#define LOCALTIME_R(clock, result) fake_localtime_r(clock, result)
+#define GMTIME_R(clock, result) fake_gmtime_r(clock, result)
+
+static struct TM Static_Return_Date;
+
 #define IS_LEAP(n) ((!(((n) + 1900) % 400) || (!(((n) + 1900) % 4) && (((n) + 1900) % 100))) != 0)
 #define IS_LEAP_ABS(n) (!((n) % 400) || (!((n) % 4) && ((n) % 100)))
 
@@ -76,7 +92,7 @@ Time64_T timegm64(const struct TM *date)
     Time64_T seconds = 0;
     Year year;
     Year orig_year = (Year)date->tm_year;
-    Year cycles = 0;
+    int cycles = 0;
 
     if (orig_year > 100) {
         cycles = (orig_year - 100) / 400;
@@ -129,7 +145,7 @@ static Year cycle_offset(Year year)
     return exceptions * 16;
 }
 
-static int safe_year(const Year year)
+static inline int safe_year(const Year year)
 {
     int safe_year;
     Year year_cycle;
@@ -262,4 +278,232 @@ Time64_T mktime64(const struct TM *input_date)
 Time64_T timelocal64(const struct TM *date)
 {
     return mktime64(date);
+}
+
+/* 0x4b42c arm */
+struct TM *gmtime64_r(const Time64_T *in_time, struct TM *p)
+{
+    int v_tm_sec, v_tm_min, v_tm_hour, v_tm_mon, v_tm_wday;
+    Time64_T v_tm_tday;
+    int leap;
+    Time64_T m;
+    Time64_T time = *in_time;
+    Year year = 70;
+    int cycles = 0;
+
+
+    /* Use the system gmtime() if time_t is small enough */
+    if( SHOULD_USE_SYSTEM_GMTIME(*in_time) ) {
+        time_t safe_time = (time_t)*in_time;
+        struct tm safe_date;
+        GMTIME_R(&safe_time, &safe_date);
+
+        copy_tm_to_TM64(&safe_date, p);
+
+        return p;
+    }
+
+#ifdef HAS_TM_TM_GMTOFF
+    p->tm_gmtoff = 0;
+#endif
+    p->tm_isdst  = 0;
+#ifdef HAS_TM_TM_ZONE
+    p->tm_zone   = "UTC";
+#endif
+
+    v_tm_sec =  (int)(time % 60);
+    time /= 60;
+    v_tm_min =  (int)(time % 60);
+    time /= 60;
+    v_tm_hour = (int)(time % 24);
+    time /= 24;
+    v_tm_tday = time;
+
+    WRAP_TIME64 (v_tm_sec, v_tm_min, 60);
+    WRAP_TIME64 (v_tm_min, v_tm_hour, 60);
+    WRAP_TIME64 (v_tm_hour, v_tm_tday, 24);
+
+    v_tm_wday = (int)((v_tm_tday + 4) % 7);
+    if (v_tm_wday < 0)
+        v_tm_wday += 7;
+    m = v_tm_tday;
+
+    if (m >= CHEAT_DAYS) {
+        year = CHEAT_YEARS;
+        m -= CHEAT_DAYS;
+    }
+
+    if (m >= 0) {
+        /* Gregorian cycles, this is huge optimization for distant times */
+        cycles = m / (Time64_T) days_in_gregorian_cycle;
+        if( cycles ) {
+            m -= cycles * (Time64_T) days_in_gregorian_cycle;
+            year += cycles * years_in_gregorian_cycle;
+        }
+
+        /* Years */
+        leap = IS_LEAP (year);
+        while (m >= (Time64_T) length_of_year[leap]) {
+            m -= (Time64_T) length_of_year[leap];
+            year++;
+            leap = IS_LEAP (year);
+        }
+
+        /* Months */
+        v_tm_mon = 0;
+        while (m >= (Time64_T) days_in_month[leap][v_tm_mon]) {
+            m -= (Time64_T) days_in_month[leap][v_tm_mon];
+            v_tm_mon++;
+        }
+    } else {
+        year--;
+
+        /* Gregorian cycles */
+        cycles = (m / (Time64_T) days_in_gregorian_cycle) + 1;
+        if( cycles ) {
+            m -= cycles * (Time64_T) days_in_gregorian_cycle;
+            year += cycles * years_in_gregorian_cycle;
+        }
+
+        /* Years */
+        leap = IS_LEAP (year);
+        while (m < (Time64_T) -length_of_year[leap]) {
+            m += (Time64_T) length_of_year[leap];
+            year--;
+            leap = IS_LEAP (year);
+        }
+
+        /* Months */
+        v_tm_mon = 11;
+        while (m < (Time64_T) -days_in_month[leap][v_tm_mon]) {
+            m += (Time64_T) days_in_month[leap][v_tm_mon];
+            v_tm_mon--;
+        }
+        m += (Time64_T) days_in_month[leap][v_tm_mon];
+    }
+
+#   ifdef USE_TM64
+      p->tm_year = year;
+#   else
+      p->tm_year = (int)year;
+#   endif
+
+    if( p->tm_year != year ) {
+#ifdef EOVERFLOW
+        errno = EOVERFLOW;
+#endif
+        return NULL;
+    }
+
+    /* At this point m is less than a year so casting to an int is safe */
+    p->tm_mday = (int) m + 1;
+    p->tm_yday = julian_days_by_month[leap][v_tm_mon] + (int)m;
+    p->tm_sec  = v_tm_sec;
+    p->tm_min  = v_tm_min;
+    p->tm_hour = v_tm_hour;
+    p->tm_mon  = v_tm_mon;
+    p->tm_wday = v_tm_wday;
+    
+
+    return p;
+}
+
+
+/* 0x4bc70 arm */
+struct TM *localtime64_r(const Time64_T *time, struct TM *local_tm)
+{
+    time_t safe_time;
+    struct tm safe_date;
+    struct TM gm_tm;
+    Year orig_year;
+    int month_diff;
+
+
+    /* Use the system localtime() if time_t is small enough */
+    if( SHOULD_USE_SYSTEM_LOCALTIME(*time) ) {
+        safe_time = (time_t)*time;
+
+
+        LOCALTIME_R(&safe_time, &safe_date);
+
+        copy_tm_to_TM64(&safe_date, local_tm);
+
+        return local_tm;
+    }
+
+    if( gmtime64_r(time, &gm_tm) == NULL ) {
+        return NULL;
+    }
+
+    orig_year = gm_tm.tm_year;
+
+    if (gm_tm.tm_year > (2037 - 1900) ||
+        gm_tm.tm_year < (1970 - 1900)
+       )
+    {
+        gm_tm.tm_year = safe_year((Year)(gm_tm.tm_year + 1900)) - 1900;
+    }
+
+    safe_time = (time_t)timegm64(&gm_tm);
+    if( LOCALTIME_R(&safe_time, &safe_date) == NULL ) {
+        return NULL;
+    }
+
+    copy_tm_to_TM64(&safe_date, local_tm);
+
+#   ifdef USE_TM64
+      local_tm->tm_year = orig_year;
+#   else
+      local_tm->tm_year = (int)orig_year;
+#   endif
+
+    if( local_tm->tm_year != orig_year ) {
+
+#ifdef EOVERFLOW
+        errno = EOVERFLOW;
+#endif
+        return NULL;
+    }
+
+
+    month_diff = local_tm->tm_mon - gm_tm.tm_mon;
+
+    /*  When localtime is Dec 31st previous year and
+        gmtime is Jan 1st next year.
+    */
+    if( month_diff == 11 ) {
+        local_tm->tm_year--;
+    }
+
+    /*  When localtime is Jan 1st, next year and
+        gmtime is Dec 31st, previous year.
+    */
+    if( month_diff == -11 ) {
+        local_tm->tm_year++;
+    }
+
+    /* GMT is Jan 1st, xx01 year, but localtime is still Dec 31st 
+       in a non-leap xx00.  There is one point in the cycle
+       we can't account for which the safe xx00 year is a leap
+       year.  So we need to correct for Dec 31st coming out as
+       the 366th day of the year.
+    */
+    if( !IS_LEAP(local_tm->tm_year) && local_tm->tm_yday == 365 )
+        local_tm->tm_yday--;
+
+    
+    return local_tm;
+}
+
+
+/* 0x4c018 arm */
+struct TM *localtime64(const Time64_T *time)
+{
+    return localtime64_r(time, &Static_Return_Date);
+}
+
+/* 0x4c028 arm */
+struct TM *gmtime64(const Time64_T *time)
+{
+    return gmtime64_r(time, &Static_Return_Date);
 }
