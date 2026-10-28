@@ -136,6 +136,7 @@ const cst_val *val_car(const cst_val *v)
     cst_error();
 }
 
+/* 0x55570: non-const val_car */
 cst_val *val_car_mut(const cst_val *v)
 {
     return (cst_val *)val_car(v);
@@ -149,6 +150,7 @@ const cst_val *val_cdr(const cst_val *v)
     cst_error();
 }
 
+/* 0x5559c: non-const val_cdr */
 cst_val *val_cdr_mut(const cst_val *v)
 {
     return (cst_val *)val_cdr(v);

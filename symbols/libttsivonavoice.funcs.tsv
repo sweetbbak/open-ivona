@@ -1071,9 +1071,9 @@ addr	size	mode	name	status	src	score	note
 00055504	34	arm	val_void	matched	src/libttsivonavoice/flite/cst_val.c	100	
 00055538	10	arm	cst_val_consp	matched	src/libttsivonavoice/flite/cst_val.c	100	
 00055548	28	arm	val_car	matched	src/libttsivonavoice/flite/cst_val.c	100	
-00055570	4	arm	FUN_00055570	todo			
+00055570	4	arm	val_car_mut	matched	src/libttsivonavoice/flite/cst_val.c	100	
 00055574	28	arm	val_cdr	matched	src/libttsivonavoice/flite/cst_val.c	100	
-0005559c	4	arm	FUN_0005559c	todo			
+0005559c	4	arm	val_cdr_mut	matched	src/libttsivonavoice/flite/cst_val.c	100	
 000555a0	2c	arm	val_last	matched	src/libttsivonavoice/flite/cst_val.c	100	
 000555cc	160	arm	val_print	matched	src/libttsivonavoice/flite/cst_val.c	100	
 0005572c	28	arm	val_reverse	matched	src/libttsivonavoice/flite/cst_val.c	100	
@@ -1449,8 +1449,8 @@ addr	size	mode	name	status	src	score	note
 00064434	6c	arm	track_frame_at	matched	src/libttsivonavoice/track.c	100	
 000644a0	b8	arm	track_print	matched	src/libttsivonavoice/track.c	100	
 00064558	240	arm	FUN_00064558	todo			
-00064798	68	arm	crossfade_weight	todo			
-00064800	7c	arm	wave_crossfade	todo			
+00064798	68	arm	crossfade_weight	matched	src/libttsivonavoice/track.c	100	
+00064800	7c	arm	wave_crossfade	wip	src/libttsivonavoice/track.c	71.0	
 0006487c	4e4	arm	FUN_0006487c	todo			
 00064d60	f8	arm	FUN_00064d60	todo			
 00064e58	790	arm	FUN_00064e58	todo			

@@ -164,3 +164,34 @@ void track_print(const track *t)
         printf("%d%s", t->pms[i], i < t->num_frames - 1 ? ", " : " ");
     puts("}");
 }
+
+/* Raised-cosine fade-out sampled at 16 points, and the step to the next point. */
+static const float crossfade_curve[17] = {
+    1.0f, 0.99039f, 0.96194f, 0.91573f, 0.85355f, 0.77779f, 0.69134f, 0.59755f, 0.5f,
+    0.40245f, 0.30866f, 0.22221f, 0.14645f, 0.08427f, 0.03806f, 0.00961f, 0.0f,
+};
+static const float crossfade_step[17] = {
+    -0.00961f, -0.02845f, -0.04621f, -0.06218f, -0.07576f, -0.08645f, -0.09379f, -0.09755f,
+    -0.09755f, -0.09379f, -0.08645f, -0.07576f, -0.06218f, -0.04621f, -0.02845f, -0.00961f, -0.0f,
+};
+
+/* 0x64798 arm: fade-out weight of sample i of n, interpolated from crossfade_curve. */
+float crossfade_weight(int i, int n)
+{
+    float x = (float)(i * 16) / n;
+    int k = (int)x;
+
+    return crossfade_curve[k] + (x - k) * crossfade_step[k];
+}
+
+/* 0x64800 arm: crossfades the start of dst into the end of src over min(n_dst, n_src) samples;
+ * returns that count. */
+int wave_crossfade(short *dst, int n_dst, const short *src, int n_src)
+{
+    int n = n_src > n_dst ? n_dst : n_src;
+    int i;
+
+    for (i = 0; i < n; i++)
+        dst[i] = (int)(crossfade_weight(i, n) * (dst[i] - src[n_src - n + i])) + src[n_src - n + i];
+    return n;
+}
