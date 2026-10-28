@@ -769,8 +769,8 @@ addr	size	mode	name	status	src	score	note
 0004c018	10	arm	localtime64	matched	src/libttsivonavoice/time64.c	100	
 0004c028	10	arm	gmtime64	matched	src/libttsivonavoice/time64.c	100	
 0004c038	18	arm	voice_attach_language	matched	src/libttsivonavoice/conc_cost.c	100	
-0004c050	38c	arm	conc_cost_plosive_unvoiced	todo			
-0004c3dc	34c	arm	conc_cost_trill	todo			
+0004c050	38c	arm	conc_cost_plosive_unvoiced	wip	src/libttsivonavoice/conc_cost.c	58.1	
+0004c3dc	34c	arm	conc_cost_trill	wip	src/libttsivonavoice/conc_cost.c	74.0	
 0004c728	34c	arm	conc_cost_unvoiced	todo			
 0004ca74	358	arm	conc_cost_vowel	todo			
 0004cdcc	350	arm	conc_cost_glide	todo			
