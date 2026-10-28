@@ -1537,11 +1537,11 @@ addr	size	mode	name	status	src	score	note
 0006cee8	54	arm	lex_select_pos	matched	src/libttsivonavoice/flite/cst_lexicon.c	100	
 0006cf3c	1fc	arm	lex_lookup	wip	src/libttsivonavoice/flite/cst_lexicon.c	43.0	
 0006d138	418	arm	lts_apply	todo			flite strings(3) 9%
-0006d550	244	arm	str_ctx_match_repeat	wip	src/libttsivonavoice/syllabify.c	17.9	
+0006d550	244	arm	str_ctx_match_repeat	wip	src/libttsivonavoice/syllabify.c	8.8	
 0006d794	f4	arm	str_ctx_match	matched	src/libttsivonavoice/syllabify.c	100	
-0006d888	2a4	arm	str_ctx_match_left_repeat	todo			
+0006d888	2a4	arm	str_ctx_match_left_repeat	wip	src/libttsivonavoice/syllabify.c	3.1	
 0006db2c	168	arm	str_ctx_match_left	wip	src/libttsivonavoice/syllabify.c	22.3	
-0006dc94	188	arm	str_rewrite_span	wip	src/libttsivonavoice/syllabify.c	45.8	
+0006dc94	188	arm	str_rewrite_span	wip	src/libttsivonavoice/syllabify.c	52.1	
 0006de1c	3c	arm	str_rewrite	matched	src/libttsivonavoice/syllabify.c	100	
 0006de58	c8	arm	syl_cons_sonority	matched	src/libttsivonavoice/syllabify.c	100	
 0006df20	6c	arm	syl_has_syllabic	matched	src/libttsivonavoice/syllabify.c	100	

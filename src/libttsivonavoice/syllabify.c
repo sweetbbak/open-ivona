@@ -15,7 +15,27 @@ const char *phone_feature_base(const cst_phoneset *ps, const cst_val *p, const c
 /* A context is a NULL-terminated list of alternatives (character sets). */
 typedef const char *const *str_ctx;
 
-int str_ctx_match_left_repeat(const str_ctx *left, unsigned int n, const char *s, unsigned int pos);
+int str_ctx_match_left(const str_ctx *left, unsigned int n, const char *s, unsigned int pos);
+
+/* 0x6d888 arm: whether s[..pos) ends with one or more repetitions of left[n - 1] preceded by
+ * left[0..n - 1). */
+static inline int str_ctx_match_left_repeat(const str_ctx *left, unsigned int n, const char *s,
+                                            unsigned int pos)
+{
+    const char *const *alt;
+
+    for (alt = left[n - 1]; *alt; alt++) {
+        unsigned int len = strlen(*alt);
+
+        if (len > pos || memcmp(s + pos - len, *alt, len) != 0)
+            continue;
+        if (n - 1 == 0 || str_ctx_match_left(left, n - 1, s, pos - len))
+            return 1;
+        if (str_ctx_match_left_repeat(left, n, s, pos - len))
+            return 1;
+    }
+    return 0;
+}
 
 /* 0x6db2c arm: whether s[..pos) ends with the context sequence left[0..n) (matched from the
  * end). "*" and "+" after a context repeat it as in str_ctx_match. */
@@ -119,7 +139,7 @@ void str_rewrite_span(const char *s, unsigned int start, unsigned int len,
             if (pos + n > end || strncmp(s + pos, m, n) != 0)
                 continue;
             if (r->left[0] && r->left[0][0]) {
-                int i = 1;
+                unsigned int i = 1;
 
                 while (r->left[i] && r->left[i][0])
                     i++;
