@@ -427,7 +427,7 @@ const char *xsampa_mod_name(unsigned int flag)
 cst_item *item_traverse(const cst_item *item, ...);
 const char *ffeature_string(const cst_item *item, const char *featpath);
 int ffeature_int(const cst_item *item, const char *featpath);
-void FUN_0006dc94(const char *s, int start, int len, const void *rules, int flags, char *out);
+void str_rewrite_span(const char *s, int start, int len, const void *rules, int flags, char *out);
 
 /* how syllable stress values are written */
 typedef struct stress_info {
@@ -508,7 +508,7 @@ char *xivona_to_xsampa(cst_item *seg, const void *rules, const stress_info *si)
         if (item_next(item_as(word, REL_PHRASE)) == NULL)
             strbuf_append_str(&ctx, "[$$]");
         buf = cst_safe_alloc(ctx.len + 1, 1);
-        FUN_0006dc94(ctx.data, start, len, rules, 0, buf);
+        str_rewrite_span(ctx.data, start, len, rules, 0, buf);
         strbuf_append_str(&out, buf);
         cst_free(buf);
         if (si != default_stress_info
