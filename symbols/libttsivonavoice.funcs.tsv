@@ -1525,17 +1525,17 @@ addr	size	mode	name	status	src	score	note
 0006bb58	364	arm	vorbis_ogg_unit_open	todo			
 0006bebc	3c	arm	vorbis_ogg_unit_close	todo			
 0006bef8	54c	arm	vorbis_ogg_unit_decode	todo			
-0006c444	4dc	arm	FUN_0006c444	todo			
-0006c920	58	arm	FUN_0006c920	todo			
-0006c978	18	arm	FUN_0006c978	todo			
-0006c990	58	arm	FUN_0006c990	todo			
-0006c9e8	18	arm	FUN_0006c9e8	todo			
-0006ca00	c	arm	FUN_0006ca00	todo			
-0006ca0c	c	arm	FUN_0006ca0c	todo			
-0006ca18	180	arm	FUN_0006ca18	todo			
-0006cb98	350	arm	FUN_0006cb98	todo			
-0006cee8	54	arm	FUN_0006cee8	todo			
-0006cf3c	1fc	arm	FUN_0006cf3c	todo			
+0006c444	4dc	arm	lex_lookup_bsearch	matched	src/libttsivonavoice/flite/cst_lexicon.c	100	
+0006c920	58	arm	val_lexicon	matched	src/libttsivonavoice/flite/cst_lexicon.c	100	
+0006c978	18	arm	lexicon_val	matched	src/libttsivonavoice/flite/cst_lexicon.c	100	
+0006c990	58	arm	val_allwordposfunc	matched	src/libttsivonavoice/flite/cst_lexicon.c	100	
+0006c9e8	18	arm	allwordposfunc_val	matched	src/libttsivonavoice/flite/cst_lexicon.c	100	
+0006ca00	c	arm	new_lexicon	matched	src/libttsivonavoice/flite/cst_lexicon.c	100	
+0006ca0c	c	arm	delete_lexicon	matched	src/libttsivonavoice/flite/cst_lexicon.c	100	
+0006ca18	180	arm	in_lex	wip	src/libttsivonavoice/flite/cst_lexicon.c	94.8	
+0006cb98	350	arm	lex_word_pos_list	wip	src/libttsivonavoice/flite/cst_lexicon.c	45.6	
+0006cee8	54	arm	lex_select_pos	matched	src/libttsivonavoice/flite/cst_lexicon.c	100	
+0006cf3c	1fc	arm	lex_lookup	wip	src/libttsivonavoice/flite/cst_lexicon.c	43.0	
 0006d138	418	arm	lts_apply	todo			flite strings(3) 9%
 0006d550	244	arm	FUN_0006d550	todo			
 0006d794	f4	arm	FUN_0006d794	todo			

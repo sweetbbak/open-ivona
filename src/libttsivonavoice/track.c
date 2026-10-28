@@ -195,3 +195,16 @@ int wave_crossfade(short *dst, int n_dst, const short *src, int n_src)
         dst[i] = (int)(crossfade_weight(i, n) * (dst[i] - src[n_src - n + i])) + src[n_src - n + i];
     return n;
 }
+
+float FUN_00065780(const track *t, int from, int to, float ratio);
+
+/* 0x65d50 arm: FUN_00065780 over frames from..to with the ratio len / span, scaled back to
+ * samples. */
+unsigned int FUN_00065d50(const track *t, int from, int to, unsigned int len)
+{
+    float span = (unsigned int)track_span(t, from, to);
+
+    float r = FUN_00065780(t, from, to, len / span);
+
+    return span * r;
+}
