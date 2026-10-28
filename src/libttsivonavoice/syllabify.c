@@ -24,7 +24,49 @@ typedef struct str_rewrite_rule {
 } str_rewrite_rule;
 
 int FUN_0006db2c(const str_ctx *left, int n, const char *s, unsigned int pos);
-int FUN_0006d794(const str_ctx *right, const char *s);
+int str_ctx_match(const str_ctx *ctx, const char *s);
+
+/* 0x6d550 arm: whether s starts with one or more repetitions of ctx[0] followed by ctx + 2.
+ * TODO: the binary inlines the recursion ~5 levels deep, this builds ~8. */
+static inline int str_ctx_match_repeat(const str_ctx *ctx, const char *s)
+{
+    const char *const *alt;
+
+    for (alt = ctx[0]; *alt; alt++) {
+        unsigned int n = strlen(*alt);
+
+        if (strncmp(s, *alt, n) == 0
+            && (str_ctx_match(ctx + 2, s + n) || str_ctx_match_repeat(ctx, s + n)))
+            return 1;
+    }
+    return 0;
+}
+
+/* 0x6d794 arm: whether s starts with the context sequence ctx. A context followed by "*" may
+ * repeat zero or more times, one followed by "+" one or more times. */
+int str_ctx_match(const str_ctx *ctx, const char *s)
+{
+    const char *const *alt = ctx[0];
+
+    if (alt == NULL || alt[0] == NULL)
+        return 1;
+    if (ctx[1] && ctx[1][0]) {
+        if (strcmp(ctx[1][0], "*") == 0) {
+            if (str_ctx_match(ctx + 2, s))
+                return 1;
+            return str_ctx_match_repeat(ctx, s);
+        }
+        if (strcmp(ctx[1][0], "+") == 0)
+            return str_ctx_match_repeat(ctx, s);
+    }
+    for (; *alt; alt++) {
+        unsigned int n = strlen(*alt);
+
+        if (strncmp(s, *alt, n) == 0 && str_ctx_match(ctx + 1, s + n))
+            return 1;
+    }
+    return 0;
+}
 
 /* 0x6dc94 arm: rewrites s[start..start+len) into out: at each position the first rule whose
  * match and contexts fit is applied; characters no rule matches are dropped. */
@@ -53,7 +95,7 @@ void str_rewrite_span(const char *s, unsigned int start, unsigned int len,
                 if (!FUN_0006db2c(r->left, i, s, pos))
                     continue;
             }
-            if (!FUN_0006d794(r->right, s + pos + n))
+            if (!str_ctx_match(r->right, s + pos + n))
                 continue;
             pos += n;
             n = strlen(r->output);
