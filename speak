@@ -1,0 +1,66 @@
+#!/usr/bin/env bash
+# Speak text with the decompiled IVONA engine:
+#
+#   ./speak "Hello world" [out.wav]
+#
+# Does everything needed, only when needed:
+#   1. fetches the Android 4.4 system files qemu runs it on (once, 160 MB)
+#   2. builds the engine, build/engine/libttsivonavoice.so (again whenever a source changed)
+#   3. builds the test program (tests/run/tts_run.c, examples/example.c with arguments)
+#   4. runs it under qemu with the original Amy voice library and data, writing the WAV
+#
+# Voice data is taken from ../eng.gbr.amy.1.6.101.3 (set IVONA_VOICE_DIR to use another
+# directory holding vox_en_gb_amy22i and lang_en_gb.dat).
+set -euo pipefail
+ROOT="$(cd "$(dirname "$0")" && pwd)"
+cd "$ROOT"
+
+if [ $# -lt 1 ] || [ $# -gt 2 ]; then
+    sed -n '2,15p' "$0" | sed 's/^# \{0,1\}//'
+    exit 2
+fi
+TEXT="$1"
+OUT="$(realpath -m "${2:-out.wav}")"
+VOICE_DIR="$(realpath "${IVONA_VOICE_DIR:-$ROOT/../eng.gbr.amy.1.6.101.3}")"
+ENGINE=build/engine/libttsivonavoice.so
+RUNNER=build/run/tts_run
+RUNDIR=build/run/amy
+
+step() { printf '\033[1m==> %s\033[0m\n' "$*" >&2; }
+
+for f in vox_en_gb_amy22i lang_en_gb.dat; do
+    [ -e "$VOICE_DIR/$f" ] || { echo "missing $VOICE_DIR/$f (set IVONA_VOICE_DIR)" >&2; exit 1; }
+done
+
+# 1. Android system files for qemu
+if [ ! -x toolchain/android-19/system/bin/linker ]; then
+    step "fetching the Android 4.4 system files (once)"
+    toolchain/fetch_android_sysroot.sh
+fi
+
+# 2. the engine, rebuilt when any source, header or build setting is newer than it
+if [ ! -f "$ENGINE" ] || [ -n "$(find src include config tools/build_engine.py -newer "$ENGINE" \
+        -type f -print -quit)" ]; then
+    step "building the engine ($ENGINE), takes a minute or two"
+    .venv/bin/python tools/build_engine.py >&2
+fi
+
+# 3. the test program
+if [ ! -f "$RUNNER" ] || [ tests/run/tts_run.c -nt "$RUNNER" ] || [ "$ENGINE" -nt "$RUNNER" ]; then
+    step "building the test program ($RUNNER)"
+    mkdir -p build/run
+    bin/agcc sh -c "arm-linux-androideabi-gcc --sysroot=/opt/sysroot -Iinclude -o $RUNNER \
+        tests/run/tts_run.c -Lbuild/engine -lttsivonavoice"
+fi
+
+# 4. run: the voice library and data side by side, any certificate file will do
+mkdir -p "$RUNDIR"
+cp -u target/libvoice_en_gb_amy.so "$RUNDIR/"
+ln -sfn "$VOICE_DIR/vox_en_gb_amy22i" "$RUNDIR/vox_en_gb_amy22i"
+ln -sfn "$VOICE_DIR/lang_en_gb.dat" "$RUNDIR/lang_en_gb.dat"
+[ -f "$RUNDIR/certificate.txt" ] || : > "$RUNDIR/certificate.txt"
+step "speaking"
+cd "$RUNDIR"
+"$ROOT/tools/run_android.sh" -l "$ROOT/build/engine" -l . "$ROOT/$RUNNER" certificate.txt \
+    libvoice_en_gb_amy.so vox_en_gb_amy22i "$TEXT" "$OUT"
+step "done: $OUT"

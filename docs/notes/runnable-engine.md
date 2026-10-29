@@ -39,6 +39,9 @@ NEEDED libraries and exported API as the original. **It speaks.** Under qemu wit
 
 ## Running it (qemu-user + real bionic)
 
+The one command for all of this is `./speak "text" out.wav`: it fetches, builds and runs as
+needed. What it does by hand:
+
 ```
 toolchain/fetch_android_sysroot.sh    # once: Android 4.4 ARM /system -> toolchain/android-19
 bin/agcc sh -c 'arm-linux-androideabi-gcc --sysroot=/opt/sysroot -Iinclude \

@@ -6,6 +6,15 @@ compiler. The harness then proves the result is byte-identical to the shipped bi
 relocations, it checks that each reference points at the same import, function, data object or
 string contents as in the original.
 
+## Make it speak
+
+```
+./speak "Hello world" hello.wav
+```
+
+That's all. The first run downloads what it needs and builds everything; later runs rebuild
+the engine only if a source changed. Details: `docs/notes/runnable-engine.md`.
+
 | target | what |
 |---|---|
 | `libttsivonavoice.so` | the engine (ARM + Thumb, C/C++) |
