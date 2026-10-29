@@ -715,35 +715,43 @@ typedef struct token_chunk {
 } token_chunk;
 void token_chunk_from_utt(const utt_chunk *c, token_chunk *tc, void *ctx);
 
+#define UTT_BUILDER_FLUSH(v, b)                                                         \
+    do {                                                                                \
+        tts_voice **v_ = (v);                                                           \
+        utt_builder *b_ = (b);                                                        \
+        token_chunk tc_;                                                                \
+        float pause_;                                                                   \
+        cst_item *t_;                                                                   \
+                                                                                        \
+        b_->unk_c = 0;                                                                   \
+        if (relation_head(b_->tokens)) {                                                 \
+            if (b_->unk_10[2] && (pause_ = b_->paragraph_break) > 0) {                    \
+                t_ = relation_append(b_->tokens, NULL);                                  \
+                item_set_string(t_, "name", "");                                        \
+                item_set_int(t_, "start_pos", -1);                                      \
+                item_set_int(t_, "end_pos", -1);                                        \
+                item_set_string(t_, "punc", "");                                        \
+                item_set_float(t_, "silence", pause_);                                  \
+                b_->unk_8 = 0;                                                           \
+            }                                                                           \
+            token_chunk_from_utt(&b_->chunk, &tc_, b_->unk_0);                            \
+            vector_push(b_->unk_4, &tc_);                                                \
+            utt_chunk_free_utt(&b_->chunk);                                              \
+            utt_chunk_init_empty(&b_->chunk, (tts_instance **)*v_, b_->chunk.phrasing_model,\
+                                 b_->chunk.break_dur_model);                             \
+            b_->tokens = utt_relation(b_->chunk.utt, REL_TOKEN);                          \
+            b_->last_item = NULL;                                                        \
+            b_->unk_10[5] = 0;                                                           \
+        }                                                                               \
+        b_->unk_10[2] = 0;                                                               \
+    } while (0)
+
 /* 0x314d4 arm: turns the utterance built so far into a token chunk (ending a paragraph
  * with its pause) and starts a new one */
 void utt_builder_flush(tts_voice **v, utt_builder *b)
 {
-    token_chunk tc;
-    float pause;
-    cst_item *t;
+    UTT_BUILDER_FLUSH(v, b);
 
-    b->unk_c = 0;
-    if (relation_head(b->tokens)) {
-        if (b->unk_10[2] && (pause = b->paragraph_break) > 0) {
-            t = relation_append(b->tokens, NULL);
-            item_set_string(t, "name", "");
-            item_set_int(t, "start_pos", -1);
-            item_set_int(t, "end_pos", -1);
-            item_set_string(t, "punc", "");
-            item_set_float(t, "silence", pause);
-            b->unk_8 = 0;
-        }
-        token_chunk_from_utt(&b->chunk, &tc, b->unk_0);
-        vector_push(b->unk_4, &tc);
-        utt_chunk_free_utt(&b->chunk);
-        utt_chunk_init_empty(&b->chunk, (tts_instance **)*v, b->chunk.phrasing_model,
-                             b->chunk.break_dur_model);
-        b->tokens = utt_relation(b->chunk.utt, REL_TOKEN);
-        b->last_item = NULL;
-        b->unk_10[5] = 0;
-    }
-    b->unk_10[2] = 0;
 }
 
 static inline lang_core *ctx_lang(const synth_ctx *c)
@@ -775,6 +783,17 @@ void utt_builder_end_sentence(synth_ctx *c, cst_item *prev)
         return;
     item_set_string(prev, "punc", ".");
 }
+
+/* utt_builder_end_sentence, inline */
+#define END_SENTENCE(c, prev)                                                                 \
+    do {                                                                                      \
+        synth_ctx *c_ = (c);                                                                  \
+        cst_item *p_ = (prev);                                                                \
+                                                                                              \
+        if (p_ && !ends_in(c_, item_feat_string(p_, "punc"),                                  \
+                           get_param_string(ctx_lang(c_)->features, "hard_punc", ".!?")))     \
+            item_set_string(p_, "punc", ".");                                                 \
+    } while (0)
 
 /* 0x31754 arm: gives the token before a break a pause if its punctuation has none */
 void utt_builder_item_added(synth_ctx *c, cst_item *prev)
@@ -1431,6 +1450,73 @@ void synth_state_free(synth_state *s)
     vector_free(s->say_as_depth_stack);
     vector_free(s->chunks);
     cst_free(s);
+}
+
+/* 0x33ae0 arm: a paragraph break: flushes the utterance */
+void synth_state_break_paragraph(synth_state *s)
+{
+    synth_state_flush(s);
+    UTT_BUILDER_FLUSH(&s->ctx->voice, s->builder);
+}
+
+/* 0x33c34 arm: enters a paragraph (with its phrasing and break duration models) */
+void synth_state_enter_p(synth_state *s, int phrasing_model, int break_dur_model)
+{
+    utt_builder *b;
+
+    if (s->ctx->unk_0[0]++ != 0)
+        return;
+    synth_state_flush(s);
+    b = s->builder;
+    utt_builder_end_sentence(s->ctx, b->last_item);
+    b->unk_c = 1;
+    b->unk_10[2] = 1;
+    s->builder->chunk.phrasing_model = phrasing_model;
+    feat_set_int(s->builder->chunk.utt->features, "phrasing_model", phrasing_model);
+    s->builder->chunk.break_dur_model = break_dur_model;
+    feat_set_int(s->builder->chunk.utt->features, "break_dur_model", break_dur_model);
+}
+
+/* 0x33cc4 arm: leaves a paragraph */
+void synth_state_leave_p(synth_state *s)
+{
+    utt_builder *b;
+
+    if (--s->ctx->unk_0[0] != 0)
+        return;
+    synth_state_flush(s);
+    b = s->builder;
+    END_SENTENCE(s->ctx, b->last_item);
+    b->unk_c = 1;
+    b->unk_10[2] = 1;
+    s->builder->chunk.phrasing_model = 0;
+    s->builder->chunk.break_dur_model = 0;
+}
+
+/* 0x33e44 arm: enters a sentence */
+void synth_state_enter_s(synth_state *s)
+{
+    utt_builder *b;
+
+    if (s->ctx->unk_0[1]++ != 0)
+        return;
+    synth_state_flush(s);
+    b = s->builder;
+    END_SENTENCE(s->ctx, b->last_item);
+    b->unk_c = 1;
+}
+
+/* 0x33fa4 arm: leaves a sentence */
+void synth_state_leave_s(synth_state *s)
+{
+    utt_builder *b;
+
+    if (--s->ctx->unk_0[1] != 0)
+        return;
+    synth_state_flush(s);
+    b = s->builder;
+    END_SENTENCE(s->ctx, b->last_item);
+    b->unk_c = 1;
 }
 
 /* 0x34104 arm */

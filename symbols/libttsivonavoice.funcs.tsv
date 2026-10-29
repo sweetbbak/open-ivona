@@ -385,11 +385,11 @@ addr	size	mode	name	status	src	score	note
 0003385c	1f4	arm	utt_builder_new	wip	src/libttsivonavoice/synth_iter.c	88.0	
 00033a50	24	arm	utt_builder_free	matched	src/libttsivonavoice/synth_iter.c	100	
 00033a74	6c	arm	synth_state_free	matched	src/libttsivonavoice/synth_iter.c	100	
-00033ae0	154	arm	FUN_00033ae0	todo			
-00033c34	90	arm	FUN_00033c34	todo			
-00033cc4	180	arm	FUN_00033cc4	todo			
-00033e44	160	arm	FUN_00033e44	todo			
-00033fa4	160	arm	FUN_00033fa4	todo			
+00033ae0	154	arm	synth_state_break_paragraph	matched	src/libttsivonavoice/synth_iter.c	100	
+00033c34	90	arm	synth_state_enter_p	wip	src/libttsivonavoice/synth_iter.c	88.9	
+00033cc4	180	arm	synth_state_leave_p	wip	src/libttsivonavoice/synth_iter.c	42.7	
+00033e44	160	arm	synth_state_enter_s	wip	src/libttsivonavoice/synth_iter.c	43.2	
+00033fa4	160	arm	synth_state_leave_s	wip	src/libttsivonavoice/synth_iter.c	43.2	
 00034104	14	arm	synth_state_enter_block	matched	src/libttsivonavoice/synth_iter.c	100	
 00034118	14	arm	synth_state_leave_block	matched	src/libttsivonavoice/synth_iter.c	100	
 0003412c	18	arm	synth_state_last_end	matched	src/libttsivonavoice/synth_iter.c	100	
