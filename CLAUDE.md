@@ -73,6 +73,15 @@ Read README.md first. The rules below are what keeps the project deterministic.
     verifies.
   - `./dc diff FUNC -s lib:<lib>:<member> [--sym NAME]` diffs a todo function against a library
     member. That's how every configure option above was found (struct offsets, missing calls).
+- **Cross-binary matching.** The voice library statically contains copies of much of the engine.
+  `tools/xmatch.py [--apply]` finds functions of one binary (`--to`, default the voice library)
+  that are already decompiled in another (`--from`, default the engine). Candidates have the same
+  name or the same instruction sequence, and the real matcher confirms each one before anything is
+  recorded. Re-run it until nothing new matches: every rename lets callers match.
+  - **Twins.** Identical code under another name that the table already uses is reported and
+    skipped.
+  - **Address comments.** Never run `dc -b libvoice_en_gb_amy tu` on an engine source: its
+    address comments are engine addresses and would rename unrelated voice rows.
 - **Renaming.** `./dc rename` rewrites sources only for placeholder names (`FUN_`/`D_`); pass
   `--src` to rewrite a real name. Address comments above C++ functions resolve to the mangled
   symbol of the compiled object (`/* 0x4ecc: ... */` above `h(...)` names the row `h` or `_Z...`).
