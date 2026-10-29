@@ -1361,7 +1361,7 @@ addr	size	mode	name	status	src	score	note
 0005fc44	48	arm	unit_selector_new	matched	src/libttsivonavoice/voxdb.c	100	
 0005fc8c	68	arm	unit_selector_free	wip	src/libttsivonavoice/voxdb.c	92.3	
 0005fcf4	64	arm	unit_selector_add_segment	matched	src/libttsivonavoice/voxdb.c	100	
-0005fd58	160	arm	FUN_0005fd58	todo			
+0005fd58	160	arm	unit_selector_add_diphone	matched	src/libttsivonavoice/voxdb.c	100	
 0005feb8	24	arm	select_segment_resize	matched	src/libttsivonavoice/voxdb.c	100	
 0005fedc	20	arm	select_segment_sort	matched	src/libttsivonavoice/voxdb.c	100	
 0005fefc	150c	arm	unit_select_viterbi	wip	src/libttsivonavoice/voxdb.c	8.7	merged FUN_00060f84/FUN_00061384 (cold tail past a literal pool)

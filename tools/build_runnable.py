@@ -32,6 +32,7 @@ TARGETS = {
         "syslibs": ["-ldl", "-llog", "-lstdc++", "-lm", "-lc"],
         "defines": ["-DIVONA_NO_CERT_CHECK"],
         "extra": ["src/libttsivonavoice/charset_tables.c", "src/libttsivonavoice/runnable_stubs.c",
+                  "src/libttsivonavoice/runnable_stubs_vorbis.c",
                   "src/libttsivonavoice/flite/cst_endian.c"],  # cst_endian_loc
     },
     "libvoice_en_gb_amy": {
@@ -39,7 +40,8 @@ TARGETS = {
         "vendored": ["pcre", "silk", "cmp"],
         "syslibs": ["-lm", "-ldl", "-llog", "-lc"],
         "defines": [],
-        "extra": ["src/libvoice_en_gb_amy/runnable_stubs.c"],
+        "extra": ["src/libvoice_en_gb_amy/runnable_stubs.c",
+                  "src/libttsivonavoice/runnable_stubs_vorbis.c"],
     },
 }
 OUT = ""

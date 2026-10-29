@@ -663,7 +663,7 @@ static int select_cand_cmp_8(const void *a, const void *b)
 }
 
 /* 0x5fbe4 arm: acoustic join cost between units a|b and c|d. */
-unsigned int vox_join_cost(const vox_unit *a, const vox_unit *b, const vox_unit *c,
+static unsigned int vox_join_cost(const vox_unit *a, const vox_unit *b, const vox_unit *c,
                            const vox_unit *d)
 {
     if (*(const int *)(c->unk_60 + 4) != 0 || *(const int *)(d->unk_60 + 4) != 0)
@@ -709,6 +709,42 @@ select_segment *unit_selector_add_segment(unit_selector *s)
     s->segs = cst_safe_realloc(s->segs, s->n_segs, sizeof(select_segment));
     memset(&s->segs[s->n_segs - 1], 0, sizeof(select_segment));
     return &s->segs[s->n_segs - 1];
+}
+
+/* 0x5fd58 arm: appends the segment of the diphone between units a and b, named "A-B" after
+ * their phones. A pause-breath pair comes from the breath database, with vox_join_cost as its
+ * model cost. NULL if the database has no such diphone (counted as "vox_missing_units"). */
+select_segment *unit_selector_add_diphone(unit_selector *s, const vox_unit *a, const vox_unit *b)
+{
+    const diphonedb *db = s->dynamic->a;
+    const diphonedb *breath_db;
+    select_segment *seg;
+    char name[10];
+    int breath, i;
+
+    snprintf(name, 10, "%s-%s", a->phones[2]->name, b->phones[2]->name);
+    if ((breath_db = s->dynamic->b) == NULL)
+        breath = 0;
+    else if (strcmp(name, "pau-brth") == 0) {
+        breath = 1;
+        db = breath_db;
+    } else if ((breath = strcmp(name, "brth-pau") == 0))
+        db = breath_db;
+    if ((i = diphonedb_unit_index(db, name)) == -1) {
+        metrics_add_int(get_param_features(s->utt->features, "core_metrics", NULL),
+                        "vox_missing_units", 1);
+        return NULL;
+    }
+    seg = unit_selector_add_segment(s);
+    seg->range = (const vox_unit_range *)(db->names + i * 20);
+    seg->db = db;
+    memcpy(&seg->target[0], a, sizeof(vox_unit));
+    memcpy(&seg->target[1], b, sizeof(vox_unit));
+    if (breath)
+        seg->model_cost = (select_model_cost_fn)vox_join_cost;
+    else
+        seg->model_cost = NULL;
+    return seg;
 }
 
 /* 0x5feb8 arm */

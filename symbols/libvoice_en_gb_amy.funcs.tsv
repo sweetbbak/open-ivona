@@ -199,14 +199,14 @@ addr	size	mode	name	status	src	score	note
 00029028	290	arm	diphonedb_unit_decode	matched	src/libttsivonavoice/voxdb.c	100	
 000292b8	98	arm	vox_file_name	matched	src/libttsivonavoice/voxdb.c	100	
 00029350	48	arm	vox_db_free	matched	src/libttsivonavoice/voxdb.c	100	
-00029398	57c	arm	FUN_00029398	todo			
+00029398	57c	arm	vox_db_open	todo			
 00029914	12c	arm	FUN_00029914	todo			
 00029a40	3c	arm	vox_decoder_free	matched	src/libttsivonavoice/voxdb.c	100	
 00029a7c	1c8	arm	voxdb_name_match	matched	src/libttsivonavoice/voxdb.c	100	
 00029c44	150	arm	FUN_00029c44	todo			
 00029d94	38	arm	delete_diphonedb	matched	src/libttsivonavoice/voxdb.c	100	
 00029dcc	4	arm	val_delete_diphonedb	matched	src/libttsivonavoice/voxdb.c	100	
-00029dd0	36c	arm	FUN_00029dd0	todo			
+00029dd0	36c	arm	voice_load_diphonedb	wip	src/libttsivonavoice/voxdb.c	37.9	
 0002a13c	2c	arm	diphonedb_unit_flag	matched	src/libttsivonavoice/voxdb.c	100	
 0002a168	464	arm	FUN_0002a168	todo			
 0002a5cc	30	arm	utt_diphonedb_extra	matched	src/libttsivonavoice/voxdb.c	100	
@@ -572,23 +572,23 @@ addr	size	mode	name	status	src	score	note
 00034efc	f4	arm	utf8_rtrim	wip	src/libvoice_en_gb_amy/utf8.c	40.6	
 00034ff0	1bc	arm	utf8_map	wip	src/libvoice_en_gb_amy/utf8.c	34.3	
 000351ac	c0	arm	utf8_encode	todo			
-0003526c	b8	arm	FUN_0003526c	todo			
-00035324	c0	arm	FUN_00035324	todo			
+0003526c	b8	arm	pcm_unit_decode	todo			
+00035324	c0	arm	silk_unit_open	todo			
 000353e4	34	arm	silk_unit_close	matched	src/libttsivonavoice/vox_codec.c	100	
-00035418	388	arm	FUN_00035418	todo			
-000357a0	150	arm	FUN_000357a0	todo			
-000358f0	3c	arm	FUN_000358f0	todo			
-0003592c	2f0	arm	FUN_0003592c	todo			
-00035c1c	364	arm	FUN_00035c1c	todo			
-00035f80	3c	arm	FUN_00035f80	todo			
-00035fbc	54c	arm	FUN_00035fbc	todo			
+00035418	388	arm	silk_unit_decode	todo			
+000357a0	150	arm	vorbis_unit_open	todo			
+000358f0	3c	arm	vorbis_unit_close	todo			
+0003592c	2f0	arm	vorbis_unit_decode	todo			
+00035c1c	364	arm	vorbis_ogg_unit_open	todo			
+00035f80	3c	arm	vorbis_ogg_unit_close	todo			
+00035fbc	54c	arm	vorbis_ogg_unit_decode	todo			
 00036508	24	arm	FUN_00036508	todo			
 0003652c	24	arm	select_cand_cmp_8	matched	src/libttsivonavoice/voxdb.c	100	
-00036550	60	arm	FUN_00036550	todo			
+00036550	60	arm	vox_join_cost	wip	src/libttsivonavoice/voxdb.c	50.0	
 000365b0	48	arm	unit_selector_new	matched	src/libttsivonavoice/voxdb.c	100	
 000365f8	68	arm	FUN_000365f8	todo			
 00036660	64	arm	unit_selector_add_segment	matched	src/libttsivonavoice/voxdb.c	100	
-000366c4	160	arm	FUN_000366c4	todo			
+000366c4	160	arm	unit_selector_add_diphone	matched	src/libttsivonavoice/voxdb.c	100	
 00036824	24	arm	select_segment_resize	matched	src/libttsivonavoice/voxdb.c	100	
 00036848	20	arm	FUN_00036848	todo			
 00036868	1088	arm	FUN_00036868	todo			
@@ -708,7 +708,7 @@ addr	size	mode	name	status	src	score	note
 0004b694	3c	arm	FUN_0004b694	todo			
 0004b6d0	60	arm	FUN_0004b6d0	todo			
 0004b730	60	arm	FUN_0004b730	todo			
-0004b790	30c	arm	FUN_0004b790	todo			
+0004b790	30c	arm	diphone_graph_build	wip	src/libvoice_en_gb_amy/diphone_graph.c	24.9	
 0004ba9c	1c	arm	FUN_0004ba9c	todo			
 0004bab8	f8	arm	FUN_0004bab8	todo			
 0004bbb0	f0	arm	FUN_0004bbb0	todo			
@@ -752,7 +752,7 @@ addr	size	mode	name	status	src	score	note
 00051614	254	arm	FUN_00051614	todo			
 00051868	4b0	arm	FUN_00051868	todo			
 00051d18	820	arm	FUN_00051d18	todo			
-00052538	a20	arm	FUN_00052538	todo			
+00052538	a20	arm	unit_model_cost	todo			
 00052f58	af4	arm	FUN_00052f58	todo			
 00053a4c	4dc	arm	lex_lookup_bsearch	matched	src/libvoice_en_gb_amy/cst_lexicon.c	100	
 00053f28	58	arm	val_lexicon	matched	src/libvoice_en_gb_amy/cst_lexicon.c	100	flite strings(1) 91%
