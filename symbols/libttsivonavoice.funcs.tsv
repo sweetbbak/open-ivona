@@ -645,7 +645,7 @@ addr	size	mode	name	status	src	score	note
 000465cc	104	arm	ustr_append_ustr	wip	src/libttsivonavoice/ustr.c	68.2	
 000466d0	3c	arm	ustr_sub	matched	src/libttsivonavoice/ustr.c	100	
 0004670c	7c	arm	ustr_equal	wip	src/libttsivonavoice/ustr.c	41.7	
-00046788	444	arm	ustr_transcode	todo			
+00046788	444	arm	ustr_transcode	wip	src/libttsivonavoice/ustr.c	4.4	
 00046bcc	78	arm	text_has_breaks	wip	src/libttsivonavoice/ustr.c	90.0	
 00046c44	74	arm	text_ends_with_breaks	wip	src/libttsivonavoice/ustr.c	65.5	
 00046cb8	40	arm	ivona_time_cmp	wip	src/libttsivonavoice/ivona_sys.c	56.2	
@@ -707,7 +707,7 @@ addr	size	mode	name	status	src	score	note
 00048818	3c	arm	ustr_decode_n	matched	src/libttsivonavoice/charset.c	100	
 00048854	34	arm	ivona_ustr_decode	matched	src/libttsivonavoice/charset.c	100	
 00048888	34	arm	charset_supported	matched	src/libttsivonavoice/charset.c	100	
-000488bc	c88	arm	ustr_to_charset	todo			
+000488bc	c88	arm	ustr_to_charset	wip	src/libttsivonavoice/charset.c	3.7	
 00049544	90	arm	charset_detect	matched	src/libttsivonavoice/charset.c	100	
 000495d4	58	arm	str_to_ascii	matched	src/libttsivonavoice/charset.c	100	
 0004962c	210	arm	utt_split_tokens	wip	src/libttsivonavoice/utt_split.c	28.4	

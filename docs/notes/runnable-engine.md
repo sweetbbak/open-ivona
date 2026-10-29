@@ -39,6 +39,16 @@ separate from the matching build, so non-matching code is fine as long as it is 
 
 Remove a stub when the real function is written.
 
+## Written differently from the binary
+
+- **`ustr_to_charset` (charset.c).**
+  - UTF-8, ASCII and ISO-8859-1 behave as in the binary.
+  - The binary has a hand-written encoder for each of the other ISO 8859 code pages (2, 5, 9, 14,
+    15, 16). Here they use a reverse lookup in the decode tables, plus the binary's one extra
+    ISO-8859-2 mapping.
+  - Unmapped characters are transliterated, as in the original.
+  - The two can still differ on characters a hand-written encoder special-cases.
+
 ## Still undefined
 
 `tools/build_engine.py` prints the current list. On the plain-text path (`ssml-deferred.md`), the

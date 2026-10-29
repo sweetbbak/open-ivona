@@ -363,6 +363,132 @@ int ustr_equal(const ivona_ustr *a, const ivona_ustr *b)
     return 1;
 }
 
+/* charset_dec.c */
+typedef struct charset_decoder {
+    void *decode;
+    const void *arg;
+} charset_decoder;
+int charset_decoder_init(charset_decoder *d, const char *name, const char *data);
+unsigned int charset_decode(const charset_decoder *d, const char *s, int *len);
+int utf8_encode(unsigned int c, char *out);
+int uni_isspace(unsigned int c);
+
+#define TRANSCODE_MAX_CHARS 7462        /* past this a chunk ends at the next line break */
+#define TRANSCODE_MAX_LINE 139          /* mode 2: a longer line ends the paragraph search */
+
+/* 0x46788 arm: decodes s (in encoding) to UTF-8 up to the end of its first paragraph: an empty
+ * line, U+2029, or after TRANSCODE_MAX_CHARS characters the next line break. CRLF becomes LF and
+ * a leading BOM is dropped. *mode is 0, or 2 to stop at the first line break once a line is
+ * longer than TRANSCODE_MAX_LINE (it becomes 1). *next gets the input offset to resume at. NULL
+ * if the encoding is unknown. */
+ivona_ustr *ustr_transcode(const ivona_ustr *s, const char *encoding, int *mode, size_t *next)
+{
+    int m = *mode;
+    charset_decoder dec;
+    ustr_edit e;
+    char buf[8];
+    int clen;
+    unsigned int c, prev = 0;
+    int blank = 0, line_len = 0, n_chars = 0;
+    size_t cut_pos = 0, cut_len = 0, brk_pos = 0, brk_len = 0, end, n;
+    ivona_ustr *out, *base, *res;
+
+    if (!charset_decoder_init(&dec, encoding, s->data))
+        return NULL;
+    ustr_edit_init(&e, s);
+    while (e.pos < e.src->len) {
+        c = charset_decode(&dec, e.src->data + e.pos, &clen);
+        if (prev == '\r') {
+            if (c == '\n') {
+                ustr_edit_skip(&e, clen);
+                ustr_edit_insert_n(&e, buf, utf8_encode(c, buf));
+                n_chars++;
+                goto line_break;
+            }
+            /* a lone CR ended the line */
+            if (m == 2) {
+                if (cut_pos == 0) {
+                    cut_pos = e.pos;
+                    cut_len = e.out->len;
+                }
+                if (line_len > TRANSCODE_MAX_LINE - 1) {
+                    m = 1;
+                    break;
+                }
+            } else if (m == 1)
+                break;
+            if (blank)
+                break;
+            blank = 1;
+            line_len = 0;
+            brk_pos = e.pos;
+            brk_len = e.out->len;
+        }
+        ustr_edit_skip(&e, clen);
+        if (e.pos == 0 && c == 0xfeff)
+            goto next;
+        ustr_edit_insert_n(&e, buf, utf8_encode(c, buf));
+        n_chars++;
+        if (c == '\r')
+            goto next;
+        if (c == 0x2029)
+            break;
+    line_break:
+        if (c == 0x85 || c == '\n' || c == 0x2028 || c == '\f') {
+            if (m == 2) {
+                if (cut_pos == 0) {
+                    cut_pos = e.pos;
+                    cut_len = e.out->len;
+                }
+                if (line_len > TRANSCODE_MAX_LINE - 1) {
+                    m = 1;
+                    break;
+                }
+            } else if (m == 1)
+                break;
+            if (blank)
+                break;
+            blank = 1;
+            line_len = 0;
+            brk_pos = e.pos;
+            brk_len = e.out->len;
+            goto next;
+        }
+        line_len++;
+        if (blank && m != 1)
+            blank = uni_isspace(c);
+        if (n_chars > TRANSCODE_MAX_CHARS && brk_pos)
+            break;
+    next:
+        prev = c;
+    }
+    if (next) {
+        if (m == 1 && cut_pos)
+            end = cut_pos;
+        else if (n_chars > TRANSCODE_MAX_CHARS && brk_pos)
+            end = brk_pos;
+        else
+            end = e.pos;
+        *next = end;
+    }
+    *mode = m;
+    if (e.pos < e.src->len)
+        ustr_edit_skip(&e, e.src->len - e.pos);
+    out = ustr_edit_result(&e);
+    base = out ? out : (ivona_ustr *)e.src;
+    n = 0;
+    if (m == 1 && cut_pos && cut_pos < base->len)
+        n = cut_len;
+    else if (n_chars > TRANSCODE_MAX_CHARS && brk_pos && brk_pos < out->len)
+        n = brk_len;
+    if (n == 0)
+        return out ? out : ustr_copy(s);
+    res = ustr_new(base->start, NULL, 0);
+    ustr_append_ustr(res, base, 0, n);
+    ivona_ustr_free(out);
+    return res;
+}
+
 /* 0x46bcc arm: whether s holds a line break (n == 1) or at least two (paragraph break). */
 int text_has_breaks(const char *s, int n)
 {
