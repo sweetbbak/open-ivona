@@ -355,7 +355,7 @@ addr	size	mode	name	status	src	score	note
 0002db0c	1b4	arm	voices_by_lang.isra.2	matched	src/libttsivonavoice/synth_iter.c	100	
 0002dcc0	ec	arm	voices_by_name.isra.3	wip	src/libttsivonavoice/synth_iter.c	35.8	
 0002ddac	154	arm	voice_insert_by_age	wip	src/libttsivonavoice/synth_iter.c	79.1	
-0002df00	ec	arm	voices_by_age.isra.5	matched	src/libttsivonavoice/synth_iter.c	100	
+0002df00	ec	arm	voices_by_age.isra.6	matched	src/libttsivonavoice/synth_iter.c	100	
 0002dfec	98	arm	synth_iter_lang	matched	src/libttsivonavoice/synth_iter.c	100	
 0002e084	ce0	arm	ssml_select_voice	wip	src/libttsivonavoice/synth_iter.c	8.4	
 0002ed64	16c	arm	synth_iter_new	wip	src/libttsivonavoice/synth_iter.c	96.7	
@@ -368,13 +368,13 @@ addr	size	mode	name	status	src	score	note
 00031478	18	arm	voice_age_matches	matched	src/libttsivonavoice/synth_iter.c	100	
 00031490	3c	arm	str_pair_free	matched	src/libttsivonavoice/synth_iter.c	100	
 000314cc	8	arm	synth_chunk_free_ptr	matched	src/libttsivonavoice/synth_iter.c	100	
-000314d4	14c	arm	FUN_000314d4	todo			
-00031620	134	arm	FUN_00031620	todo			
+000314d4	14c	arm	utt_builder_flush	matched	src/libttsivonavoice/synth_iter.c	100	
+00031620	134	arm	utt_builder_end_sentence	wip	src/libttsivonavoice/synth_iter.c	55.4	
 00031754	224	arm	utt_builder_item_added	wip	src/libttsivonavoice/synth_iter.c	43.1	
-00031978	270	arm	utt_builder_check_size	todo			
-00031be8	234	arm	FUN_00031be8	todo			
-00031e1c	51c	arm	FUN_00031e1c	todo			
-00032338	494	arm	utt_builder_add_item	todo			
+00031978	270	arm	utt_builder_check_size	wip	src/libttsivonavoice/synth_iter.c	45.5	
+00031be8	234	arm	utt_is_sentence_end	wip	src/libttsivonavoice/synth_iter.c	37.1	
+00031e1c	51c	arm	utt_builder_add_pause	wip	src/libttsivonavoice/synth_iter.c	26.9	
+00032338	494	arm	utt_builder_add_item	wip	src/libttsivonavoice/synth_iter.c	27.3	
 000327cc	3c0	arm	FUN_000327cc	todo			
 00032b8c	1d0	arm	FUN_00032b8c	todo			
 00032d5c	bc	arm	FUN_00032d5c	todo			

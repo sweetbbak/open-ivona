@@ -123,7 +123,6 @@ typedef struct synth_state {
 void synth_state_flush(synth_state *s);
 cst_item *utt_builder_add_item(synth_ctx *ctx, utt_builder *b, int kind);
 void utt_builder_item_added(synth_ctx *ctx, cst_item *prev);
-int utt_builder_check_size(synth_ctx *ctx, utt_builder *b, int n);
 void utt_chunk_add_span(utt_chunk *c, const ustr_span *s);
 typedef struct audio_clip_chunk audio_clip_chunk;
 audio_clip_chunk *audio_clip_chunk_new(const synth_ctx *ctx, const char *src, const char *alt,
@@ -706,6 +705,48 @@ static void synth_chunk_free_ptr(void *p)
 }
 
 /* the language of the context */
+/* the tokens of an utterance chunk (utt_chunk.c) */
+typedef struct token_chunk {
+    void *head;
+    void *tail;
+    ustr_span span;             /* +0x08 */
+    int phrasing_model;         /* +0x10 */
+    int break_dur_model;        /* +0x14 */
+    void *src;                  /* +0x18 */
+} token_chunk;
+void token_chunk_from_utt(const utt_chunk *c, token_chunk *tc, void *ctx);
+
+/* 0x314d4 arm: turns the utterance built so far into a token chunk (ending a paragraph
+ * with its pause) and starts a new one */
+void utt_builder_flush(tts_voice **v, utt_builder *b)
+{
+    token_chunk tc;
+    float pause;
+    cst_item *t;
+
+    b->unk_c = 0;
+    if (relation_head(b->tokens)) {
+        if (b->unk_10[2] && (pause = b->paragraph_break) > 0) {
+            t = relation_append(b->tokens, NULL);
+            item_set_string(t, "name", "");
+            item_set_int(t, "start_pos", -1);
+            item_set_int(t, "end_pos", -1);
+            item_set_string(t, "punc", "");
+            item_set_float(t, "silence", pause);
+            b->unk_8 = 0;
+        }
+        token_chunk_from_utt(&b->chunk, &tc, b->unk_0);
+        vector_push(b->unk_4, &tc);
+        utt_chunk_free_utt(&b->chunk);
+        utt_chunk_init_empty(&b->chunk, (tts_instance **)*v, b->chunk.phrasing_model,
+                             b->chunk.break_dur_model);
+        b->tokens = utt_relation(b->chunk.utt, REL_TOKEN);
+        b->last_item = NULL;
+        b->unk_10[5] = 0;
+    }
+    b->unk_10[2] = 0;
+}
+
 static inline lang_core *ctx_lang(const synth_ctx *c)
 {
     return c->lang ? c->lang : VOICE_DATA(c->voice)->reg->lang_data;
@@ -723,6 +764,19 @@ static inline int ends_in(const synth_ctx *c, const char *s, const char *set)
     return strchr(set, s[n - 1]) != NULL;
 }
 
+/* 0x31620 arm: ends a sentence at prev (gives it a "." unless its punctuation ends one) */
+void utt_builder_end_sentence(synth_ctx *c, cst_item *prev)
+{
+    const char *punc;
+
+    if (prev == NULL)
+        return;
+    punc = item_feat_string(prev, "punc");
+    if (ends_in(c, punc, get_param_string(ctx_lang(c)->features, "hard_punc", ".!?")))
+        return;
+    item_set_string(prev, "punc", ".");
+}
+
 /* 0x31754 arm: gives the token before a break a pause if its punctuation has none */
 void utt_builder_item_added(synth_ctx *c, cst_item *prev)
 {
@@ -737,6 +791,201 @@ void utt_builder_item_added(synth_ctx *c, cst_item *prev)
         return;
     item_set_string(prev, "punc", ",");
 }
+
+cst_utterance *utt_split_tokens(cst_item *t);
+void utt_chunk_init(utt_chunk *c, cst_utterance *utt, tts_instance **src, int phrasing_model,
+                    int break_dur_model);
+size_t utf8_strlen(const char *s);
+
+/* 0x31978 arm: makes room for n more characters in the utterance: splits it after the last
+ * punctuated token that allows it (the rest becomes a chunk), or flushes it */
+void utt_builder_check_size(synth_ctx *c, utt_builder *b, int n)
+{
+    token_chunk tc;
+    cst_item *t, *i;
+    cst_utterance *u;
+    const char *s;
+    int utf8, len;
+
+    if (b->max_sentence < n + b->unk_10[5]) {
+        for (t = relation_tail(b->tokens); t; t = item_prev(t)) {
+            s = item_feat_string(t, "punc");
+            if (s == NULL || *s == 0 || (u = utt_split_tokens(t)) == NULL)
+                continue;
+            b->chunk.span.end = item_feat_int(t, "end_pos");
+            token_chunk_from_utt(&b->chunk, &tc, b->unk_0);
+            vector_push(b->unk_4, &tc);
+            utt_chunk_free_utt(&b->chunk);
+            utt_chunk_init(&b->chunk, u, (tts_instance **)c->voice, b->chunk.phrasing_model,
+                           b->chunk.break_dur_model);
+            b->tokens = utt_relation(u, REL_TOKEN);
+            utf8 = strcmp(get_param_string(ctx_lang(c)->features, "encoding", ""), "UTF-8");
+            len = 0;
+            for (i = relation_head(b->tokens); i; i = item_next(i)) {
+                if (item_feat_present(i, "name")) {
+                    s = item_feat_string(i, "name");
+                    len += utf8 == 0 ? utf8_strlen(s) : strlen(s);
+                }
+                if (item_feat_present(i, "phones"))
+                    len += strlen(item_feat_string(i, "phones"));
+                if (item_feat_present(i, "xsampa"))
+                    len += strlen(item_feat_string(i, "xsampa"));
+                len++;
+            }
+            b->unk_10[5] = len;
+            b->last_item = relation_tail(b->tokens);
+            break;
+        }
+        if (b->max_sentence < n + b->unk_10[5])
+            utt_builder_flush(&c->voice, b);
+    }
+}
+
+#define ASCII_ALPHA(ch) ((unsigned char)(((ch) & ~0x20) - 'A') < 26)
+
+/* 0x31be8 arm: whether a sentence ends after token t (by the language's
+ * sentence_boundary_func, else by its punctuation; "A.B." abbreviations do not) */
+int utt_is_sentence_end(synth_ctx *c, cst_item *t)
+{
+    const cst_val *f = get_param_val(ctx_lang(c)->features, "sentence_boundary_func", NULL);
+    const char *punc, *name, *p;
+    cst_val *v;
+    int r;
+
+    if (f) {
+        v = ((cst_val *(*)(cst_item *))val_itemfunc(f))(t);
+        if (v == NULL)
+            return 0;
+        r = val_int(v);
+        delete_val(v);
+        return r;
+    }
+    punc = item_feat_string(t, "punc");
+    if (punc == NULL)
+        return 0;
+    if (strcmp(punc, ".") == 0 && item_feat_present(t, "name")) {
+        name = item_feat_string(t, "name");
+        if (ASCII_ALPHA(name[0]) && name[1] != 0 && name[1] == '.') {
+            for (p = name; ASCII_ALPHA(p[2]); p += 2) {
+                if (p[3] == 0)
+                    return p + 3 - name <= 2;
+                if (p[3] != '.')
+                    break;
+            }
+        }
+        return 1;
+    }
+    return ends_in(c, punc, get_param_string(ctx_lang(c)->features, "hard_punc", ".!?"));
+}
+
+cst_val *string_val_consume(char *s);
+
+/* strips the sentence-ending punctuation (but hard_non_strip_punc, "!?") off the last token
+ * when a sentence is being merged on */
+static inline void utt_builder_strip_end(synth_ctx *c, utt_builder *b)
+{
+    cst_item *t = b->last_item;
+    const char *keep, *punc;
+    char *buf = NULL;
+    int utf8, k;
+
+    if (!item_feat_present(t, "punc") || !utt_is_sentence_end(c, t))
+        return;
+    keep = get_param_string(ctx_lang(c)->features, "hard_non_strip_punc", "!?");
+    punc = item_feat_string(t, "punc");
+    utf8 = strcmp(get_param_string(ctx_lang(c)->features, "encoding", ""), "UTF-8");
+    while (utt_is_sentence_end(c, t)) {
+        if (ends_in(c, punc, keep))
+            break;
+        if (utf8 == 0)
+            k = utf8_last_char(punc) - punc;
+        else
+            k = strlen(punc) - 1;
+        if (buf == NULL) {
+            punc = buf = cst_substr(punc, 0, k);
+            item_set(t, "punc", string_val_consume(buf));
+        }
+        buf[k] = 0;
+    }
+}
+
+/* appends a new token (after the pause of a sentence break if one is due) */
+static inline cst_item *utt_builder_append(synth_ctx *c, utt_builder *b)
+{
+    float pause;
+    cst_item *t;
+
+    if (vector_size(b->unk_4) && relation_head(b->tokens) == NULL && (pause = b->sentence_break) > 0) {
+        if (b->unk_10[0] == 0) {
+            t = relation_append(b->tokens, NULL);
+            item_set_string(t, "name", "");
+            item_set_int(t, "start_pos", -1);
+            item_set_int(t, "end_pos", -1);
+            item_set_string(t, "punc", "");
+            item_set_float(t, "silence", pause);
+            b->unk_8 = 0;
+        } else
+            b->unk_10[0] = 0;
+    }
+    b->unk_8 = 0;
+    t = relation_append(b->tokens, NULL);
+    item_set_string(t, "whitespace", b->text.data ? b->text.data : "");
+    strbuf_clear(&b->text);
+    if (c->block_id)
+        item_set_int(t, "w_tag_id", c->block_id);
+    if (c->say_as_depth)
+        item_set_int(t, "sayas_tag_id", c->say_as_depth);
+    if (b->unk_10[1]) {
+        item_set_int(t, "no_pause_start", 1);
+        b->unk_10[1] = 0;
+    }
+    return t;
+}
+
+/* 0x31e1c arm: adds a pause token covering span */
+void utt_builder_add_pause(synth_ctx *c, utt_builder *b, const ustr_span *span, float silence)
+{
+    int saved = b->unk_c;
+    cst_item *t;
+
+    b->unk_c = 0;
+    if ((c->unk_0[1] || c->unk_0[2]) && b->unk_8 == 0)
+        utt_builder_strip_end(c, b);
+    if (relation_head(b->tokens))
+        utt_builder_check_size(c, b, 1);
+    t = utt_builder_append(c, b);
+    if (item_prev(t))
+        b->unk_c = saved;
+    item_set_string(t, "name", "");
+    item_set_int(t, "start_pos", span->start);
+    item_set_int(t, "end_pos", span->end);
+    item_set_string(t, "punc", "");
+    item_set_float(t, "silence", silence);
+    b->last_end = span->end;
+    utt_builder_item_added(c, item_prev(t));
+    b->unk_10[5]++;
+}
+
+/* 0x32338 arm: adds a token for n characters of text (starting a new utterance first if one
+ * is due) */
+cst_item *utt_builder_add_item(synth_ctx *c, utt_builder *b, int n)
+{
+    if (b->unk_c) {
+        if (b->unk_10[3]) {
+            utt_builder_item_added(c, b->last_item);
+            b->unk_10[3] = 0;
+        }
+        utt_builder_flush(&c->voice, b);
+    } else {
+        if ((c->unk_0[1] || c->unk_0[2]) && b->unk_8 == 0)
+            utt_builder_strip_end(c, b);
+        if (n && relation_head(b->tokens))
+            utt_builder_check_size(c, b, n);
+    }
+    return utt_builder_append(c, b);
+}
+
+
 
 /* 0x33798 arm */
 synth_ctx *synth_ctx_new(tts_voice *v)
@@ -863,10 +1112,10 @@ int synth_state_last_end(synth_state *s)
 }
 
 /* 0x34414 arm */
-int synth_state_check_size(synth_state *s, int n)
+void synth_state_check_size(synth_state *s, int n)
 {
     synth_state_flush(s);
-    return utt_builder_check_size(s->ctx, s->builder, n);
+    utt_builder_check_size(s->ctx, s->builder, n);
 }
 
 /* 0x34434 arm */
