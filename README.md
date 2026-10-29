@@ -6,6 +6,20 @@ compiler. The harness then proves the result is byte-identical to the shipped bi
 relocations, it checks that each reference points at the same import, function, data object or
 string contents as in the original.
 
+## What you need to bring
+
+The original IVONA files are not in this repository. Get them from the IVONA Amy voice package
+(`eng.gbr.amy.1.6.101.3`, Android) and put them here:
+
+| file | where | checked by |
+|---|---|---|
+| `libttsivonavoice.so`, `libvoice_en_gb_amy.so`, `libtiver.so` | `target/` | `target/target.sha256` (must match) |
+| `vox_en_gb_amy22i`, `lang_en_gb.dat` | `../eng.gbr.amy.1.6.101.3/` (or set `IVONA_VOICE_DIR`) | |
+
+```sh
+(cd target && sha256sum -c target.sha256)
+```
+
 ## Make it speak
 
 ```

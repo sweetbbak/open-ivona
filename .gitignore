@@ -15,3 +15,6 @@ external/pcre-*/
 external/expat-*/
 external/silk-*/
 toolchain/android-*/
+external/cmp-*/
+# the original IVONA binaries are not distributed: copy your own into target/ (README)
+target/*.so
