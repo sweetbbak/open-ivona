@@ -589,12 +589,12 @@ addr	size	mode	name	status	src	score	note
 00042384	214	arm	lex_apply_text	todo			
 00042598	4b8	arm	lex_apply_ssml	todo			
 00042a50	60	arm	cert_free	matched	src/libttsivonavoice/cert.c	100	
-00042ab0	efc	arm	FUN_00042ab0	todo			
+00042ab0	efc	arm	cert_parse	todo			
 000439ac	c0	arm	cert_copy	wip	src/libttsivonavoice/cert.c	85.4	
 00043a6c	78	arm	cert_status	matched	src/libttsivonavoice/cert.c	100	
 00043ae4	180	arm	cert_allows_voice	matched	src/libttsivonavoice/cert.c	100	
-00043c64	220	arm	FUN_00043c64	todo			
-00043e84	33c	arm	FUN_00043e84	todo			
+00043c64	220	arm	cert_compatible	todo			
+00043e84	33c	arm	cert_merge	todo			
 000441c0	20	arm	charset_dec_8bit	matched	src/libttsivonavoice/charset_dec.c	100	
 000441e0	c8	arm	utf16_decode_char	wip	src/libttsivonavoice/charset_dec.c	96.0	
 000442a8	c	arm	charset_dec_utf8	matched	src/libttsivonavoice/charset_dec.c	100	

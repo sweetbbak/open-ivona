@@ -155,7 +155,7 @@ const tts_certificate *tts_load_certificate(tts_instance *tts, const char *cert_
         tts_set_error(TTS_STATUS_INVALID_ARGUMENT);
         return NULL;
     }
-    cert = FUN_00042ab0(cert_text);
+    cert = cert_parse(cert_text);
     if (cert == NULL)
         goto out;
 
@@ -181,7 +181,7 @@ const tts_certificate *tts_load_certificate(tts_instance *tts, const char *cert_
                 tts_set_errorf(TTS_STATUS_RANGE_ERROR, "Attempt to load the same certificate twice");
                 goto fail;
             }
-        } else if (!FUN_00043c64(c, (tts_cert_data *)entry->cert))
+        } else if (!cert_compatible(c, (tts_cert_data *)entry->cert))
             goto fail;
     }
     if (dup >= 0) {
@@ -199,7 +199,7 @@ const tts_certificate *tts_load_certificate(tts_instance *tts, const char *cert_
             if (c == NULL)
                 continue;
             if (tts->certificate)
-                FUN_00043e84(tts->certificate, c);
+                cert_merge(tts->certificate, c);
             else
                 tts->certificate = cert_copy(c);
         }
