@@ -422,10 +422,10 @@ addr	size	mode	name	status	src	score	note
 00035658	48	arm	synth_state_set_voice	matched	src/libttsivonavoice/synth_iter.c	100	
 000356a0	c	arm	synth_state_set_unk_14	matched	src/libttsivonavoice/synth_iter.c	100	
 000356ac	2c	arm	synth_state_set_lang	matched	src/libttsivonavoice/synth_iter.c	100	
-000356d8	190	arm	FUN_000356d8	todo			
-00035868	9b8	arm	token_info_from_item	todo			
+000356d8	190	arm	token_info_init	matched	src/libttsivonavoice/token_info.c	100	
+00035868	9b8	arm	token_info_from_item	wip	src/libttsivonavoice/token_info.c	14.1	
 00036220	34	arm	token_info_free	matched	src/libttsivonavoice/token_info.c	100	
-00036254	7e8	arm	token_info_to_item	todo			
+00036254	7e8	arm	token_info_to_item	wip	src/libttsivonavoice/token_info.c	47.7	
 00036a3c	40	arm	addon_attach	matched	src/libttsivonavoice/addon.c	100	
 00036a7c	40	arm	addon_detach	matched	src/libttsivonavoice/addon.c	100	
 00036abc	54	arm	addon_free	matched	src/libttsivonavoice/addon.c	100	
