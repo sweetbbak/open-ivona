@@ -53,6 +53,7 @@ addr	size	name	note
 0010c634	100	uni_translit_index1	
 0010c734	2000	uni_translit_index2	
 0010e734	2460	uni_translit_index3	
+00390828	8	unit_cost_weights	
 00390c1c	30	default_stress_info	
 00393410	0	_pcre_OP_lengths	named from library relocation
 003934b4	0	_pcre_hspace_list	named from library relocation

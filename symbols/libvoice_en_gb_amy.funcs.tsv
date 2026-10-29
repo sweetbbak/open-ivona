@@ -751,8 +751,8 @@ addr	size	mode	name	status	src	score	note
 000512f0	324	arm	FUN_000512f0	todo			
 00051614	254	arm	FUN_00051614	todo			
 00051868	4b0	arm	FUN_00051868	todo			
-00051d18	820	arm	FUN_00051d18	todo			
-00052538	a20	arm	unit_model_cost	todo			
+00051d18	820	arm	unit_half_cost	wip	src/libvoice_en_gb_amy/target_cost.c	14.1	
+00052538	a20	arm	unit_model_cost	wip	src/libvoice_en_gb_amy/target_cost.c	19.0	
 00052f58	af4	arm	FUN_00052f58	todo			
 00053a4c	4dc	arm	lex_lookup_bsearch	matched	src/libvoice_en_gb_amy/cst_lexicon.c	100	
 00053f28	58	arm	val_lexicon	matched	src/libvoice_en_gb_amy/cst_lexicon.c	100	flite strings(1) 91%
