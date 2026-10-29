@@ -49,7 +49,7 @@ pcre:
   # a local change that keeps pcre_compile2 and its few users from matching.
   # UTF + Unicode properties: pcre_compile's .rodata has the \p{Nd} posix_substitutes before
   # error_texts (0x228014); the "compiled without ... support" texts are always in the table.
-  binaries: [libttsivonavoice]
+  binaries: [libttsivonavoice, libvoice_en_gb_amy]
   src: external/pcre-8.37
   prepare: autoconf
   config_h: config.h
@@ -73,7 +73,7 @@ silk:
   # SILK SDK 1.0.8 fixed-point decoder: vox codec 14, used by the Android voices
   # (docs/notes/vox-codecs.md). The engine's ARM flags but -O3, as in the SDK's Makefile: at -O2
   # SKP_Silk_lin2log (0x204448), SKP_Silk_biquad and SKP_Silk_CNG_Reset differ in inlining.
-  binaries: [libttsivonavoice]
+  binaries: [libttsivonavoice, libvoice_en_gb_amy]
   src: external/silk-sdk-fix-1.0.8
   sources: silk
   flags: [-marm, -O3, -fstrict-aliasing, -funswitch-loops, -finline-limit=300]  # SDK Makefile: -O3
@@ -81,7 +81,7 @@ cmp:
   # cmp v16 (camgunz/cmp, MessagePack): the unoptimized block before Tremor (~0x1f1200). cmp_init
   # (0x1f1798) matches v16 exactly and differs in v17/v18; the error strings ("No Error" ..
   # "Error writing size", "Max Error") are v16's. Unoptimized ARM with a frame pointer, like Expat.
-  binaries: [libttsivonavoice]
+  binaries: [libttsivonavoice, libvoice_en_gb_amy]
   src: external/cmp-16
   sources: cmp
   remove: [-fsigned-char, -DNDEBUG]

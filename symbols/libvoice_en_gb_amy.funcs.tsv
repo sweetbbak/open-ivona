@@ -1061,877 +1061,422 @@ addr	size	mode	name	status	src	score	note
 00065554	50	arm	named_table_find	todo			
 000655a4	198	arm	lexicon_from_pls	matched	src/libttsivonavoice/flite/cst_synth.c	100	
 0006573c	68	arm	val_in_lex	matched	src/libttsivonavoice/flite/cst_synth.c	100	flite strings(1) 11%
-000657a4	8c	arm	FUN_000657a4	todo			
-00065830	144	arm	FUN_00065830	todo			
-00065974	150	arm	FUN_00065974	todo			
-00065ac4	1124	arm	FUN_00065ac4	todo			
-00066be8	2e8	arm	FUN_00066be8	todo			
-00066ed0	1ac	arm	FUN_00066ed0	todo			
-0006707c	130	arm	FUN_0006707c	todo			
-000671ac	7a8	arm	FUN_000671ac	todo			
-00067954	390	arm	FUN_00067954	todo			
-00067ce4	2e4	arm	FUN_00067ce4	todo			
-00067fc8	a38	arm	FUN_00067fc8	todo			
-00068a00	94	arm	FUN_00068a00	todo			
-00068a94	8c	arm	FUN_00068a94	todo			
-00068b20	448	arm	FUN_00068b20	todo			
-00068f68	bf0	arm	FUN_00068f68	todo			
-00069b58	3b4	arm	FUN_00069b58	todo			
-00069f0c	c5c	arm	FUN_00069f0c	todo			
-0006ab68	38	arm	FUN_0006ab68	todo			
-0006aba0	68	arm	FUN_0006aba0	todo			
-0006ac08	38	arm	FUN_0006ac08	todo			
-0006ac40	38	arm	FUN_0006ac40	todo			
-0006ac78	38	arm	FUN_0006ac78	todo			
-0006acb0	38	arm	FUN_0006acb0	todo			
-0006ace8	38	arm	FUN_0006ace8	todo			
-0006ad20	38	arm	FUN_0006ad20	todo			
-0006ad58	98	arm	FUN_0006ad58	todo			
-0006adf0	4	arm	FUN_0006adf0	todo			
-0006adf4	94	arm	FUN_0006adf4	todo			
-0006ae88	4	arm	FUN_0006ae88	todo			
-0006ae8c	40	arm	FUN_0006ae8c	todo			
-0006aecc	4	arm	FUN_0006aecc	todo			
-0006aed0	40	arm	FUN_0006aed0	todo			
-0006af10	4	arm	FUN_0006af10	todo			
-0006af14	3c	arm	FUN_0006af14	todo			
-0006af50	50	arm	FUN_0006af50	todo			
-0006afa0	14	arm	FUN_0006afa0	todo			
-0006afb4	80	arm	FUN_0006afb4	todo			
-0006b034	58	arm	FUN_0006b034	todo			
-0006b08c	8	arm	FUN_0006b08c	todo			
-0006b094	3c	arm	FUN_0006b094	todo			
-0006b0d0	4	arm	FUN_0006b0d0	todo			
-0006b0d4	c	arm	FUN_0006b0d4	todo			
-0006b0e0	558	arm	FUN_0006b0e0	todo			
-0006b638	15c	arm	FUN_0006b638	todo			
-0006b794	c0	arm	FUN_0006b794	todo			
-0006b854	1ac	arm	FUN_0006b854	todo			
-0006ba00	b8	arm	FUN_0006ba00	todo			
-0006bab8	88	arm	FUN_0006bab8	todo			
-0006bb40	318	arm	FUN_0006bb40	todo			
-0006be58	428	arm	FUN_0006be58	todo			
-0006c280	108	arm	FUN_0006c280	todo			
-0006c388	16c	arm	FUN_0006c388	todo			
-0006c4f4	fe8	arm	FUN_0006c4f4	todo			
-0006d4dc	a84	arm	FUN_0006d4dc	todo			
-0006df60	b14	arm	FUN_0006df60	todo			
-0006ea74	54	arm	FUN_0006ea74	todo			
-0006eac8	14	arm	FUN_0006eac8	todo			
-0006eadc	14	arm	FUN_0006eadc	todo			
-0006eaf0	aac	arm	FUN_0006eaf0	todo			
-0006f59c	f4	arm	FUN_0006f59c	todo			
-0006f690	bb0	arm	FUN_0006f690	todo			
-00070240	3dc	arm	FUN_00070240	todo			
-0007061c	1094	arm	FUN_0007061c	todo			
-000716b0	d0	arm	FUN_000716b0	todo			
-00071780	c0	arm	FUN_00071780	todo			
-00071840	18	arm	FUN_00071840	todo			
-00071858	14c	arm	FUN_00071858	todo			
-000719a4	74	arm	FUN_000719a4	todo			
-00071a18	3f0	arm	FUN_00071a18	todo			
-00071e08	518	arm	FUN_00071e08	todo			
-00072320	3e8	arm	FUN_00072320	todo			
-00072708	35c	arm	FUN_00072708	todo			
-00072a64	4	arm	FUN_00072a64	todo			
-00072a68	20	arm	FUN_00072a68	todo			
-00072a88	4d4	arm	FUN_00072a88	todo			
-00072f5c	5ec	arm	FUN_00072f5c	todo			
-00073548	454	arm	FUN_00073548	todo			
-0007399c	1c	arm	FUN_0007399c	todo			
-000739b8	14	arm	FUN_000739b8	todo			
-000739cc	8b0	arm	FUN_000739cc	todo			
-0007427c	288	arm	FUN_0007427c	todo			
-00074504	384	arm	FUN_00074504	todo			
-00074888	428	arm	FUN_00074888	todo			
-00074cb0	17c	arm	FUN_00074cb0	todo			
-00074e2c	50	arm	FUN_00074e2c	todo			
-00074e7c	187c	arm	FUN_00074e7c	todo			
-000766f8	104c	arm	FUN_000766f8	todo			
-00077744	2034	arm	FUN_00077744	todo			
-00079778	ec	arm	FUN_00079778	todo			
-00079864	570	arm	FUN_00079864	todo			
-00079dd4	48c	arm	FUN_00079dd4	todo			
-0007a260	380	arm	FUN_0007a260	todo			
-0007a5e0	354	arm	FUN_0007a5e0	todo			
-0007a934	350	arm	FUN_0007a934	todo			
-0007ac84	370	arm	FUN_0007ac84	todo			
-0007aff4	3e0	arm	FUN_0007aff4	todo			
-0007b3d4	3d8	arm	FUN_0007b3d4	todo			
-0007b7ac	20	arm	FUN_0007b7ac	todo			
-0007b7cc	74	arm	FUN_0007b7cc	todo			
-0007b840	4	arm	FUN_0007b840	todo			
-0007b844	5c	arm	FUN_0007b844	todo			
-0007b8a0	cc	arm	FUN_0007b8a0	todo			
-0007b96c	4d0	arm	FUN_0007b96c	todo			
-0007be3c	1b4	arm	FUN_0007be3c	todo			
-0007bff0	17c	arm	FUN_0007bff0	todo			
-0007c16c	1d0	arm	FUN_0007c16c	todo			
-0007c33c	c	arm	FUN_0007c33c	todo			
-0007c348	518	arm	FUN_0007c348	todo			
-0007c860	c	arm	FUN_0007c860	todo			
-0007c86c	4bc	arm	FUN_0007c86c	todo			
-0007cd28	c	arm	FUN_0007cd28	todo			
-0007cd34	1a0	arm	FUN_0007cd34	todo			
-0007ced4	c	arm	FUN_0007ced4	todo			
-0007cee0	168	arm	FUN_0007cee0	todo			
-0007d048	c	arm	FUN_0007d048	todo			
-0007d054	1bc	arm	FUN_0007d054	todo			
-0007d210	59c	arm	FUN_0007d210	todo			
-0007d7ac	124	arm	FUN_0007d7ac	todo			
-0007d8d0	38	arm	FUN_0007d8d0	todo			
-0007d908	494	arm	FUN_0007d908	todo			
-0007dd9c	238	arm	FUN_0007dd9c	todo			
-0007dfd4	1f8	arm	FUN_0007dfd4	todo			
-0007e1cc	250	arm	FUN_0007e1cc	todo			
-0007e41c	74	arm	FUN_0007e41c	todo			
-0007e490	1f8	arm	FUN_0007e490	todo			
-0007e688	460	arm	FUN_0007e688	todo			
-0007eae8	208	arm	FUN_0007eae8	todo			
-0007ecf0	94	arm	FUN_0007ecf0	todo			
-0007ed84	94	arm	FUN_0007ed84	todo			
-0007ee18	e8	arm	FUN_0007ee18	todo			
-0007ef00	ec	arm	FUN_0007ef00	todo			
-0007efec	74	arm	FUN_0007efec	todo			
-0007f060	128	arm	FUN_0007f060	todo			
-0007f188	238	arm	FUN_0007f188	todo			
-0007f3c0	214	arm	FUN_0007f3c0	todo			
-0007f5d4	208	arm	FUN_0007f5d4	todo			
-0007f7dc	110	arm	FUN_0007f7dc	todo			
-0007f8ec	140	arm	FUN_0007f8ec	todo			
-0007fa2c	2a0	arm	FUN_0007fa2c	todo			
-0007fccc	5d0	arm	FUN_0007fccc	todo			
-0008029c	10	arm	FUN_0008029c	todo			
-000802ac	180	arm	FUN_000802ac	todo			
-0008042c	618	arm	FUN_0008042c	todo			
-00080a44	384	arm	FUN_00080a44	todo			
-00080dc8	2b8	arm	FUN_00080dc8	todo			
-00081080	3b8	arm	FUN_00081080	todo			
-00081438	290	arm	FUN_00081438	todo			
-000816c8	8	arm	FUN_000816c8	todo			
-000816d0	8	arm	FUN_000816d0	todo			
-000816d8	128	arm	FUN_000816d8	todo			
-00081800	1328	arm	FUN_00081800	todo			
-00082b28	670	arm	FUN_00082b28	todo			
-00083198	5a8	arm	FUN_00083198	todo			
-00083740	4	arm	FUN_00083740	todo			
-00083744	e0	arm	FUN_00083744	todo			
-00083824	30	arm	FUN_00083824	todo			
-00083854	128	arm	FUN_00083854	todo			
-0008397c	4	arm	FUN_0008397c	todo			
-00083980	64	arm	FUN_00083980	todo			
-000839e4	128	arm	FUN_000839e4	todo			
-00083b0c	4	arm	FUN_00083b0c	todo			
-00083b10	64	arm	FUN_00083b10	todo			
-00083b74	160	arm	FUN_00083b74	todo			
-00083cd4	4	arm	FUN_00083cd4	todo			
-00083cd8	9c	arm	FUN_00083cd8	todo			
-00083d74	128	arm	FUN_00083d74	todo			
-00083e9c	4	arm	FUN_00083e9c	todo			
-00083ea0	74	arm	FUN_00083ea0	todo			
-00083f14	1b4	arm	FUN_00083f14	todo			
-000840c8	4	arm	FUN_000840c8	todo			
-000840cc	78	arm	FUN_000840cc	todo			
-00084144	6c	arm	FUN_00084144	todo			
-000841b0	dc	arm	FUN_000841b0	todo			
-0008428c	4	arm	FUN_0008428c	todo			
-00084290	74	arm	FUN_00084290	todo			
-00084304	160	arm	FUN_00084304	todo			
-00084464	4	arm	FUN_00084464	todo			
-00084468	ac	arm	FUN_00084468	todo			
-00084514	140	arm	FUN_00084514	todo			
-00084654	4	arm	FUN_00084654	todo			
-00084658	368	arm	FUN_00084658	todo			
-000849c0	4	arm	FUN_000849c0	todo			
-000849c4	154	arm	FUN_000849c4	todo			
-00084b18	4	arm	FUN_00084b18	todo			
-00084b1c	4c	arm	FUN_00084b1c	todo			
-00084b68	28c	arm	FUN_00084b68	todo			
-00084df4	4	arm	FUN_00084df4	todo			
-00084df8	1f0	arm	FUN_00084df8	todo			
-00084fe8	1f8	arm	FUN_00084fe8	todo			
-000851e0	4	arm	FUN_000851e0	todo			
-000851e4	218	arm	FUN_000851e4	todo			
-000853fc	2b8	arm	FUN_000853fc	todo			
-000856b4	4	arm	FUN_000856b4	todo			
-000856b8	300	arm	FUN_000856b8	todo			
-000859b8	18c	arm	FUN_000859b8	todo			
-00085b44	4	arm	FUN_00085b44	todo			
-00085b48	264	arm	FUN_00085b48	todo			
-00085dac	74c	arm	FUN_00085dac	todo			
-000864f8	4	arm	FUN_000864f8	todo			
-000864fc	180	arm	FUN_000864fc	todo			
-0008667c	19c	arm	FUN_0008667c	todo			
-00086818	4	arm	FUN_00086818	todo			
-0008681c	30	arm	FUN_0008681c	todo			
-0008684c	1b4	arm	FUN_0008684c	todo			
-00086a00	128	arm	FUN_00086a00	todo			
-00086b28	154	arm	FUN_00086b28	todo			
-00086c7c	4	arm	FUN_00086c7c	todo			
-00086c80	240	arm	FUN_00086c80	todo			
-00086ec0	154	arm	FUN_00086ec0	todo			
-00087014	4	arm	FUN_00087014	todo			
-00087018	22c	arm	FUN_00087018	todo			
-00087244	19c	arm	FUN_00087244	todo			
-000873e0	1f8	arm	FUN_000873e0	todo			
-000875d8	3a4	arm	FUN_000875d8	todo			
-0008797c	4	arm	FUN_0008797c	todo			
-00087980	26c	arm	FUN_00087980	todo			
-00087bec	54	arm	FUN_00087bec	todo			
-00087c40	120	arm	FUN_00087c40	todo			
-00087d60	4	arm	FUN_00087d60	todo			
-00087d64	9c	arm	FUN_00087d64	todo			
-00087e00	174	arm	FUN_00087e00	todo			
-00087f74	4	arm	FUN_00087f74	todo			
-00087f78	4c	arm	FUN_00087f78	todo			
-00087fc4	7c	arm	FUN_00087fc4	todo			
-00088040	5c	arm	FUN_00088040	todo			
-0008809c	580	arm	FUN_0008809c	todo			
-0008861c	4	arm	FUN_0008861c	todo			
-00088620	1c8	arm	FUN_00088620	todo			
-000887e8	4	arm	FUN_000887e8	todo			
-000887ec	154	arm	FUN_000887ec	todo			
-00088940	4	arm	FUN_00088940	todo			
-00088944	194	arm	FUN_00088944	todo			
-00088ad8	4	arm	FUN_00088ad8	todo			
-00088adc	14c	arm	FUN_00088adc	todo			
-00088c28	4	arm	FUN_00088c28	todo			
-00088c2c	180	arm	FUN_00088c2c	todo			
-00088dac	4	arm	FUN_00088dac	todo			
-00088db0	8c	arm	FUN_00088db0	todo			
-00088e3c	58	arm	FUN_00088e3c	todo			
-00088e94	60	arm	FUN_00088e94	todo			
-00088ef4	1f4	arm	FUN_00088ef4	todo			
-000890e8	6c	arm	FUN_000890e8	todo			
-00089154	28	arm	FUN_00089154	todo			
-0008917c	2cc	arm	FUN_0008917c	todo			
-00089448	54	arm	FUN_00089448	todo			
-0008949c	d4	arm	FUN_0008949c	todo			
-00089570	2bc	arm	FUN_00089570	todo			
-0008982c	afc	arm	FUN_0008982c	todo			
-0008a328	1e8	arm	FUN_0008a328	todo			
-0008a510	138	arm	FUN_0008a510	todo			
-0008a648	e8	arm	FUN_0008a648	todo			
-0008a730	3a8	arm	FUN_0008a730	todo			
-0008aad8	398	arm	FUN_0008aad8	todo			
-0008ae70	398	arm	FUN_0008ae70	todo			
-0008b208	398	arm	FUN_0008b208	todo			
-0008b5a0	398	arm	FUN_0008b5a0	todo			
-0008b938	398	arm	FUN_0008b938	todo			
-0008bcd0	4bc	arm	FUN_0008bcd0	todo			
-0008c18c	3e8	arm	FUN_0008c18c	todo			
-0008c574	18	arm	FUN_0008c574	todo			
-0008c58c	3e4	arm	FUN_0008c58c	todo			
-0008c970	18	arm	FUN_0008c970	todo			
-0008c988	390	arm	FUN_0008c988	todo			
-0008cd18	18	arm	FUN_0008cd18	todo			
-0008cd30	390	arm	FUN_0008cd30	todo			
-0008d0c0	18	arm	FUN_0008d0c0	todo			
-0008d0d8	3dc	arm	FUN_0008d0d8	todo			
-0008d4b4	4	arm	FUN_0008d4b4	todo			
-0008d4b8	70	arm	FUN_0008d4b8	todo			
-0008d528	a8	arm	FUN_0008d528	todo			
-0008d5d0	98	arm	FUN_0008d5d0	todo			
-0008d668	84	arm	FUN_0008d668	todo			
-0008d6ec	84	arm	FUN_0008d6ec	todo			
-0008d770	b8	arm	FUN_0008d770	todo			
-0008d828	168	arm	FUN_0008d828	todo			
-0008d990	c0	arm	FUN_0008d990	todo			
-0008da50	dc	arm	FUN_0008da50	todo			
-0008db2c	a8	arm	FUN_0008db2c	todo			
-0008dbd4	30	arm	FUN_0008dbd4	todo			
-0008dc04	18	arm	FUN_0008dc04	todo			
-0008dc1c	784	arm	FUN_0008dc1c	todo			
-0008e3a0	1b4	arm	FUN_0008e3a0	todo			
-0008e554	6a8	arm	FUN_0008e554	todo			
-0008ebfc	4	arm	FUN_0008ebfc	todo			
-0008ec00	3e8	arm	FUN_0008ec00	todo			
-0008efe8	4	arm	FUN_0008efe8	todo			
-0008efec	9c	arm	FUN_0008efec	todo			
-0008f088	604	arm	FUN_0008f088	todo			
-0008f68c	2ac	arm	FUN_0008f68c	todo			
-0008f938	4	arm	FUN_0008f938	todo			
-0008f93c	57c	arm	FUN_0008f93c	todo			
-0008feb8	4	arm	FUN_0008feb8	todo			
-0008febc	564	arm	FUN_0008febc	todo			
-00090420	10c	arm	FUN_00090420	todo			
-0009052c	4	arm	FUN_0009052c	todo			
-00090530	2bc	arm	FUN_00090530	todo			
-000907ec	4	arm	FUN_000907ec	todo			
-000907f0	90	arm	FUN_000907f0	todo			
-00090880	710	arm	FUN_00090880	todo			
-00090f90	4	arm	FUN_00090f90	todo			
-00090f94	748	arm	FUN_00090f94	todo			
-000916dc	54	arm	FUN_000916dc	todo			
-00091730	10c	arm	FUN_00091730	todo			
-0009183c	4	arm	FUN_0009183c	todo			
-00091840	cc	arm	FUN_00091840	todo			
-0009190c	5cc	arm	FUN_0009190c	todo			
-00091ed8	8cc	arm	FUN_00091ed8	todo			
-000927a4	58	arm	FUN_000927a4	todo			
-000927fc	94	arm	FUN_000927fc	todo			
-00092890	38	arm	FUN_00092890	todo			
-000928c8	38	arm	FUN_000928c8	todo			
-00092900	38	arm	FUN_00092900	todo			
-00092938	7f0	arm	FUN_00092938	todo			
-00093128	4	arm	FUN_00093128	todo			
-0009312c	430	arm	FUN_0009312c	todo			
-0009355c	128	arm	FUN_0009355c	todo			
-00093684	4	arm	FUN_00093684	todo			
-00093688	2cc	arm	FUN_00093688	todo			
-00093954	b8	arm	FUN_00093954	todo			
-00093a0c	4	arm	FUN_00093a0c	todo			
-00093a10	2ec	arm	FUN_00093a10	todo			
-00093cfc	128	arm	FUN_00093cfc	todo			
-00093e24	4	arm	FUN_00093e24	todo			
-00093e28	2c0	arm	FUN_00093e28	todo			
-000940e8	4	arm	FUN_000940e8	todo			
-000940ec	2ac	arm	FUN_000940ec	todo			
-00094398	128	arm	FUN_00094398	todo			
-000944c0	4	arm	FUN_000944c0	todo			
-000944c4	4c	arm	FUN_000944c4	todo			
-00094510	770	arm	FUN_00094510	todo			
-00094c80	58	arm	FUN_00094c80	todo			
-00094cd8	8c	arm	FUN_00094cd8	todo			
-00094d64	38	arm	FUN_00094d64	todo			
-00094d9c	38	arm	FUN_00094d9c	todo			
-00094dd4	38	arm	FUN_00094dd4	todo			
-00094e0c	5c	arm	FUN_00094e0c	todo			
-00094e68	ab0	arm	FUN_00094e68	todo			
-00095918	4	arm	FUN_00095918	todo			
-0009591c	204	arm	FUN_0009591c	todo			
-00095b20	338	arm	FUN_00095b20	todo			
-00095e58	4	arm	FUN_00095e58	todo			
-00095e5c	534	arm	FUN_00095e5c	todo			
-00096390	128	arm	FUN_00096390	todo			
-000964b8	4	arm	FUN_000964b8	todo			
-000964bc	188	arm	FUN_000964bc	todo			
-00096644	128	arm	FUN_00096644	todo			
-0009676c	4	arm	FUN_0009676c	todo			
-00096770	654	arm	FUN_00096770	todo			
-00096dc4	4	arm	FUN_00096dc4	todo			
-00096dc8	514	arm	FUN_00096dc8	todo			
-000972dc	4	arm	FUN_000972dc	todo			
-000972e0	504	arm	FUN_000972e0	todo			
-000977e4	128	arm	FUN_000977e4	todo			
-0009790c	4	arm	FUN_0009790c	todo			
-00097910	170	arm	FUN_00097910	todo			
-00097a80	128	arm	FUN_00097a80	todo			
-00097ba8	4	arm	FUN_00097ba8	todo			
-00097bac	4c	arm	FUN_00097bac	todo			
-00097bf8	60	arm	FUN_00097bf8	todo			
-00097c58	78	arm	FUN_00097c58	todo			
-00097cd0	50	arm	FUN_00097cd0	todo			
-00097d20	38	arm	FUN_00097d20	todo			
-00097d58	38	arm	FUN_00097d58	todo			
-00097d90	5c	arm	FUN_00097d90	todo			
-00097dec	4038	arm	FUN_00097dec	todo			
-0009be24	18	arm	FUN_0009be24	todo			
-0009be3c	130	arm	FUN_0009be3c	todo			
-0009bf6c	2d0	arm	FUN_0009bf6c	todo			
-0009c23c	18	arm	FUN_0009c23c	todo			
-0009c254	390	arm	FUN_0009c254	todo			
-0009c5e4	18	arm	FUN_0009c5e4	todo			
-0009c5fc	390	arm	FUN_0009c5fc	todo			
-0009c98c	18	arm	FUN_0009c98c	todo			
-0009c9a4	398	arm	FUN_0009c9a4	todo			
-0009cd3c	15c	arm	FUN_0009cd3c	todo			
-0009ce98	1a4	arm	FUN_0009ce98	todo			
-0009d03c	15c	arm	FUN_0009d03c	todo			
-0009d198	1a4	arm	FUN_0009d198	todo			
-0009d33c	15c	arm	FUN_0009d33c	todo			
-0009d498	30	arm	FUN_0009d498	todo			
-0009d4c8	814	arm	FUN_0009d4c8	todo			
-0009dcdc	18	arm	FUN_0009dcdc	todo			
-0009dcf4	128	arm	FUN_0009dcf4	todo			
-0009de1c	18	arm	FUN_0009de1c	todo			
-0009de34	12c	arm	FUN_0009de34	todo			
-0009df60	18	arm	FUN_0009df60	todo			
-0009df78	128	arm	FUN_0009df78	todo			
-0009e0a0	18	arm	FUN_0009e0a0	todo			
-0009e0b8	148	arm	FUN_0009e0b8	todo			
-0009e200	148	arm	FUN_0009e200	todo			
-0009e348	148	arm	FUN_0009e348	todo			
-0009e490	148	arm	FUN_0009e490	todo			
-0009e5d8	148	arm	FUN_0009e5d8	todo			
-0009e720	148	arm	FUN_0009e720	todo			
-0009e868	30	arm	FUN_0009e868	todo			
-0009e898	194	arm	FUN_0009e898	todo			
-0009ea2c	4	arm	FUN_0009ea2c	todo			
-0009ea30	400	arm	FUN_0009ea30	todo			
-0009ee30	11c	arm	FUN_0009ee30	todo			
-0009ef4c	4	arm	FUN_0009ef4c	todo			
-0009ef50	49c	arm	FUN_0009ef50	todo			
-0009f3ec	11c	arm	FUN_0009f3ec	todo			
-0009f508	4	arm	FUN_0009f508	todo			
-0009f50c	4a8	arm	FUN_0009f50c	todo			
-0009f9b4	11c	arm	FUN_0009f9b4	todo			
-0009fad0	4	arm	FUN_0009fad0	todo			
-0009fad4	488	arm	FUN_0009fad4	todo			
-0009ff5c	11c	arm	FUN_0009ff5c	todo			
-000a0078	4	arm	FUN_000a0078	todo			
-000a007c	488	arm	FUN_000a007c	todo			
-000a0504	11c	arm	FUN_000a0504	todo			
-000a0620	4	arm	FUN_000a0620	todo			
-000a0624	4a0	arm	FUN_000a0624	todo			
-000a0ac4	11c	arm	FUN_000a0ac4	todo			
-000a0be0	4	arm	FUN_000a0be0	todo			
-000a0be4	570	arm	FUN_000a0be4	todo			
-000a1154	11c	arm	FUN_000a1154	todo			
-000a1270	4	arm	FUN_000a1270	todo			
-000a1274	4a8	arm	FUN_000a1274	todo			
-000a171c	11c	arm	FUN_000a171c	todo			
-000a1838	4	arm	FUN_000a1838	todo			
-000a183c	1a4	arm	FUN_000a183c	todo			
-000a19e0	31c	arm	FUN_000a19e0	todo			
-000a1cfc	11c	arm	FUN_000a1cfc	todo			
-000a1e18	4	arm	FUN_000a1e18	todo			
-000a1e1c	43c	arm	FUN_000a1e1c	todo			
-000a2258	15c	arm	FUN_000a2258	todo			
-000a23b4	4	arm	FUN_000a23b4	todo			
-000a23b8	924	arm	FUN_000a23b8	todo			
-000a2cdc	4	arm	FUN_000a2cdc	todo			
-000a2ce0	7a8	arm	FUN_000a2ce0	todo			
-000a3488	bc	arm	FUN_000a3488	todo			
-000a3544	68	arm	FUN_000a3544	todo			
-000a35ac	68	arm	FUN_000a35ac	todo			
-000a3614	37c	arm	FUN_000a3614	todo			
-000a3990	4	arm	FUN_000a3990	todo			
-000a3994	84	arm	FUN_000a3994	todo			
-000a3a18	470	arm	FUN_000a3a18	todo			
-000a3e88	50	arm	FUN_000a3e88	todo			
-000a3ed8	50	arm	FUN_000a3ed8	todo			
-000a3f28	50	arm	FUN_000a3f28	todo			
-000a3f78	28ec	arm	FUN_000a3f78	todo			
-000a6864	128	arm	FUN_000a6864	todo			
-000a698c	4	arm	FUN_000a698c	todo			
-000a6990	804	arm	FUN_000a6990	todo			
-000a7194	128	arm	FUN_000a7194	todo			
-000a72bc	4	arm	FUN_000a72bc	todo			
-000a72c0	9dc	arm	FUN_000a72c0	todo			
-000a7c9c	8c	arm	FUN_000a7c9c	todo			
-000a7d28	98	arm	FUN_000a7d28	todo			
-000a7dc0	4	arm	FUN_000a7dc0	todo			
-000a7dc4	d8	arm	FUN_000a7dc4	todo			
-000a7e9c	3d0	arm	FUN_000a7e9c	todo			
-000a826c	3ec	arm	FUN_000a826c	todo			
-000a8658	398	arm	FUN_000a8658	todo			
-000a89f0	34c	arm	FUN_000a89f0	todo			
-000a8d3c	348	arm	FUN_000a8d3c	todo			
-000a9084	34c	arm	FUN_000a9084	todo			
-000a93d0	348	arm	FUN_000a93d0	todo			
-000a9718	34c	arm	FUN_000a9718	todo			
-000a9a64	348	arm	FUN_000a9a64	todo			
-000a9dac	30	arm	FUN_000a9dac	todo			
-000a9ddc	10	arm	FUN_000a9ddc	todo			
-000a9dec	128	arm	FUN_000a9dec	todo			
-000a9f14	4	arm	FUN_000a9f14	todo			
-000a9f18	fe4	arm	FUN_000a9f18	todo			
-000aaefc	128	arm	FUN_000aaefc	todo			
-000ab024	4	arm	FUN_000ab024	todo			
-000ab028	b8	arm	FUN_000ab028	todo			
-000ab0e0	30	arm	FUN_000ab0e0	todo			
-000ab110	4	arm	FUN_000ab110	todo			
-000ab114	134	arm	FUN_000ab114	todo			
-000ab248	6c	arm	FUN_000ab248	todo			
-000ab2b4	1c6c	arm	FUN_000ab2b4	todo			
-000acf20	28	arm	FUN_000acf20	todo			
-000acf48	28	arm	FUN_000acf48	todo			
-000acf70	28	arm	FUN_000acf70	todo			
-000acf98	20	arm	FUN_000acf98	todo			
-000acfb8	20	arm	FUN_000acfb8	todo			
-000acfd8	20	arm	FUN_000acfd8	todo			
-000acff8	20	arm	FUN_000acff8	todo			
-000ad018	1e8	arm	FUN_000ad018	todo			
-000ad200	6c	arm	FUN_000ad200	todo			
-000ad26c	128	arm	FUN_000ad26c	todo			
-000ad394	5c	arm	FUN_000ad394	todo			
-000ad3f0	28	arm	FUN_000ad3f0	todo			
-000ad418	a0	arm	FUN_000ad418	todo			
-000ad4b8	80	arm	FUN_000ad4b8	todo			
-000ad538	2cc	arm	FUN_000ad538	todo			
-000ad804	23c	arm	FUN_000ad804	todo			
-000ada40	cc	arm	FUN_000ada40	todo			
-000adb0c	2ac	arm	FUN_000adb0c	todo			
-000addb8	ec	arm	FUN_000addb8	todo			
-000adea4	38	arm	FUN_000adea4	todo			
-000adedc	20	arm	FUN_000adedc	todo			
-000adefc	8c	arm	FUN_000adefc	todo			
-000adf88	70	arm	FUN_000adf88	todo			
-000adff8	114	arm	FUN_000adff8	todo			
-000ae10c	114	arm	FUN_000ae10c	todo			
-000ae220	7c	arm	FUN_000ae220	todo			
-000ae29c	70	arm	FUN_000ae29c	todo			
-000ae30c	64	arm	FUN_000ae30c	todo			
-000ae370	64	arm	FUN_000ae370	todo			
-000ae3d4	78	arm	FUN_000ae3d4	todo			
-000ae44c	78	arm	FUN_000ae44c	todo			
-000ae4c4	78	arm	FUN_000ae4c4	todo			
-000ae53c	a8	arm	FUN_000ae53c	todo			
-000ae5e4	24	arm	FUN_000ae5e4	todo			
-000ae608	204	arm	FUN_000ae608	todo			
-000ae80c	f0	arm	FUN_000ae80c	todo			
-000ae8fc	278	arm	FUN_000ae8fc	todo			
-000aeb74	1ac	arm	FUN_000aeb74	todo			
-000aed20	84	arm	FUN_000aed20	todo			
-000aeda4	40	arm	FUN_000aeda4	todo			
-000aede4	1c0	arm	FUN_000aede4	todo			
-000aefa4	220	arm	FUN_000aefa4	todo			
-000af1c4	184	arm	FUN_000af1c4	todo			
-000af348	240	arm	FUN_000af348	todo			
-000af588	1b4	arm	FUN_000af588	todo			
-000af73c	8c8	arm	FUN_000af73c	todo			
-000b0004	330	arm	FUN_000b0004	todo			
-000b0334	c	arm	FUN_000b0334	todo			
-000b0340	d8	arm	FUN_000b0340	todo			
-000b0418	1c4	arm	FUN_000b0418	todo			
-000b05dc	12a4	arm	FUN_000b05dc	todo			
-000b1880	118	arm	FUN_000b1880	todo			
-000b1998	1b8	arm	FUN_000b1998	todo			
-000b1b50	1b8	arm	FUN_000b1b50	todo			
-000b1d08	10	arm	FUN_000b1d08	todo			
-000b1d18	11c	arm	FUN_000b1d18	todo			
-000b1e34	4ac	arm	FUN_000b1e34	todo			
-000b22e0	1b0	arm	FUN_000b22e0	todo			
-000b2490	144	arm	FUN_000b2490	todo			
-000b25d4	698	arm	FUN_000b25d4	todo			
-000b2c6c	140	arm	FUN_000b2c6c	todo			
-000b2dac	10f4	arm	FUN_000b2dac	todo			
-000b3ea0	294	arm	FUN_000b3ea0	todo			
-000b4134	a4	arm	FUN_000b4134	todo			
-000b41d8	8c	arm	FUN_000b41d8	todo			
-000b4264	9c0	arm	FUN_000b4264	todo			
-000b4c24	23c	arm	FUN_000b4c24	todo			
-000b4e60	544	arm	FUN_000b4e60	todo			
-000b53a4	224	arm	FUN_000b53a4	todo			
-000b55c8	38	arm	FUN_000b55c8	todo			
-000b5600	28	arm	FUN_000b5600	todo			
-000b5628	58	arm	FUN_000b5628	todo			
-000b5680	44	arm	FUN_000b5680	todo			
-000b56c4	3c	arm	FUN_000b56c4	todo			
-000b5700	640	arm	FUN_000b5700	todo			
-000b5d40	140	arm	FUN_000b5d40	todo			
-000b5e80	1c0	arm	FUN_000b5e80	todo			
-000b6040	138	arm	FUN_000b6040	todo			
-000b6178	3e8	arm	FUN_000b6178	todo			
-000b6560	330	arm	FUN_000b6560	todo			
-000b6890	180	arm	FUN_000b6890	todo			
-000b6a10	210	arm	FUN_000b6a10	todo			
-000b6c20	ec	arm	FUN_000b6c20	todo			
-000b6d0c	b0	arm	FUN_000b6d0c	todo			
-000b6dbc	1dc	arm	FUN_000b6dbc	todo			
-000b6f98	270	arm	FUN_000b6f98	todo			
-000b7208	588	arm	FUN_000b7208	todo			
-000b7790	174	arm	FUN_000b7790	todo			
-000b7904	2c	arm	FUN_000b7904	todo			
-000b7930	2c	arm	FUN_000b7930	todo			
-000b795c	218	arm	FUN_000b795c	todo			
-000b7b74	d0	arm	FUN_000b7b74	todo			
-000b7c44	b8	arm	FUN_000b7c44	todo			
-000b7cfc	6c	arm	FUN_000b7cfc	todo			
-000b7d68	74	arm	FUN_000b7d68	todo			
-000b7ddc	3fc	arm	FUN_000b7ddc	todo			
-000b81d8	644	arm	FUN_000b81d8	todo			
-000b881c	c4	arm	FUN_000b881c	todo			
-000b88e0	49c	arm	FUN_000b88e0	todo			
-000b8d7c	734	arm	FUN_000b8d7c	todo			
-000b94b0	5a4	arm	FUN_000b94b0	todo			
-000b9a54	700	arm	FUN_000b9a54	todo			
-000ba154	704	arm	FUN_000ba154	todo			
-000ba858	ed8	arm	FUN_000ba858	todo			
-000bb730	1fc	arm	FUN_000bb730	todo			
-000bb92c	40	arm	FUN_000bb92c	todo			
-000bb96c	4c	arm	FUN_000bb96c	todo			
-000bb9b8	64	arm	FUN_000bb9b8	todo			
-000bba1c	80	arm	FUN_000bba1c	todo			
-000bba9c	c4	arm	FUN_000bba9c	todo			
-000bbb60	84	arm	FUN_000bbb60	todo			
-000bbbe4	84	arm	FUN_000bbbe4	todo			
-000bbc68	94	arm	FUN_000bbc68	todo			
-000bbcfc	60	arm	FUN_000bbcfc	todo			
-000bbd5c	c8	arm	FUN_000bbd5c	todo			
-000bbe24	64	arm	FUN_000bbe24	todo			
-000bbe88	18c	arm	FUN_000bbe88	todo			
-000bc014	298	arm	FUN_000bc014	todo			
-000bc2ac	9c	arm	FUN_000bc2ac	todo			
-000bc348	410	arm	FUN_000bc348	todo			
-000bc758	2dc	arm	FUN_000bc758	todo			
-000bca34	154	arm	FUN_000bca34	todo			
-000bcb88	32c	arm	FUN_000bcb88	todo			
-000bceb4	e0	arm	FUN_000bceb4	todo			
-000bcf94	3ec	arm	FUN_000bcf94	todo			
-000bd380	17c	arm	FUN_000bd380	todo			
-000bd4fc	1e8	arm	FUN_000bd4fc	todo			
-000bd6e4	1ac	arm	FUN_000bd6e4	todo			
-000bd890	13c	arm	FUN_000bd890	todo			
-000bd9cc	90	arm	FUN_000bd9cc	todo			
-000bda5c	164	arm	FUN_000bda5c	todo			
-000bdbc0	9b0	arm	FUN_000bdbc0	todo			
-000be570	2c	arm	FUN_000be570	todo			
-000be59c	310	arm	FUN_000be59c	todo			
-000be8ac	138	arm	FUN_000be8ac	todo			
-000be9e4	1f4	arm	FUN_000be9e4	todo			
-000bebd8	504	arm	FUN_000bebd8	todo			
-000bf0dc	398	arm	FUN_000bf0dc	todo			
-000bf474	30c	arm	FUN_000bf474	todo			
-000bf780	1f8	arm	FUN_000bf780	todo			
-000bf978	72c	arm	FUN_000bf978	todo			
-000c00a4	f8	arm	FUN_000c00a4	todo			
-000c019c	d44	arm	FUN_000c019c	todo			
-000c0ee0	d34	arm	FUN_000c0ee0	todo			
-000c1c14	368	arm	FUN_000c1c14	todo			
-000c1f7c	6f0	arm	FUN_000c1f7c	todo			
-000c266c	434	arm	FUN_000c266c	todo			
-000c2aa0	3d8	arm	FUN_000c2aa0	todo			
-000c2e78	2cc	arm	FUN_000c2e78	todo			
-000c3144	78c	arm	FUN_000c3144	todo			
-000c38d0	a78	arm	FUN_000c38d0	todo			
-000c4348	1ec	arm	FUN_000c4348	todo			
-000c4534	3f8	arm	FUN_000c4534	todo			
-000c492c	1ec	arm	FUN_000c492c	todo			
-000c4b18	28c	arm	FUN_000c4b18	todo			
-000c4da4	34c	arm	FUN_000c4da4	todo			
-000c50f0	5f8	arm	FUN_000c50f0	todo			
-000c56e8	2d4	arm	FUN_000c56e8	todo			
-000c59bc	fb8	arm	FUN_000c59bc	todo			
-000c6974	27a8	arm	FUN_000c6974	todo			
-000c911c	d70	arm	FUN_000c911c	todo			
-000c9e8c	378	arm	FUN_000c9e8c	todo			
-000ca204	760	arm	FUN_000ca204	todo			
-000ca964	4c	arm	FUN_000ca964	todo			
-000ca9b0	e4	arm	FUN_000ca9b0	todo			
-000caa94	300	arm	FUN_000caa94	todo			
-000cad94	f4	arm	FUN_000cad94	todo			
-000cae88	364	arm	FUN_000cae88	todo			
-000cb1ec	588	arm	FUN_000cb1ec	todo			
-000cb774	648	arm	FUN_000cb774	todo			
-000cbdbc	278	arm	FUN_000cbdbc	todo			
-000cc034	44	arm	FUN_000cc034	todo			
-000cc078	158	arm	FUN_000cc078	todo			
-000cc1d0	ac	arm	FUN_000cc1d0	todo			
-000cc27c	10	arm	FUN_000cc27c	todo			
-000cc28c	314	arm	FUN_000cc28c	todo			
-000cc5a0	264	arm	FUN_000cc5a0	todo			
-000cc804	78c	arm	FUN_000cc804	todo			
-000ccf90	d60	arm	FUN_000ccf90	todo			
-000cdcf0	434	arm	FUN_000cdcf0	todo			
-000ce124	23c	arm	FUN_000ce124	todo			
-000ce360	444	arm	FUN_000ce360	todo			
-000ce7a4	152c	arm	FUN_000ce7a4	todo			
-000cfcd0	270	arm	FUN_000cfcd0	todo			
-000cff40	258	arm	FUN_000cff40	todo			
-000d0198	1e38	arm	FUN_000d0198	todo			
-000d1fd0	ff4	arm	FUN_000d1fd0	todo			
-000d2fc4	540	arm	FUN_000d2fc4	todo			
-000d3504	f4c	arm	FUN_000d3504	todo			
-000d4450	42c	arm	FUN_000d4450	todo			
-000d487c	160	arm	FUN_000d487c	todo			
-000d49dc	1e4	arm	FUN_000d49dc	todo			
-000d4bc0	284	arm	FUN_000d4bc0	todo			
-000d4e44	e60	arm	FUN_000d4e44	todo			
-000d5ca4	a68	arm	FUN_000d5ca4	todo			
-000d670c	1d0	arm	FUN_000d670c	todo			
-000d68dc	1dc	arm	FUN_000d68dc	todo			
-000d6ab8	3a0	arm	FUN_000d6ab8	todo			
-000d6e58	1ac4	arm	FUN_000d6e58	todo			
-000d891c	2d4	arm	FUN_000d891c	todo			
-000d8bf0	d4	arm	FUN_000d8bf0	todo			
-000d8cc4	424	arm	FUN_000d8cc4	todo			
-000d90e8	178	arm	FUN_000d90e8	todo			
-000d9260	60c	arm	FUN_000d9260	todo			
-000d986c	938	arm	FUN_000d986c	todo			
-000da1a4	20ac	arm	FUN_000da1a4	todo			
-000dc250	124	arm	FUN_000dc250	todo			
-000dc374	318	arm	FUN_000dc374	todo			
-000dc68c	2d8	arm	FUN_000dc68c	todo			
-000dc964	bc	arm	FUN_000dc964	todo			
-000dca20	7c	arm	FUN_000dca20	todo			
-000dca9c	18	arm	FUN_000dca9c	todo			
-000dcab4	a4	arm	FUN_000dcab4	todo			
-000dcb58	24	arm	FUN_000dcb58	todo			
-000dcb7c	78	arm	FUN_000dcb7c	todo			
-000dcbf4	10	arm	FUN_000dcbf4	todo			
-000dcc04	3b8	arm	FUN_000dcc04	todo			
-000dcfbc	3e0	arm	FUN_000dcfbc	todo			
-000dd39c	100	arm	FUN_000dd39c	todo			
-000dd49c	57c	arm	FUN_000dd49c	todo			
-000dda18	106c	arm	FUN_000dda18	todo			
-000dea84	7c	arm	FUN_000dea84	todo			
-000deb00	a8	arm	FUN_000deb00	todo			
-000deba8	10c	arm	FUN_000deba8	todo			
+000657a4	8c	arm	find_error_text@pcre_compile	lib	lib:pcre:pcre_compile.o	100	
+00065830	144	arm	expand_workspace@pcre_compile	lib	lib:pcre:pcre_compile.o	100	
+00065974	150	arm	is_counted_repeat@pcre_compile	lib	lib:pcre:pcre_compile.o	100	
+00065ac4	1124	arm	check_escape@pcre_compile	lib	lib:pcre:pcre_compile.o	100	
+00066be8	2e8	arm	get_ucp@pcre_compile	lib	lib:pcre:pcre_compile.o	100	
+00066ed0	1ac	arm	read_repeat_counts@pcre_compile	lib	lib:pcre:pcre_compile.o	100	
+0006707c	130	arm	first_significant_code@pcre_compile	lib	lib:pcre:pcre_compile.o	100	
+000671ac	7a8	arm	find_fixedlength@pcre_compile	lib	lib:pcre:pcre_compile.o	100	
+00067954	390	arm	_pcre_find_bracket	lib	lib:pcre:pcre_compile.o	100	
+00067ce4	2e4	arm	find_recurse@pcre_compile	lib	lib:pcre:pcre_compile.o	100	
+00067fc8	a38	arm	could_be_empty_branch@pcre_compile	lib	lib:pcre:pcre_compile.o	100	
+00068a00	94	arm	could_be_empty@pcre_compile	lib	lib:pcre:pcre_compile.o	100	
+00068a94	8c	arm	get_repeat_base@pcre_compile	lib	lib:pcre:pcre_compile.o	100	
+00068b20	448	arm	check_char_prop@pcre_compile	lib	lib:pcre:pcre_compile.o	100	
+00068f68	bf0	arm	get_chr_property_list@pcre_compile	lib	lib:pcre:pcre_compile.o	100	
+00069b58	1588	arm	compare_opcodes@pcre_compile	lib	lib:pcre:pcre_compile.o	100	
+0006b0e0	558	arm	auto_possessify@pcre_compile	lib	lib:pcre:pcre_compile.o	100	
+0006b638	15c	arm	check_posix_syntax@pcre_compile	lib	lib:pcre:pcre_compile.o	100	
+0006b794	c0	arm	check_posix_name@pcre_compile	lib	lib:pcre:pcre_compile.o	100	
+0006b854	1ac	arm	adjust_recurse@pcre_compile	lib	lib:pcre:pcre_compile.o	100	
+0006ba00	b8	arm	auto_callout@pcre_compile	lib	lib:pcre:pcre_compile.o	100	
+0006bab8	88	arm	complete_callout@pcre_compile	lib	lib:pcre:pcre_compile.o	100	
+0006bb40	318	arm	get_othercase_range@pcre_compile	lib	lib:pcre:pcre_compile.o	100	
+0006be58	428	arm	add_to_class@pcre_compile	lib	lib:pcre:pcre_compile.o	100	
+0006c280	108	arm	add_list_to_class@pcre_compile	lib	lib:pcre:pcre_compile.o	100	
+0006c388	16c	arm	add_not_list_to_class@pcre_compile	lib	lib:pcre:pcre_compile.o	100	
+0006c4f4	74d8	arm	compile_branch@pcre_compile	lib	lib:pcre:pcre_compile.o	100	
+000739cc	8b0	arm	compile_regex@pcre_compile	lib	lib:pcre:pcre_compile.o	100	
+0007427c	288	arm	is_anchored@pcre_compile	lib	lib:pcre:pcre_compile.o	100	
+00074504	384	arm	is_startline@pcre_compile	lib	lib:pcre:pcre_compile.o	100	
+00074888	428	arm	find_firstassertedchar@pcre_compile	lib	lib:pcre:pcre_compile.o	100	
+00074cb0	17c	arm	add_name@pcre_compile	lib	lib:pcre:pcre_compile.o	100	
+00074e2c	50	arm	pcre_compile	lib	lib:pcre:pcre_compile.o	100	
+00074e7c	187c	arm	pcre_compile2	todo			
+000766f8	b108	arm	internal_dfa_exec@pcre_dfa_exec	lib	lib:pcre:pcre_dfa_exec.o	100	
+00081800	1328	arm	pcre_dfa_exec	lib	lib:pcre:pcre_dfa_exec.o	100	
+00082b28	670	arm	match_ref@pcre_exec	lib	lib:pcre:pcre_exec.o	100	
+00083198	280b0	arm	match@pcre_exec	lib	lib:pcre:pcre_exec.o	100	
+000ab248	6c	arm	release_match_heapframes@pcre_exec	lib	lib:pcre:pcre_exec.o	100	
+000ab2b4	1c6c	arm	pcre_exec	lib	lib:pcre:pcre_exec.o	100	
+000acf20	28	arm	sljit_get_compiler_error@pcre_jit_compile	lib	lib:pcre:pcre_jit_compile.o	100	
+000acf48	28	arm	sljit_get_generated_code_size@pcre_jit_compile	lib	lib:pcre:pcre_jit_compile.o	100	
+000acf70	28	arm	sljit_get_label_addr@pcre_jit_compile	lib	lib:pcre:pcre_jit_compile.o	100	
+000acf98	20	arm	allocator_grab_lock@pcre_jit_compile	lib	lib:pcre:pcre_jit_compile.o	100	
+000acfb8	20	arm	allocator_release_lock@pcre_jit_compile	lib	lib:pcre:pcre_jit_compile.o	100	
+000acfd8	20	arm	sljit_grab_lock@pcre_jit_compile	lib	lib:pcre:pcre_jit_compile.o	100	
+000acff8	20	arm	sljit_release_lock@pcre_jit_compile	lib	lib:pcre:pcre_jit_compile.o	100	
+000ad018	1e8	arm	sljit_allocate_stack@pcre_jit_compile	lib	lib:pcre:pcre_jit_compile.o	100	
+000ad200	6c	arm	sljit_free_stack@pcre_jit_compile	lib	lib:pcre:pcre_jit_compile.o	100	
+000ad26c	128	arm	sljit_stack_resize@pcre_jit_compile	lib	lib:pcre:pcre_jit_compile.o	100	
+000ad394	5c	arm	alloc_chunk@pcre_jit_compile	lib	lib:pcre:pcre_jit_compile.o	100	
+000ad3f0	28	arm	free_chunk@pcre_jit_compile	lib	lib:pcre:pcre_jit_compile.o	100	
+000ad418	a0	arm	sljit_insert_free_block@pcre_jit_compile	lib	lib:pcre:pcre_jit_compile.o	100	
+000ad4b8	80	arm	sljit_remove_free_block@pcre_jit_compile	lib	lib:pcre:pcre_jit_compile.o	100	
+000ad538	2cc	arm	sljit_malloc_exec@pcre_jit_compile	lib	lib:pcre:pcre_jit_compile.o	100	
+000ad804	23c	arm	sljit_free_exec@pcre_jit_compile	lib	lib:pcre:pcre_jit_compile.o	100	
+000ada40	cc	arm	sljit_free_unused_memory_exec@pcre_jit_compile	lib	lib:pcre:pcre_jit_compile.o	100	
+000adb0c	2ac	arm	sljit_create_compiler@pcre_jit_compile	lib	lib:pcre:pcre_jit_compile.o	100	
+000addb8	ec	arm	sljit_free_compiler@pcre_jit_compile	lib	lib:pcre:pcre_jit_compile.o	100	
+000adea4	38	arm	sljit_set_compiler_memory_error@pcre_jit_compile	lib	lib:pcre:pcre_jit_compile.o	100	
+000adedc	20	arm	sljit_free_code@pcre_jit_compile	lib	lib:pcre:pcre_jit_compile.o	100	
+000adefc	8c	arm	sljit_set_label@pcre_jit_compile	lib	lib:pcre:pcre_jit_compile.o	100	
+000adf88	70	arm	sljit_set_target@pcre_jit_compile	lib	lib:pcre:pcre_jit_compile.o	100	
+000adff8	114	arm	ensure_buf@pcre_jit_compile	lib	lib:pcre:pcre_jit_compile.o	100	
+000ae10c	114	arm	ensure_abuf@pcre_jit_compile	lib	lib:pcre:pcre_jit_compile.o	100	
+000ae220	7c	arm	sljit_alloc_memory@pcre_jit_compile	lib	lib:pcre:pcre_jit_compile.o	100	
+000ae29c	70	arm	reverse_buf@pcre_jit_compile	lib	lib:pcre:pcre_jit_compile.o	100	
+000ae30c	64	arm	set_emit_enter@pcre_jit_compile	lib	lib:pcre:pcre_jit_compile.o	100	
+000ae370	64	arm	set_set_context@pcre_jit_compile	lib	lib:pcre:pcre_jit_compile.o	100	
+000ae3d4	78	arm	set_label@pcre_jit_compile	lib	lib:pcre:pcre_jit_compile.o	100	
+000ae44c	78	arm	set_jump@pcre_jit_compile	lib	lib:pcre:pcre_jit_compile.o	100	
+000ae4c4	78	arm	set_const@pcre_jit_compile	lib	lib:pcre:pcre_jit_compile.o	100	
+000ae53c	a8	arm	emit_mov_before_return@pcre_jit_compile	lib	lib:pcre:pcre_jit_compile.o	100	
+000ae5e4	24	arm	sljit_get_platform_name@pcre_jit_compile	lib	lib:pcre:pcre_jit_compile.o	100	
+000ae608	204	arm	push_cpool@pcre_jit_compile	lib	lib:pcre:pcre_jit_compile.o	100	
+000ae80c	f0	arm	push_inst@pcre_jit_compile	lib	lib:pcre:pcre_jit_compile.o	100	
+000ae8fc	278	arm	push_inst_with_literal@pcre_jit_compile	lib	lib:pcre:pcre_jit_compile.o	100	
+000aeb74	1ac	arm	push_inst_with_unique_literal@pcre_jit_compile	lib	lib:pcre:pcre_jit_compile.o	100	
+000aed20	84	arm	prepare_blx@pcre_jit_compile	lib	lib:pcre:pcre_jit_compile.o	100	
+000aeda4	40	arm	emit_blx@pcre_jit_compile	lib	lib:pcre:pcre_jit_compile.o	100	
+000aede4	1c0	arm	patch_pc_relative_loads@pcre_jit_compile	lib	lib:pcre:pcre_jit_compile.o	100	
+000aefa4	220	arm	resolve_const_pool_index@pcre_jit_compile	lib	lib:pcre:pcre_jit_compile.o	100	
+000af1c4	184	arm	detect_jump_type@pcre_jit_compile	lib	lib:pcre:pcre_jit_compile.o	100	
+000af348	240	arm	inline_set_jump_addr@pcre_jit_compile	lib	lib:pcre:pcre_jit_compile.o	100	
+000af588	1b4	arm	inline_set_const@pcre_jit_compile	lib	lib:pcre:pcre_jit_compile.o	100	
+000af73c	8c8	arm	sljit_generate_code@pcre_jit_compile	lib	lib:pcre:pcre_jit_compile.o	100	
+000b0004	33c	arm	sljit_emit_enter@pcre_jit_compile	lib	lib:pcre:pcre_jit_compile.o	100	
+000b0340	d8	arm	sljit_set_context@pcre_jit_compile	lib	lib:pcre:pcre_jit_compile.o	100	
+000b0418	1c4	arm	sljit_emit_return@pcre_jit_compile	lib	lib:pcre:pcre_jit_compile.o	100	
+000b05dc	173c	arm	emit_single_op@pcre_jit_compile	lib	lib:pcre:pcre_jit_compile.o	100	
+000b1d18	11c	arm	get_imm@pcre_jit_compile	lib	lib:pcre:pcre_jit_compile.o	100	
+000b1e34	4ac	arm	generate_int@pcre_jit_compile	lib	lib:pcre:pcre_jit_compile.o	100	
+000b22e0	1b0	arm	load_immediate@pcre_jit_compile	lib	lib:pcre:pcre_jit_compile.o	100	
+000b2490	144	arm	emit_set_delta@pcre_jit_compile	lib	lib:pcre:pcre_jit_compile.o	100	
+000b25d4	698	arm	getput_arg_fast@pcre_jit_compile	lib	lib:pcre:pcre_jit_compile.o	100	
+000b2c6c	140	arm	can_cache@pcre_jit_compile	lib	lib:pcre:pcre_jit_compile.o	100	
+000b2dac	1388	arm	getput_arg@pcre_jit_compile	lib	lib:pcre:pcre_jit_compile.o	100	
+000b4134	a4	arm	emit_op_mem@pcre_jit_compile	lib	lib:pcre:pcre_jit_compile.o	100	
+000b41d8	8c	arm	emit_op_mem2@pcre_jit_compile	lib	lib:pcre:pcre_jit_compile.o	100	
+000b4264	9c0	arm	emit_op@pcre_jit_compile	lib	lib:pcre:pcre_jit_compile.o	100	
+000b4c24	23c	arm	sljit_emit_op0@pcre_jit_compile	lib	lib:pcre:pcre_jit_compile.o	100	
+000b4e60	544	arm	sljit_emit_op1@pcre_jit_compile	lib	lib:pcre:pcre_jit_compile.o	100	
+000b53a4	224	arm	sljit_emit_op2@pcre_jit_compile	lib	lib:pcre:pcre_jit_compile.o	100	
+000b55c8	38	arm	sljit_get_register_index@pcre_jit_compile	lib	lib:pcre:pcre_jit_compile.o	100	
+000b5600	28	arm	sljit_get_float_register_index@pcre_jit_compile	lib	lib:pcre:pcre_jit_compile.o	100	
+000b5628	58	arm	sljit_emit_op_custom@pcre_jit_compile	lib	lib:pcre:pcre_jit_compile.o	100	
+000b5680	44	arm	init_compiler@pcre_jit_compile	lib	lib:pcre:pcre_jit_compile.o	100	
+000b56c4	3c	arm	sljit_is_fpu_available@pcre_jit_compile	lib	lib:pcre:pcre_jit_compile.o	100	
+000b5700	640	arm	emit_fop_mem@pcre_jit_compile	lib	lib:pcre:pcre_jit_compile.o	100	
+000b5d40	140	arm	sljit_emit_fop1_convw_fromd@pcre_jit_compile	lib	lib:pcre:pcre_jit_compile.o	100	
+000b5e80	1c0	arm	sljit_emit_fop1_convd_fromw@pcre_jit_compile	lib	lib:pcre:pcre_jit_compile.o	100	
+000b6040	138	arm	sljit_emit_fop1_cmp@pcre_jit_compile	lib	lib:pcre:pcre_jit_compile.o	100	
+000b6178	3e8	arm	sljit_emit_fop1@pcre_jit_compile	lib	lib:pcre:pcre_jit_compile.o	100	
+000b6560	330	arm	sljit_emit_fop2@pcre_jit_compile	lib	lib:pcre:pcre_jit_compile.o	100	
+000b6890	180	arm	sljit_emit_fast_enter@pcre_jit_compile	lib	lib:pcre:pcre_jit_compile.o	100	
+000b6a10	210	arm	sljit_emit_fast_return@pcre_jit_compile	lib	lib:pcre:pcre_jit_compile.o	100	
+000b6c20	ec	arm	get_cc@pcre_jit_compile	lib	lib:pcre:pcre_jit_compile.o	100	
+000b6d0c	b0	arm	sljit_emit_label@pcre_jit_compile	lib	lib:pcre:pcre_jit_compile.o	100	
+000b6dbc	1dc	arm	sljit_emit_jump@pcre_jit_compile	lib	lib:pcre:pcre_jit_compile.o	100	
+000b6f98	270	arm	sljit_emit_ijump@pcre_jit_compile	lib	lib:pcre:pcre_jit_compile.o	100	
+000b7208	588	arm	sljit_emit_op_flags@pcre_jit_compile	lib	lib:pcre:pcre_jit_compile.o	100	
+000b7790	174	arm	sljit_emit_const@pcre_jit_compile	lib	lib:pcre:pcre_jit_compile.o	100	
+000b7904	2c	arm	sljit_set_jump_addr@pcre_jit_compile	lib	lib:pcre:pcre_jit_compile.o	100	
+000b7930	2c	arm	sljit_set_const@pcre_jit_compile	lib	lib:pcre:pcre_jit_compile.o	100	
+000b795c	218	arm	sljit_emit_cmp@pcre_jit_compile	lib	lib:pcre:pcre_jit_compile.o	100	
+000b7b74	d0	arm	sljit_emit_fcmp@pcre_jit_compile	lib	lib:pcre:pcre_jit_compile.o	100	
+000b7c44	b8	arm	sljit_get_local_base@pcre_jit_compile	lib	lib:pcre:pcre_jit_compile.o	100	
+000b7cfc	6c	arm	bracketend@pcre_jit_compile	lib	lib:pcre:pcre_jit_compile.o	100	
+000b7d68	74	arm	no_alternatives@pcre_jit_compile	lib	lib:pcre:pcre_jit_compile.o	100	
+000b7ddc	3fc	arm	next_opcode@pcre_jit_compile	lib	lib:pcre:pcre_jit_compile.o	100	
+000b81d8	644	arm	check_opcode_types@pcre_jit_compile	lib	lib:pcre:pcre_jit_compile.o	100	
+000b881c	c4	arm	get_class_iterator_size@pcre_jit_compile	lib	lib:pcre:pcre_jit_compile.o	100	
+000b88e0	49c	arm	detect_repeat@pcre_jit_compile	lib	lib:pcre:pcre_jit_compile.o	100	
+000b8d7c	734	arm	set_private_data_ptrs@pcre_jit_compile	lib	lib:pcre:pcre_jit_compile.o	100	
+000b94b0	5a4	arm	get_framesize@pcre_jit_compile	lib	lib:pcre:pcre_jit_compile.o	100	
+000b9a54	700	arm	init_frame@pcre_jit_compile	lib	lib:pcre:pcre_jit_compile.o	100	
+000ba154	704	arm	get_private_data_copy_length@pcre_jit_compile	lib	lib:pcre:pcre_jit_compile.o	100	
+000ba858	ed8	arm	copy_private_data@pcre_jit_compile	lib	lib:pcre:pcre_jit_compile.o	100	
+000bb730	1fc	arm	set_then_offsets@pcre_jit_compile	lib	lib:pcre:pcre_jit_compile.o	100	
+000bb92c	40	arm	is_powerof2@pcre_jit_compile	lib	lib:pcre:pcre_jit_compile.o	100	
+000bb96c	4c	arm	set_jumps@pcre_jit_compile	lib	lib:pcre:pcre_jit_compile.o	100	
+000bb9b8	64	arm	add_jump@pcre_jit_compile	lib	lib:pcre:pcre_jit_compile.o	100	
+000bba1c	80	arm	add_stub@pcre_jit_compile	lib	lib:pcre:pcre_jit_compile.o	100	
+000bba9c	c4	arm	flush_stubs@pcre_jit_compile	lib	lib:pcre:pcre_jit_compile.o	100	
+000bbb60	84	arm	add_label_addr@pcre_jit_compile	lib	lib:pcre:pcre_jit_compile.o	100	
+000bbbe4	84	arm	count_match@pcre_jit_compile	lib	lib:pcre:pcre_jit_compile.o	100	
+000bbc68	94	arm	allocate_stack@pcre_jit_compile	lib	lib:pcre:pcre_jit_compile.o	100	
+000bbcfc	60	arm	free_stack@pcre_jit_compile	lib	lib:pcre:pcre_jit_compile.o	100	
+000bbd5c	c8	arm	allocate_read_only_data@pcre_jit_compile	lib	lib:pcre:pcre_jit_compile.o	100	
+000bbe24	64	arm	free_read_only_data@pcre_jit_compile	lib	lib:pcre:pcre_jit_compile.o	100	
+000bbe88	18c	arm	reset_ovector@pcre_jit_compile	lib	lib:pcre:pcre_jit_compile.o	100	
+000bc014	298	arm	do_reset_match@pcre_jit_compile	lib	lib:pcre:pcre_jit_compile.o	100	
+000bc2ac	9c	arm	do_search_mark@pcre_jit_compile	lib	lib:pcre:pcre_jit_compile.o	100	
+000bc348	410	arm	copy_ovector@pcre_jit_compile	lib	lib:pcre:pcre_jit_compile.o	100	
+000bc758	2dc	arm	return_with_partial_match@pcre_jit_compile	lib	lib:pcre:pcre_jit_compile.o	100	
+000bca34	154	arm	check_start_used_ptr@pcre_jit_compile	lib	lib:pcre:pcre_jit_compile.o	100	
+000bcb88	32c	arm	char_has_othercase@pcre_jit_compile	lib	lib:pcre:pcre_jit_compile.o	100	
+000bceb4	e0	arm	char_othercase@pcre_jit_compile	lib	lib:pcre:pcre_jit_compile.o	100	
+000bcf94	3ec	arm	char_get_othercase_bit@pcre_jit_compile	lib	lib:pcre:pcre_jit_compile.o	100	
+000bd380	17c	arm	check_partial@pcre_jit_compile	lib	lib:pcre:pcre_jit_compile.o	100	
+000bd4fc	1e8	arm	check_str_end@pcre_jit_compile	lib	lib:pcre:pcre_jit_compile.o	100	
+000bd6e4	1ac	arm	detect_partial_match@pcre_jit_compile	lib	lib:pcre:pcre_jit_compile.o	100	
+000bd890	13c	arm	peek_char@pcre_jit_compile	lib	lib:pcre:pcre_jit_compile.o	100	
+000bd9cc	90	arm	is_char7_bitset@pcre_jit_compile	lib	lib:pcre:pcre_jit_compile.o	100	
+000bda5c	164	arm	read_char7_type@pcre_jit_compile	lib	lib:pcre:pcre_jit_compile.o	100	
+000bdbc0	9b0	arm	read_char_range@pcre_jit_compile	lib	lib:pcre:pcre_jit_compile.o	100	
+000be570	2c	arm	read_char@pcre_jit_compile	lib	lib:pcre:pcre_jit_compile.o	100	
+000be59c	310	arm	read_char8_type@pcre_jit_compile	lib	lib:pcre:pcre_jit_compile.o	100	
+000be8ac	138	arm	skip_char_back@pcre_jit_compile	lib	lib:pcre:pcre_jit_compile.o	100	
+000be9e4	1f4	arm	check_newlinechar@pcre_jit_compile	lib	lib:pcre:pcre_jit_compile.o	100	
+000bebd8	504	arm	do_utfreadchar@pcre_jit_compile	lib	lib:pcre:pcre_jit_compile.o	100	
+000bf0dc	398	arm	do_utfreadchar16@pcre_jit_compile	lib	lib:pcre:pcre_jit_compile.o	100	
+000bf474	30c	arm	do_utfreadtype8@pcre_jit_compile	lib	lib:pcre:pcre_jit_compile.o	100	
+000bf780	1f8	arm	do_getucd@pcre_jit_compile	lib	lib:pcre:pcre_jit_compile.o	100	
+000bf978	72c	arm	mainloop_entry@pcre_jit_compile	lib	lib:pcre:pcre_jit_compile.o	100	
+000c00a4	f8	arm	add_prefix_byte@pcre_jit_compile	lib	lib:pcre:pcre_jit_compile.o	100	
+000c019c	d44	arm	scan_prefix@pcre_jit_compile	lib	lib:pcre:pcre_jit_compile.o	100	
+000c0ee0	d34	arm	fast_forward_first_n_chars@pcre_jit_compile	lib	lib:pcre:pcre_jit_compile.o	100	
+000c1c14	368	arm	fast_forward_first_char@pcre_jit_compile	lib	lib:pcre:pcre_jit_compile.o	100	
+000c1f7c	6f0	arm	fast_forward_newline@pcre_jit_compile	lib	lib:pcre:pcre_jit_compile.o	100	
+000c266c	434	arm	fast_forward_start_bits@pcre_jit_compile	lib	lib:pcre:pcre_jit_compile.o	100	
+000c2aa0	3d8	arm	search_requested_char@pcre_jit_compile	lib	lib:pcre:pcre_jit_compile.o	100	
+000c2e78	2cc	arm	do_revertframes@pcre_jit_compile	lib	lib:pcre:pcre_jit_compile.o	100	
+000c3144	78c	arm	check_wordboundary@pcre_jit_compile	lib	lib:pcre:pcre_jit_compile.o	100	
+000c38d0	a78	arm	check_class_ranges@pcre_jit_compile	lib	lib:pcre:pcre_jit_compile.o	100	
+000c4348	1ec	arm	check_anynewline@pcre_jit_compile	lib	lib:pcre:pcre_jit_compile.o	100	
+000c4534	3f8	arm	check_hspace@pcre_jit_compile	lib	lib:pcre:pcre_jit_compile.o	100	
+000c492c	1ec	arm	check_vspace@pcre_jit_compile	lib	lib:pcre:pcre_jit_compile.o	100	
+000c4b18	28c	arm	do_casefulcmp@pcre_jit_compile	lib	lib:pcre:pcre_jit_compile.o	100	
+000c4da4	34c	arm	do_caselesscmp@pcre_jit_compile	lib	lib:pcre:pcre_jit_compile.o	100	
+000c50f0	5f8	arm	do_utf_caselesscmp@pcre_jit_compile	lib	lib:pcre:pcre_jit_compile.o	100	
+000c56e8	2d4	arm	byte_sequence_compare@pcre_jit_compile	lib	lib:pcre:pcre_jit_compile.o	100	
+000c59bc	3760	arm	compile_xclass_matchingpath@pcre_jit_compile	lib	lib:pcre:pcre_jit_compile.o	100	
+000c911c	3170	arm	compile_char1_matchingpath@pcre_jit_compile	lib	lib:pcre:pcre_jit_compile.o	100	
+000cc28c	314	arm	compile_charn_matchingpath@pcre_jit_compile	lib	lib:pcre:pcre_jit_compile.o	100	
+000cc5a0	264	arm	compile_dnref_search@pcre_jit_compile	lib	lib:pcre:pcre_jit_compile.o	100	
+000cc804	78c	arm	compile_ref_matchingpath@pcre_jit_compile	lib	lib:pcre:pcre_jit_compile.o	100	
+000ccf90	d60	arm	compile_ref_iterator_matchingpath@pcre_jit_compile	lib	lib:pcre:pcre_jit_compile.o	100	
+000cdcf0	434	arm	compile_recurse_matchingpath@pcre_jit_compile	lib	lib:pcre:pcre_jit_compile.o	100	
+000ce124	23c	arm	do_callout@pcre_jit_compile	lib	lib:pcre:pcre_jit_compile.o	100	
+000ce360	444	arm	compile_callout_matchingpath@pcre_jit_compile	lib	lib:pcre:pcre_jit_compile.o	100	
+000ce7a4	152c	arm	compile_assert_matchingpath@pcre_jit_compile	lib	lib:pcre:pcre_jit_compile.o	100	
+000cfcd0	270	arm	match_once_common@pcre_jit_compile	lib	lib:pcre:pcre_jit_compile.o	100	
+000cff40	258	arm	match_capture_common@pcre_jit_compile	lib	lib:pcre:pcre_jit_compile.o	100	
+000d0198	1e38	arm	compile_bracket_matchingpath@pcre_jit_compile	lib	lib:pcre:pcre_jit_compile.o	100	
+000d1fd0	ff4	arm	compile_bracketpos_matchingpath@pcre_jit_compile	lib	lib:pcre:pcre_jit_compile.o	100	
+000d2fc4	540	arm	get_iterator_parameters@pcre_jit_compile	lib	lib:pcre:pcre_jit_compile.o	100	
+000d3504	f4c	arm	compile_iterator_matchingpath@pcre_jit_compile	lib	lib:pcre:pcre_jit_compile.o	100	
+000d4450	42c	arm	compile_fail_accept_matchingpath@pcre_jit_compile	lib	lib:pcre:pcre_jit_compile.o	100	
+000d487c	160	arm	compile_close_matchingpath@pcre_jit_compile	lib	lib:pcre:pcre_jit_compile.o	100	
+000d49dc	1e4	arm	compile_control_verb_matchingpath@pcre_jit_compile	lib	lib:pcre:pcre_jit_compile.o	100	
+000d4bc0	284	arm	compile_then_trap_matchingpath@pcre_jit_compile	lib	lib:pcre:pcre_jit_compile.o	100	
+000d4e44	e60	arm	compile_matchingpath@pcre_jit_compile	lib	lib:pcre:pcre_jit_compile.o	100	
+000d5ca4	a68	arm	compile_iterator_backtrackingpath@pcre_jit_compile	lib	lib:pcre:pcre_jit_compile.o	100	
+000d670c	1d0	arm	compile_ref_iterator_backtrackingpath@pcre_jit_compile	lib	lib:pcre:pcre_jit_compile.o	100	
+000d68dc	1dc	arm	compile_recurse_backtrackingpath@pcre_jit_compile	lib	lib:pcre:pcre_jit_compile.o	100	
+000d6ab8	3a0	arm	compile_assert_backtrackingpath@pcre_jit_compile	lib	lib:pcre:pcre_jit_compile.o	100	
+000d6e58	1ac4	arm	compile_bracket_backtrackingpath@pcre_jit_compile	lib	lib:pcre:pcre_jit_compile.o	100	
+000d891c	2d4	arm	compile_bracketpos_backtrackingpath@pcre_jit_compile	lib	lib:pcre:pcre_jit_compile.o	100	
+000d8bf0	d4	arm	compile_braminzero_backtrackingpath@pcre_jit_compile	lib	lib:pcre:pcre_jit_compile.o	100	
+000d8cc4	424	arm	compile_control_verb_backtrackingpath@pcre_jit_compile	lib	lib:pcre:pcre_jit_compile.o	100	
+000d90e8	178	arm	compile_then_trap_backtrackingpath@pcre_jit_compile	lib	lib:pcre:pcre_jit_compile.o	100	
+000d9260	60c	arm	compile_backtrackingpath@pcre_jit_compile	lib	lib:pcre:pcre_jit_compile.o	100	
+000d986c	938	arm	compile_recurse@pcre_jit_compile	lib	lib:pcre:pcre_jit_compile.o	100	
+000da1a4	20ac	arm	_pcre_jit_compile	lib	lib:pcre:pcre_jit_compile.o	100	
+000dc250	124	arm	jit_machine_stack_exec@pcre_jit_compile	lib	lib:pcre:pcre_jit_compile.o	100	
+000dc374	318	arm	_pcre_jit_exec	lib	lib:pcre:pcre_jit_compile.o	100	
+000dc68c	2d8	arm	pcre_jit_exec	lib	lib:pcre:pcre_jit_compile.o	100	
+000dc964	bc	arm	_pcre_jit_free	lib	lib:pcre:pcre_jit_compile.o	100	
+000dca20	7c	arm	_pcre_jit_get_size	lib	lib:pcre:pcre_jit_compile.o	100	
+000dca9c	18	arm	_pcre_jit_get_target	lib	lib:pcre:pcre_jit_compile.o	100	
+000dcab4	a4	arm	pcre_jit_stack_alloc	lib	lib:pcre:pcre_jit_compile.o	100	
+000dcb58	24	arm	pcre_jit_stack_free	lib	lib:pcre:pcre_jit_compile.o	100	
+000dcb7c	78	arm	pcre_assign_jit_stack	lib	lib:pcre:pcre_jit_compile.o	100	
+000dcbf4	10	arm	pcre_jit_free_unused_memory	lib	lib:pcre:pcre_jit_compile.o	100	
+000dcc04	3b8	arm	_pcre_is_newline	lib	lib:pcre:pcre_newline.o	100	
+000dcfbc	3e0	arm	_pcre_was_newline	lib	lib:pcre:pcre_newline.o	100	
+000dd39c	100	arm	_pcre_ord2utf	lib	lib:pcre:pcre_ord2utf8.o	100	
+000dd49c	57c	arm	_pcre_valid_utf	lib	lib:pcre:pcre_valid_utf8.o	100	
+000dda18	106c	arm	_pcre_xclass	lib	lib:pcre:pcre_xclass.o	100	
+000dea84	7c	arm	be16@cmp	todo			
+000deb00	a8	arm	be32@cmp	todo			
+000deba8	10c	arm	be64@cmp	todo			
 000decb4	a8	arm	FUN_000decb4	todo			
 000ded5c	10c	arm	FUN_000ded5c	todo			
-000dee68	3c	arm	FUN_000dee68	todo			
-000deea4	54	arm	FUN_000deea4	todo			
-000deef8	50	arm	FUN_000deef8	todo			
-000def48	58	arm	FUN_000def48	todo			
-000defa0	58	arm	FUN_000defa0	todo			
-000deff8	58	arm	cmp_init	todo			
+000dee68	3c	arm	read_byte@cmp	lib	lib:cmp:cmp.o	100	
+000deea4	54	arm	write_byte@cmp	lib	lib:cmp:cmp.o	100	
+000deef8	50	arm	read_type_marker@cmp	lib	lib:cmp:cmp.o	100	
+000def48	58	arm	write_type_marker@cmp	lib	lib:cmp:cmp.o	100	
+000defa0	58	arm	write_fixed_value@cmp	lib	lib:cmp:cmp.o	100	
+000deff8	58	arm	cmp_init	lib	lib:cmp:cmp.o	100	
 000df050	1c	arm	FUN_000df050	todo			
-000df06c	1c	arm	FUN_000df06c	todo			
+000df06c	1c	arm	cmp_mp_version	lib	lib:cmp:cmp.o	100	
 000df088	78	arm	FUN_000df088	todo			
-000df100	60	arm	FUN_000df100	todo			
-000df160	64	arm	FUN_000df160	todo			
-000df1c4	88	arm	FUN_000df1c4	todo			
-000df24c	7c	arm	FUN_000df24c	todo			
-000df2c8	a0	arm	FUN_000df2c8	todo			
-000df368	8c	arm	FUN_000df368	todo			
-000df3f4	94	arm	FUN_000df3f4	todo			
-000df488	130	arm	FUN_000df488	todo			
-000df5b8	38	arm	FUN_000df5b8	todo			
-000df5f0	7c	arm	FUN_000df5f0	todo			
-000df66c	90	arm	FUN_000df66c	todo			
-000df6fc	8c	arm	FUN_000df6fc	todo			
-000df788	94	arm	FUN_000df788	todo			
-000df81c	e4	arm	FUN_000df81c	todo			
-000df900	8c	arm	FUN_000df900	todo			
-000df98c	94	arm	FUN_000df98c	todo			
-000dfa20	88	arm	FUN_000dfa20	todo			
-000dfaa8	2c	arm	FUN_000dfaa8	todo			
-000dfad4	2c	arm	FUN_000dfad4	todo			
-000dfb00	2c	arm	FUN_000dfb00	todo			
-000dfb2c	4c	arm	FUN_000dfb2c	todo			
-000dfb78	4c	arm	FUN_000dfb78	todo			
-000dfbc4	68	arm	FUN_000dfbc4	todo			
-000dfc2c	a4	arm	FUN_000dfc2c	todo			
-000dfcd0	8c	arm	FUN_000dfcd0	todo			
-000dfd5c	a4	arm	FUN_000dfd5c	todo			
-000dfe00	a0	arm	FUN_000dfe00	todo			
-000dfea0	a4	arm	FUN_000dfea0	todo			
-000dff44	9c	arm	FUN_000dff44	todo			
-000dffe0	9c	arm	FUN_000dffe0	todo			
-000e007c	ac	arm	FUN_000e007c	todo			
-000e0128	84	arm	FUN_000e0128	todo			
-000e01ac	c0	arm	cmp_write_str	todo			
-000e026c	94	arm	FUN_000e026c	todo			
-000e0300	8c	arm	FUN_000e0300	todo			
-000e038c	a4	arm	FUN_000e038c	todo			
-000e0430	a0	arm	FUN_000e0430	todo			
-000e04d0	a4	arm	FUN_000e04d0	todo			
-000e0574	9c	arm	FUN_000e0574	todo			
-000e0610	9c	arm	FUN_000e0610	todo			
-000e06ac	84	arm	FUN_000e06ac	todo			
-000e0730	94	arm	FUN_000e0730	todo			
-000e07c4	68	arm	FUN_000e07c4	todo			
-000e082c	a0	arm	FUN_000e082c	todo			
-000e08cc	9c	arm	FUN_000e08cc	todo			
-000e0968	84	arm	FUN_000e0968	todo			
-000e09ec	64	arm	FUN_000e09ec	todo			
-000e0a50	a0	arm	FUN_000e0a50	todo			
-000e0af0	9c	arm	FUN_000e0af0	todo			
-000e0b8c	84	arm	FUN_000e0b8c	todo			
-000e0c10	8c	arm	FUN_000e0c10	todo			
-000e0c9c	90	arm	FUN_000e0c9c	todo			
-000e0d2c	8c	arm	FUN_000e0d2c	todo			
-000e0db8	90	arm	FUN_000e0db8	todo			
-000e0e48	8c	arm	FUN_000e0e48	todo			
-000e0ed4	90	arm	FUN_000e0ed4	todo			
-000e0f64	8c	arm	FUN_000e0f64	todo			
-000e0ff0	90	arm	FUN_000e0ff0	todo			
-000e1080	8c	arm	FUN_000e1080	todo			
-000e110c	90	arm	FUN_000e110c	todo			
-000e119c	d0	arm	FUN_000e119c	todo			
-000e126c	a0	arm	FUN_000e126c	todo			
-000e130c	e4	arm	FUN_000e130c	todo			
-000e13f0	9c	arm	FUN_000e13f0	todo			
-000e148c	e0	arm	FUN_000e148c	todo			
-000e156c	98	arm	FUN_000e156c	todo			
-000e1604	158	arm	FUN_000e1604	todo			
-000e175c	17c	arm	FUN_000e175c	todo			
-000e18d8	55c	arm	FUN_000e18d8	todo			
-000e1e34	53c	arm	FUN_000e1e34	todo			
-000e2370	7c	arm	FUN_000e2370	todo			
-000e23ec	7c	arm	FUN_000e23ec	todo			
-000e2468	84	arm	FUN_000e2468	todo			
-000e24ec	7c	arm	FUN_000e24ec	todo			
-000e2568	7c	arm	FUN_000e2568	todo			
-000e25e4	7c	arm	FUN_000e25e4	todo			
-000e2660	7c	arm	FUN_000e2660	todo			
-000e26dc	13c	arm	FUN_000e26dc	todo			
-000e2818	180	arm	FUN_000e2818	todo			
-000e2998	198	arm	cmp_read_int	todo			
-000e2b30	1ec	arm	FUN_000e2b30	todo			
-000e2d1c	30	arm	FUN_000e2d1c	todo			
-000e2d4c	30	arm	FUN_000e2d4c	todo			
-000e2d7c	7c	arm	FUN_000e2d7c	todo			
-000e2df8	7c	arm	FUN_000e2df8	todo			
-000e2e74	7c	arm	FUN_000e2e74	todo			
-000e2ef0	7c	arm	FUN_000e2ef0	todo			
-000e2f6c	84	arm	FUN_000e2f6c	todo			
-000e2ff0	a4	arm	FUN_000e2ff0	todo			
-000e3094	f4	arm	FUN_000e3094	todo			
-000e3188	120	arm	FUN_000e3188	todo			
-000e32a8	30	arm	FUN_000e32a8	todo			
-000e32d8	7c	arm	FUN_000e32d8	todo			
-000e3354	7c	arm	FUN_000e3354	todo			
-000e33d0	ac	arm	FUN_000e33d0	todo			
-000e347c	6c	arm	FUN_000e347c	todo			
-000e34e8	98	arm	FUN_000e34e8	todo			
-000e3580	98	arm	FUN_000e3580	todo			
-000e3618	90	arm	FUN_000e3618	todo			
-000e36a8	f4	arm	FUN_000e36a8	todo			
-000e379c	80	arm	FUN_000e379c	todo			
-000e381c	d0	arm	FUN_000e381c	todo			
-000e38ec	90	arm	cmp_read_array	todo			
-000e397c	90	arm	cmp_read_map	todo			
-000e3a0c	7c	arm	FUN_000e3a0c	todo			
-000e3a88	88	arm	FUN_000e3a88	todo			
-000e3b10	7c	arm	FUN_000e3b10	todo			
-000e3b8c	88	arm	FUN_000e3b8c	todo			
-000e3c14	7c	arm	FUN_000e3c14	todo			
-000e3c90	88	arm	FUN_000e3c90	todo			
-000e3d18	7c	arm	FUN_000e3d18	todo			
-000e3d94	88	arm	FUN_000e3d94	todo			
-000e3e1c	7c	arm	FUN_000e3e1c	todo			
-000e3e98	88	arm	FUN_000e3e98	todo			
-000e3f20	90	arm	FUN_000e3f20	todo			
-000e3fb0	94	arm	FUN_000e3fb0	todo			
-000e4044	94	arm	FUN_000e4044	todo			
-000e40d8	94	arm	FUN_000e40d8	todo			
-000e416c	8c	arm	FUN_000e416c	todo			
-000e41f8	94	arm	FUN_000e41f8	todo			
-000e428c	dc	arm	FUN_000e428c	todo			
-000e4368	94	arm	FUN_000e4368	todo			
+000df100	60	arm	cmp_write_pfix	lib	lib:cmp:cmp.o	100	
+000df160	64	arm	cmp_write_nfix	lib	lib:cmp:cmp.o	100	
+000df1c4	88	arm	cmp_write_sfix	lib	lib:cmp:cmp.o	100	
+000df24c	7c	arm	cmp_write_s8	lib	lib:cmp:cmp.o	100	
+000df2c8	a0	arm	cmp_write_s16	lib	lib:cmp:cmp.o	100	
+000df368	8c	arm	cmp_write_s32	lib	lib:cmp:cmp.o	100	
+000df3f4	94	arm	cmp_write_s64	lib	lib:cmp:cmp.o	100	
+000df488	130	arm	cmp_write_integer	lib	lib:cmp:cmp.o	100	
+000df5b8	38	arm	cmp_write_ufix	lib	lib:cmp:cmp.o	100	
+000df5f0	7c	arm	cmp_write_u8	lib	lib:cmp:cmp.o	100	
+000df66c	90	arm	cmp_write_u16	lib	lib:cmp:cmp.o	100	
+000df6fc	8c	arm	cmp_write_u32	lib	lib:cmp:cmp.o	100	
+000df788	94	arm	cmp_write_u64	lib	lib:cmp:cmp.o	100	
+000df81c	e4	arm	cmp_write_uinteger	lib	lib:cmp:cmp.o	100	
+000df900	8c	arm	cmp_write_float	todo			
+000df98c	94	arm	cmp_write_double	todo			
+000dfa20	88	arm	cmp_write_decimal	lib	lib:cmp:cmp.o	100	
+000dfaa8	2c	arm	cmp_write_nil	lib	lib:cmp:cmp.o	100	
+000dfad4	2c	arm	cmp_write_true	lib	lib:cmp:cmp.o	100	
+000dfb00	2c	arm	cmp_write_false	lib	lib:cmp:cmp.o	100	
+000dfb2c	4c	arm	cmp_write_bool	lib	lib:cmp:cmp.o	100	
+000dfb78	4c	arm	cmp_write_u8_as_bool	lib	lib:cmp:cmp.o	100	
+000dfbc4	68	arm	cmp_write_fixstr_marker	lib	lib:cmp:cmp.o	100	
+000dfc2c	a4	arm	cmp_write_fixstr	lib	lib:cmp:cmp.o	100	
+000dfcd0	8c	arm	cmp_write_str8_marker	lib	lib:cmp:cmp.o	100	
+000dfd5c	a4	arm	cmp_write_str8	lib	lib:cmp:cmp.o	100	
+000dfe00	a0	arm	cmp_write_str16_marker	lib	lib:cmp:cmp.o	100	
+000dfea0	a4	arm	cmp_write_str16	lib	lib:cmp:cmp.o	100	
+000dff44	9c	arm	cmp_write_str32_marker	lib	lib:cmp:cmp.o	100	
+000dffe0	9c	arm	cmp_write_str32	lib	lib:cmp:cmp.o	100	
+000e007c	ac	arm	cmp_write_str_marker	lib	lib:cmp:cmp.o	100	
+000e0128	84	arm	cmp_write_str_marker_v4	lib	lib:cmp:cmp.o	100	
+000e01ac	c0	arm	cmp_write_str	lib	lib:cmp:cmp.o	100	
+000e026c	94	arm	cmp_write_str_v4	lib	lib:cmp:cmp.o	100	
+000e0300	8c	arm	cmp_write_bin8_marker	lib	lib:cmp:cmp.o	100	
+000e038c	a4	arm	cmp_write_bin8	lib	lib:cmp:cmp.o	100	
+000e0430	a0	arm	cmp_write_bin16_marker	lib	lib:cmp:cmp.o	100	
+000e04d0	a4	arm	cmp_write_bin16	lib	lib:cmp:cmp.o	100	
+000e0574	9c	arm	cmp_write_bin32_marker	lib	lib:cmp:cmp.o	100	
+000e0610	9c	arm	cmp_write_bin32	lib	lib:cmp:cmp.o	100	
+000e06ac	84	arm	cmp_write_bin_marker	lib	lib:cmp:cmp.o	100	
+000e0730	94	arm	cmp_write_bin	lib	lib:cmp:cmp.o	100	
+000e07c4	68	arm	cmp_write_fixarray	lib	lib:cmp:cmp.o	100	
+000e082c	a0	arm	cmp_write_array16	lib	lib:cmp:cmp.o	100	
+000e08cc	9c	arm	cmp_write_array32	lib	lib:cmp:cmp.o	100	
+000e0968	84	arm	cmp_write_array	lib	lib:cmp:cmp.o	100	
+000e09ec	64	arm	cmp_write_fixmap	lib	lib:cmp:cmp.o	100	
+000e0a50	a0	arm	cmp_write_map16	lib	lib:cmp:cmp.o	100	
+000e0af0	9c	arm	cmp_write_map32	lib	lib:cmp:cmp.o	100	
+000e0b8c	84	arm	cmp_write_map	lib	lib:cmp:cmp.o	100	
+000e0c10	8c	arm	cmp_write_fixext1_marker	lib	lib:cmp:cmp.o	100	
+000e0c9c	90	arm	cmp_write_fixext1	lib	lib:cmp:cmp.o	100	
+000e0d2c	8c	arm	cmp_write_fixext2_marker	lib	lib:cmp:cmp.o	100	
+000e0db8	90	arm	cmp_write_fixext2	lib	lib:cmp:cmp.o	100	
+000e0e48	8c	arm	cmp_write_fixext4_marker	lib	lib:cmp:cmp.o	100	
+000e0ed4	90	arm	cmp_write_fixext4	lib	lib:cmp:cmp.o	100	
+000e0f64	8c	arm	cmp_write_fixext8_marker	lib	lib:cmp:cmp.o	100	
+000e0ff0	90	arm	cmp_write_fixext8	lib	lib:cmp:cmp.o	100	
+000e1080	8c	arm	cmp_write_fixext16_marker	lib	lib:cmp:cmp.o	100	
+000e110c	90	arm	cmp_write_fixext16	lib	lib:cmp:cmp.o	100	
+000e119c	d0	arm	cmp_write_ext8_marker	lib	lib:cmp:cmp.o	100	
+000e126c	a0	arm	cmp_write_ext8	lib	lib:cmp:cmp.o	100	
+000e130c	e4	arm	cmp_write_ext16_marker	lib	lib:cmp:cmp.o	100	
+000e13f0	9c	arm	cmp_write_ext16	lib	lib:cmp:cmp.o	100	
+000e148c	e0	arm	cmp_write_ext32_marker	lib	lib:cmp:cmp.o	100	
+000e156c	98	arm	cmp_write_ext32	lib	lib:cmp:cmp.o	100	
+000e1604	158	arm	cmp_write_ext_marker	lib	lib:cmp:cmp.o	100	
+000e175c	17c	arm	cmp_write_ext	lib	lib:cmp:cmp.o	100	
+000e18d8	55c	arm	cmp_write_object	lib	lib:cmp:cmp.o	100	
+000e1e34	53c	arm	cmp_write_object_v4	lib	lib:cmp:cmp.o	100	
+000e2370	7c	arm	cmp_read_pfix	lib	lib:cmp:cmp.o	100	
+000e23ec	7c	arm	cmp_read_nfix	lib	lib:cmp:cmp.o	100	
+000e2468	84	arm	cmp_read_sfix	lib	lib:cmp:cmp.o	100	
+000e24ec	7c	arm	cmp_read_s8	lib	lib:cmp:cmp.o	100	
+000e2568	7c	arm	cmp_read_s16	lib	lib:cmp:cmp.o	100	
+000e25e4	7c	arm	cmp_read_s32	lib	lib:cmp:cmp.o	100	
+000e2660	7c	arm	cmp_read_s64	lib	lib:cmp:cmp.o	100	
+000e26dc	13c	arm	cmp_read_char	lib	lib:cmp:cmp.o	100	
+000e2818	180	arm	cmp_read_short	lib	lib:cmp:cmp.o	100	
+000e2998	198	arm	cmp_read_int	lib	lib:cmp:cmp.o	100	
+000e2b30	1ec	arm	cmp_read_long	lib	lib:cmp:cmp.o	100	
+000e2d1c	30	arm	cmp_read_integer	lib	lib:cmp:cmp.o	100	
+000e2d4c	30	arm	cmp_read_ufix	lib	lib:cmp:cmp.o	100	
+000e2d7c	7c	arm	cmp_read_u8	lib	lib:cmp:cmp.o	100	
+000e2df8	7c	arm	cmp_read_u16	lib	lib:cmp:cmp.o	100	
+000e2e74	7c	arm	cmp_read_u32	lib	lib:cmp:cmp.o	100	
+000e2ef0	7c	arm	cmp_read_u64	lib	lib:cmp:cmp.o	100	
+000e2f6c	84	arm	cmp_read_uchar	lib	lib:cmp:cmp.o	100	
+000e2ff0	a4	arm	cmp_read_ushort	lib	lib:cmp:cmp.o	100	
+000e3094	f4	arm	cmp_read_uint	lib	lib:cmp:cmp.o	100	
+000e3188	120	arm	cmp_read_ulong	lib	lib:cmp:cmp.o	100	
+000e32a8	30	arm	cmp_read_uinteger	lib	lib:cmp:cmp.o	100	
+000e32d8	7c	arm	cmp_read_float	lib	lib:cmp:cmp.o	100	
+000e3354	7c	arm	cmp_read_double	lib	lib:cmp:cmp.o	100	
+000e33d0	ac	arm	cmp_read_decimal	lib	lib:cmp:cmp.o	100	
+000e347c	6c	arm	cmp_read_nil	lib	lib:cmp:cmp.o	100	
+000e34e8	98	arm	cmp_read_bool	lib	lib:cmp:cmp.o	100	
+000e3580	98	arm	cmp_read_bool_as_u8	lib	lib:cmp:cmp.o	100	
+000e3618	90	arm	cmp_read_str_size	lib	lib:cmp:cmp.o	100	
+000e36a8	f4	arm	cmp_read_str	lib	lib:cmp:cmp.o	100	
+000e379c	80	arm	cmp_read_bin_size	lib	lib:cmp:cmp.o	100	
+000e381c	d0	arm	cmp_read_bin	lib	lib:cmp:cmp.o	100	
+000e38ec	90	arm	cmp_read_array	lib	lib:cmp:cmp.o	100	
+000e397c	90	arm	cmp_read_map	lib	lib:cmp:cmp.o	100	
+000e3a0c	7c	arm	cmp_read_fixext1_marker	lib	lib:cmp:cmp.o	100	
+000e3a88	88	arm	cmp_read_fixext1	lib	lib:cmp:cmp.o	100	
+000e3b10	7c	arm	cmp_read_fixext2_marker	lib	lib:cmp:cmp.o	100	
+000e3b8c	88	arm	cmp_read_fixext2	lib	lib:cmp:cmp.o	100	
+000e3c14	7c	arm	cmp_read_fixext4_marker	lib	lib:cmp:cmp.o	100	
+000e3c90	88	arm	cmp_read_fixext4	lib	lib:cmp:cmp.o	100	
+000e3d18	7c	arm	cmp_read_fixext8_marker	lib	lib:cmp:cmp.o	100	
+000e3d94	88	arm	cmp_read_fixext8	lib	lib:cmp:cmp.o	100	
+000e3e1c	7c	arm	cmp_read_fixext16_marker	lib	lib:cmp:cmp.o	100	
+000e3e98	88	arm	cmp_read_fixext16	lib	lib:cmp:cmp.o	100	
+000e3f20	90	arm	cmp_read_ext8_marker	lib	lib:cmp:cmp.o	100	
+000e3fb0	94	arm	cmp_read_ext8	lib	lib:cmp:cmp.o	100	
+000e4044	94	arm	cmp_read_ext16_marker	lib	lib:cmp:cmp.o	100	
+000e40d8	94	arm	cmp_read_ext16	lib	lib:cmp:cmp.o	100	
+000e416c	8c	arm	cmp_read_ext32_marker	lib	lib:cmp:cmp.o	100	
+000e41f8	94	arm	cmp_read_ext32	lib	lib:cmp:cmp.o	100	
+000e428c	dc	arm	cmp_read_ext_marker	lib	lib:cmp:cmp.o	100	
+000e4368	94	arm	cmp_read_ext	lib	lib:cmp:cmp.o	100	
 000e43fc	103c	arm	cmp_read_object	todo			
-000e5438	44	arm	FUN_000e5438	todo			
-000e547c	4c	arm	FUN_000e547c	todo			
-000e54c8	4c	arm	FUN_000e54c8	todo			
-000e5514	4c	arm	FUN_000e5514	todo			
-000e5560	28	arm	FUN_000e5560	todo			
-000e5588	44	arm	FUN_000e5588	todo			
-000e55cc	54	arm	FUN_000e55cc	todo			
-000e5620	50	arm	FUN_000e5620	todo			
-000e5670	50	arm	FUN_000e5670	todo			
-000e56c0	28	arm	FUN_000e56c0	todo			
-000e56e8	3c	arm	FUN_000e56e8	todo			
-000e5724	3c	arm	FUN_000e5724	todo			
-000e5760	3c	arm	FUN_000e5760	todo			
-000e579c	3c	arm	FUN_000e579c	todo			
-000e57d8	50	arm	FUN_000e57d8	todo			
-000e5828	40	arm	FUN_000e5828	todo			
-000e5868	50	arm	FUN_000e5868	todo			
-000e58b8	50	arm	FUN_000e58b8	todo			
-000e5908	8c	arm	FUN_000e5908	todo			
-000e5994	114	arm	FUN_000e5994	todo			
-000e5aa8	164	arm	FUN_000e5aa8	todo			
-000e5c0c	184	arm	FUN_000e5c0c	todo			
-000e5d90	1e0	arm	FUN_000e5d90	todo			
-000e5f70	30	arm	FUN_000e5f70	todo			
-000e5fa0	58	arm	FUN_000e5fa0	todo			
-000e5ff8	7c	arm	FUN_000e5ff8	todo			
-000e6074	d0	arm	FUN_000e6074	todo			
-000e6144	100	arm	FUN_000e6144	todo			
-000e6244	30	arm	FUN_000e6244	todo			
-000e6274	50	arm	FUN_000e6274	todo			
-000e62c4	50	arm	FUN_000e62c4	todo			
-000e6314	6c	arm	FUN_000e6314	todo			
-000e6380	64	arm	FUN_000e6380	todo			
-000e63e4	54	arm	FUN_000e63e4	todo			
-000e6438	64	arm	FUN_000e6438	todo			
-000e649c	64	arm	FUN_000e649c	todo			
-000e6500	b4	arm	FUN_000e6500	todo			
-000e65b4	e8	arm	FUN_000e65b4	todo			
-000e669c	c0	arm	FUN_000e669c	todo			
+000e5438	44	arm	cmp_object_is_char	lib	lib:cmp:cmp.o	100	
+000e547c	4c	arm	cmp_object_is_short	lib	lib:cmp:cmp.o	100	
+000e54c8	4c	arm	cmp_object_is_int	lib	lib:cmp:cmp.o	100	
+000e5514	4c	arm	cmp_object_is_long	lib	lib:cmp:cmp.o	100	
+000e5560	28	arm	cmp_object_is_sinteger	lib	lib:cmp:cmp.o	100	
+000e5588	44	arm	cmp_object_is_uchar	lib	lib:cmp:cmp.o	100	
+000e55cc	54	arm	cmp_object_is_ushort	lib	lib:cmp:cmp.o	100	
+000e5620	50	arm	cmp_object_is_uint	lib	lib:cmp:cmp.o	100	
+000e5670	50	arm	cmp_object_is_ulong	lib	lib:cmp:cmp.o	100	
+000e56c0	28	arm	cmp_object_is_uinteger	lib	lib:cmp:cmp.o	100	
+000e56e8	3c	arm	cmp_object_is_float	lib	lib:cmp:cmp.o	100	
+000e5724	3c	arm	cmp_object_is_double	lib	lib:cmp:cmp.o	100	
+000e5760	3c	arm	cmp_object_is_nil	lib	lib:cmp:cmp.o	100	
+000e579c	3c	arm	cmp_object_is_bool	lib	lib:cmp:cmp.o	100	
+000e57d8	50	arm	cmp_object_is_str	lib	lib:cmp:cmp.o	100	
+000e5828	40	arm	cmp_object_is_bin	lib	lib:cmp:cmp.o	100	
+000e5868	50	arm	cmp_object_is_array	lib	lib:cmp:cmp.o	100	
+000e58b8	50	arm	cmp_object_is_map	lib	lib:cmp:cmp.o	100	
+000e5908	8c	arm	cmp_object_is_ext	lib	lib:cmp:cmp.o	100	
+000e5994	114	arm	cmp_object_as_char	lib	lib:cmp:cmp.o	100	
+000e5aa8	164	arm	cmp_object_as_short	lib	lib:cmp:cmp.o	100	
+000e5c0c	184	arm	cmp_object_as_int	lib	lib:cmp:cmp.o	100	
+000e5d90	1e0	arm	cmp_object_as_long	lib	lib:cmp:cmp.o	100	
+000e5f70	30	arm	cmp_object_as_sinteger	lib	lib:cmp:cmp.o	100	
+000e5fa0	58	arm	cmp_object_as_uchar	lib	lib:cmp:cmp.o	100	
+000e5ff8	7c	arm	cmp_object_as_ushort	lib	lib:cmp:cmp.o	100	
+000e6074	d0	arm	cmp_object_as_uint	lib	lib:cmp:cmp.o	100	
+000e6144	100	arm	cmp_object_as_ulong	lib	lib:cmp:cmp.o	100	
+000e6244	30	arm	cmp_object_as_uinteger	lib	lib:cmp:cmp.o	100	
+000e6274	50	arm	cmp_object_as_float	lib	lib:cmp:cmp.o	100	
+000e62c4	50	arm	cmp_object_as_double	lib	lib:cmp:cmp.o	100	
+000e6314	6c	arm	cmp_object_as_bool	lib	lib:cmp:cmp.o	100	
+000e6380	64	arm	cmp_object_as_str	lib	lib:cmp:cmp.o	100	
+000e63e4	54	arm	cmp_object_as_bin	lib	lib:cmp:cmp.o	100	
+000e6438	64	arm	cmp_object_as_array	lib	lib:cmp:cmp.o	100	
+000e649c	64	arm	cmp_object_as_map	lib	lib:cmp:cmp.o	100	
+000e6500	b4	arm	cmp_object_as_ext	lib	lib:cmp:cmp.o	100	
+000e65b4	e8	arm	cmp_object_to_str	lib	lib:cmp:cmp.o	100	
+000e669c	c0	arm	cmp_object_to_bin	lib	lib:cmp:cmp.o	100	
 000e675c	28	arm	FUN_000e675c	todo			
 000e6784	80	arm	FUN_000e6784	todo			
 000e6804	a4	arm	FUN_000e6804	todo			
@@ -2066,75 +1611,76 @@ addr	size	mode	name	status	src	score	note
 000f0488	30	arm	FUN_000f0488	todo			
 000f04b8	30	arm	FUN_000f04b8	todo			
 000f04e8	24	arm	FUN_000f04e8	todo			
-000f050c	14	arm	FUN_000f050c	todo			
-000f0520	4	arm	FUN_000f0520	todo			
-000f0524	30c	arm	FUN_000f0524	todo			
-000f0830	134	arm	FUN_000f0830	todo			
-000f0964	148	arm	FUN_000f0964	todo			
-000f0aac	10	arm	FUN_000f0aac	todo			
-000f0abc	218	arm	FUN_000f0abc	todo			
-000f0cd4	8d8	arm	FUN_000f0cd4	todo			
-000f15ac	90	arm	FUN_000f15ac	todo			
-000f163c	270	arm	FUN_000f163c	todo			
-000f18ac	258	arm	FUN_000f18ac	todo			
-000f1b04	118	arm	FUN_000f1b04	todo			
-000f1c1c	8c	arm	FUN_000f1c1c	todo			
-000f1ca8	34c	arm	FUN_000f1ca8	todo			
-000f1ff4	68	arm	FUN_000f1ff4	todo			
-000f205c	d4	arm	FUN_000f205c	todo			
-000f2130	44	arm	FUN_000f2130	todo			
-000f2174	174	arm	FUN_000f2174	todo			
-000f22e8	50	arm	FUN_000f22e8	todo			
-000f2338	28	arm	FUN_000f2338	todo			
-000f2360	6c	arm	FUN_000f2360	todo			
-000f23cc	190	arm	FUN_000f23cc	todo			
-000f255c	d8	arm	FUN_000f255c	todo			
-000f2634	58	arm	FUN_000f2634	todo			
-000f268c	518	arm	FUN_000f268c	todo			
-000f2ba4	90	arm	FUN_000f2ba4	todo			
-000f2c34	168	arm	FUN_000f2c34	todo			
-000f2d9c	108	arm	FUN_000f2d9c	todo			
-000f2ea4	200	arm	FUN_000f2ea4	todo			
-000f30a4	10	arm	FUN_000f30a4	todo			
-000f30b4	118	arm	FUN_000f30b4	todo			
-000f31cc	568	arm	FUN_000f31cc	todo			
-000f3734	354	arm	FUN_000f3734	todo			
-000f3a88	4	arm	FUN_000f3a88	todo			
-000f3a8c	120	arm	FUN_000f3a8c	todo			
-000f3bac	114	arm	FUN_000f3bac	todo			
-000f3cc0	42c	arm	FUN_000f3cc0	todo			
-000f40ec	4e8	arm	FUN_000f40ec	todo			
-000f45d4	184	arm	FUN_000f45d4	todo			
-000f4758	3d4	arm	FUN_000f4758	todo			
-000f4b2c	270	arm	FUN_000f4b2c	todo			
-000f4d9c	54c	arm	FUN_000f4d9c	todo			
-000f52e8	80	arm	FUN_000f52e8	todo			
-000f5368	520	arm	FUN_000f5368	todo			
-000f5888	20	arm	FUN_000f5888	todo			
-000f58a8	3e4	arm	FUN_000f58a8	todo			
-000f5c8c	c68	arm	FUN_000f5c8c	todo			
-000f68f4	90	arm	FUN_000f68f4	todo			
-000f6984	6a8	arm	FUN_000f6984	todo			
-000f702c	f8	arm	FUN_000f702c	todo			
-000f7124	74	arm	FUN_000f7124	todo			
-000f7198	a0	arm	FUN_000f7198	todo			
-000f7238	b0	arm	FUN_000f7238	todo			
-000f72e8	54	arm	FUN_000f72e8	todo			
-000f733c	298	arm	FUN_000f733c	todo			
-000f75d4	f00	arm	FUN_000f75d4	todo			
-000f84d4	78	arm	FUN_000f84d4	todo			
-000f854c	1c0	arm	FUN_000f854c	todo			
-000f870c	19c	arm	FUN_000f870c	todo			
-000f88a8	1c0	arm	FUN_000f88a8	todo			
-000f8a68	84	arm	FUN_000f8a68	todo			
-000f8aec	140	arm	FUN_000f8aec	todo			
-000f8c2c	680	arm	FUN_000f8c2c	todo			
-000f92ac	48	arm	FUN_000f92ac	todo			
-000f92f4	50	arm	FUN_000f92f4	todo			
-000f9344	e0	arm	FUN_000f9344	todo			
-000f9424	184	arm	FUN_000f9424	todo			
-000f95a8	cfc	arm	FUN_000f95a8	todo			
-000fa2a4	c4	arm	FUN_000fa2a4	todo			
+000f050c	14	arm	SKP_Silk_SDK_Get_Decoder_Size	lib	lib:silk:src__SKP_Silk_dec_API.o	100	
+000f0520	4	arm	SKP_Silk_SDK_InitDecoder	lib	lib:silk:src__SKP_Silk_dec_API.o	100	
+000f0524	30c	arm	SKP_Silk_SDK_Decode	lib	lib:silk:src__SKP_Silk_dec_API.o	100	
+000f0830	134	arm	SKP_Silk_SDK_search_for_LBRR	lib	lib:silk:src__SKP_Silk_dec_API.o	100	
+000f0964	148	arm	SKP_Silk_SDK_get_TOC	lib	lib:silk:src__SKP_Silk_dec_API.o	100	
+000f0aac	10	arm	SKP_Silk_SDK_get_version	lib	lib:silk:src__SKP_Silk_dec_API.o	100	
+000f0abc	218	arm	SKP_Silk_decode_frame	lib	lib:silk:src__SKP_Silk_decode_frame.o	100	
+000f0cd4	8d8	arm	SKP_Silk_decode_parameters	lib	lib:silk:src__SKP_Silk_decode_parameters.o	100	
+000f15ac	90	arm	SKP_Silk_decode_pitch	lib	lib:silk:src__SKP_Silk_decode_pitch.o	100	
+000f163c	270	arm	SKP_Silk_decode_pulses	lib	lib:silk:src__SKP_Silk_decode_pulses.o	100	
+000f18ac	258	arm	SKP_Silk_decoder_set_fs	lib	lib:silk:src__SKP_Silk_decoder_set_fs.o	100	
+000f1b04	118	arm	SKP_Silk_gains_quant	lib	lib:silk:src__SKP_Silk_gain_quant.o	100	
+000f1c1c	8c	arm	SKP_Silk_gains_dequant	lib	lib:silk:src__SKP_Silk_gain_quant.o	100	
+000f1ca8	34c	arm	SKP_Silk_lin2log	lib	lib:silk:src__SKP_Silk_lin2log.o	100	
+000f1ff4	68	arm	SKP_Silk_log2lin	lib	lib:silk:src__SKP_Silk_log2lin.o	100	
+000f205c	d4	arm	SKP_Silk_range_encoder	lib	lib:silk:src__SKP_Silk_range_coder.o	100	
+000f2130	44	arm	SKP_Silk_range_encoder_multi	lib	lib:silk:src__SKP_Silk_range_coder.o	100	
+000f2174	174	arm	SKP_Silk_range_decoder	lib	lib:silk:src__SKP_Silk_range_coder.o	100	
+000f22e8	50	arm	SKP_Silk_range_decoder_multi	lib	lib:silk:src__SKP_Silk_range_coder.o	100	
+000f2338	28	arm	SKP_Silk_range_enc_init	lib	lib:silk:src__SKP_Silk_range_coder.o	100	
+000f2360	6c	arm	SKP_Silk_range_dec_init	lib	lib:silk:src__SKP_Silk_range_coder.o	100	
+000f23cc	190	arm	SKP_Silk_range_coder_get_length	lib	lib:silk:src__SKP_Silk_range_coder.o	100	
+000f255c	d8	arm	SKP_Silk_range_enc_wrap_up	lib	lib:silk:src__SKP_Silk_range_coder.o	100	
+000f2634	58	arm	SKP_Silk_range_coder_check_after_decoding	lib	lib:silk:src__SKP_Silk_range_coder.o	100	
+000f268c	518	arm	SKP_Silk_resampler_init	lib	lib:silk:src__SKP_Silk_resampler.o	100	
+000f2ba4	90	arm	SKP_Silk_resampler_clear	lib	lib:silk:src__SKP_Silk_resampler.o	100	
+000f2c34	168	arm	SKP_Silk_resampler	lib	lib:silk:src__SKP_Silk_resampler.o	100	
+000f2d9c	108	arm	SKP_Silk_resampler_down2	lib	lib:silk:src__SKP_Silk_resampler_down2.o	100	
+000f2ea4	200	arm	SKP_Silk_resampler_private_IIR_FIR	lib	lib:silk:src__SKP_Silk_resampler_private_IIR_FIR.o	100	
+000f30a4	10	arm	SKP_Silk_resampler_private_copy	lib	lib:silk:src__SKP_Silk_resampler_private_copy.o	100	
+000f30b4	118	arm	SKP_Silk_resampler_private_down4	lib	lib:silk:src__SKP_Silk_resampler_private_down4.o	100	
+000f31cc	568	arm	SKP_Silk_resampler_private_down_FIR	lib	lib:silk:src__SKP_Silk_resampler_private_down_FIR.o	100	
+000f3734	354	arm	SKP_Silk_resampler_private_up2_HQ	lib	lib:silk:src__SKP_Silk_resampler_private_up2_HQ.o	100	
+000f3a88	4	arm	SKP_Silk_resampler_private_up2_HQ_wrapper	lib	lib:silk:src__SKP_Silk_resampler_private_up2_HQ.o	100	
+000f3a8c	120	arm	SKP_Silk_resampler_private_up4	lib	lib:silk:src__SKP_Silk_resampler_private_up4.o	100	
+000f3bac	114	arm	SKP_Silk_resampler_up2	lib	lib:silk:src__SKP_Silk_resampler_up2.o	100	
+000f3cc0	42c	arm	SKP_Silk_shell_encoder	lib	lib:silk:src__SKP_Silk_shell_coder.o	100	
+000f40ec	4e8	arm	SKP_Silk_shell_decoder	lib	lib:silk:src__SKP_Silk_shell_coder.o	100	
+000f45d4	184	arm	SKP_Silk_CNG_Reset	lib	lib:silk:src__SKP_Silk_CNG.o	100	
+000f4758	3d4	arm	SKP_Silk_CNG	lib	lib:silk:src__SKP_Silk_CNG.o	100	
+000f4b2c	270	arm	SKP_Silk_LPC_synthesis_filter	lib	lib:silk:src__SKP_Silk_LPC_synthesis_filter.o	100	
+000f4d9c	54c	arm	SKP_Silk_LPC_synthesis_order16	lib	lib:silk:src__SKP_Silk_LPC_synthesis_order16.o	100	
+000f52e8	80	arm	SKP_Silk_NLSF2A_stable	lib	lib:silk:src__SKP_Silk_NLSF2A_stable.o	100	
+000f5368	1ec	arm	SKP_Silk_NLSF_MSVQ_decode	lib	lib:silk:src__SKP_Silk_NLSF_MSVQ_decode.o	100	
+000f5554	334	arm	SKP_Silk_NLSF_stabilize	lib	lib:silk:src__SKP_Silk_NLSF_stabilize.o	100	
+000f5888	20	arm	SKP_Silk_PLC_Reset	lib	lib:silk:src__SKP_Silk_PLC.o	100	
+000f58a8	3e4	arm	SKP_Silk_PLC_update	lib	lib:silk:src__SKP_Silk_PLC.o	100	
+000f5c8c	c68	arm	SKP_Silk_PLC_conceal	lib	lib:silk:src__SKP_Silk_PLC.o	100	
+000f68f4	90	arm	SKP_Silk_PLC	lib	lib:silk:src__SKP_Silk_PLC.o	100	
+000f6984	6a8	arm	SKP_Silk_PLC_glue_frames	lib	lib:silk:src__SKP_Silk_PLC.o	100	
+000f702c	f8	arm	SKP_Silk_biquad	lib	lib:silk:src__SKP_Silk_biquad.o	100	
+000f7124	74	arm	SKP_Silk_bwexpander	lib	lib:silk:src__SKP_Silk_bwexpander.o	100	
+000f7198	a0	arm	SKP_Silk_encode_signs	lib	lib:silk:src__SKP_Silk_code_signs.o	100	
+000f7238	b0	arm	SKP_Silk_decode_signs	lib	lib:silk:src__SKP_Silk_code_signs.o	100	
+000f72e8	54	arm	SKP_Silk_init_decoder	lib	lib:silk:src__SKP_Silk_create_init_destroy.o	100	
+000f733c	298	arm	SKP_Silk_decode_short_term_prediction	lib	lib:silk:src__SKP_Silk_decode_core.o	100	
+000f75d4	f00	arm	SKP_Silk_decode_core	lib	lib:silk:src__SKP_Silk_decode_core.o	100	
+000f84d4	78	arm	SKP_Silk_resampler_private_AR2	lib	lib:silk:src__SKP_Silk_resampler_private_AR2.o	100	
+000f854c	1c0	arm	SKP_Silk_resampler_private_ARMA4	lib	lib:silk:src__SKP_Silk_resampler_private_ARMA4.o	100	
+000f870c	19c	arm	SKP_Silk_insertion_sort_increasing	lib	lib:silk:src__SKP_Silk_sort.o	100	
+000f88a8	1c0	arm	SKP_Silk_insertion_sort_decreasing_int16	lib	lib:silk:src__SKP_Silk_sort.o	100	
+000f8a68	84	arm	SKP_Silk_insertion_sort_increasing_all_values	lib	lib:silk:src__SKP_Silk_sort.o	100	
+000f8aec	140	arm	SKP_Silk_sum_sqr_shift	lib	lib:silk:src__SKP_Silk_sum_sqr_shift.o	100	
+000f8c2c	680	arm	LPC_inverse_pred_gain_QA@SKP_Silk_LPC_inv_pred_gain	lib	lib:silk:src__SKP_Silk_LPC_inv_pred_gain.o	100	
+000f92ac	48	arm	SKP_Silk_LPC_inverse_pred_gain	lib	lib:silk:src__SKP_Silk_LPC_inv_pred_gain.o	100	
+000f92f4	50	arm	SKP_Silk_LPC_inverse_pred_gain_Q24	lib	lib:silk:src__SKP_Silk_LPC_inv_pred_gain.o	100	
+000f9344	e0	arm	SKP_Silk_MA_Prediction	lib	lib:silk:src__SKP_Silk_MA.o	100	
+000f9424	184	arm	SKP_Silk_LPC_analysis_filter	lib	lib:silk:src__SKP_Silk_MA.o	100	
+000f95a8	cfc	arm	SKP_Silk_NLSF2A	lib	lib:silk:src__SKP_Silk_NLSF2A.o	100	
+000fa2a4	c4	arm	SKP_Silk_bwexpander_32	lib	lib:silk:src__SKP_Silk_bwexpander_32.o	100	
 000fa368	8	arm	strchr	todo			
 000fa370	8	arm	strrchr	todo			
 000fa378	a8	arm	__aeabi_uidiv	lib	lib:libgcc:_udivsi3.o	100	
@@ -2171,8 +1717,7 @@ addr	size	mode	name	status	src	score	note
 000fb130	20	arm	__aeabi_i2f	lib	lib:libgcc-thumb:_arm_addsubsf3.o	100	
 000fb150	10	arm	FUN_000fb150	todo			
 000fb160	7c	arm	FUN_000fb160	todo			
-000fb1dc	18c	arm	__aeabi_fmul	todo			
-000fb368	c	arm	FUN_000fb368	todo			
+000fb1dc	198	arm	__aeabi_fmul	lib	lib:libgcc-thumb:_arm_muldivsf3.o	100	
 000fb374	160	arm	__aeabi_fdiv	lib	lib:libgcc-thumb:_arm_muldivsf3.o	100	
 000fb4d4	8	arm	FUN_000fb4d4	todo			
 000fb4dc	8	arm	FUN_000fb4dc	todo			
@@ -2205,7 +1750,7 @@ addr	size	mode	name	status	src	score	note
 000fbc30	1c	arm	__gnu_Unwind_ForcedUnwind	lib	lib:libgcc:unwind-arm.o	100	
 000fbc4c	74	arm	__gnu_Unwind_Resume	lib	lib:libgcc:unwind-arm.o	100	
 000fbcc0	20	arm	__gnu_Unwind_Resume_or_Rethrow	lib	lib:libgcc:unwind-arm.o	100	
-000fbce0	4	arm	_Unwind_Complete	lib	lib:libgcc:unwind-arm.o	100	by object order
+000fbce0	4	arm	_Unwind_Complete	lib	lib:libgcc:unwind-arm.o	100	
 000fbce4	20	arm	_Unwind_DeleteException	lib	lib:libgcc:unwind-arm.o	100	
 000fbd04	5c	arm	_Unwind_VRS_Get	lib	lib:libgcc:unwind-arm.o	100	
 000fbd60	28	arm	_Unwind_GetGR@unwind-arm	lib	lib:libgcc:unwind-arm.o	100	
