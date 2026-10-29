@@ -183,7 +183,7 @@ cst_utterance *t2t_tokens(cst_utterance *u);
 cst_utterance *default_textanalysis(cst_utterance *u);
 cst_utterance *default_phrasing(cst_utterance *u);
 cst_utterance *default_lexical_insertion(cst_utterance *u);
-cst_utterance *FUN_00069b88(cst_utterance *u);
+cst_utterance *change_language(cst_utterance *u);
 cst_utterance *default_pause_insertion(cst_utterance *u);
 cst_utterance *default_intonation(cst_utterance *u);
 cst_utterance *phones_textanalysis(cst_utterance *u);
@@ -195,7 +195,7 @@ static const cst_synth_module text_methods[] = {
     { "pos_tagger_func", "pos_tagger_time", NULL },
     { "phrasing_func", "phrasing_time", default_phrasing },
     { "lettertosound_func", "lettertosound_time", default_lexical_insertion },
-    { "change_language_func", "change_language_time", FUN_00069b88 },
+    { "change_language_func", "change_language_time", change_language },
     { "pause_insertion_func", "pause_insertion_time", default_pause_insertion },
     { "postlex_func", "postlex_time", NULL },
     { "intonation_func", "intonation_time", default_intonation },
@@ -211,7 +211,7 @@ static const cst_synth_module token_methods[] = {
     { "pos_tagger_func", "pos_tagger_time", NULL },
     { "phrasing_func", "phrasing_time", default_phrasing },
     { "lettertosound_func", "lettertosound_time", default_lexical_insertion },
-    { "change_language_func", "change_language_time", FUN_00069b88 },
+    { "change_language_func", "change_language_time", change_language },
     { "pause_insertion_func", "pause_insertion_time", default_pause_insertion },
     { "postlex_func", "postlex_time", NULL },
     { "intonation_func", "intonation_time", default_intonation },
@@ -227,7 +227,7 @@ static const cst_synth_module phones_methods[] = {
     { "pos_tagger_func", "pos_tagger_time", NULL },
     { "phrasing_func", "phrasing_time", default_phrasing },
     { "lettertosound_func", "lettertosound_time", default_lexical_insertion },
-    { "change_language_func", "change_language_time", FUN_00069b88 },
+    { "change_language_func", "change_language_time", change_language },
     { "pause_insertion_func", "pause_insertion_time", default_pause_insertion },
     { "postlex_func", "postlex_time", NULL },
     { "intonation_func", "intonation_time", default_intonation },
@@ -1096,15 +1096,178 @@ cst_utterance *default_phrasing(cst_utterance *u)
     return phrasing_tokens(u, relation_head(utt_relation(u, REL_TOKEN)), NULL);
 }
 
-cst_utterance *lexical_insertion_words(cst_utterance *u, cst_item *w, cst_item *end);
+#define REL_SYLLABLE 5
+
+#include "cst_lexicon.h"
+#include "cst_phoneset.h"
+cst_phoneset *val_phoneset(const cst_val *v);
+cst_val *phoneset_val(const cst_phoneset *v);
+cst_val *syl_split_default(const cst_phoneset *ps, cst_val *phones);
+void *val_phonefunc(const cst_val *v);
+cst_lexicon *val_lexicon(const cst_val *v);
+typedef cst_val *(*phones_fn)(cst_val *phones);
+typedef cst_val *(*xsampa_to_xivona_fn)(const char *xsampa, const char *alphabet, const char *lang);
+
+/* a copy of the list l */
+static inline cst_val *val_list_copy(const cst_val *l)
+{
+    cst_val *r = NULL;
+
+    for (; l; l = val_cdr(l))
+        r = cons_val(val_car(l), r);
+    return val_reverse(r);
+}
+
+/* where word w goes in SylStructure: before the next word's (when it is already there, and its
+ * first syllable and segment become the insertion points), else appended */
+static inline cst_item *word_sylstructure(cst_utterance *u, cst_item *w, cst_item **syl_before,
+                                          cst_item **seg_before)
+{
+    cst_item *n, *ss, *s, *d;
+
+    *syl_before = *seg_before = NULL;
+    if ((n = item_next(w)) == NULL || (ss = item_as(n, REL_SYLSTRUCTURE)) == NULL)
+        return relation_append(utt_relation(u, REL_SYLSTRUCTURE), w);
+    for (s = ss; s; s = item_next(s))
+        if ((d = item_daughter(s)) != NULL) {
+            *syl_before = item_as(d, REL_SYLLABLE);
+            *seg_before = item_as(item_daughter(d), REL_SEGMENT);
+            break;
+        }
+    return item_prepend(ss, w);
+}
+
+/* the syllables and segments of phones under ssword: stress digits and "?" (glottal stop) end
+ * phone names, "-" separates syllables. Segments get the phoneset ps if given. */
+static inline void word_syllables(cst_utterance *u, cst_item *ssword, const cst_val *phones,
+                                  cst_item *syl_before, cst_item *seg_before,
+                                  const cst_phoneset *ps)
+{
+    cst_relation *syl = utt_relation(u, REL_SYLLABLE), *seg = utt_relation(u, REL_SEGMENT);
+    cst_item *sylitem = NULL, *sssyl = NULL, *segitem;
+    int stress = 0, glottal = 0, nseg = 0;
+    const cst_val *p;
+    const char *c;
+    char *name;
+    size_t len;
+
+    for (p = phones; p; p = val_cdr(p)) {
+        name = cst_strdup(val_string(val_car(p)));
+        if (sylitem == NULL) {
+            sylitem = syl_before ? item_prepend(syl_before, NULL) : relation_append(syl, NULL);
+            sssyl = item_add_daughter(ssword, sylitem);
+            stress = 0;
+        }
+        if (strcmp("-", name) == 0)
+            nseg = 0;
+        else {
+            segitem = seg_before ? item_prepend(seg_before, NULL) : relation_append(seg, NULL);
+            nseg++;
+            while ((len = strlen(name)) > 0 && (c = strchr("0123?", name[len - 1])) != NULL && *c) {
+                if (*c == '?')
+                    glottal = nseg;
+                else
+                    stress = *c - '0';
+                name[len - 1] = '\0';
+            }
+            item_set_string(segitem, "name", name);
+            if (ps)
+                item_set(segitem, "phoneset", phoneset_val(ps));
+            item_add_daughter(sssyl, segitem);
+            if (strcmp("-", name) != 0 && val_cdr(p) != NULL) {
+                cst_free(name);
+                continue;
+            }
+        }
+        /* end of a syllable */
+        if (item_daughter(sssyl) == NULL) {
+            delete_item(sylitem);
+            delete_item(sssyl);
+        } else {
+            item_set_int(sssyl, "glottal_stop_pos", glottal);
+            item_set_int(sssyl, "stress", stress);
+        }
+        glottal = 0;
+        sylitem = NULL;
+        cst_free(name);
+    }
+}
+
+/* the pronunciation given with word w's token (x-sampa or phones), syllabified, or NULL */
+static inline cst_val *word_given_phones(cst_utterance *u, cst_item *w, lang_core *ld)
+{
+    const cst_val *v, *alpha, *f;
+    cst_val *phones;
+
+    if ((v = item_feat(item_parent(item_as(w, REL_TOKEN)), "xsampa")) != NULL) {
+        alpha = item_feat(item_parent(item_as(w, REL_TOKEN)), "alphabet");
+        f = ld ? feat_val(ld->features, "xsampa_to_xivona_func")
+               : feat_val(item_utt(w)->features, "xsampa_to_xivona_func");
+        if (f)
+            return ((xsampa_to_xivona_fn)val_xsampafunc(f))(val_string(v),
+                                                             alpha ? val_string(alpha) : NULL,
+                                                             ld ? ld->code : NULL);
+    }
+    if ((v = item_feat(item_parent(item_as(w, REL_TOKEN)), "phones")) == NULL
+        && (v = item_feat(w, "phones")) == NULL)
+        return NULL;
+    phones = cst_val_consp(v) ? val_list_copy(v) : phones_from_string(val_string(v));
+    if (val_member_string("-", phones))
+        return phones;
+    /* no syllable boundaries given */
+    f = (ld = item_lang_data(w)) != NULL ? feat_val(ld->features, "syl_boundaries_func")
+                                        : feat_val(item_utt(w)->features, "syl_boundaries_func");
+    if (f)
+        return ((phones_fn)val_phonefunc(f))(phones);
+    return syl_split_default(item_phoneset(w), phones);
+}
+
+/* 0x691b8 arm: the syllables and segments of words [w, end): from the pronunciation given with
+ * the token, else the user lexicon, else the voice's lexicon, else the language's (or the
+ * voice's) wordtosegments function. Phones carry stress digits and "?" (glottal stop); "-"
+ * separates syllables. Words are inserted before the next word's syllables, so a range can be
+ * redone after the rest of the utterance. */
+cst_utterance *lexical_insertion_words(cst_utterance *u, cst_item *w, cst_item *end)
+{
+    const cst_val *user, *vox, *w2s, *f, *e;
+    cst_item *ssword, *syl_before, *seg_before;
+    cst_val *phones;
+    lang_core *ld;
+
+    utt_relation_create(u, REL_SYLSTRUCTURE);
+    utt_relation_create(u, REL_SYLLABLE);
+    utt_relation_create(u, REL_SEGMENT);
+    user = feat_val(u->features, "user_lexicon");
+    vox = feat_val(u->features, "vox_lexicon");
+    w2s = feat_val(u->features, "wordtosegments_func");
+    for (; w && w != end; w = item_next(w)) {
+        ld = item_lang_data(w);
+        phones = word_given_phones(u, w, ld);
+        if (phones == NULL && user) {
+            e = val_in_lex(user, item_feat_string(w, "name"), NULL);
+            phones = e ? val_list_copy(val_cdr(e)) : NULL;
+        }
+        if (phones == NULL && vox)
+            phones = lex_lookup(val_lexicon(vox), item_feat_string(w, "name"), NULL);
+        if (phones == NULL) {
+            f = ld ? feat_val(ld->features, "wordtosegments_func") : NULL;
+            if (f == NULL && w2s && item_feat_string_opt(w, "name"))
+                f = w2s;
+            if (f)
+                phones = val_itemfunc(f)(w);
+        }
+        ssword = word_sylstructure(u, w, &syl_before, &seg_before);
+        word_syllables(u, ssword, phones, syl_before, seg_before, NULL);
+        delete_val(phones);
+    }
+    return u;
+}
 
 /* 0x69a08 arm */
 cst_utterance *default_lexical_insertion(cst_utterance *u)
 {
     return lexical_insertion_words(u, relation_head(utt_relation(u, REL_WORD)), NULL);
 }
-
-#define REL_SYLLABLE 5
 
 void item_delete_range(cst_item *from, cst_item *to);
 
@@ -1140,6 +1303,36 @@ void word_to_xsampa(cst_item *w, cst_features *f, strbuf *out)
     item_delete_range(sfirst, item_next(slast));
     item_delete_range(first, item_next(last));
     delete_item(ws);
+}
+
+/* 0x69b88 arm: change_language_func: words of another language than the voice's are said with
+ * the voice's phones, through their X-SAMPA (xsampa_to_xivona_func); their segments are marked
+ * with the voice's phoneset. */
+cst_utterance *change_language(cst_utterance *u)
+{
+    const cst_val *v = feat_val(u->features, "xsampa_to_xivona_func");
+    xsampa_to_xivona_fn conv = v ? (xsampa_to_xivona_fn)val_xsampafunc(v) : NULL;
+    const char *lang = get_param_string(u->features, "language_code", "");
+    const cst_phoneset *ps = (v = feat_val(u->features, "phoneset")) ? val_phoneset(v) : NULL;
+    cst_item *w, *ssword, *syl_before, *seg_before;
+    cst_val *phones;
+    lang_core *ld;
+    strbuf sb;
+
+    if (conv == NULL)
+        return u;
+    strbuf_init(&sb);
+    for (w = relation_head(utt_relation(u, REL_WORD)); w; w = item_next(w)) {
+        if ((ld = item_lang_data(w)) == NULL || strcmp(ld->code, lang) == 0)
+            continue;
+        word_to_xsampa(w, ld->features, &sb);
+        phones = sb.len ? conv(sb.data, NULL, ld->code) : NULL;
+        ssword = word_sylstructure(u, w, &syl_before, &seg_before);
+        word_syllables(u, ssword, phones, syl_before, seg_before, ps);
+        delete_val(phones);
+    }
+    strbuf_release(&sb);
+    return u;
 }
 
 /* 0x6a078 arm: appends a segment named name after the last segment of the last word of w
