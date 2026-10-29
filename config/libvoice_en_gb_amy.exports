@@ -1,12 +1,11 @@
-/* The symbols the original libvoice_en_gb_amy.so exports: the voice entry points the engine
- * looks up after dlopen, the language data and the engine interface version marker. Used by
- * tools/build_runnable.py. */
-{
+/* The symbols the original libvoice_en_gb_amy.so exports, in its version node TTS_ENGINE_1_6
+ * (register_voice@@TTS_ENGINE_1_6, ...): the voice entry points the engine looks up after
+ * dlopen and the language module. Used by tools/build_runnable.py. */
+TTS_ENGINE_1_6 {
   global:
     register_voice;
     unregister_voice;
     language_data;
-    TTS_ENGINE_1_6;
   local:
     *;
 };

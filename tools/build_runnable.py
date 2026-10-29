@@ -40,7 +40,7 @@ TARGETS = {
         "vendored": ["pcre", "silk", "cmp"],
         "syslibs": ["-lm", "-ldl", "-llog", "-lc"],
         "defines": [],
-        "extra": ["src/libvoice_en_gb_amy/runnable_stubs.c",
+        "extra": ["src/libvoice_en_gb_amy/runnable_stubs.c", "src/libvoice_en_gb_amy/amy_lexicon.c",
                   "src/libttsivonavoice/runnable_stubs_vorbis.c"],
     },
 }
@@ -147,7 +147,20 @@ def main() -> int:
             print(f"  {'':8} {'':5} {'(data/other)':11} {name}")
     for name in multi:
         print(f"  multiple definition: {name}")
-    if os.path.exists(path(so)) and not undef and not multi:
+    # a version script does not complain about an export nothing defines: check them
+    missing = []
+    if os.path.exists(path(so)):
+        exp = open(path("config", args.bin + ".exports")).read()
+        exp = re.sub(r"/\*.*?\*/", "", exp, flags=re.S)
+        want = [w for w in re.findall(r"^\s*([A-Za-z_][\w:]*)\s*;", exp, flags=re.M)]
+        dyn = subprocess.run(["readelf", "--dyn-syms", "-W", path(so)], capture_output=True,
+                             text=True).stdout
+        have = {l.split()[7].split("@")[0] for l in dyn.splitlines()
+                if len(l.split()) >= 8 and l.split()[6] != "UND"}
+        missing = [w for w in want if w not in have]
+        for w in missing:
+            print(f"  export not defined: {w}")
+    if os.path.exists(path(so)) and not undef and not multi and not missing:
         print(f"linked {so}")
         return 0
     if not undef and not multi and not failed:

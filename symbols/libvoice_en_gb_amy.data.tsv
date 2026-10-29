@@ -173,7 +173,8 @@ addr	size	name	note
 003ba8e8	8	val_string_0	
 003ba8f0	6c0	uni_halfwidth_table	
 003bafb0	6cc	uni_translit_strs	
-003bb67c	44	amy_lexicon	
+003bb67c	2c	amy_lexicon	
+003bb6a8	c	amy_addenda	
 003bbec4	4	amy_voice_params	
 003d6bf4	0	cst_regex_table	learned from src/libttsivonavoice/flite/cst_cart.c
 003d6d50	1e0	xsampa_modifiers	

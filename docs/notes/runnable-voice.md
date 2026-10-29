@@ -56,10 +56,31 @@ tools/difftest.sh                     # corpus spoken with original and decompil
 4. **Stubs.** None until the library links. If one is needed for a step, it goes in
    `src/libvoice_en_gb_amy/runnable_stubs.c` and is listed here.
 
-## Status
+## Status (2026-10-29)
 
-- **Links?** No. 10 symbols are undefined on the first link: `amy_lexicon`, the vox database
-  loader `FUN_00029dd0`, `FUN_0004b790`, `item_set_breath_acoustic_data`, `named_table_find`,
-  `val_dur_stats` and four one-instruction `val_delete_*` wrappers. The list grows as data
-  tables are defined.
-- **Difftest.** Harness ready.
+- **Links?** Every symbol resolves. One export is missing: `language_data`. That is the English
+  language module (`{"english", {"en-US", "en-GB", "en-GB-WLS", "en-AU", "en-IN"}, init, free}`,
+  0x3d7380). Its init function (0x397d4) sets up the whole English text front end:
+  - the phoneset and syllabification;
+  - X-SAMPA conversion;
+  - word-to-segments, postlex and sentence boundaries;
+  - tokenizer settings and token-to-words;
+  - phone numbers;
+  - about 14 feature functions (`gpos`, `lex_pos_*`, ...).
+
+  That front end is most of the remaining todo code, and is the next phase.
+- **Done.**
+  - Library code verified: PCRE, SILK, cmp, libgcc.
+  - 93 functions matched from engine sources (`tools/xmatch.py`).
+  - Voice-only functions of shared engine files: `val_dur_stats`, `dur_stats_val`,
+    `named_table_find`, `unit_selector_add_diphone` (that one matches in both binaries).
+  - Written:
+    - `diphone_graph_build` (`diphone_graph.c`)
+    - the target cost (`target_cost.c`, `unit_half_cost` and `unit_model_cost` sharing one side
+      cost)
+    - `amy_lexicon` with its 81-word addenda (`amy_lexicon.c`, by `tools/gen_lex_table.py`)
+  - The vox database loader and codec rows were named after the engine's.
+- **Checks.**
+  - Exports carry the original's version node, `register_voice@@TTS_ENGINE_1_6`.
+  - `tools/build_runnable.py` reports any export the build does not define.
+- **Difftest.** Harness ready; it runs once `language_data` is in.
