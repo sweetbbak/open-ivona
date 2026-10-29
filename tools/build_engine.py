@@ -26,7 +26,8 @@ OUT = "build/engine"
 VENDORED = ["openssl", "curl", "expat", "pcre", "silk", "cmp"]
 SYSLIBS = ["-ldl", "-llog", "-lstdc++", "-lm", "-lc"]
 # data-only TUs: no function row credits them, so name them here
-EXTRA_SRCS = ["src/libttsivonavoice/charset_tables.c", "src/libttsivonavoice/runnable_stubs.c"]
+EXTRA_SRCS = ["src/libttsivonavoice/charset_tables.c", "src/libttsivonavoice/runnable_stubs.c",
+              "src/libttsivonavoice/flite/cst_endian.c"]  # cst_endian_loc
 
 
 def obj_for(src: str) -> str:
