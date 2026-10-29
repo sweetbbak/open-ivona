@@ -1505,8 +1505,8 @@ addr	size	mode	name	status	src	score	note
 0006b134	2c	arm	ivona_is_dir	matched	src/libvoice_en_gb_amy/ivona_sys.c	100	
 0006b160	28	arm	ivona_rand_r	matched	src/libvoice_en_gb_amy/ivona_sys.c	100	
 0006b188	20	arm	ivona_rand	matched	src/libvoice_en_gb_amy/ivona_sys.c	100	
-0006b1a8	b8	arm	pcm_unit_decode	todo			
-0006b260	c0	arm	silk_unit_open	wip	src/libttsivonavoice/vox_codec.c	85.7	
+0006b1a8	b8	arm	pcm_unit_decode	wip	src/libttsivonavoice/vox_codec.c	73.9	
+0006b260	c0	arm	silk_unit_open	wip	src/libttsivonavoice/vox_codec.c	89.6	
 0006b320	34	arm	silk_unit_close	matched	src/libttsivonavoice/vox_codec.c	100	
 0006b354	388	arm	silk_unit_decode	wip	src/libttsivonavoice/vox_codec.c	9.2	
 0006b6dc	150	arm	vorbis_unit_open	todo			

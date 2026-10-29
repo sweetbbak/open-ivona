@@ -6,6 +6,7 @@
 #include <string.h>
 #include "cst_alloc.h"
 #include "silk.h"
+#include "tts_track.h"
 
 /* codec object built by the factory from the vox header (partly known) */
 typedef struct vox_codec_info {
@@ -39,6 +40,29 @@ typedef struct silk_unit_decoder {
     SKP_SILK_SDK_DecControlStruct ctrl;
     unsigned char key[8];               /* info->key, then each packet's clear tail bytes */
 } silk_unit_decoder;
+
+/* 0x6b1a8 arm: codec 2, raw 16-bit PCM: the number of pitch periods n, n cumulative period end
+ * offsets, then the samples. */
+track *pcm_unit_decode(vox_decoder *d, const unsigned char *data, unsigned int size)
+{
+    const unsigned short *p = (const unsigned short *)data;
+    track *t = new_track();
+    const unsigned short *src;
+    short *dst;
+    int i;
+
+    (void)d;
+    (void)size;
+    track_resize(t, p[0]);
+    for (i = 0; i < p[0]; i++) {
+        t->pms[i] = p[i + 1];
+        track_frame_alloc(t, i, track_frame_len(t, i));
+        dst = t->frames[i];
+        src = p + p[0] + 1 + (i ? t->pms[i - 1] : 0);
+        memcpy(dst, src, track_frame_len(t, i) * sizeof(short));
+    }
+    return t;
+}
 
 static inline silk_unit_decoder *silk_decoder_new(int rate, int key)
 {

@@ -26,7 +26,7 @@ OUT = "build/engine"
 VENDORED = ["openssl", "curl", "expat", "pcre", "silk", "cmp"]
 SYSLIBS = ["-ldl", "-llog", "-lstdc++", "-lm", "-lc"]
 # data-only TUs: no function row credits them, so name them here
-EXTRA_SRCS = ["src/libttsivonavoice/charset_tables.c"]
+EXTRA_SRCS = ["src/libttsivonavoice/charset_tables.c", "src/libttsivonavoice/runnable_stubs.c"]
 
 
 def obj_for(src: str) -> str:
