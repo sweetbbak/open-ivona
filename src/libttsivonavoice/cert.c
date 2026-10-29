@@ -111,6 +111,11 @@ int cert_allows_voice(const tts_cert_data *c, const char *lector, const char *la
 }
 
 #ifdef IVONA_NO_CERT_CHECK
+/* SSML input is off until the SSML path is finished (docs/notes/ssml-deferred.md):
+ * plain text then skips Expat, text_is_ssml and ssml_parse. -DIVONA_CERT_SSML=1 enables it. */
+#ifndef IVONA_CERT_SSML
+#define IVONA_CERT_SSML 0
+#endif
 /*
  * Certificate bypass (not part of the original library; see docs/notes/cert-bypass.md).
  *
@@ -189,7 +194,7 @@ tts_cert_data *cert_parse(const char *text)
     c->voices = strlist_new();
     strlist_push(c->voices, "all");
     strlist_push(c->voices, "all:custom");
-    c->ssml = 1;
+    c->ssml = IVONA_CERT_SSML;
     c->key = ivona_crc32(cert_pubkey_blob, sizeof(cert_pubkey_blob));
     return c;
 }

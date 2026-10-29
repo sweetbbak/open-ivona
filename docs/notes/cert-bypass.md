@@ -13,7 +13,8 @@ We don't need licensing any more, so the decompiled engine bypasses it at build 
 - Define `IVONA_NO_CERT_CHECK` when building a runnable engine (`-DIVONA_NO_CERT_CHECK`).
 - `cert_parse()` then ignores the certificate text and returns an unlimited certificate:
   never expires, no speed limit, no license (`license_id = -1`), voices `all` and
-  `all:custom`, SSML allowed. `cert_compatible()` accepts any pair and `cert_merge()` is a
+  `all:custom`. SSML is off by default (`IVONA_CERT_SSML`, see `ssml-deferred.md`), so all
+  input takes the plain-text path. `cert_compatible()` accepts any pair and `cert_merge()` is a
   no-op.
 - Its `key` is still the real one, the CRC-32 of the public key blob (the original sets it
   the same way after verification), because voice parameter values are obfuscated with it
