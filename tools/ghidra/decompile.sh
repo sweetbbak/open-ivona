@@ -3,6 +3,7 @@
 #   tools/ghidra/decompile.sh BINARY ADDR...     e.g. libvoice_en_gb_amy 4b790 366c4
 # Needs the project from tools/ghidra/export.sh (build/ghidra/proj); it is opened read-only.
 # A hint for writing C, like the retdec output: never a source of truth.
+# DECOMPILE_TIMEOUT (seconds per function, default 120) helps large functions.
 set -euo pipefail
 ROOT="$(cd "$(dirname "$0")/../.." && pwd)"
 BIN="$1"; shift
@@ -11,6 +12,7 @@ tmp=$(mktemp -d)
 trap 'rm -rf "$tmp"' EXIT
 # a copy of the project, so a running Ghidra (or another decompile) does not lock it
 cp -r "$ROOT/build/ghidra/proj/$BIN.gpr" "$ROOT/build/ghidra/proj/$BIN.rep" "$tmp/"
+_JAVA_OPTIONS="${_JAVA_OPTIONS:-} -Ddecompile.timeout=${DECOMPILE_TIMEOUT:-120}" \
 "$GHIDRA/support/analyzeHeadless" "$tmp" "$BIN" -process "$BIN.so" -noanalysis -readOnly \
     -scriptPath "$ROOT/tools/ghidra" -postScript Decompile.java "$ROOT/symbols/$BIN." \
     "$tmp/out.c" "${@#0x}" 2>&1 | grep -E "ERROR|Exception" >&2 || true

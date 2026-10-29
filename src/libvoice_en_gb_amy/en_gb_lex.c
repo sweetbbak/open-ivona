@@ -84,8 +84,8 @@ cst_val *en_gb_lex_lookup(const char *word, const char *pos, float *score)
     return lts_apply(word, "", &en_gb_lts_rules);
 }
 
-/* 0x3b704 arm */
-int en_gb_in_lex(const char *word, const char *pos)
+/* 0x3b704 arm (main_only: the en-US lexicons' flag, unused) */
+int en_gb_in_lex(const char *word, const char *pos, int main_only)
 {
     return in_lex(&en_gb_lex, word, pos);
 }

@@ -33,6 +33,9 @@ public class Decompile extends GhidraScript {
             br.close();
         }
         DecompInterface di = new DecompInterface();
+        ghidra.app.decompiler.DecompileOptions opts = new ghidra.app.decompiler.DecompileOptions();
+        opts.setMaxPayloadMBytes(Integer.getInteger("decompile.payload", 50));  // large functions
+        di.setOptions(opts);
         di.openProgram(currentProgram);
         for (int i = 2; i < args.length; i++) {
             Address a = currentProgram.getAddressFactory().getDefaultAddressSpace().getAddress(Long.parseLong(args[i], 16));
@@ -44,7 +47,7 @@ public class Decompile extends GhidraScript {
             }
             if (f == null) f = getFunctionContaining(a);
             if (f == null) { out.println("// no function at " + args[i]); continue; }
-            DecompileResults r = di.decompileFunction(f, 120, monitor);
+            DecompileResults r = di.decompileFunction(f, Integer.getInteger("decompile.timeout", 120), monitor);
             out.println("// ==== " + args[i] + " " + f.getName());
             out.println(r.getDecompiledFunction() != null ? r.getDecompiledFunction().getC() : "// failed: " + r.getErrorMessage());
         }

@@ -631,23 +631,23 @@ addr	size	mode	name	status	src	score	note
 00039d74	b4	arm	FUN_00039d74	todo			
 00039e28	7a8	arm	FUN_00039e28	todo			
 0003a5d0	4d4	arm	en_expand_phone_number	todo			
-0003aaa4	74	arm	FUN_0003aaa4	todo			
-0003ab18	74	arm	FUN_0003ab18	todo			
-0003ab8c	40	arm	FUN_0003ab8c	todo			
-0003abcc	40	arm	FUN_0003abcc	todo			
-0003ac0c	40	arm	FUN_0003ac0c	todo			
-0003ac4c	40	arm	FUN_0003ac4c	todo			
-0003ac8c	40	arm	FUN_0003ac8c	todo			
-0003accc	40	arm	FUN_0003accc	todo			
-0003ad0c	40	arm	FUN_0003ad0c	todo			
-0003ad4c	40	arm	FUN_0003ad4c	todo			
-0003ad8c	40	arm	FUN_0003ad8c	todo			
-0003adcc	13c	arm	FUN_0003adcc	todo			
-0003af08	6c	arm	FUN_0003af08	todo			
-0003af74	154	arm	FUN_0003af74	todo			
-0003b0c8	130	arm	FUN_0003b0c8	todo			
-0003b1f8	120	arm	FUN_0003b1f8	todo			
-0003b318	1d0	arm	en_ff_register	todo			
+0003aaa4	74	arm	next_word_punc	wip	src/libvoice_en_gb_amy/en_ffeatures.c	82.8	
+0003ab18	74	arm	lex_all_pos	matched	src/libvoice_en_gb_amy/en_ffeatures.c	100	
+0003ab8c	40	arm	lex_pos_v	matched	src/libvoice_en_gb_amy/en_ffeatures.c	100	
+0003abcc	40	arm	lex_pos_t	matched	src/libvoice_en_gb_amy/en_ffeatures.c	100	
+0003ac0c	40	arm	lex_pos_r	matched	src/libvoice_en_gb_amy/en_ffeatures.c	100	
+0003ac4c	40	arm	lex_pos_p	matched	src/libvoice_en_gb_amy/en_ffeatures.c	100	
+0003ac8c	40	arm	lex_pos_n	matched	src/libvoice_en_gb_amy/en_ffeatures.c	100	
+0003accc	40	arm	lex_pos_i	matched	src/libvoice_en_gb_amy/en_ffeatures.c	100	
+0003ad0c	40	arm	lex_pos_d	matched	src/libvoice_en_gb_amy/en_ffeatures.c	100	
+0003ad4c	40	arm	lex_pos_c	matched	src/libvoice_en_gb_amy/en_ffeatures.c	100	
+0003ad8c	40	arm	lex_pos_a	matched	src/libvoice_en_gb_amy/en_ffeatures.c	100	
+0003adcc	13c	arm	lex_pos	wip	src/libvoice_en_gb_amy/en_ffeatures.c	55.7	
+0003af08	6c	arm	gpos_name	wip	src/libvoice_en_gb_amy/en_ffeatures.c	55.6	
+0003af74	154	arm	gpos_left	wip	src/libvoice_en_gb_amy/en_ffeatures.c	8.3	
+0003b0c8	130	arm	gpos	wip	src/libvoice_en_gb_amy/en_ffeatures.c	35.2	
+0003b1f8	120	arm	gpos_string	todo			
+0003b318	1d0	arm	en_ff_register	wip	src/libvoice_en_gb_amy/en_ffeatures.c	98.3	
 0003b4e8	140	arm	en_gb_setup	wip	src/libvoice_en_gb_amy/en_gb_lex.c	14.4	
 0003b628	4	arm	en_gb_teardown	matched	src/libvoice_en_gb_amy/en_gb_lex.c	100	
 0003b62c	d8	arm	en_gb_lex_lookup	wip	src/libvoice_en_gb_amy/en_gb_lex.c	72.2	
@@ -661,16 +661,15 @@ addr	size	mode	name	status	src	score	note
 0003bdac	2bc	arm	en_phrase_syl_end_tone	todo			
 0003c068	38	arm	en_lang_setup	matched	src/libvoice_en_gb_amy/en_setup.c	100	
 0003c0a0	30	arm	en_lang_teardown	matched	src/libvoice_en_gb_amy/en_setup.c	100	
-0003c0d0	c4	arm	FUN_0003c0d0	todo			
-0003c194	c4	arm	FUN_0003c194	todo			
-0003c258	b8	arm	FUN_0003c258	todo			
-0003c310	e0	arm	FUN_0003c310	todo			
-0003c3f0	168	arm	FUN_0003c3f0	todo			
-0003c558	118	arm	FUN_0003c558	todo			
-0003c670	117c	arm	FUN_0003c670	todo			
-0003d7ec	11c	arm	en_word_to_segments	todo			
-0003d908	fc4	arm	FUN_0003d908	todo			
-0003e8cc	21a8	arm	FUN_0003e8cc	todo			
+0003c0d0	c4	arm	en_in_lex	wip	src/libvoice_en_gb_amy/en_word.c	63.3	
+0003c194	c4	arm	en_lex_lookup	wip	src/libvoice_en_gb_amy/en_word.c	63.3	
+0003c258	b8	arm	en_lex_select_pos	wip	src/libvoice_en_gb_amy/en_word.c	63.0	
+0003c310	e0	arm	en_lex_pos_list	wip	src/libvoice_en_gb_amy/en_word.c	48.2	
+0003c3f0	168	arm	en_join_pron	wip	src/libvoice_en_gb_amy/en_word.c	74.4	
+0003c558	118	arm	en_spell_word	wip	src/libvoice_en_gb_amy/en_word.c	95.7	
+0003c670	117c	arm	en_word_pron	wip	src/libvoice_en_gb_amy/en_word.c	24.9	
+0003d7ec	11c	arm	en_word_to_segments	wip	src/libvoice_en_gb_amy/en_word.c	60.6	
+0003d908	316c	arm	en_word_pos	todo			
 00040a74	2348	arm	FUN_00040a74	todo			
 00042dbc	2388	arm	FUN_00042dbc	todo			
 00045144	2264	arm	FUN_00045144	todo			
@@ -679,7 +678,7 @@ addr	size	mode	name	status	src	score	note
 000482e8	20	arm	en_gb_syllabify	matched	src/libvoice_en_gb_amy/en_postlex.c	100	
 00048308	ac	arm	en_syllabify	matched	src/libvoice_en_gb_amy/en_postlex.c	100	
 000483b4	9d4	arm	en_gb_amy_postlex	todo			
-00048d88	210	arm	FUN_00048d88	todo			
+00048d88	210	arm	en_is_initial	wip	src/libvoice_en_gb_amy/en_postlex.c	46.7	
 00048f98	4	arm	en_lang_global_init	matched	src/libvoice_en_gb_amy/en_postlex.c	100	
 00048f9c	4	arm	en_lang_global_fini	matched	src/libvoice_en_gb_amy/en_postlex.c	100	
 00048fa0	94	arm	FUN_00048fa0	todo			
@@ -692,7 +691,7 @@ addr	size	mode	name	status	src	score	note
 00049458	d24	arm	FUN_00049458	todo			
 0004a17c	c18	arm	en_token_to_words	todo			
 0004ad94	f0	arm	FUN_0004ad94	todo			
-0004ae84	19c	arm	en_sentence_boundary	todo			
+0004ae84	19c	arm	en_sentence_boundary	wip	src/libvoice_en_gb_amy/en_token.c	38.1	
 0004b020	44	arm	en_strip_apostrophes	wip	src/libvoice_en_gb_amy/en_us_lex.c	50.0	
 0004b064	2c	arm	FUN_0004b064	todo			
 0004b090	c	arm	FUN_0004b090	todo			
@@ -761,18 +760,18 @@ addr	size	mode	name	status	src	score	note
 00051d18	820	arm	unit_half_cost	wip	src/libvoice_en_gb_amy/target_cost.c	14.1	
 00052538	a20	arm	unit_model_cost	wip	src/libvoice_en_gb_amy/target_cost.c	19.0	
 00052f58	af4	arm	FUN_00052f58	todo			
-00053a4c	4dc	arm	lex_lookup_bsearch	matched	src/libvoice_en_gb_amy/cst_lexicon.c	100	
-00053f28	58	arm	val_lexicon	matched	src/libvoice_en_gb_amy/cst_lexicon.c	100	flite strings(1) 91%
-00053f80	18	arm	lexicon_val	matched	src/libvoice_en_gb_amy/cst_lexicon.c	100	flite order 67%
-00053f98	58	arm	val_allwordposfunc	matched	src/libvoice_en_gb_amy/cst_lexicon.c	100	
-00053ff0	18	arm	allwordposfunc_val	matched	src/libvoice_en_gb_amy/cst_lexicon.c	100	
-00054008	c	arm	new_lexicon	matched	src/libvoice_en_gb_amy/cst_lexicon.c	100	
-00054014	c	arm	delete_lexicon	matched	src/libvoice_en_gb_amy/cst_lexicon.c	100	
-00054020	180	arm	in_lex	wip	src/libvoice_en_gb_amy/cst_lexicon.c	94.8	
-000541a0	350	arm	lex_word_pos_list	wip	src/libvoice_en_gb_amy/cst_lexicon.c	45.6	
-000544f0	54	arm	lex_select_pos	matched	src/libvoice_en_gb_amy/cst_lexicon.c	100	
-00054544	1fc	arm	lex_lookup	wip	src/libvoice_en_gb_amy/cst_lexicon.c	43.0	
-00054740	418	arm	lts_apply	wip	src/libvoice_en_gb_amy/cst_lts.c	74.3	flite strings(3) 9%
+00053a4c	4dc	arm	lex_lookup_bsearch	matched	src/libttsivonavoice/flite/cst_lexicon.c	100	
+00053f28	58	arm	val_lexicon	matched	src/libttsivonavoice/flite/cst_lexicon.c	100	flite strings(1) 91%
+00053f80	18	arm	lexicon_val	matched	src/libttsivonavoice/flite/cst_lexicon.c	100	flite order 67%
+00053f98	58	arm	val_allwordposfunc	matched	src/libttsivonavoice/flite/cst_lexicon.c	100	
+00053ff0	18	arm	allwordposfunc_val	matched	src/libttsivonavoice/flite/cst_lexicon.c	100	
+00054008	c	arm	new_lexicon	matched	src/libttsivonavoice/flite/cst_lexicon.c	100	
+00054014	c	arm	delete_lexicon	matched	src/libttsivonavoice/flite/cst_lexicon.c	100	
+00054020	180	arm	in_lex	wip	src/libttsivonavoice/flite/cst_lexicon.c	93.8	
+000541a0	350	arm	lex_word_pos_list	wip	src/libttsivonavoice/flite/cst_lexicon.c	45.2	
+000544f0	54	arm	lex_select_pos	matched	src/libttsivonavoice/flite/cst_lexicon.c	100	
+00054544	1fc	arm	lex_lookup	wip	src/libttsivonavoice/flite/cst_lexicon.c	42.4	
+00054740	418	arm	lts_apply	wip	src/libttsivonavoice/flite/cst_lts.c	74.0	flite strings(3) 9%
 00054b58	1e4	arm	postlex_rewrite_phones	wip	src/libvoice_en_gb_amy/cst_postlex.c	81.0	
 00054d3c	3bc	arm	postlex_assimilation	wip	src/libvoice_en_gb_amy/cst_postlex.c	96.2	
 000550f8	5c	arm	postlex_voice_is	matched	src/libvoice_en_gb_amy/cst_postlex.c	100	
@@ -974,7 +973,7 @@ addr	size	mode	name	status	src	score	note
 00061094	420	arm	FUN_00061094	todo			
 000614b4	f8	arm	duration_parse	matched	src/libvoice_en_gb_amy/en_text.c	100	
 000615ac	38	arm	duration_free	matched	src/libvoice_en_gb_amy/en_text.c	100	
-000615e4	a8	arm	token_single_alpha	wip	src/libvoice_en_gb_amy/en_text.c	28.6	
+000615e4	a8	arm	token_single_alpha	wip	src/libvoice_en_gb_amy/en_text.c	97.6	
 0006168c	7c	arm	token_no_punc_prev	matched	src/libvoice_en_gb_amy/en_text.c	100	
 00061708	80	arm	token_no_punc_next	matched	src/libvoice_en_gb_amy/en_text.c	100	
 00061788	50	arm	token_prev_interpret_as	matched	src/libvoice_en_gb_amy/en_text.c	100	
@@ -983,7 +982,7 @@ addr	size	mode	name	status	src	score	note
 00061850	28	arm	token_unpunctuated_next_interpret_as	matched	src/libvoice_en_gb_amy/en_text.c	100	
 00061878	44	arm	strip_leading_zeros	wip	src/libvoice_en_gb_amy/en_text.c	47.1	
 000618bc	28	arm	strip_non_ascii	matched	src/libvoice_en_gb_amy/en_text.c	100	
-000618e4	94	arm	FUN_000618e4	todo			
+000618e4	94	arm	word_role_pos	wip	src/libvoice_en_gb_amy/en_text.c	59.5	
 00061978	5c	arm	utf8_category_boundary	matched	src/libvoice_en_gb_amy/en_text.c	100	
 000619d4	80	arm	utf8_category_split	matched	src/libvoice_en_gb_amy/en_text.c	100	
 00061a54	c0	arm	utf8_is_letters_except	matched	src/libvoice_en_gb_amy/en_text.c	100	
@@ -1029,12 +1028,12 @@ addr	size	mode	name	status	src	score	note
 00063a9c	a0	arm	speaking_style_id	matched	src/libttsivonavoice/wavesynth.c	100	
 00063b3c	70	arm	FUN_00063b3c	todo			
 00063bac	c	arm	lex_entry_cmp	matched	src/libttsivonavoice/phones.c	100	
-00063bb8	120	arm	FUN_00063bb8	todo			
-00063cd8	84	arm	FUN_00063cd8	todo			
-00063d5c	14	arm	FUN_00063d5c	todo			
-00063d70	fc	arm	FUN_00063d70	todo			
-00063e6c	20	arm	FUN_00063e6c	todo			
-00063e8c	54	arm	FUN_00063e8c	todo			
+00063bb8	120	arm	lex_lookup_index	wip	src/libttsivonavoice/phones.c	88.9	
+00063cd8	84	arm	lex_lower_bound_name	wip	src/libttsivonavoice/phones.c	55.9	
+00063d5c	14	arm	lex_has_entry	matched	src/libttsivonavoice/phones.c	100	
+00063d70	fc	arm	lex_lookup_pos_all	wip	src/libttsivonavoice/phones.c	59.4	
+00063e6c	20	arm	lex_lookup_data	matched	src/libttsivonavoice/phones.c	100	
+00063e8c	54	arm	lex_lookup_phones	matched	src/libttsivonavoice/phones.c	100	
 00063ee0	244	arm	FUN_00063ee0	todo			
 00064124	f4	arm	FUN_00064124	todo			
 00064218	2a4	arm	FUN_00064218	todo			

@@ -522,6 +522,26 @@ void duration_free(cst_duration *d)
     d->f0 = NULL;
 }
 
+/* 0x615e4 arm: the one alphabetic part of speech pos_list gives word, else '?' */
+char token_single_alpha(const char *word, int (*pos_list)(const char *word, char *buf, size_t max))
+{
+    char buf[0x100];
+    int n = pos_list(word, buf, sizeof buf), i, at = -1;
+
+    if (n == 0)
+        return '?';
+    for (i = 0; i < n; i++) {
+        if (buf[i] >= 0 && isalpha(buf[i])) {
+            if (at != -1)
+                return '?';
+            at = i;
+        }
+    }
+    if (at == -1)
+        return '?';
+    return buf[at];
+}
+
 /* 0x6168c arm */
 int token_no_punc_prev(const cst_item *item)
 {
@@ -603,6 +623,28 @@ void strip_non_ascii(char *str)
             *str++ = c;
     }
     *str = 0;
+}
+
+/* 0x3d72f8: SSML roles and the parts of speech they give (pairs) */
+static const char *const en_role_pos[] = {
+    "a", "JJ", "c", "CC", "n", "NN", "p", "IN", "r", "DT", "t", "VBD", "v", "VB",
+    "0", "DEFAULT", "1", "SENSE_1", "2", "SENSE_2", "3", "SENSE_3", "4", "SENSE_4", NULL
+};
+
+/* 0x618e4 arm: the part of speech the role of the word's token gives, else pos_func's */
+const char *word_role_pos(const cst_item *word, const char *(*pos_func)(const cst_item *))
+{
+    const cst_val *v = item_feat(item_parent(item_as(word, 1)), "role");
+    const char *const *p;
+    const char *role;
+
+    if (v) {
+        role = val_string(v);
+        for (p = en_role_pos; p[0]; p += 2)
+            if (strcmp(role, p[1]) == 0)
+                return p[0];
+    }
+    return pos_func(word);
 }
 
 int utf8_decode(const char *str, int *len);
