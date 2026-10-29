@@ -1296,13 +1296,11 @@ addr	size	mode	name	status	src	score	note
 0005aaa0	b4	arm	vector_equal	wip	src/libttsivonavoice/vector.c	95.6	
 0005ab54	5c	arm	vector_from_array	matched	src/libttsivonavoice/vector.c	100	
 0005abb0	8	arm	vector_free_ptr	matched	src/libttsivonavoice/vector.c	100	
-0005abb8	c0	arm	utf8_encode	todo			
-0005ac78	10c	arm	FUN_0005ac78	todo			
-0005ad84	950	arm	FUN_0005ad84	todo			
-0005b6d4	568	arm	FUN_0005b6d4	todo			
-0005bc3c	1064	arm	FUN_0005bc3c	todo			
-0005cca0	1b4	arm	FUN_0005cca0	todo			
-0005ce54	c4	arm	FUN_0005ce54	todo			
+0005abb8	c0	arm	utf8_encode	matched	src/libttsivonavoice/utf8_enc.c	100	
+0005ac78	10c	arm	syl_whisper	wip	src/libttsivonavoice/concat.c	78.6	
+0005ad84	950	arm	concat_select	wip	src/libttsivonavoice/concat.c	20.8	
+0005b6d4	568	arm	unit_apply_effects	wip	src/libttsivonavoice/concat.c	47.4	
+0005bc3c	12dc	arm	concat_synth	wip	src/libttsivonavoice/concat.c	16.3	merged FUN_0005cca0/FUN_0005ce54 (cold tail past a literal pool)
 0005cf18	58	arm	val_float_ptr	matched	src/libttsivonavoice/acoustic.c	100	
 0005cf70	18	arm	float_ptr_val	matched	src/libttsivonavoice/acoustic.c	100	
 0005cf88	58	arm	val_phone_acoustic_data	matched	src/libttsivonavoice/acoustic.c	100	
@@ -1372,7 +1370,7 @@ addr	size	mode	name	status	src	score	note
 0005fd58	160	arm	FUN_0005fd58	todo			
 0005feb8	24	arm	select_segment_resize	matched	src/libttsivonavoice/voxdb.c	100	
 0005fedc	20	arm	select_segment_sort	matched	src/libttsivonavoice/voxdb.c	100	
-0005fefc	1088	arm	FUN_0005fefc	todo			
+0005fefc	1088	arm	unit_select_viterbi	todo			
 00060f84	400	arm	FUN_00060f84	todo			
 00061384	84	arm	FUN_00061384	todo			
 00061408	1c	arm	dynamic_voxdbs_new	matched	src/libttsivonavoice/voxdb.c	100	
@@ -1404,11 +1402,11 @@ addr	size	mode	name	status	src	score	note
 00062bc0	1b8	arm	wavesynth_add_track	wip	src/libttsivonavoice/wavesynth.c	95.5	
 00062d78	68	arm	wavesynth_add_mark	matched	src/libttsivonavoice/wavesynth.c	100	
 00062de0	e0	arm	wavesynth_add_unit_marks	wip	src/libttsivonavoice/wavesynth.c	43.3	
-00062ec0	204	arm	wavesynth_take	wip	src/libttsivonavoice/wavesynth.c	63.6	
+00062ec0	204	arm	wavesynth_take	wip	src/libttsivonavoice/wavesynth.c	96.9	
 000630c4	4	arm	wavesynth_nop	matched	src/libttsivonavoice/wavesynth.c	100	
 000630c8	27c	arm	cache_decrypt	wip	src/libttsivonavoice/wavesynth.c	66.3	
-00063344	290	arm	FUN_00063344	todo			
-000635d4	224	arm	FUN_000635d4	todo			
+00063344	290	arm	cache_encrypt	todo			
+000635d4	224	arm	cache_graph_key	todo			
 000637f8	e8	arm	utt_cache_key	wip	src/libttsivonavoice/wavesynth.c	49.2	
 000638e0	10	arm	item_first_sibling	matched	src/libttsivonavoice/flite/cst_ffeature.c	100	
 000638f0	10	arm	item_last_sibling	matched	src/libttsivonavoice/flite/cst_ffeature.c	100	

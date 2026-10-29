@@ -16,7 +16,6 @@
 #include "tts_track.h"
 #include "tts_voxdb.h"
 
-typedef struct unit_selector unit_selector;
 void unit_selector_free(unit_selector *s);
 void *val_userdata(const cst_val *v);
 cst_val *userdata_val(const void *v);
@@ -26,28 +25,7 @@ int wave_crossfade(short *dst, short n, const short *src, short len);
 int ivona_time_usec(void);
 float metrics_add_time(cst_features *metrics, const char *name, int usec);
 
-/* a mark (0x14 bytes) */
-typedef struct wavesynth_mark {
-    cst_val *a;                 /* items, stored as vals */
-    cst_val *b;
-    int unit;                   /* +0x08 */
-    int start;                  /* +0x0c */
-    int end;                    /* +0x10 */
-} wavesynth_mark;
-
-typedef struct wavesynth {
-    int unk_0;
-    void *seg;                  /* +0x04 */
-    cst_wave *wave;             /* +0x08 */
-    int pos;                    /* +0x0c: samples written */
-    int pending;                /* +0x10 */
-    int total;                  /* +0x14 */
-    cst_val *marks;             /* +0x18: userdata wavesynth_mark */
-    unit_selector *selector;    /* +0x1c */
-    int unk_20[6];
-} wavesynth;
-
-CST_VAL_USER_TYPE_DCLS(wavesynth, wavesynth)
+#include "tts_wavesynth.h"
 
 /* 0x62174 arm: writes a unit's context as a full-context label. */
 void vox_unit_print(cst_file f, const vox_unit *u)
