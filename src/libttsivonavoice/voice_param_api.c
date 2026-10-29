@@ -3,9 +3,11 @@
  * voice_params[] to the typed handlers of voice_param.c.
  */
 #include <string.h>
+#include "cst_features.h"
 #include "cst_string.h"
 #include "tts_internal.h"
 #include "ivona_util.h"
+#include "tts_voice.h"
 #include "voice_param.h"
 
 typedef struct voice_param_def {
@@ -91,5 +93,21 @@ error:
     tts_set_error(TTS_STATUS_INVALID_ARGUMENT);
     ret = 0;
 end:
+    return ret;
+}
+
+/* 0x3d9a0: sets every parameter to its default. Returns 0 if one failed. */
+int voice_params_init(tts_voice *v)
+{
+    const voice_param_def *p;
+    int ret = 1;
+
+    feat_set_float(VOICE_FEATURES(v), "pause_base_len", 0);
+    voice_quality_init(v);
+    if (!feat_present(VOICE_FEATURES(v), "param_amplify_max"))
+        feat_set_float(VOICE_FEATURES(v), "param_amplify_max", 1.6f);
+    for (p = voice_params; p->name; p++)
+        if (p->fn != (voice_param_fn)voice_param_bool_plain && !p->fn(v, "set", p->feat, "def", NULL))
+            ret = 0;
     return ret;
 }

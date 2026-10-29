@@ -42,7 +42,7 @@ void voice_reg_fixup(voice_reg *reg);
 void voice_attach_language(voice_reg *reg, tts_lang_desc *lang,
                            void *(*part_data)(tts_lang_desc *lang, const char *name));
 int vox_file_check(const char *path);
-void voice_params_init(tts_voice *v);
+int voice_params_init(tts_voice *v);
 void pls_lexicon_free(void *lex);
 void *pls_lexicon_parse(const char *data, size_t size, const char *lang_codes, tts_msg **msgs,
                         int flags);

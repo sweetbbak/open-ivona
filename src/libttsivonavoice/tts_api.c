@@ -53,8 +53,8 @@ int license_acquire(void *license, void *key);
 void license_free(void *p);
 
 int tts_unload_all_languages(tts_instance *tts);
-void FUN_000f435c(int x);
-void FUN_000e3070(void);
+void ERR_remove_state(int x);
+void CRYPTO_cleanup_all_ex_data(void);
 void curl_global_cleanup(void);
 void ivona_mutex_free(pthread_mutex_t *m);
 void res_cache_free(res_cache *c);
@@ -510,9 +510,9 @@ int tts_destroy(tts_instance *tts)
     tts->addons_lock = NULL;
     cst_free(tts);
     curl_global_cleanup();
-    FUN_000f435c(0);
+    ERR_remove_state(0);
     if (--g_tts_instance_count == 0)
-        FUN_000e3070();
+        CRYPTO_cleanup_all_ex_data();
     return 1;
 }
 

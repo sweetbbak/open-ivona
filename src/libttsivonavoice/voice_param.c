@@ -9,10 +9,8 @@
 #include "tts_internal.h"
 #include "tts_cert.h"
 #include "ivona_util.h"
+#include "tts_voice.h"
 #include "voice_param.h"
-
-/* the voice's feature set (voice_feats -> engine voice -> features) */
-#define VOICE_FEATURES(v) (**(cst_features ***)(v)->voice_feats)
 
 /* the voice's default feature values (consulted for "def") */
 #define VOICE_DEFAULTS(v) (((cst_features **)(v)->voice_feats)[5])
@@ -540,4 +538,31 @@ int voice_param_pointer(tts_voice *v, const char *op, const char *feat, const ch
         }
     }
     return ret;
+}
+
+/* features copied from the voice library's registration into the voice's own */
+static const char *const voice_copied_feats[] = { "text_maxwordlength", NULL };
+
+/* 0x3d5a0: the unit selection beam ("quality") from the voice library, and the features in
+ * voice_copied_feats. */
+void voice_quality_init(tts_voice *v)
+{
+    voice_data *d = VOICE_DATA(v);
+    int beam = get_param_int(d->reg->features, "viterbi_beam", -1);
+    const char *const *f;
+    const cst_val *val;
+
+    if (beam < 1) {
+        d = VOICE_DATA(v);
+        d->unk_10 = (void *)50;
+        beam = 25;
+    } else {
+        d = VOICE_DATA(v);
+        d->unk_10 = (void *)beam;
+        beam >>= 1;
+    }
+    feat_set_int(d->features, "viterbi_beam", beam);
+    for (f = voice_copied_feats; *f; f++)
+        if ((val = feat_val(VOICE_FEATURES(v), *f)) != NULL)
+            feat_set(VOICE_DATA(v)->features, *f, val);
 }

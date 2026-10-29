@@ -453,7 +453,7 @@ addr	size	mode	name	status	src	score	note
 00037bf0	1e0	arm	dynamic_voxdbs_parse	wip	src/libttsivonavoice/addon.c	80.0	
 00037dd0	2b4	arm	tts_dict_save	wip	src/libttsivonavoice/dict.c	75.1	
 00038084	268	arm	dict_split_line	matched	src/libttsivonavoice/dict.c	100	
-000382ec	830	arm	dict_parse	wip	src/libttsivonavoice/dict.c	19.8	
+000382ec	830	arm	dict_parse	wip	src/libttsivonavoice/dict.c	20.0	
 00038b1c	64	arm	dict_load_file	matched	src/libttsivonavoice/dict.c	100	
 00038b80	208	arm	tts_dict_load	matched	src/libttsivonavoice/dict.c	100	
 00038d88	64	arm	dict_load_mem	matched	src/libttsivonavoice/dict.c	100	
@@ -530,10 +530,10 @@ addr	size	mode	name	status	src	score	note
 0003d1ec	124	arm	voice_param_pointer	matched	src/libttsivonavoice/voice_param.c	100	
 0003d310	148	arm	FUN_0003d310	todo			
 0003d458	148	arm	FUN_0003d458	todo			
-0003d5a0	a8	arm	FUN_0003d5a0	todo			
+0003d5a0	a8	arm	voice_quality_init	wip	src/libttsivonavoice/voice_param.c	15.8	
 0003d648	224	arm	FUN_0003d648	todo			
 0003d86c	134	arm	tts_voice_param	wip	src/libttsivonavoice/voice_param_api.c	51.8	
-0003d9a0	f8	arm	voice_params_init	todo			
+0003d9a0	f8	arm	voice_params_init	wip	src/libttsivonavoice/voice_param_api.c	68.3	
 0003da98	124	arm	streamer_plain_text	matched	src/libttsivonavoice/streamer.c	100	
 0003dbbc	4	arm	wavedict_new	matched	src/libttsivonavoice/streamer.c	100	
 0003dbc0	64	arm	wavedict_remove	matched	src/libttsivonavoice/streamer.c	100	

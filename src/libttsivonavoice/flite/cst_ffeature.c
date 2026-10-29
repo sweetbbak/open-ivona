@@ -151,7 +151,7 @@ cst_item *item_traverse(const cst_item *item, ...)
 
 /* 0x63aec arm: feature name of item: a feature function of the language or the
  * utterance, else the item's feature; "0" if missing. */
-static const cst_val *item_feat_func(const cst_item *item, const char *name)
+const cst_val *item_feat_func(const cst_item *item, const char *name)
 {
     const char *arg = cst_strrchr(name, '_');
     char *base = NULL;

@@ -1,0 +1,13 @@
+/* Symbols the original libttsivonavoice.so exports (besides its statically linked runtime):
+ * the public API, the CIvonaTTS wrapper and android_syslog. Used by tools/build_engine.py. */
+{
+  global:
+    tts_*;
+    engine_rvd_extensions_marker;
+    extern "C++" {
+      CIvonaTTS::*;
+      "android_syslog(int, char const*, ...)";
+    };
+  local:
+    *;
+};

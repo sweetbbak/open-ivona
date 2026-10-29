@@ -26,5 +26,7 @@ int voice_param_pointer(tts_voice *v, const char *op, const char *feat, const ch
 int FUN_0003d310(tts_voice *v, const char *op, const char *feat, const char *which, void *io_val);
 int FUN_0003d458(tts_voice *v, const char *op, const char *feat, const char *which, void *io_val);
 int FUN_0003d648(tts_voice *v, const char *op, const char *feat, const char *which, void *io_val);
+void voice_quality_init(tts_voice *v);
+int voice_params_init(tts_voice *v);
 
 #endif

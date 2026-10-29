@@ -24,7 +24,7 @@ cst_val *features_val(const cst_features *v)
 }
 
 /* 0x51abc */
-static cst_featvalpair *feat_find_featpair(const cst_features *f, const char *name)
+cst_featvalpair *feat_find_featpair(const cst_features *f, const char *name)
 {
     cst_featvalpair *n;
 

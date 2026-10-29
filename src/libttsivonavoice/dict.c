@@ -34,7 +34,7 @@ ivona_ustr *ivona_ustr_decode(const char *s, const char *encoding);
 void ivona_ustr_free(ivona_ustr *u);
 ivona_ustr *ustr_new(unsigned int pos, const char *s, size_t n);
 void ustr_clear(ivona_ustr *u);
-ivona_ustr *ustr_recode(ivona_ustr *src, ivona_ustr *dst, const char *encoding);
+ivona_ustr *ustr_decode_into(const ivona_ustr *u, ivona_ustr *out, const char *charset);
 
 typedef struct ustr_span {
     size_t start;
@@ -358,7 +358,7 @@ int dict_parse(textstream *ts, const char *encoding, tts_dict_entry ***dictp, co
             ustr_clear(p.line);
             ustr_append(p.line, textstream_ptr(p.ts), len, &span);
             ustr_clear(p.utf8);
-            r = dict_split_line(ustr_recode(p.line, p.utf8, p.encoding)->data,
+            r = dict_split_line(ustr_decode_into(p.line, p.utf8, p.encoding)->data,
                                 &rule, &rule_end, &change, &change_end);
             if (r == 1) {
                 n = dict_unescape(rule, rule_end - rule);
