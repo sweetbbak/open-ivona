@@ -77,6 +77,49 @@ void fetcher_delete(fetcher *f);
 #define FETCH_ABORTED   1
 #define FETCH_OK        3
 
+/* what tts_get_input_warning uses of a streamer and its document (streamer.c, ssml_doc.h) */
+typedef struct doc_warnings_view {
+    int unk_0[12];
+    tts_msg *warnings;          /* +0x30: pending */
+    tts_msg *warning;           /* +0x34: the one last returned */
+} doc_warnings_view;
+
+typedef struct streamer_doc_view {
+    int unk_0[8];
+    doc_warnings_view *doc;     /* +0x20 */
+} streamer_doc_view;
+
+/* 0x401e4 arm: exported. Pops the next warning about st's input (0 if there is none). The text
+ * of the one returned stays valid until the next call. */
+enum tts_input_warning_code tts_get_input_warning(tts_streamer *st, int *byte_offset, int *line,
+                                                  const char **msg)
+{
+    streamer_doc_view *s;
+    doc_warnings_view *d;
+    tts_msg *w;
+
+    if (st == NULL || (s = st->data) == NULL) {
+        tts_set_error(TTS_STATUS_INVALID_ARGUMENT);
+        return 0;
+    }
+    if ((d = s->doc) == NULL)
+        return 0;
+    tts_msg_free(d->warning);
+    d->warning = NULL;
+    if ((w = d->warnings) == NULL)
+        return 0;
+    d->warning = w;
+    if (byte_offset)
+        *byte_offset = w->line;
+    if (line)
+        *line = w->column;
+    if (msg)
+        *msg = w->text;
+    d->warnings = w->next;
+    w->next = NULL;
+    return w->code;
+}
+
 /* 0x4029c arm: the part of lang named name, else the last one named fallback, else the first. */
 lang_part *lang_find_part(tts_lang_desc *lang, const char *name, const char *fallback)
 {

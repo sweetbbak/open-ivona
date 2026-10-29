@@ -551,7 +551,7 @@ addr	size	mode	name	status	src	score	note
 0003f2b0	98	arm	tts_wave_delete	wip	src/libttsivonavoice/streamer.c	68.4	
 0003f348	cfc	arm	tts_streamer_synth	wip	src/libttsivonavoice/streamer.c	31.1	
 00040044	1a0	arm	tts_streamer_jump	wip	src/libttsivonavoice/streamer.c	80.8	
-000401e4	b8	arm	tts_get_input_warning	todo			
+000401e4	b8	arm	tts_get_input_warning	wip	src/libttsivonavoice/voice.c	30.4	
 0004029c	ec	arm	lang_find_part	wip	src/libttsivonavoice/voice.c	86.7	
 00040388	18	arm	lang_part_data	matched	src/libttsivonavoice/voice.c	100	
 000403a0	8	arm	pls_entry_free	matched	src/libttsivonavoice/voice.c	100	
@@ -573,9 +573,9 @@ addr	size	mode	name	status	src	score	note
 00041784	5c	arm	FUN_00041784	todo			
 000417e0	308	arm	FUN_000417e0	todo			
 00041ae8	1fc	arm	phoneme_alphabet_id	todo			
-00041ce4	10	arm	phoneme_split_words	todo			
+00041ce4	10	arm	phoneme_split_words	matched	src/libttsivonavoice/phoneme.c	100	
 00041cf4	c0	arm	phoneme_convert	todo			
-00041db4	128	arm	phone_viseme	todo			
+00041db4	128	arm	phone_viseme	wip	src/libttsivonavoice/phoneme.c	68.9	
 00041edc	8	arm	FUN_00041edc	todo			
 00041ee4	9c	arm	FUN_00041ee4	todo			
 00041f80	200	arm	FUN_00041f80	todo			
