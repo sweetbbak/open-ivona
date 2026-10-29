@@ -57,3 +57,62 @@ int vorbis_ogg_unit_decode(vox_decoder *d, const unsigned char *data, unsigned i
     (void)n_samples;
     return -1;
 }
+
+/* SSML-only functions, unreachable while the runnable build has SSML input off
+ * (IVONA_CERT_SSML=0, docs/notes/ssml-deferred.md): plain text never has <audio> or <phoneme>
+ * elements, lexicon rules in SSML form are skipped, and input is never sniffed for SSML.
+ * Reaching one means SSML was enabled before these were written. */
+#include <stdlib.h>
+
+static void ssml_unavailable(const char *name)
+{
+    fprintf(stderr, "ivona: %s is not decompiled yet (SSML input, see ssml-deferred.md)\n", name);
+    abort();
+}
+
+void ssml_audio_apply_attrs(void *doc, void *e, void *w)
+{
+    (void)doc;
+    (void)e;
+    (void)w;
+    ssml_unavailable("ssml_audio_apply_attrs");
+}
+
+int phoneme_alphabet_id(const char *alphabet, const char *lang)
+{
+    (void)alphabet;
+    (void)lang;
+    ssml_unavailable("phoneme_alphabet_id");
+    return 0;
+}
+
+void *phoneme_convert(int alphabet, const char *ph)
+{
+    (void)alphabet;
+    (void)ph;
+    ssml_unavailable("phoneme_convert");
+    return NULL;
+}
+
+void *lex_apply_ssml(void *rules, void *data, const char *src, const void *text, void *a,
+                     void *b, void *c, void *ap)
+{
+    (void)rules;
+    (void)data;
+    (void)src;
+    (void)text;
+    (void)a;
+    (void)b;
+    (void)c;
+    (void)ap;
+    ssml_unavailable("lex_apply_ssml");
+    return NULL;
+}
+
+int text_is_ssml(const char *s, int len)
+{
+    (void)s;
+    (void)len;
+    ssml_unavailable("text_is_ssml");
+    return 0;
+}

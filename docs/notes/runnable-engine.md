@@ -36,6 +36,7 @@ separate from the matching build, so non-matching code is fine as long as it is 
 | function | why it's stubbed | effect |
 |---|---|---|
 | `vorbis_unit_*`, `vorbis_ogg_unit_*` | Tremor deferred (vox codecs 8/12, Windows voices only) | opening such a voice fails; Android voices use SILK (14) |
+| `ssml_audio_apply_attrs`, `phoneme_alphabet_id`, `phoneme_convert`, `lex_apply_ssml`, `text_is_ssml` | SSML only, deferred (`ssml-deferred.md`) | unreachable with `IVONA_CERT_SSML=0`; they abort if reached |
 
 Remove a stub when the real function is written.
 

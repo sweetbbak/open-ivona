@@ -27,7 +27,8 @@ Written and functional, not matching yet:
   `ssml_audio_fetch`, `ssml_parse`, `ssml_start_element`, `ssml_end_element`,
   `ssml_chardata`, `ssml_text_expand`, `ssml_apply_dict` / `_prm`, `say_as_lookup`.
 
-Not written (called only from SSML elements; the link fails until they exist):
+Not written. The runnable build has aborting stubs for these (`runnable_stubs.c`); remove each stub
+when the function is written:
 - `phoneme_alphabet_id` (0x41ae8), `phoneme_split_words` (0x41ce4, `strlist_split(ph, "#")`),
   `phoneme_convert` (0x41cf4) and its helpers `FUN_000417e0` / `FUN_00041540`.
 - `ssml_audio_apply_attrs` (0x27920): clipBegin / clipEnd / soundLevel / speed / repeatCount
