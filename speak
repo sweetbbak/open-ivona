@@ -67,7 +67,7 @@ case "$VOICE_LIB" in
     original) VLIB=target/libvoice_en_gb_amy.so ;;
     decomp)
         VLIB=build/voice/libvoice_en_gb_amy.so
-        if [ ! -f "$VLIB" ] || [ -n "$(find src include config tools/build_runnable.py -newer "$VLIB" \
+        if [ ! -f "$VLIB" ] || [ -n "$(find src include config symbols tools/build_runnable.py tools/asm2c.py tools/gen_assets.py -newer "$VLIB" \
                 -type f -print -quit)" ]; then
             step "building the decompiled voice library ($VLIB)"
             if ! .venv/bin/python tools/build_runnable.py -b libvoice_en_gb_amy > build/voice.log 2>&1; then

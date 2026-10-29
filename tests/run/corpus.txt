@@ -18,3 +18,10 @@ A$AP Rocky and The Byrds played Wavves' songs.
 www.example.com and info@example.org are made up addresses.
 In 2020, 7 out of 10 people said "maybe".
 Once upon a time, in a land far, far away, there lived a king who had three daughters. The youngest was the most beautiful of all, and the sun itself, which has seen so many things, was astonished whenever it shone in her face.
+# Homographs (en_word_pos's part-of-speech rules)
+I read the book yesterday, and now I read it again.
+They record a new record; the content made him content.
+Wind the clock, the wind is strong. We live in a live broadcast.
+The bass player caught a bass. Lead the way to the lead mine.
+She will present the present. Nice is nice in June. Please read this.
+I object to that object. Let me close the door; he lives close by.

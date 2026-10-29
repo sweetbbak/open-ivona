@@ -46,6 +46,9 @@ TARGETS = {
                   "src/libttsivonavoice/runnable_stubs_vorbis.c"],
         # opaque byte tables extracted from target/ (tools/gen_assets.py)
         "assets": True,
+        # functions not decompiled yet, lifted from target/ as functional stand-ins
+        # (tools/asm2c.py): the homograph part-of-speech rules
+        "lifted": ["en_word_pos"],
     },
 }
 OUT = ""
@@ -97,6 +100,9 @@ def main() -> int:
     if t.get("assets"):
         subprocess.run([sys.executable, path("tools", "gen_assets.py"), args.bin], check=True)
         srcs.add(f"build/gen/{args.bin}/assets.c")
+    for fn in t.get("lifted", []):
+        subprocess.run([sys.executable, path("tools", "asm2c.py"), args.bin, fn], check=True)
+        srcs.add(f"build/gen/{args.bin}/lifted_{fn}.c")
     srcs = sorted(s for s in srcs if os.path.exists(path(s)))
     defines = t["defines"] + ["-D" + d for d in args.D]
     script = []

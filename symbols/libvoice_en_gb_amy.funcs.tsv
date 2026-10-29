@@ -669,11 +669,7 @@ addr	size	mode	name	status	src	score	note
 0003c558	118	arm	en_spell_word	wip	src/libvoice_en_gb_amy/en_word.c	95.7	
 0003c670	117c	arm	en_word_pron	wip	src/libvoice_en_gb_amy/en_word.c	24.9	
 0003d7ec	11c	arm	en_word_to_segments	wip	src/libvoice_en_gb_amy/en_word.c	60.6	
-0003d908	316c	arm	en_word_pos	todo			
-00040a74	2348	arm	FUN_00040a74	todo			
-00042dbc	2388	arm	FUN_00042dbc	todo			
-00045144	2264	arm	FUN_00045144	todo			
-000473a8	f20	arm	FUN_000473a8	todo			
+0003d908	a9c0	arm	en_word_pos	todo			
 000482c8	20	arm	en_us_syllabify	matched	src/libvoice_en_gb_amy/en_postlex.c	100	
 000482e8	20	arm	en_gb_syllabify	matched	src/libvoice_en_gb_amy/en_postlex.c	100	
 00048308	ac	arm	en_syllabify	matched	src/libvoice_en_gb_amy/en_postlex.c	100	
