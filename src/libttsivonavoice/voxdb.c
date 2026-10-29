@@ -17,6 +17,10 @@
 #define VOX_MAGIC_CDXV 0x56584443
 #define VOX_MAGIC_DDXV 0x56584444
 
+int blacklists_contain(const cst_val *l, int id);
+int metrics_add_int(cst_features *metrics, const char *name, int v);
+int metrics_max_int(cst_features *metrics, const char *name, int v);
+float metrics_set_float(cst_features *metrics, const char *name, float v);
 float acoustic_stub_1(const void *a, const void *b, int x);
 
 int ivona_is_dir(const char *path);
@@ -651,7 +655,7 @@ static int select_cand_cmp_cost(const void *a, const void *b)
 /* 0x5fbc0 arm */
 static int select_cand_cmp_8(const void *a, const void *b)
 {
-    unsigned int x = ((const select_cand *)a)->unk_8, y = ((const select_cand *)b)->unk_8;
+    unsigned int x = ((const select_cand *)a)->total, y = ((const select_cand *)b)->total;
 
     if (x < y)
         return -1;
@@ -718,6 +722,424 @@ void select_segment_resize(select_segment *seg, int n)
 void select_segment_sort(select_segment *seg)
 {
     qsort(seg->cands, seg->n_cands, sizeof(select_cand), select_cand_cmp_cost);
+}
+
+#define VITERBI_INF 1000000000
+#define PRESELECT_MAX 50
+
+/* inserts v into the ascending k best path costs */
+#define BEST_INSERT(best, k, v)                                                      \
+    do {                                                                             \
+        int lo_ = 0, hi_ = (int)(k) - 1, mid_ = 0;                                   \
+        unsigned int *p_;                                                            \
+        while (lo_ <= hi_) {                                                         \
+            mid_ = lo_ + (hi_ - lo_) / 2;                                            \
+            if ((v) < (best)[mid_])                                                  \
+                hi_ = mid_ - 1;                                                      \
+            else if ((v) == (best)[mid_])                                            \
+                break;                                                               \
+            else                                                                     \
+                lo_ = mid_ + 1;                                                      \
+        }                                                                            \
+        if (lo_ > hi_ && (best)[mid_] < (v))                                         \
+            mid_++;                                                                  \
+        p_ = &(best)[mid_];                                                          \
+        if ((unsigned int)(mid_ + 1) < (unsigned int)(k))                            \
+            memmove(p_ + 1, p_, ((k) - 1 - mid_) * sizeof(unsigned int));           \
+        *p_ = (v);                                                                   \
+    } while (0)
+
+/* the unit's first (half 0) or second (half 1) context byte */
+#define UNIT_CTX(db, u) ((db)->unit_data[(db)->units[u].data + 2] & 0xf)
+
+/* 0x5fefc arm: advances the unit selection: computes (and preselects) the candidates of the
+ * segments up to the next boundary, then runs the beam-limited Viterbi search over them
+ * until the best path is fixed at some segment; returns the (checksum, unit) pairs of the
+ * newly fixed path (*n of them), NULL when there is nothing more to select. */
+int *unit_select_viterbi(unit_selector *s, unsigned int beam, const cst_val *bl, cst_features *m,
+                         unsigned int *n_out, int threads)
+{
+    int nsegs = s->n_segs, i, end, j, k, n, calls, fb, fixed, q, p;
+    int t0, t, fallback = 0, model_calls = 0, pre_time = 0, sort_time = 0;
+    unsigned int u, cnt, lo, hi, total, jc, keep, na, nb;
+    select_segment *seg, *prev, *cur;
+    select_cand *c, *pc, *nc, *b;
+    const diphonedb *db;
+    const vox_unit_range *r;
+    select_model_cost_fn cost;
+    int *path;
+    union {
+        struct {
+            vox_unit a;
+            vox_unit b;
+        } u;
+        struct {
+            unsigned char pad[0x9c];
+            unsigned int best[2002];
+        } s;
+    } w;
+    unsigned int *best = w.s.best;
+    int msum, jsum;
+
+    t0 = m ? ivona_time_usec() : 0;
+    if (s->n_segs == 0)
+        return NULL;
+    if (s->done)
+        return NULL;
+    i = s->n_ready;
+    if (s->pos + 1 >= i) {
+        end = nsegs;
+        if (i < nsegs - 2) {
+            for (k = i; k != nsegs - 2; k++) {
+                if (s->segs[k].boundary) {
+                    end = k + 2;
+                    break;
+                }
+            }
+        }
+        if (i < end) {
+            for (; i != end; i++) {
+                seg = &s->segs[i];
+                r = seg->range;
+                select_segment_resize(seg, r->count);
+                calls = 0;
+                fb = 0;
+                n = 0;
+                if (r->count == 0)
+                    seg->n_cands = 0;
+                else {
+                    for (j = 0; j < r->count; j++) {
+                        u = ((const unsigned int *)seg->db->sec4)[r->first + j];
+                        if (blacklists_contain(bl, u))
+                            continue;
+                        db = seg->db;
+                        if (strcmp((const char *)seg->target[0].p88, "+") == 0 && seg->target[0].f1d != UNIT_CTX(db, u))
+                            continue;
+                        if (strcmp((const char *)seg->target[1].p88, "+") == 0 && seg->target[1].f1d != UNIT_CTX(db, u + 1))
+                            continue;
+                        diphonedb_unit_decode(db, &db->units[u], &w.u.a);
+                        diphonedb_unit_decode(seg->db, &seg->db->units[u + 1], &w.u.b);
+                        cost = seg->model_cost;
+                        seg->cands[n].unit = u;
+                        if (cost == NULL)
+                            seg->model_cost = cost = s->model_cost;
+                        seg->cands[n].cost = cost(&w.u.a, &w.u.b, &seg->target[0], &seg->target[1]);
+                        n++;
+                        calls++;
+                    }
+                    seg->n_cands = n;
+                    if (n <= PRESELECT_MAX) {
+                        /* too few: add the units of the wrong context too */
+                        for (j = 0; j < r->count; j++) {
+                            u = ((const unsigned int *)seg->db->sec4)[r->first + j];
+                            if (blacklists_contain(bl, u))
+                                continue;
+                            db = seg->db;
+                            if (strcmp((const char *)seg->target[0].p88, "+") != 0
+                                || seg->target[0].f1d == UNIT_CTX(db, u)) {
+                                if (strcmp((const char *)seg->target[1].p88, "+") != 0
+                                    || seg->target[1].f1d == UNIT_CTX(db, u + 1))
+                                    continue;
+                            }
+                            diphonedb_unit_decode(db, &db->units[u], &w.u.a);
+                            diphonedb_unit_decode(seg->db, &seg->db->units[u + 1], &w.u.b);
+                            seg->cands[n].unit = u;
+                            seg->cands[n].cost = s->model_cost(&w.u.a, &w.u.b, &seg->target[0],
+                                                               &seg->target[1]);
+                            fb++;
+                            n++;
+                        }
+                        seg->n_cands = n;
+                    }
+                }
+                t = ivona_time_usec();
+                if (s->preselect)
+                    s->preselect(s, i);
+                else {
+                    seg = &s->segs[i];
+                    n = seg->n_cands;
+                    if (n > PRESELECT_MAX + 1) {
+                        /* keep about PRESELECT_MAX of the cheapest, and those whose
+                         * neighbouring phones match */
+                        hi = 0;
+                        lo = 0xffffffff;
+                        for (k = 0; k < n; k++) {
+                            if (hi < seg->cands[k].cost)
+                                hi = seg->cands[k].cost;
+                            if (lo >= seg->cands[k].cost)
+                                lo = seg->cands[k].cost;
+                        }
+                        if (lo < hi) {
+                            do {
+                                cnt = 0;
+                                for (k = 0; k < n; k++)
+                                    if (seg->cands[k].cost <= lo)
+                                        cnt++;
+                                lo++;
+                            } while (cnt <= PRESELECT_MAX && lo < hi);
+                        }
+                        na = strcmp("pau", seg->target[0].phones[2]->name);
+                        nb = strcmp("pau", seg->target[1].phones[2]->name);
+                        keep = 0;
+                        for (k = 0; k < n; k++) {
+                            c = &seg->cands[k];
+                            u = c->unit;
+                            if (c->cost <= lo
+                                || (na && strcmp(seg->db->phones[seg->db->units[u].phones[1]].name,
+                                                 seg->target[0].phones[1]->name) == 0)
+                                || (nb && strcmp(seg->db->phones[seg->db->units[u + 1].phones[3]].name,
+                                                 seg->target[1].phones[3]->name) == 0)) {
+                                if (k != keep)
+                                    memcpy(&seg->cands[keep], c, sizeof(select_cand));
+                                n = seg->n_cands;
+                                keep++;
+                            }
+                        }
+                        seg->n_cands = keep;
+                    }
+                }
+                pre_time += ivona_time_usec() - t;
+                model_calls += calls;
+                fallback += fb;
+                if (m) {
+                    t = ivona_time_usec();
+                    select_segment_sort(&s->segs[i]);
+                    sort_time += ivona_time_usec() - t;
+                } else
+                    select_segment_sort(&s->segs[i]);
+                if (i == 0) {
+                    seg = &s->segs[0];
+                    for (k = 0; k < seg->n_cands; k++)
+                        seg->cands[k].total = seg->cands[k].cost;
+                }
+            }
+            s->n_ready = i;
+            if (s->pos + 1 < s->n_segs) {
+                prev = &s->segs[s->pos];
+                cur = prev + 1;
+                if (prev->n_cands && cur->n_cands) {
+                    j = k = 0;
+                    do {
+                        pc = &prev->cands[j];
+                        c = &cur->cands[k];
+                        if (pc->unit + 1 == c->unit) {
+                            pc->next = c;
+                            j++;
+                            k++;
+                        } else if (pc->unit < c->unit)
+                            j++;
+                        else
+                            k++;
+                    } while (j < prev->n_cands && k < cur->n_cands);
+                }
+            }
+        }
+    }
+    if (m) {
+        metrics_add_time(m, "diphone_graph_get_diphones_time", ivona_time_usec() - t0);
+        metrics_add_time(m, "diphone_graph_sort_mc_time", sort_time);
+        metrics_add_time(m, "diphone_graph_preselect_time", pre_time);
+        metrics_add_int(m, "diphone_graph_model_cost_calls", model_calls);
+        metrics_add_int(m, "diphone_graph_model_cost_fallback_calls", fallback);
+    }
+
+    fixed = -1;
+    for (;;) {
+        if (s->pos >= s->n_segs - 1) {
+            if (fixed == -1) {
+                /* the end: the cheapest last candidate */
+                s->prev_best = s->best;
+                cur = &s->segs[s->n_segs - 1];
+                k = 0;
+                if (cur->n_cands) {
+                    lo = 0xffffffff;
+                    for (j = 0; j < cur->n_cands; j++) {
+                        if (cur->cands[j].total < lo)
+                            k = j;
+                        if (lo >= cur->cands[j].total)
+                            lo = cur->cands[j].total;
+                    }
+                }
+                s->best = &cur->cands[k];
+                s->fixed = s->n_segs - 1;
+                s->done = 1;
+            }
+            break;
+        }
+        prev = &s->segs[s->pos];
+        cur = prev + 1;
+        s->pos++;
+        for (j = 0; j < (int)beam; j++)
+            best[j] = VITERBI_INF;
+        for (k = 0; k < cur->n_cands; k++)
+            cur->cands[k].total = VITERBI_INF;
+        if (m) {
+            t = ivona_time_usec();
+            qsort(prev->cands, prev->n_cands, sizeof(select_cand), select_cand_cmp_8);
+            metrics_add_time(m, "diphone_graph_sort_dist_time", ivona_time_usec() - t);
+        } else
+            qsort(prev->cands, prev->n_cands, sizeof(select_cand), select_cand_cmp_8);
+        /* continuing a unit costs no join */
+        for (k = 0; k < prev->n_cands; k++) {
+            pc = &prev->cands[k];
+            nc = pc->next;
+            if (nc == NULL)
+                continue;
+            nc->back = pc;
+            nc->total = pc->total + nc->cost;
+            if (beam != 0xffffffff && nc->total < best[beam - 1])
+                BEST_INSERT(best, beam, nc->total);
+        }
+        if (s->pos + 1 < s->n_segs && !prev->boundary) {
+            seg = &s->segs[s->pos + 1];
+            if (cur->n_cands && seg->n_cands) {
+                j = k = 0;
+                do {
+                    c = &cur->cands[j];
+                    nc = &seg->cands[k];
+                    if (c->unit + 1 == nc->unit) {
+                        c->next = nc;
+                        j++;
+                        k++;
+                    } else if (c->unit < nc->unit)
+                        j++;
+                    else
+                        k++;
+                } while (j < cur->n_cands && k < seg->n_cands);
+            }
+        }
+        for (k = 0; k < cur->n_cands; k++) {
+            c = &cur->cands[k];
+            u = c->unit;
+            for (j = 0; j < prev->n_cands; j++) {
+                pc = &prev->cands[j];
+                total = pc->total + c->cost;
+                if (j >= (int)beam && (pc->total != pc[-1].total || j > 2 * (int)beam))
+                    break;
+                if (total >= c->total)
+                    break;
+                if (c->next == NULL && beam != 0xffffffff && total >= best[beam - 1])
+                    break;
+                if (pc->unit + 1 == u)
+                    continue;
+                jc = prev->join_cost(&prev->db->units[pc->unit + 1], &cur->db->units[u], c->total - total);
+                if (jc + total < c->total) {
+                    c->total = jc + total;
+                    c->back = pc;
+                }
+            }
+            if (c->back)
+                c->back->refs++;
+            if (beam != 0xffffffff && c->total < best[beam - 1])
+                BEST_INSERT(best, beam, c->total);
+        }
+        /* drop the paths through unreferenced candidates; a segment left with one live
+         * candidate fixes the path up to it */
+        fixed = -1;
+        for (k = 0; k < prev->n_cands; k++) {
+            pc = &prev->cands[k];
+            if (pc->refs) {
+                prev->alive++;
+                continue;
+            }
+            p = s->pos - 1;
+            if (p <= 0 || (b = pc->back) == NULL || --b->refs != 0)
+                continue;
+            if (--s->segs[p - 1].alive == 1) {
+                if (fixed < p - 1)
+                    fixed = p - 1;
+                continue;
+            }
+            for (q = p - 1; q != 0; q--) {
+                b = b->back;
+                if (b == NULL || --b->refs != 0)
+                    break;
+                if (--s->segs[q - 1].alive == 1) {
+                    if (fixed < q - 1)
+                        fixed = q - 1;
+                    break;
+                }
+            }
+        }
+        if (prev->alive == 1)
+            fixed = s->pos - 1;
+        if (prev->boundary && s->pos + 1 < s->n_segs) {
+            /* a boundary: fix the path at the cheapest candidate */
+            s->prev_best = s->best;
+            if (cur->n_cands == 0) {
+                s->best = cur->cands->back;
+                s->fixed = s->pos - 1;
+                n = 0;
+            } else {
+                k = 0;
+                lo = 0xffffffff;
+                for (j = 0; j < cur->n_cands; j++) {
+                    if (cur->cands[j].total < lo)
+                        k = j;
+                    if (lo >= cur->cands[j].total)
+                        lo = cur->cands[j].total;
+                }
+                b = cur->cands[k].back;
+                total = b->total;
+                s->best = b;
+                s->fixed = s->pos - 1;
+                for (n = 0, j = 0; j < cur->n_cands; j++) {
+                    if (cur->cands[j].back != s->best)
+                        continue;
+                    memmove(&cur->cands[n], &cur->cands[j], sizeof(select_cand));
+                    cur->cands[n].back = NULL;
+                    cur->cands[n].total -= total;
+                    n++;
+                }
+            }
+            cur->n_cands = n;
+            break;
+        }
+        if (fixed >= 0) {
+            for (c = s->segs[fixed].cands; c->refs == 0; c++)
+                ;
+            s->fixed = fixed;
+            s->prev_best = s->best;
+            s->best = c;
+            break;
+        }
+    }
+
+    if (m) {
+        n = 0;
+        msum = jsum = 0;
+        for (c = s->best; c && c != s->prev_best; c = c->back) {
+            jc = c->total - c->cost - (c->back ? c->back->total : 0);
+            msum = metrics_add_int(m, "diphone_graph_dijkstra_model_cost", c->cost);
+            metrics_max_int(m, "diphone_graph_dijkstra_max_model_cost", c->cost);
+            jsum = metrics_add_int(m, "diphone_graph_dijkstra_conc_cost", jc);
+            metrics_max_int(m, "diphone_graph_dijkstra_max_conc_cost", jc);
+            metrics_max_int(m, "diphone_graph_dijkstra_max_total_cost", jc + c->cost);
+            n++;
+        }
+        if ((k = metrics_add_int(m, "diphone_graph_layers", n)) != 0) {
+            metrics_set_float(m, "diphone_graph_dijkstra_model_cost_per_layer", (float)msum / (unsigned int)k);
+            metrics_set_float(m, "diphone_graph_dijkstra_conc_cost_per_layer", (float)jsum / (unsigned int)k);
+        }
+        metrics_add_time(m, "diphone_graph_dijkstra_time", ivona_time_usec() - t0);
+    }
+    c = s->best;
+    if (c == NULL || c == s->prev_best) {
+        n = 0;
+        path = cst_safe_alloc(0, 2 * sizeof(int));
+    } else {
+        for (n = 0, b = c; b != s->prev_best && b; b = b->back)
+            n++;
+        path = cst_safe_alloc(n, 2 * sizeof(int));
+        for (k = n; c != s->prev_best && c; c = c->back) {
+            k--;
+            path[2 * k] = s->segs[k].db->key;
+            path[2 * k + 1] = c->unit;
+        }
+    }
+    if (n_out)
+        *n_out = n;
+    return path;
 }
 
 /* 0x61408 arm */

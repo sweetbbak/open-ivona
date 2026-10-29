@@ -112,39 +112,6 @@ typedef struct diphonedb {
     vox_decoder *dec;           /* +0x48 */
 } diphonedb;
 
-/* a unit candidate for one segment (24 bytes) */
-typedef struct select_cand {
-    int unk_0[2];
-    unsigned int unk_8;
-    unsigned int cost;          /* +0x0c */
-    int unk_10[2];
-} select_cand;
-
-/* one segment of a unit selection (0x158 bytes) */
-typedef struct select_segment {
-    unsigned char unk_0[0x144];
-    select_cand *cands;         /* +0x144 */
-    int n_cands;                /* +0x148 */
-    unsigned char unk_14c[0xc];
-} select_segment;
-
-/* the extra unit databases of a voice */
-typedef struct dynamic_voxdbs {
-    diphonedb *a;
-    diphonedb *b;
-} dynamic_voxdbs;
-
-typedef struct unit_selector {
-    cst_utterance *utt;
-    dynamic_voxdbs *dynamic;    /* +0x04 */
-    int unk_8[4];
-    select_segment *segs;       /* +0x18 */
-    int n_segs;                 /* +0x1c */
-    int unk_20[3];
-    int done;                   /* +0x2c: the selection covers the utterance */
-} unit_selector;
-
-
 /* a decoded unit (0x9c bytes) */
 typedef struct vox_unit {
     float dur;                          /* +0x00: seconds */
@@ -169,5 +136,63 @@ typedef struct vox_unit {
     void *p88, *p8c, *p90, *p94;        /* +0x88 */
     unsigned int f98;                   /* +0x98 */
 } vox_unit;
+
+/* a unit candidate for one segment (24 bytes) */
+typedef struct select_cand {
+    unsigned int cost;          /* target (model) cost */
+    int refs;                   /* +0x04: candidates of the next segment whose best path runs here */
+    unsigned int total;         /* +0x08: best path cost up to here */
+    unsigned int unit;          /* +0x0c */
+    struct select_cand *back;   /* +0x10: previous candidate on the best path */
+    struct select_cand *next;   /* +0x14: the next segment's candidate continuing this unit */
+} select_cand;
+
+/* the units a segment may use: db->sec4[first..first + count) */
+typedef struct vox_unit_range {
+    int unk_0[3];
+    unsigned int first;         /* +0x0c */
+    unsigned int count;         /* +0x10 */
+} vox_unit_range;
+
+typedef unsigned int (*select_model_cost_fn)(const vox_unit *a, const vox_unit *b,
+                                             const vox_unit *ta, const vox_unit *tb);
+typedef unsigned int (*select_join_cost_fn)(const vox_unit_rec *a, const vox_unit_rec *b,
+                                            unsigned int limit);
+
+/* one segment (diphone) of a unit selection (0x158 bytes) */
+typedef struct select_segment {
+    const vox_unit_range *range;
+    vox_unit target[2];         /* +0x04, +0xa0: the wanted halves */
+    select_join_cost_fn join_cost;      /* +0x13c */
+    int boundary;               /* +0x140: the search may fix its path here */
+    select_cand *cands;         /* +0x144 */
+    int n_cands;                /* +0x148 */
+    int alive;                  /* +0x14c: candidates still on some path */
+    const struct diphonedb *db; /* +0x150 */
+    select_model_cost_fn model_cost;    /* +0x154 */
+} select_segment;
+
+/* the extra unit databases of a voice */
+typedef struct dynamic_voxdbs {
+    diphonedb *a;
+    diphonedb *b;
+} dynamic_voxdbs;
+
+typedef struct unit_selector {
+    cst_utterance *utt;
+    dynamic_voxdbs *dynamic;    /* +0x04 */
+    void (*preselect)(struct unit_selector *s, int i);  /* +0x08 */
+    select_model_cost_fn model_cost;    /* +0x0c */
+    select_cand *best;          /* +0x10: end of the path fixed so far */
+    select_cand *prev_best;     /* +0x14: end of the path returned before */
+    select_segment *segs;       /* +0x18 */
+    int n_segs;                 /* +0x1c */
+    int pos;                    /* +0x20: last segment searched */
+    int n_ready;                /* +0x24: segments with candidates */
+    int fixed;                  /* +0x28: segment of best */
+    int done;                   /* +0x2c: the selection covers the utterance */
+} unit_selector;
+
+
 
 #endif

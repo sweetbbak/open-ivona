@@ -878,7 +878,7 @@ addr	size	mode	name	status	src	score	note
 00050438	60	arm	utt_from_text	matched	src/libttsivonavoice/synth.c	100	
 00050498	60	arm	utt_from_phones	matched	src/libttsivonavoice/synth.c	100	
 000504f8	58	arm	utt_synth_frontend	wip	src/libttsivonavoice/synth.c	81.8	
-00050550	520	arm	utt_synth_wave	todo			
+00050550	520	arm	utt_synth_wave	wip	src/libttsivonavoice/synth.c	23.2	
 00050a70	4c	arm	utt_rewind	matched	src/libttsivonavoice/synth.c	100	
 00050abc	3c	arm	voice_reg_set_lexicon	matched	src/libttsivonavoice/synth.c	100	
 00050af8	38	arm	synth_text	matched	src/libttsivonavoice/synth.c	100	
@@ -1361,8 +1361,8 @@ addr	size	mode	name	status	src	score	note
 0005f6dc	2c	arm	diphonedb_unit_flag	matched	src/libttsivonavoice/voxdb.c	100	
 0005f708	464	arm	vox_decoder_read_unit	wip	src/libttsivonavoice/voxdb.c	13.3	
 0005fb6c	30	arm	utt_diphonedb_extra	matched	src/libttsivonavoice/voxdb.c	100	
-0005fb9c	24	arm	select_cand_cmp_cost	matched	src/libttsivonavoice/voxdb.c	100	
-0005fbc0	24	arm	select_cand_cmp_8	todo			
+0005fb9c	24	arm	select_cand_cmp_cost	nonmatching	src/libttsivonavoice/voxdb.c	77.8	
+0005fbc0	24	arm	select_cand_cmp_8	matched	src/libttsivonavoice/voxdb.c	100	
 0005fbe4	60	arm	vox_join_cost	wip	src/libttsivonavoice/voxdb.c	50.0	
 0005fc44	48	arm	unit_selector_new	matched	src/libttsivonavoice/voxdb.c	100	
 0005fc8c	68	arm	unit_selector_free	wip	src/libttsivonavoice/voxdb.c	92.3	
@@ -1370,9 +1370,7 @@ addr	size	mode	name	status	src	score	note
 0005fd58	160	arm	FUN_0005fd58	todo			
 0005feb8	24	arm	select_segment_resize	matched	src/libttsivonavoice/voxdb.c	100	
 0005fedc	20	arm	select_segment_sort	matched	src/libttsivonavoice/voxdb.c	100	
-0005fefc	1088	arm	unit_select_viterbi	todo			
-00060f84	400	arm	FUN_00060f84	todo			
-00061384	84	arm	FUN_00061384	todo			
+0005fefc	150c	arm	unit_select_viterbi	wip	src/libttsivonavoice/voxdb.c	8.7	merged FUN_00060f84/FUN_00061384 (cold tail past a literal pool)
 00061408	1c	arm	dynamic_voxdbs_new	matched	src/libttsivonavoice/voxdb.c	100	
 00061424	44	arm	dynamic_voxdbs_find	matched	src/libttsivonavoice/voxdb.c	100	
 00061468	20	arm	phone_is_breaths	matched	src/libttsivonavoice/voxdb.c	100	
@@ -1405,8 +1403,8 @@ addr	size	mode	name	status	src	score	note
 00062ec0	204	arm	wavesynth_take	wip	src/libttsivonavoice/wavesynth.c	96.9	
 000630c4	4	arm	wavesynth_nop	matched	src/libttsivonavoice/wavesynth.c	100	
 000630c8	27c	arm	cache_decrypt	wip	src/libttsivonavoice/wavesynth.c	66.3	
-00063344	290	arm	cache_encrypt	todo			
-000635d4	224	arm	cache_graph_key	todo			
+00063344	290	arm	cache_encrypt	wip	src/libttsivonavoice/wavesynth.c	69.5	
+000635d4	224	arm	cache_graph_key	wip	src/libttsivonavoice/wavesynth.c	29.9	
 000637f8	e8	arm	utt_cache_key	wip	src/libttsivonavoice/wavesynth.c	49.2	
 000638e0	10	arm	item_first_sibling	matched	src/libttsivonavoice/flite/cst_ffeature.c	100	
 000638f0	10	arm	item_last_sibling	matched	src/libttsivonavoice/flite/cst_ffeature.c	100	

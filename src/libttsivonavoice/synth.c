@@ -206,6 +206,139 @@ cst_utterance *utt_synth_frontend(cst_utterance *u, voice_reg *reg)
     return NULL;
 }
 
+/* a mark of the concatenation (see wavesynth.c) */
+typedef struct wavesynth_mark {
+    cst_item *seg;          /* phone mark: the segment starting here */
+    cst_item *unit;         /* unit mark: the silence/wave word */
+    int more;               /* +0x08: a unit mark that is not the end of the last unit */
+    int start;              /* +0x0c */
+    int end;                /* +0x10 */
+} wavesynth_mark;
+
+cst_wave *concat_synth(cst_utterance *utt, int n, cst_val **marks);
+void wavesynth_mark_free(wavesynth_mark *m);
+void *val_userdata(const cst_val *v);
+char *item_xsampa(cst_item *seg);
+cst_item *item_traverse(const cst_item *item, ...);
+
+#define SEG_WORD(s) item_traverse(s, 4, 0x106, 0x106, 1, 0x106, 0)
+
+/* pushes a new tag for item at sample pos */
+#define PUSH_TAG(l, t) (*(l) = cons_val(audiotag_val(t), *(l)))
+
+/* 0x50550 arm: synthesizes up to max_samples samples; marks (optional) gets the audiotags
+ * of the phones, words and inline silences/waves in them. */
+cst_wave *utt_synth_wave(cst_utterance *u, int max_samples, cst_val **marks)
+{
+    cst_val *ml, *l;
+    cst_wave *w;
+    wavesynth_mark *m;
+    cst_item *it, *p, *pw, *cw, *pword, *cword, *word, *x;
+    audiotag *t;
+    unsigned int flags;
+    int pos;
+
+    if (marks == NULL)
+        return concat_synth(u, max_samples, NULL);
+    w = concat_synth(u, max_samples, &ml);
+    if (w == NULL)
+        return w;
+    *marks = NULL;
+    for (l = ml; l; l = (cst_val *)val_cdr(l)) {
+        m = val_userdata(val_car(l));
+        if (m->seg == NULL) {
+            it = m->unit;
+            if (it == NULL)
+                goto next;
+            pos = m->start;
+            if (m->more == 0)
+                flags = AUDIOTAG_WORD_END;
+            else {
+                p = item_prev(it);
+                if (p && (item_feat_present(p, "silence") || item_feat_present(p, "wave"))) {
+                    t = new_audiotag();
+                    t->sample = pos;
+                    t->flags = AUDIOTAG_WORD_END;
+                    t->name = NULL;
+                    t->phone = NULL;
+                    t->item = p;
+                    PUSH_TAG(marks, t);
+                    pos = m->start;
+                }
+                it = m->unit;
+                flags = m->more == 0 ? AUDIOTAG_WORD_END : AUDIOTAG_WORD;
+            }
+            if (it && (item_feat_present(it, "silence") || item_feat_present(it, "wave"))) {
+                t = new_audiotag();
+                t->name = NULL;
+                t->phone = NULL;
+                t->sample = pos;
+                t->item = it;
+                t->flags = flags;
+                PUSH_TAG(marks, t);
+            }
+            goto next;
+        }
+        pw = item_as(item_prev(m->seg), 4);
+        cw = item_as(m->seg, 4);
+        pword = pw ? SEG_WORD(pw) : NULL;
+        if (cw == NULL)
+            cword = NULL;
+        else {
+            cword = SEG_WORD(cw);
+            if (pw == NULL && cword) {
+                p = item_prev(cword);
+                pos = m->start;
+                if (p && (item_feat_present(p, "silence") || item_feat_present(p, "wave"))) {
+                    t = new_audiotag();
+                    t->flags = AUDIOTAG_WORD_END;
+                    t->name = NULL;
+                    t->phone = NULL;
+                    t->sample = pos;
+                    t->item = p;
+                    PUSH_TAG(marks, t);
+                }
+                goto start;
+            }
+        }
+        if (pw && pword != cword) {
+            word = item_as(item_parent(item_parent(pw)), 1);
+            for (x = item_next(item_as(word, 3)); x; x = item_next(x))
+                if (item_daughter(item_as(x, 4)))
+                    break;
+            t = new_audiotag();
+            t->name = item_feat_string(item_prev(m->seg), "name");
+            t->phone = item_xsampa(item_prev(m->seg));
+            t->sample = m->start;
+            t->flags = x ? AUDIOTAG_WORD_END : AUDIOTAG_WORD_END | AUDIOTAG_PAUSE;
+            t->item = item_parent(word);
+            PUSH_TAG(marks, t);
+        }
+        if (cw == NULL)
+            goto next;
+    start:
+        word = item_as(item_parent(item_parent(cw)), 1);
+        t = new_audiotag();
+        t->name = item_feat_string(m->seg, "name");
+        t->phone = item_xsampa(m->seg);
+        t->sample = m->start;
+        t->flags = AUDIOTAG_PHONE;
+        if (pword != cword) {
+            for (x = item_prev(item_as(word, 3)); x; x = item_prev(x))
+                if (item_daughter(item_as(x, 4)))
+                    break;
+            t->flags |= x ? AUDIOTAG_WORD : AUDIOTAG_WORD | 0x08;
+        }
+        t->item = item_parent(word);
+        PUSH_TAG(marks, t);
+    next:
+        wavesynth_mark_free(m);
+    }
+    delete_val(ml);
+    *marks = val_reverse(*marks);
+    return w;
+}
+
 /* where the backend continues in an utterance */
 typedef struct wavesynth {
     int unk_0;

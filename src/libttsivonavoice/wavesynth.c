@@ -11,6 +11,7 @@
 #include "cst_val_defs.h"
 #include <openssl/evp.h>
 #include <openssl/hmac.h>
+#include <openssl/rand.h>
 #include "cst_file.h"
 #include "cst_wave.h"
 #include "tts_track.h"
@@ -398,30 +399,6 @@ const unsigned char cache_key_secret[32] = {
 };
 int cache_key_secret_len = 32;
 
-/* 0x637f8 arm: the key that encrypts the voice's unit cache, derived from its
- * "cache_encrypt_key" (NULL if it has none). */
-unsigned char *utt_cache_key(const cst_utterance *u)
-{
-    const unsigned char *k;
-    const EVP_MD *md;
-    unsigned char *out = NULL;
-    unsigned int len;
-    HMAC_CTX ctx;
-
-    if (!feat_present(u->features, "cache_encrypt_key") ||
-        (k = val_binary_key(feat_val(u->features, "cache_encrypt_key"))) == NULL)
-        return out;
-    md = EVP_sha256();
-    len = EVP_MD_size(md);
-    out = cst_safe_alloc(len, 1);
-    HMAC_CTX_init(&ctx);
-    HMAC_Init_ex(&ctx, cache_key_secret, cache_key_secret_len, md, NULL);
-    HMAC_Update(&ctx, k, EVP_CIPHER_key_length(EVP_aes_256_cbc()));
-    HMAC_Final(&ctx, out, &len);
-    HMAC_CTX_cleanup(&ctx);
-    return out;
-}
-
 /* 0x630c8 arm: checks the HMAC-SHA256 that ends data (over ad and the ciphertext) and
  * decrypts the AES-256-CBC ciphertext (IV first) with key; *n gets the plaintext size in
  * 8-byte records. NULL (and *n = 0) on failure. */
@@ -494,4 +471,140 @@ unsigned char *cache_decrypt(const unsigned char *data, unsigned int size, const
     }
     *n = 0;
     return NULL;
+}
+
+/* 0x63344 arm: encrypts n 8-byte records with AES-256-CBC under key (random IV first) and
+ * appends an HMAC-SHA256 over ad and the ciphertext; *size gets the total. NULL (and
+ * *size = 0) on failure. */
+unsigned char *cache_encrypt(const int *path, unsigned int n, const void *ad, int adlen,
+                             unsigned int *size, const unsigned char *key, cst_features *m)
+{
+    int maclen = EVP_MD_size(EVP_sha256());
+    const EVP_CIPHER *cipher = EVP_aes_256_cbc();
+    int bs = EVP_CIPHER_block_size(cipher);
+    int t0 = m ? ivona_time_usec() : 0;
+    unsigned char *iv = cst_safe_alloc(bs, 1);
+    unsigned char *out = cst_safe_alloc(maclen + n * 8 + EVP_CIPHER_block_size(EVP_aes_256_cbc()) * 2, 1);
+    EVP_CIPHER_CTX *c;
+    int outl, total;
+    unsigned int len;
+    HMAC_CTX ctx;
+
+    if (RAND_bytes(iv, bs) != 1) {
+        cst_free(iv);
+        cst_free(out);
+        *size = 0;
+        return NULL;
+    }
+    memcpy(out, iv, bs);
+    c = EVP_CIPHER_CTX_new();
+    if (c == NULL) {
+        cst_free(iv);
+        cst_free(out);
+        *size = 0;
+        return NULL;
+    }
+    if (EVP_EncryptInit_ex(c, cipher, NULL, key, iv) != 1) {
+        cst_free(out);
+        cst_free(iv);
+        EVP_CIPHER_CTX_free(c);
+        *size = 0;
+        return NULL;
+    }
+    cst_free(iv);
+    if (EVP_EncryptUpdate(c, out + bs, &outl, (const unsigned char *)path, n * 8) != 1) {
+        cst_free(out);
+        EVP_CIPHER_CTX_free(c);
+        *size = 0;
+        return NULL;
+    }
+    total = bs + outl;
+    if (EVP_EncryptFinal_ex(c, out + total, &outl) != 1) {
+        cst_free(out);
+        EVP_CIPHER_CTX_free(c);
+        *size = 0;
+        return NULL;
+    }
+    total += outl;
+    EVP_CIPHER_CTX_free(c);
+    HMAC_CTX_init(&ctx);
+    HMAC_Init_ex(&ctx, cache_key_secret, cache_key_secret_len, EVP_sha256(), NULL);
+    HMAC_Update(&ctx, ad, adlen);
+    HMAC_Update(&ctx, out, total);
+    HMAC_Final(&ctx, out + total, &len);
+    HMAC_CTX_cleanup(&ctx);
+    *size = total + len;
+    if (m)
+        metrics_add_time(m, "diphone_graph_cache_encrypt_time", ivona_time_usec() - t0);
+    return out;
+}
+
+/* 0x635d4 arm: the graph cache key of a selection: an HMAC-SHA256 (keyed by hkey) over the
+ * engine version, the database, tb_min_distance and the serialized units, followed by the
+ * length of that data. */
+unsigned char *cache_graph_key(const diphonedb *db, const vox_unit *units, int n,
+                               unsigned int *len, const unsigned char *hkey, cst_features *m,
+                               int tb_min_distance)
+{
+    const EVP_MD *md = EVP_sha256();
+    unsigned int maclen = EVP_MD_size(md);
+    int bsize = EVP_MD_block_size(md);
+    unsigned int total = 0;
+    unsigned char *key = cst_safe_alloc(maclen + 4, 1);
+    int t0 = m ? ivona_time_usec() : 0;
+    char *buf = NULL;
+    unsigned int cap = 0, sz;
+    int i;
+    HMAC_CTX ctx;
+
+    HMAC_CTX_init(&ctx);
+    HMAC_Init_ex(&ctx, hkey, bsize, md, NULL);
+    HMAC_Update(&ctx, (const unsigned char *)"1.6.101.3", 9);
+    HMAC_Update(&ctx, (const unsigned char *)db->name, strlen(db->name));
+    total = strlen(db->name) + 0x11;
+    HMAC_Update(&ctx, (const unsigned char *)&db->key, 4);
+    HMAC_Update(&ctx, (const unsigned char *)&tb_min_distance, 4);
+    for (i = 0; i < n; i++, units++) {
+        sz = vox_unit_serialize(NULL, units);
+        if (sz > cap) {
+            cap = sz * 1.5;
+            buf = cst_safe_realloc(buf, cap, 1);
+        }
+        sz = vox_unit_serialize(buf, units);
+        HMAC_Update(&ctx, (const unsigned char *)buf, sz);
+        total += sz;
+    }
+    HMAC_Final(&ctx, key, &maclen);
+    HMAC_CTX_cleanup(&ctx);
+    memcpy(key + maclen, &total, 4);
+    if (len)
+        *len = maclen + 4;
+    cst_free(buf);
+    if (m)
+        metrics_add_time(m, "diphone_graph_cache_make_key_time", ivona_time_usec() - t0);
+    return key;
+}
+
+/* 0x637f8 arm: the key that encrypts the voice's unit cache, derived from its
+ * "cache_encrypt_key" (NULL if it has none). */
+unsigned char *utt_cache_key(const cst_utterance *u)
+{
+    const unsigned char *k;
+    const EVP_MD *md;
+    unsigned char *out = NULL;
+    unsigned int len;
+    HMAC_CTX ctx;
+
+    if (!feat_present(u->features, "cache_encrypt_key") ||
+        (k = val_binary_key(feat_val(u->features, "cache_encrypt_key"))) == NULL)
+        return out;
+    md = EVP_sha256();
+    len = EVP_MD_size(md);
+    out = cst_safe_alloc(len, 1);
+    HMAC_CTX_init(&ctx);
+    HMAC_Init_ex(&ctx, cache_key_secret, cache_key_secret_len, md, NULL);
+    HMAC_Update(&ctx, k, EVP_CIPHER_key_length(EVP_aes_256_cbc()));
+    HMAC_Final(&ctx, out, &len);
+    HMAC_CTX_cleanup(&ctx);
+    return out;
 }
