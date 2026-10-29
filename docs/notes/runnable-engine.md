@@ -55,3 +55,16 @@ Remove a stub when the real function is written.
 `tools/build_engine.py` prints the current list. On the plain-text path (`ssml-deferred.md`), the
 SSML-only ones are `pls_*`, `phoneme_*`, `ssml_audio_apply_attrs`, `lex_apply_ssml` and
 `text_is_ssml`. They still need a definition to link.
+
+## Host tools (`tools/host/build.sh`)
+
+Some decompiled engine code also builds natively, which makes it possible to check it against
+real data without an ARM device:
+
+- `build/host/isef_list LANG.DAT [SECTION]` lists a lang.dat's sections and prints one. The engine's
+  `isef.c` is used as is, patched to OpenSSL 3 for the host.
+
+Amy's `lang_en_gb.dat` holds `prm_lex_list` (`prm_pre_lexicon`, `prm_lexicon`,
+`prm_post_lexicon`), `pls_lex_list` (`pls_lexicon1`, `pls_lexicon2`: PLS alias lexicons),
+`lang_code` "en-GB", `ivona_version` 1.6.101.3 and `lex_data`. So the PLS parser and applier are
+needed even for plain text.
