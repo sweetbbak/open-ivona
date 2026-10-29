@@ -31,8 +31,36 @@ separate from the matching build, so non-matching code is fine as long as it is 
 - **Report.** It lists the undefined symbols by table address. When that list is empty, the
   engine is linked.
 
-**Status (2026-10-28).** It links: `build/engine/libttsivonavoice.so`, 2.0 MB. The NEEDED
-libraries and the exported API are the same as the original's. It has not been run yet.
+**Status (2026-10-28).** It links (`build/engine/libttsivonavoice.so`, 2.0 MB) with the same
+NEEDED libraries and exported API as the original. **It speaks.** Under qemu with the original
+`libvoice_en_gb_amy.so` and Amy's data, it gives:
+- "hello world": 1.04 s, a speech-like envelope (/h/ onset, voiced middle, release);
+- "The quick brown fox jumps over the lazy dog. It was the 3rd of May, 2016.": 7.0 s.
+
+## Running it (qemu-user + real bionic)
+
+```
+toolchain/fetch_android_sysroot.sh    # once: Android 4.4 ARM /system -> toolchain/android-19
+bin/agcc sh -c 'arm-linux-androideabi-gcc --sysroot=/opt/sysroot -Iinclude \
+    -o build/run/tts_run tests/run/tts_run.c -Lbuild/engine -lttsivonavoice'
+cd DIR_WITH_libvoice_en_gb_amy.so_vox_en_gb_amy22i_lang_en_gb.dat
+tools/run_android.sh -l build/engine -l . build/run/tts_run CERT libvoice_en_gb_amy.so \
+    vox_en_gb_amy22i "hello world" out.wav
+```
+
+- **Runner.** `tests/run/tts_run.c` is `examples/example.c` with arguments and WAV output. Any
+  certificate file works (see `cert-bypass.md`).
+- **How it runs.** `tools/run_android.sh` runs `qemu-arm -L toolchain/android-19`, so the
+  programs use Android's own linker and libc. It needs two things:
+  - **System property area.** bionic aborts without `/dev/__properties__`, and only accepts one
+    owned by root. The script writes an empty KitKat property area there and runs inside a user
+    namespace (`unshare -r`), where the file looks root-owned.
+  - **PID namespace.** KitKat bionic stores only 16 bits of the owner tid in a mutex. With host
+    tids above 65535, the dynamic linker's recursive `dlopen` lock deadlocks on its own owner,
+    hanging the first `dlopen` (of the voice library). `unshare --pid --fork` keeps tids small.
+    This is probably also what hung the earlier qemu attempts.
+- **Comparing with the original.** The same setup can run the original engine as a reference,
+  once a copy of it gets the certificate check patched (in `build/`, never in `target/`).
 
 ## Stubs (`src/libttsivonavoice/runnable_stubs.c`)
 
