@@ -394,8 +394,6 @@ void voice_reg_init(voice_reg *reg);
 
 int conc_cost_plosive_unvoiced(const join_feats *a, const join_feats *b, int limit);
 int conc_cost_trill(const join_feats *a, const join_feats *b, int limit);
-int conc_cost_unvoiced();
-int conc_cost_vowel();
 int conc_cost_glide();
 int conc_cost_voiced();
 int conc_cost_plosive_voiced();
@@ -478,6 +476,110 @@ int conc_cost_trill(const join_feats *a, const join_feats *b, int limit)
     if (spec > 60)
         spec = spec * 3 - 120;
     return (cost + spec) * 96 / 10;
+}
+
+/* the spectral distance of the 16 band energies, weighting low bands most */
+#define CONC_SPEC(a, b)                                                                            \
+    ((abs((a)->spec[0] - (b)->spec[0]) + abs((a)->spec[1] - (b)->spec[1]) + abs((a)->spec[2] - (b)->spec[2]) \
+      + ((abs((a)->spec[6] - (b)->spec[6]) + abs((a)->spec[7] - (b)->spec[7]) + abs((a)->spec[8] - (b)->spec[8])) >> 1) \
+      + ((abs((a)->spec[3] - (b)->spec[3]) + abs((a)->spec[4] - (b)->spec[4]) + abs((a)->spec[5] - (b)->spec[5])) * 3 >> 2) \
+      + ((abs((a)->spec[9] - (b)->spec[9]) + abs((a)->spec[10] - (b)->spec[10]) + abs((a)->spec[11] - (b)->spec[11]) \
+          + abs((a)->spec[12] - (b)->spec[12]) + abs((a)->spec[13] - (b)->spec[13]) + abs((a)->spec[14] - (b)->spec[14]) \
+          + abs((a)->spec[15] - (b)->spec[15])) >> 2)) * 3 / 2)
+
+/* the energy cost: the relative energy difference, 100 for two silences */
+#define CONC_ENERGY(a, b, sum)                                                                     \
+    ((sum) == 0 ? 100 : CENTERED(conc_energy_cost, (unsigned int)abs(((a)->energy - (b)->energy) * 50 / (sum))))
+
+/* 0x4c728 arm: join cost at an unvoiced consonant (energy weighs most). */
+int conc_cost_unvoiced(const join_feats *a, const join_feats *b, int limit)
+{
+    int sum = a->energy + b->energy;
+    unsigned int cost, spec;
+
+    cost = CENTERED(conc_f0_cost, a->f0 - b->f0)
+           + (CONC_ENERGY(a, b, sum) * 12 + CENTERED(conc_dur_cost, a->dur - b->dur)) / 20
+           + conc_class_cost(a->cls, b->cls);
+    if (cost * 4 >= limit * 5)
+        return CONC_COST_MAX;
+    spec = CONC_SPEC(a, b);
+    if (spec > 90)
+        spec = spec * 5 - 360;
+    return (cost + spec * 3 / 10) * 4 / 5;
+}
+
+/* 0x4ca74 arm: join cost at a vowel. */
+int conc_cost_vowel(const join_feats *a, const join_feats *b, unsigned int limit)
+{
+    int sum = a->energy + b->energy;
+    unsigned int cost, spec;
+
+    cost = CENTERED(conc_dur_cost, a->dur - b->dur) + CENTERED(conc_f0_cost, a->f0 - b->f0)
+           + CENTERED(conc_f0_slope_cost, a->f0_slope - b->f0_slope) + CONC_ENERGY(a, b, sum)
+           + conc_class_cost(a->cls, b->cls);
+    if (cost * 2 < limit) {
+        spec = CONC_SPEC(a, b);
+        if (spec < 36)
+            cost += spec;
+        else
+            cost += spec * 10 - 315;
+        return cost * 2;
+    }
+    return CONC_COST_MAX;
+}
+
+/* 0x4cdcc arm: join cost at a glide. */
+int conc_cost_glide(const join_feats *a, const join_feats *b, unsigned int limit)
+{
+    int sum = a->energy + b->energy;
+    unsigned int cost, spec;
+
+    cost = CENTERED(conc_dur_cost, a->dur - b->dur) + CENTERED(conc_f0_cost, a->f0 - b->f0)
+           + CENTERED(conc_f0_slope_cost, a->f0_slope - b->f0_slope) + CONC_ENERGY(a, b, sum)
+           + conc_class_cost(a->cls, b->cls);
+    if (cost * 4 < limit) {
+        spec = CONC_SPEC(a, b);
+        if (spec > 40)
+            spec = spec * 7 - 240;
+        return (cost + spec) * 4;
+    }
+    return CONC_COST_MAX;
+}
+
+/* 0x4d11c arm: join cost at a voiced consonant. */
+int conc_cost_voiced(const join_feats *a, const join_feats *b, int limit)
+{
+    int sum = a->energy + b->energy;
+    unsigned int cost, spec;
+
+    cost = CENTERED(conc_dur_cost, a->dur - b->dur) + CENTERED(conc_f0_cost, a->f0 - b->f0)
+           + CENTERED(conc_f0_slope_cost, a->f0_slope - b->f0_slope) + CONC_ENERGY(a, b, sum)
+           + conc_class_cost(a->cls, b->cls);
+    if (cost * 4 < limit * 5) {
+        spec = CONC_SPEC(a, b);
+        if (spec > 40)
+            spec = spec * 5 - 160;
+        return (cost + spec) * 4 / 5;
+    }
+    return CONC_COST_MAX;
+}
+
+/* 0x4d484 arm: join cost at a voiced plosive. */
+int conc_cost_plosive_voiced(const join_feats *a, const join_feats *b, int limit)
+{
+    int sum = a->energy + b->energy;
+    unsigned int cost, spec;
+
+    cost = CENTERED(conc_dur_cost, a->dur - b->dur) + CENTERED(conc_f0_cost, a->f0 - b->f0)
+           + CENTERED(conc_f0_slope_cost, a->f0_slope - b->f0_slope) + CONC_ENERGY(a, b, sum)
+           + conc_class_cost(a->cls, b->cls);
+    if (cost * 4 < limit * 5) {
+        spec = CONC_SPEC(a, b);
+        if (spec > 70)
+            spec = spec * 5 - 280;
+        return (cost + spec) * 4 / 5;
+    }
+    return CONC_COST_MAX;
 }
 
 static inline void voice_reg_set_conc_cost(voice_reg *reg, const char *name,

@@ -771,11 +771,11 @@ addr	size	mode	name	status	src	score	note
 0004c038	18	arm	voice_attach_language	matched	src/libttsivonavoice/conc_cost.c	100	
 0004c050	38c	arm	conc_cost_plosive_unvoiced	wip	src/libttsivonavoice/conc_cost.c	58.1	
 0004c3dc	34c	arm	conc_cost_trill	wip	src/libttsivonavoice/conc_cost.c	74.0	
-0004c728	34c	arm	conc_cost_unvoiced	todo			
-0004ca74	358	arm	conc_cost_vowel	todo			
-0004cdcc	350	arm	conc_cost_glide	todo			
-0004d11c	368	arm	conc_cost_voiced	todo			
-0004d484	368	arm	conc_cost_plosive_voiced	todo			
+0004c728	34c	arm	conc_cost_unvoiced	wip	src/libttsivonavoice/conc_cost.c	83.2	
+0004ca74	358	arm	conc_cost_vowel	wip	src/libttsivonavoice/conc_cost.c	61.5	
+0004cdcc	350	arm	conc_cost_glide	wip	src/libttsivonavoice/conc_cost.c	61.4	
+0004d11c	368	arm	conc_cost_voiced	wip	src/libttsivonavoice/conc_cost.c	55.8	
+0004d484	368	arm	conc_cost_plosive_voiced	wip	src/libttsivonavoice/conc_cost.c	55.8	
 0004d7ec	168	arm	voice_reg_init	wip	src/libttsivonavoice/conc_cost.c	7.2	
 0004d954	58	arm	val_relation	matched	src/libttsivonavoice/flite/cst_item.c	100	flite strings(1) 0%
 0004d9ac	18	arm	relation_val	matched	src/libttsivonavoice/flite/cst_item.c	100	
