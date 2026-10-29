@@ -1223,3 +1223,143 @@ typedef struct join_cost_func join_cost_func;
 extern const int cst_val_type_join_cost_func;
 /* 0x615e8 arm, 0x61640 arm */
 CST_VAL_REGISTER_TYPE_NODEL(join_cost_func, join_cost_func)
+
+/* 0x61658 arm: the cost of using a unit of b's domain where a's is wanted (none for pauses
+ * and general units). */
+unsigned int unit_domain_cost(const vox_unit *a, const vox_unit *b)
+{
+    unsigned int d, da;
+
+    if (strcmp(a->phones[2]->name, "pau") == 0)
+        return 0;
+    d = b->f98;
+    da = a->f98;
+    if (d == 3)
+        return da != 3 ? 2000 : 0;
+    if (d == 4)
+        return da == 3 ? 2000 : 0;
+    if (d == 0)
+        return da != 0 ? 1500 : 0;
+    if (da == 0)
+        return 0;
+    return d != da ? 1500 : 0;
+}
+
+void item_phone_acoustic_data(const cst_item *seg, void *out);
+cst_item *item_traverse(const cst_item *item, ...);
+
+#define TRAVERSE_NEXT 0x100
+#define TRAVERSE_NEXT_NEXT 0x101
+#define TRAVERSE_PREV 0x103
+#define TRAVERSE_PREV_PREV 0x104
+#define TRAVERSE_PARENT 0x106
+#define TRAVERSE_LAST_DAUGHTER 0x108
+
+#define FF_STR(i, f) ((const vox_phone *)ffeature_string(i, f))
+
+/* 0x616f4 arm: the wanted unit for a segment: its quinphone, duration, acoustic data and
+ * the positional and prosodic features of its syllable, word and phrase (from the
+ * neighbouring syllables and words for a pause). */
+vox_unit *basic_ff_register(const cst_item *seg, vox_unit *u)
+{
+    const cst_item *syl = item_traverse(seg, 4, TRAVERSE_PARENT, 0);
+    const cst_item *phrase = item_traverse(syl, TRAVERSE_PARENT, 3, TRAVERSE_PARENT, 0);
+    const cst_item *token = item_traverse(syl, TRAVERSE_PARENT, 1, TRAVERSE_PARENT, 0);
+    const cst_item *word = item_traverse(syl, TRAVERSE_PARENT, 10, TRAVERSE_PARENT, 0);
+    const cst_item *s;
+    int rel = 0;
+
+    if (word)
+        rel = 1;
+    else
+        word = item_traverse(syl, TRAVERSE_PARENT, 2, 0);
+    memset(u, 0, sizeof(vox_unit));
+    item_phone_acoustic_data(seg, u->unk_60);
+    u->f98 = get_param_int(item_feats(token), "domain", 0);
+    if (item_feat_present(seg, "end"))
+        u->dur = item_feat_float(seg, "end") - ffeature_float(item_traverse(seg, TRAVERSE_PREV, 0), "end");
+    else
+        u->dur = 0;
+    u->phones[0] = FF_STR(item_traverse(seg, TRAVERSE_PREV_PREV, 0), "name");
+    u->phones[1] = FF_STR(item_traverse(seg, TRAVERSE_PREV, 0), "name");
+    u->phones[2] = FF_STR(item_traverse(seg, 0), "name");
+    u->phones[3] = FF_STR(item_traverse(seg, TRAVERSE_NEXT, 0), "name");
+    u->phones[4] = FF_STR(item_traverse(seg, TRAVERSE_NEXT_NEXT, 0), "name");
+    u->ph30 = FF_STR(item_traverse(syl, 0), "syl_vowel");
+    u->ph40 = FF_STR(item_traverse(word, 0), "gpos");
+    u->ph54 = FF_STR(item_traverse(phrase, TRAVERSE_LAST_DAUGHTER, 4, TRAVERSE_LAST_DAUGHTER, 0), "endtone");
+    if (strcmp(item_feat_string(seg, "name"), "pau") == 0) {
+        rel = rel != 0 ? 10 : 2;
+        if ((s = item_traverse(seg, TRAVERSE_PREV, 4, TRAVERSE_PARENT, 0))) {
+            u->f1a = ffeature_int(item_traverse(s, 0), "stress");
+            u->f1b = ffeature_int(item_traverse(s, 0), "glottal_stop_pos");
+            u->f1c = ffeature_int(item_traverse(s, 0), "syl_num_phones");
+        }
+        if ((s = item_traverse(seg, TRAVERSE_NEXT, 4, TRAVERSE_PARENT, 0))) {
+            u->f34 = ffeature_int(item_traverse(s, 0), "stress");
+            u->f35 = ffeature_int(item_traverse(s, 0), "glottal_stop_pos");
+            u->f36 = ffeature_int(item_traverse(s, 0), "syl_num_phones");
+        }
+        u->ph38 = FF_STR(item_traverse(seg, TRAVERSE_PREV, 4, TRAVERSE_PARENT, TRAVERSE_PARENT, rel,
+                                       TRAVERSE_PARENT, 0), "gpos");
+        u->f3c = ffeature_int(item_traverse(seg, TRAVERSE_PREV, 4, TRAVERSE_PARENT, TRAVERSE_PARENT, rel,
+                                            TRAVERSE_PARENT, 0), "word_num_syls");
+        u->ph48 = FF_STR(item_traverse(seg, TRAVERSE_NEXT, 4, TRAVERSE_PARENT, TRAVERSE_PARENT, rel,
+                                       TRAVERSE_PARENT, 0), "gpos");
+        u->f4c = ffeature_int(item_traverse(seg, TRAVERSE_NEXT, 4, TRAVERSE_PARENT, TRAVERSE_PARENT, rel,
+                                            TRAVERSE_PARENT, 0), "word_num_syls");
+        if ((s = item_traverse(seg, TRAVERSE_PREV, 4, TRAVERSE_PARENT, TRAVERSE_PARENT, 3,
+                               TRAVERSE_PARENT, 0))) {
+            u->f4d[0] = ffeature_int(item_traverse(s, 0), "phrase_num_syls");
+            u->f4d[1] = ffeature_int(item_traverse(s, 0), "phrase_num_words");
+        }
+        if ((s = item_traverse(seg, TRAVERSE_NEXT, 4, TRAVERSE_PARENT, TRAVERSE_PARENT, 3,
+                               TRAVERSE_PARENT, 0))) {
+            u->f58 = ffeature_int(item_traverse(s, 0), "phrase_num_syls");
+            u->f59 = ffeature_int(item_traverse(s, 0), "phrase_num_words");
+        }
+    } else {
+        u->f18 = ffeature_int(item_traverse(seg, 0), "pos_in_syl") + 1;
+        u->f19 = ffeature_int(item_traverse(syl, 0), "syl_num_phones") - u->f18 + 1;
+        u->f1a = ffeature_int(item_traverse(syl, TRAVERSE_PREV, 0), "stress");
+        u->f1b = ffeature_int(item_traverse(syl, TRAVERSE_PREV, 0), "glottal_stop_pos");
+        u->f1c = ffeature_int(item_traverse(syl, TRAVERSE_PREV, 0), "syl_num_phones");
+        u->f1d = ffeature_int(item_traverse(syl, 0), "stress");
+        u->f1e = ffeature_int(item_traverse(syl, 0), "glottal_stop_pos");
+        u->f1f[0] = ffeature_int(item_traverse(syl, 0), "syl_num_phones");
+        u->f1f[1] = ffeature_int(item_traverse(syl, 0), "pos_in_word") + 1;
+        u->f1f[2] = ffeature_int(item_traverse(word, 0), "word_num_syls") - u->f1f[1] + 1;
+        u->f1f[3] = ffeature_int(item_traverse(syl, 0), "syl_in") + 1;
+        u->f1f[4] = ffeature_int(item_traverse(syl, 0), "syl_out") + 1;
+        u->f1f[5] = ffeature_int(item_traverse(syl, 0), "ssyl_in");
+        u->f1f[6] = ffeature_int(item_traverse(syl, 0), "ssyl_out");
+        u->f1f[7] = ffeature_int(item_traverse(syl, 0), "ssyl_from");
+        u->f1f[8] = ffeature_int(item_traverse(syl, 0), "ssyl_to");
+        u->f34 = ffeature_int(item_traverse(syl, TRAVERSE_NEXT, 0), "stress");
+        u->f35 = ffeature_int(item_traverse(syl, TRAVERSE_NEXT, 0), "glottal_stop_pos");
+        u->f36 = ffeature_int(item_traverse(syl, TRAVERSE_NEXT, 0), "syl_num_phones");
+        u->ph38 = FF_STR(item_traverse(word, TRAVERSE_PREV, 0), "gpos");
+        u->f3c = ffeature_int(item_traverse(word, TRAVERSE_PREV, 0), "word_num_syls");
+        u->f44 = ffeature_int(item_traverse(word, 0), "word_num_syls");
+        u->f45 = ffeature_int(item_traverse(word, 0), "pos_in_phrase") + 1;
+        u->f46 = ffeature_int(item_traverse(phrase, 0), "phrase_num_words") - u->f45 + 1;
+        u->ph48 = FF_STR(item_traverse(word, TRAVERSE_NEXT, 0), "gpos");
+        u->f4c = ffeature_int(item_traverse(word, TRAVERSE_NEXT, 0), "word_num_syls");
+        u->f4d[0] = ffeature_int(item_traverse(phrase, TRAVERSE_PREV, 0), "phrase_num_syls");
+        u->f4d[1] = ffeature_int(item_traverse(phrase, TRAVERSE_PREV, 0), "phrase_num_words");
+        u->f4d[2] = ffeature_int(item_traverse(phrase, 0), "phrase_num_syls");
+        u->f4d[3] = ffeature_int(item_traverse(phrase, 0), "phrase_num_words");
+        u->f4d[4] = ffeature_int(item_traverse(phrase, 0), "pos_in_utt") + 1;
+        u->f4d[5] = ffeature_int(item_traverse(phrase, 0), "num_phrases") - u->f4d[4] + 1;
+        u->f58 = ffeature_int(item_traverse(phrase, TRAVERSE_NEXT, 0), "phrase_num_syls");
+        u->f59 = ffeature_int(item_traverse(phrase, TRAVERSE_NEXT, 0), "phrase_num_words");
+    }
+    u->p88 = (void *)ffeature_string(item_traverse(seg, 0), "ph_vc");
+    u->p8c = (void *)ffeature_string(item_traverse(seg, 0), "ph_cvox");
+    u->p90 = (void *)ffeature_string(item_traverse(seg, 0), "ph_ctype");
+    u->p94 = (void *)ffeature_string(item_traverse(seg, 0), "ph_cplace");
+    u->content38 = strcmp(u->ph38->name, "content") == 0;
+    u->content40 = strcmp(u->ph40->name, "content") == 0;
+    u->content48 = strcmp(u->ph48->name, "content") == 0;
+    return u;
+}

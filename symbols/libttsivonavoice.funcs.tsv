@@ -1381,8 +1381,8 @@ addr	size	mode	name	status	src	score	note
 000615d0	18	arm	dynamic_voxdbs_val	matched	src/libttsivonavoice/voxdb.c	100	
 000615e8	58	arm	val_join_cost_func	matched	src/libttsivonavoice/voxdb.c	100	
 00061640	18	arm	join_cost_func_val	matched	src/libttsivonavoice/voxdb.c	100	
-00061658	9c	arm	FUN_00061658	todo			
-000616f4	a80	arm	basic_ff_register	todo			flite strings(7) 0%
+00061658	9c	arm	unit_domain_cost	matched	src/libttsivonavoice/voxdb.c	100	
+000616f4	a80	arm	basic_ff_register	wip	src/libttsivonavoice/voxdb.c	97.8	flite strings(7) 0%
 00062174	234	arm	vox_unit_print	matched	src/libttsivonavoice/wavesynth.c	100	
 000623a8	3d4	arm	vox_unit_serialize	wip	src/libttsivonavoice/wavesynth.c	94.7	
 0006277c	168	arm	vox_unit_name	matched	src/libttsivonavoice/wavesynth.c	100	
