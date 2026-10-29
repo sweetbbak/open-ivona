@@ -19,6 +19,7 @@ addr	size	name	note
 0010c388	0	cst_val_type_itemfunc	learned from src/libttsivonavoice/flite/cst_item.c
 0010c390	4	cst_val_type_audiotag	
 0010c398	0	cst_val_type_diphonedb	learned from src/libttsivonavoice/voxdb.c
+0010c39c	0	cst_val_type_dur_stats	learned from src/libttsivonavoice/flite/cst_synth.c
 0010c3a0	0	cst_val_type_lexicon	learned from src/libvoice_en_gb_amy/cst_lexicon.c
 0010c3a4	0	cst_val_type_phoneset	learned from src/libvoice_en_gb_amy/cst_phoneset.c
 0010c3a8	4	cst_val_type_cart	

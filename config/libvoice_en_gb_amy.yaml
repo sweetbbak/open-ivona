@@ -14,3 +14,6 @@ flags:
 # Per-translation-unit overrides:  src/libtiver/foo.c: {mode: arm, add: [-O3], remove: [-O2]}
 units:
   src/libttsivonavoice/flite/cst_val_const.c: {add: [-DVAL_STRING_CONST_FIRST]}
+  # The voice library's copy of the engine's wavesynth.c is built like the engine's (see
+  # config/libttsivonavoice.yaml): -fno-inline, -fno-strict-aliasing, and OpenSSL headers for HMAC.
+  src/libttsivonavoice/wavesynth.c: {add: [-fno-inline, -fno-strict-aliasing, -Ibuild/vendor/openssl-1.0.2h/include], remove: [-fstrict-aliasing]}

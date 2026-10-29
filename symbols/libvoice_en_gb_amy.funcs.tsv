@@ -222,11 +222,11 @@ addr	size	mode	name	status	src	score	note
 0002a7e8	4	arm	FUN_0002a7e8	todo			
 0002a7ec	58	arm	FUN_0002a7ec	todo			
 0002a844	18	arm	FUN_0002a844	todo			
-0002a85c	24	arm	FUN_0002a85c	todo			
-0002a880	6c	arm	FUN_0002a880	todo			
-0002a8ec	4	arm	val_delete_wavesynth	todo			
-0002a8f0	8c	arm	FUN_0002a8f0	todo			
-0002a97c	2c	arm	FUN_0002a97c	todo			
+0002a85c	24	arm	new_wavesynth	matched	src/libttsivonavoice/wavesynth.c	100	
+0002a880	6c	arm	delete_wavesynth	todo			
+0002a8ec	4	arm	val_delete_wavesynth	matched	src/libttsivonavoice/wavesynth.c	100	
+0002a8f0	8c	arm	wavesynth_append	matched	src/libttsivonavoice/wavesynth.c	100	
+0002a97c	2c	arm	wavesynth_flush	matched	src/libttsivonavoice/wavesynth.c	100	
 0002a9a8	1b8	arm	FUN_0002a9a8	todo			
 0002ab60	68	arm	FUN_0002ab60	todo			
 0002abc8	e0	arm	FUN_0002abc8	todo			
@@ -1016,10 +1016,10 @@ addr	size	mode	name	status	src	score	note
 000627f8	18	arm	join_cost_func_val	matched	src/libttsivonavoice/voxdb.c	100	
 00062810	9c	arm	unit_domain_cost	matched	src/libttsivonavoice/voxdb.c	100	
 000628ac	a80	arm	FUN_000628ac	todo			
-0006332c	234	arm	FUN_0006332c	todo			
+0006332c	234	arm	vox_unit_print	matched	src/libttsivonavoice/wavesynth.c	100	
 00063560	3d4	arm	FUN_00063560	todo			
-00063934	168	arm	FUN_00063934	todo			
-00063a9c	a0	arm	FUN_00063a9c	todo			
+00063934	168	arm	vox_unit_name	matched	src/libttsivonavoice/wavesynth.c	100	
+00063a9c	a0	arm	speaking_style_id	matched	src/libttsivonavoice/wavesynth.c	100	
 00063b3c	70	arm	FUN_00063b3c	todo			
 00063bac	c	arm	lex_entry_cmp	matched	src/libttsivonavoice/phones.c	100	
 00063bb8	120	arm	FUN_00063bb8	todo			
@@ -1056,9 +1056,9 @@ addr	size	mode	name	status	src	score	note
 0006540c	38	arm	utt_set_input_text	matched	src/libttsivonavoice/flite/cst_synth.c	100	
 00065444	10	arm	item_print_list	matched	src/libttsivonavoice/flite/cst_synth.c	100	
 00065454	90	arm	utt_print_relations	matched	src/libttsivonavoice/flite/cst_synth.c	100	
-000654e4	58	arm	val_dur_stats	todo			
-0006553c	18	arm	FUN_0006553c	todo			
-00065554	50	arm	named_table_find	todo			
+000654e4	58	arm	val_dur_stats	matched	src/libttsivonavoice/flite/cst_synth.c	100	
+0006553c	18	arm	dur_stats_val	matched	src/libttsivonavoice/flite/cst_synth.c	100	
+00065554	50	arm	named_table_find	matched	src/libttsivonavoice/flite/cst_synth.c	100	
 000655a4	198	arm	lexicon_from_pls	matched	src/libttsivonavoice/flite/cst_synth.c	100	
 0006573c	68	arm	val_in_lex	matched	src/libttsivonavoice/flite/cst_synth.c	100	flite strings(1) 11%
 000657a4	8c	arm	find_error_text@pcre_compile	lib	lib:pcre:pcre_compile.o	100	

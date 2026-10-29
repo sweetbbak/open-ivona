@@ -82,6 +82,11 @@ Read README.md first. The rules below are what keeps the project deterministic.
     skipped.
   - **Address comments.** Never run `dc -b libvoice_en_gb_amy tu` on an engine source: its
     address comments are engine addresses and would rename unrelated voice rows.
+  - **Voice-only functions in a shared file.** Some engine files hold functions only the voice
+    library kept, because the engine's link dropped them (e.g. `val_dur_stats` and
+    `named_table_find` in `flite/cst_synth.c`). Write their comments as
+    `/* libvoice_en_gb_amy 0xADDR ... */`, not starting with `0x`, so `dc tu` does not take them
+    for engine addresses. Diff them with `dc -b libvoice_en_gb_amy diff FUNC -s FILE`.
 - **Renaming.** `./dc rename` rewrites sources only for placeholder names (`FUN_`/`D_`); pass
   `--src` to rewrite a real name. Address comments above C++ functions resolve to the mangled
   symbol of the compiled object (`/* 0x4ecc: ... */` above `h(...)` names the row `h` or `_Z...`).

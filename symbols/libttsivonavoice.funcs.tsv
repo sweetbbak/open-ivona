@@ -1562,9 +1562,9 @@ addr	size	mode	name	status	src	score	note
 00070ebc	58	arm	phone_feature	matched	src/libvoice_en_gb_amy/cst_phoneset.c	100	
 00070f14	10	arm	phone_feature_string	matched	src/libvoice_en_gb_amy/cst_phoneset.c	100	
 00070f24	74	arm	item_phoneset	matched	src/libvoice_en_gb_amy/cst_phoneset.c	100	
-00070f98	58	arm	val_dur_stats	todo			
+00070f98	58	arm	val_dur_stats	matched	src/libttsivonavoice/flite/cst_synth.c	100	
 00070ff0	18	arm	FUN_00070ff0	todo			
-00071008	50	arm	named_table_find	wip	src/libttsivonavoice/phones.c	80.0	
+00071008	50	arm	named_table_find	matched	src/libttsivonavoice/flite/cst_synth.c	100	
 00071058	58	arm	val_phonefunc	matched	src/libttsivonavoice/phones.c	100	
 000710b0	18	arm	phonefunc_val	matched	src/libttsivonavoice/phones.c	100	
 000710c8	94	arm	phones_from_string	matched	src/libttsivonavoice/phones.c	100	

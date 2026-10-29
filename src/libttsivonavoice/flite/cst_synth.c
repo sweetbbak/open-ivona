@@ -253,6 +253,42 @@ cst_utterance *utt_phones_frontend(cst_utterance *u)
     return apply_synth_method(u, phones_methods);
 }
 
+/* Functions below only the voice library keeps (the engine's link drops them as unused). Their
+ * comments name the voice library's addresses in a form `dc tu` does not read as engine ones. */
+
+/* duration statistics of a phone: a voice's table is a NULL-terminated array of pointers */
+typedef struct dur_stat {
+    const char *phone;
+    float mean;
+    float stddev;
+} dur_stat;
+
+/* an entry of a table looked up by name: the name comes first */
+typedef struct named_entry {
+    const char *name;
+} named_entry;
+
+typedef const dur_stat *const dur_stats;
+extern const int cst_val_type_dur_stats;
+
+/* libvoice_en_gb_amy 0x654e4 arm, 0x6553c arm */
+CST_VAL_REGISTER_TYPE_NODEL(dur_stats, dur_stats)
+
+/* libvoice_en_gb_amy 0x65554 arm: the entry of a NULL-terminated table named name, else the
+ * first entry */
+const named_entry *named_table_find(const named_entry *const *t, const char *name)
+{
+    const named_entry *first = t[0], *e = first, *const *p = t;
+
+    if (first == NULL)
+        return NULL;
+    do {
+        if (strcmp(name, e->name) == 0)
+            return e;
+    } while ((e = *++p) != NULL);
+    return first;
+}
+
 /* ------------------------------------------------------------------------------------------ */
 /* Lexicons and X-SAMPA */
 
@@ -1465,15 +1501,6 @@ dnn_models *val_dnn_models(const cst_val *v);
 
 #include "cst_cart.h"
 
-typedef struct dur_stat {
-    const char *phone;
-    float mean;
-    float stddev;
-} dur_stat;
-
-typedef struct named_entry named_entry;
-const named_entry *named_table_find(const named_entry *const *t, const char *name);
-const dur_stat *const *val_dur_stats(const cst_val *v);
 float item_set_breath_acoustic_data(cst_item *item);
 
 #define PAUSE_MIN 0.01f
