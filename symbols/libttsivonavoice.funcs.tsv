@@ -1641,18 +1641,18 @@ addr	size	mode	name	status	src	score	note
 0008370c	280b0	arm	match@pcre_exec	lib	lib:pcre:pcre_exec.o	100	
 000ab7bc	6c	arm	release_match_heapframes@pcre_exec	lib	lib:pcre:pcre_exec.o	100	
 000ab828	1c6c	arm	pcre_exec	lib	lib:pcre:pcre_exec.o	100	
-000ad494	28	arm	sljit_get_compiler_error@pcre_jit_compile	lib	lib:pcre:pcre_jit_compile.o	100	by object order
-000ad4bc	28	arm	sljit_get_generated_code_size@pcre_jit_compile	lib	lib:pcre:pcre_jit_compile.o	100	by object order
-000ad4e4	28	arm	sljit_get_label_addr@pcre_jit_compile	lib	lib:pcre:pcre_jit_compile.o	100	by object order
-000ad50c	20	arm	allocator_grab_lock@pcre_jit_compile	lib	lib:pcre:pcre_jit_compile.o	100	by object order
-000ad52c	20	arm	allocator_release_lock@pcre_jit_compile	lib	lib:pcre:pcre_jit_compile.o	100	by object order
-000ad54c	20	arm	sljit_grab_lock@pcre_jit_compile	lib	lib:pcre:pcre_jit_compile.o	100	by object order
-000ad56c	20	arm	sljit_release_lock@pcre_jit_compile	lib	lib:pcre:pcre_jit_compile.o	100	by object order
+000ad494	28	arm	sljit_get_compiler_error@pcre_jit_compile	lib	lib:pcre:pcre_jit_compile.o	100	
+000ad4bc	28	arm	sljit_get_generated_code_size@pcre_jit_compile	lib	lib:pcre:pcre_jit_compile.o	100	
+000ad4e4	28	arm	sljit_get_label_addr@pcre_jit_compile	lib	lib:pcre:pcre_jit_compile.o	100	
+000ad50c	20	arm	allocator_grab_lock@pcre_jit_compile	lib	lib:pcre:pcre_jit_compile.o	100	
+000ad52c	20	arm	allocator_release_lock@pcre_jit_compile	lib	lib:pcre:pcre_jit_compile.o	100	
+000ad54c	20	arm	sljit_grab_lock@pcre_jit_compile	lib	lib:pcre:pcre_jit_compile.o	100	
+000ad56c	20	arm	sljit_release_lock@pcre_jit_compile	lib	lib:pcre:pcre_jit_compile.o	100	
 000ad58c	1e8	arm	sljit_allocate_stack@pcre_jit_compile	lib	lib:pcre:pcre_jit_compile.o	100	
 000ad774	6c	arm	sljit_free_stack@pcre_jit_compile	lib	lib:pcre:pcre_jit_compile.o	100	
 000ad7e0	128	arm	sljit_stack_resize@pcre_jit_compile	lib	lib:pcre:pcre_jit_compile.o	100	
 000ad908	5c	arm	alloc_chunk@pcre_jit_compile	lib	lib:pcre:pcre_jit_compile.o	100	
-000ad964	28	arm	free_chunk@pcre_jit_compile	lib	lib:pcre:pcre_jit_compile.o	100	by object order
+000ad964	28	arm	free_chunk@pcre_jit_compile	lib	lib:pcre:pcre_jit_compile.o	100	
 000ad98c	a0	arm	sljit_insert_free_block@pcre_jit_compile	lib	lib:pcre:pcre_jit_compile.o	100	
 000ada2c	80	arm	sljit_remove_free_block@pcre_jit_compile	lib	lib:pcre:pcre_jit_compile.o	100	
 000adaac	2cc	arm	sljit_malloc_exec@pcre_jit_compile	lib	lib:pcre:pcre_jit_compile.o	100	
@@ -1661,20 +1661,20 @@ addr	size	mode	name	status	src	score	note
 000ae080	2ac	arm	sljit_create_compiler@pcre_jit_compile	lib	lib:pcre:pcre_jit_compile.o	100	
 000ae32c	ec	arm	sljit_free_compiler@pcre_jit_compile	lib	lib:pcre:pcre_jit_compile.o	100	
 000ae418	38	arm	sljit_set_compiler_memory_error@pcre_jit_compile	lib	lib:pcre:pcre_jit_compile.o	100	
-000ae450	20	arm	sljit_free_code@pcre_jit_compile	lib	lib:pcre:pcre_jit_compile.o	100	by object order
+000ae450	20	arm	sljit_free_code@pcre_jit_compile	lib	lib:pcre:pcre_jit_compile.o	100	
 000ae470	8c	arm	sljit_set_label@pcre_jit_compile	lib	lib:pcre:pcre_jit_compile.o	100	
 000ae4fc	70	arm	sljit_set_target@pcre_jit_compile	lib	lib:pcre:pcre_jit_compile.o	100	
 000ae56c	114	arm	ensure_buf@pcre_jit_compile	lib	lib:pcre:pcre_jit_compile.o	100	
 000ae680	114	arm	ensure_abuf@pcre_jit_compile	lib	lib:pcre:pcre_jit_compile.o	100	
 000ae794	7c	arm	sljit_alloc_memory@pcre_jit_compile	lib	lib:pcre:pcre_jit_compile.o	100	
 000ae810	70	arm	reverse_buf@pcre_jit_compile	lib	lib:pcre:pcre_jit_compile.o	100	
-000ae880	64	arm	set_emit_enter@pcre_jit_compile	lib	lib:pcre:pcre_jit_compile.o	100	by object order
-000ae8e4	64	arm	set_set_context@pcre_jit_compile	lib	lib:pcre:pcre_jit_compile.o	100	by object order
+000ae880	64	arm	set_emit_enter@pcre_jit_compile	lib	lib:pcre:pcre_jit_compile.o	100	
+000ae8e4	64	arm	set_set_context@pcre_jit_compile	lib	lib:pcre:pcre_jit_compile.o	100	
 000ae948	78	arm	set_label@pcre_jit_compile	lib	lib:pcre:pcre_jit_compile.o	100	
 000ae9c0	78	arm	set_jump@pcre_jit_compile	lib	lib:pcre:pcre_jit_compile.o	100	
 000aea38	78	arm	set_const@pcre_jit_compile	lib	lib:pcre:pcre_jit_compile.o	100	
 000aeab0	a8	arm	emit_mov_before_return@pcre_jit_compile	lib	lib:pcre:pcre_jit_compile.o	100	
-000aeb58	24	arm	sljit_get_platform_name@pcre_jit_compile	lib	lib:pcre:pcre_jit_compile.o	100	by object order
+000aeb58	24	arm	sljit_get_platform_name@pcre_jit_compile	lib	lib:pcre:pcre_jit_compile.o	100	
 000aeb7c	204	arm	push_cpool@pcre_jit_compile	lib	lib:pcre:pcre_jit_compile.o	100	
 000aed80	f0	arm	push_inst@pcre_jit_compile	lib	lib:pcre:pcre_jit_compile.o	100	
 000aee70	278	arm	push_inst_with_literal@pcre_jit_compile	lib	lib:pcre:pcre_jit_compile.o	100	
@@ -1723,8 +1723,8 @@ addr	size	mode	name	status	src	score	note
 000b750c	270	arm	sljit_emit_ijump@pcre_jit_compile	lib	lib:pcre:pcre_jit_compile.o	100	
 000b777c	588	arm	sljit_emit_op_flags@pcre_jit_compile	lib	lib:pcre:pcre_jit_compile.o	100	
 000b7d04	174	arm	sljit_emit_const@pcre_jit_compile	lib	lib:pcre:pcre_jit_compile.o	100	
-000b7e78	2c	arm	sljit_set_jump_addr@pcre_jit_compile	lib	lib:pcre:pcre_jit_compile.o	100	by object order
-000b7ea4	2c	arm	sljit_set_const@pcre_jit_compile	lib	lib:pcre:pcre_jit_compile.o	100	by object order
+000b7e78	2c	arm	sljit_set_jump_addr@pcre_jit_compile	lib	lib:pcre:pcre_jit_compile.o	100	
+000b7ea4	2c	arm	sljit_set_const@pcre_jit_compile	lib	lib:pcre:pcre_jit_compile.o	100	
 000b7ed0	218	arm	sljit_emit_cmp@pcre_jit_compile	lib	lib:pcre:pcre_jit_compile.o	100	
 000b80e8	d0	arm	sljit_emit_fcmp@pcre_jit_compile	lib	lib:pcre:pcre_jit_compile.o	100	
 000b81b8	b8	arm	sljit_get_local_base@pcre_jit_compile	lib	lib:pcre:pcre_jit_compile.o	100	
@@ -1831,11 +1831,11 @@ addr	size	mode	name	status	src	score	note
 000dcc00	2d8	arm	pcre_jit_exec	lib	lib:pcre:pcre_jit_compile.o	100	
 000dced8	bc	arm	_pcre_jit_free	lib	lib:pcre:pcre_jit_compile.o	100	
 000dcf94	7c	arm	_pcre_jit_get_size	lib	lib:pcre:pcre_jit_compile.o	100	
-000dd010	18	arm	_pcre_jit_get_target	lib	lib:pcre:pcre_jit_compile.o	100	by object order
+000dd010	18	arm	_pcre_jit_get_target	lib	lib:pcre:pcre_jit_compile.o	100	
 000dd028	a4	arm	pcre_jit_stack_alloc	lib	lib:pcre:pcre_jit_compile.o	100	
-000dd0cc	24	arm	pcre_jit_stack_free	lib	lib:pcre:pcre_jit_compile.o	100	by object order
+000dd0cc	24	arm	pcre_jit_stack_free	lib	lib:pcre:pcre_jit_compile.o	100	
 000dd0f0	78	arm	pcre_assign_jit_stack	lib	lib:pcre:pcre_jit_compile.o	100	
-000dd168	10	arm	pcre_jit_free_unused_memory	lib	lib:pcre:pcre_jit_compile.o	100	by object order
+000dd168	10	arm	pcre_jit_free_unused_memory	lib	lib:pcre:pcre_jit_compile.o	100	
 000dd178	3b8	arm	_pcre_is_newline	lib	lib:pcre:pcre_newline.o	100	
 000dd530	3e0	arm	_pcre_was_newline	lib	lib:pcre:pcre_newline.o	100	
 000dd910	100	arm	_pcre_ord2utf	lib	lib:pcre:pcre_ord2utf8.o	100	
@@ -5393,182 +5393,182 @@ addr	size	mode	name	status	src	score	note
 001f1104	fc	arm	Curl_rand	todo			
 001f1200	c	arm	FUN_001f1200	todo			
 001f120c	18	arm	FUN_001f120c	todo			
-001f1224	7c	arm	FUN_001f1224	todo			
-001f12a0	a8	arm	FUN_001f12a0	todo			
-001f1348	10c	arm	FUN_001f1348	todo			
+001f1224	7c	arm	be16@cmp	todo			
+001f12a0	a8	arm	be32@cmp	todo			
+001f1348	10c	arm	be64@cmp	todo			
 001f1454	a8	arm	FUN_001f1454	todo			
 001f14fc	10c	arm	FUN_001f14fc	todo			
-001f1608	3c	arm	FUN_001f1608	todo			
-001f1644	54	arm	FUN_001f1644	todo			
-001f1698	50	arm	FUN_001f1698	todo			
-001f16e8	58	arm	FUN_001f16e8	todo			
-001f1740	58	arm	FUN_001f1740	todo			
-001f1798	58	arm	cmp_init	todo			
+001f1608	3c	arm	read_byte@cmp	lib	lib:cmp:cmp.o	100	
+001f1644	54	arm	write_byte@cmp	lib	lib:cmp:cmp.o	100	
+001f1698	50	arm	read_type_marker@cmp	lib	lib:cmp:cmp.o	100	
+001f16e8	58	arm	write_type_marker@cmp	lib	lib:cmp:cmp.o	100	
+001f1740	58	arm	write_fixed_value@cmp	lib	lib:cmp:cmp.o	100	
+001f1798	58	arm	cmp_init	lib	lib:cmp:cmp.o	100	
 001f17f0	1c	arm	FUN_001f17f0	todo			
-001f180c	1c	arm	FUN_001f180c	todo			
+001f180c	1c	arm	cmp_mp_version	lib	lib:cmp:cmp.o	100	
 001f1828	78	arm	FUN_001f1828	todo			
-001f18a0	60	arm	FUN_001f18a0	todo			
-001f1900	64	arm	FUN_001f1900	todo			
-001f1964	88	arm	FUN_001f1964	todo			
-001f19ec	7c	arm	FUN_001f19ec	todo			
-001f1a68	a0	arm	FUN_001f1a68	todo			
-001f1b08	8c	arm	FUN_001f1b08	todo			
-001f1b94	94	arm	FUN_001f1b94	todo			
-001f1c28	130	arm	FUN_001f1c28	todo			
-001f1d58	38	arm	FUN_001f1d58	todo			
-001f1d90	7c	arm	FUN_001f1d90	todo			
-001f1e0c	90	arm	FUN_001f1e0c	todo			
-001f1e9c	8c	arm	FUN_001f1e9c	todo			
-001f1f28	94	arm	FUN_001f1f28	todo			
-001f1fbc	e4	arm	FUN_001f1fbc	todo			
-001f20a0	8c	arm	FUN_001f20a0	todo			
-001f212c	94	arm	FUN_001f212c	todo			
-001f21c0	88	arm	FUN_001f21c0	todo			
-001f2248	2c	arm	FUN_001f2248	todo			
-001f2274	2c	arm	FUN_001f2274	todo			
-001f22a0	2c	arm	FUN_001f22a0	todo			
-001f22cc	4c	arm	FUN_001f22cc	todo			
-001f2318	4c	arm	FUN_001f2318	todo			
-001f2364	68	arm	FUN_001f2364	todo			
-001f23cc	a4	arm	FUN_001f23cc	todo			
-001f2470	8c	arm	FUN_001f2470	todo			
-001f24fc	a4	arm	FUN_001f24fc	todo			
-001f25a0	a0	arm	FUN_001f25a0	todo			
-001f2640	a4	arm	FUN_001f2640	todo			
-001f26e4	9c	arm	FUN_001f26e4	todo			
-001f2780	9c	arm	FUN_001f2780	todo			
-001f281c	ac	arm	FUN_001f281c	todo			
-001f28c8	84	arm	FUN_001f28c8	todo			
-001f294c	c0	arm	cmp_write_str	todo			
-001f2a0c	94	arm	FUN_001f2a0c	todo			
-001f2aa0	8c	arm	FUN_001f2aa0	todo			
-001f2b2c	a4	arm	FUN_001f2b2c	todo			
-001f2bd0	a0	arm	FUN_001f2bd0	todo			
-001f2c70	a4	arm	FUN_001f2c70	todo			
-001f2d14	9c	arm	FUN_001f2d14	todo			
-001f2db0	9c	arm	FUN_001f2db0	todo			
-001f2e4c	84	arm	FUN_001f2e4c	todo			
-001f2ed0	94	arm	FUN_001f2ed0	todo			
-001f2f64	68	arm	FUN_001f2f64	todo			
-001f2fcc	a0	arm	FUN_001f2fcc	todo			
-001f306c	9c	arm	FUN_001f306c	todo			
-001f3108	84	arm	FUN_001f3108	todo			
-001f318c	64	arm	FUN_001f318c	todo			
-001f31f0	a0	arm	FUN_001f31f0	todo			
-001f3290	9c	arm	FUN_001f3290	todo			
-001f332c	84	arm	FUN_001f332c	todo			
-001f33b0	8c	arm	FUN_001f33b0	todo			
-001f343c	90	arm	FUN_001f343c	todo			
-001f34cc	8c	arm	FUN_001f34cc	todo			
-001f3558	90	arm	FUN_001f3558	todo			
-001f35e8	8c	arm	FUN_001f35e8	todo			
-001f3674	90	arm	FUN_001f3674	todo			
-001f3704	8c	arm	FUN_001f3704	todo			
-001f3790	90	arm	FUN_001f3790	todo			
-001f3820	8c	arm	FUN_001f3820	todo			
-001f38ac	90	arm	FUN_001f38ac	todo			
-001f393c	d0	arm	FUN_001f393c	todo			
-001f3a0c	a0	arm	FUN_001f3a0c	todo			
-001f3aac	e4	arm	FUN_001f3aac	todo			
-001f3b90	9c	arm	FUN_001f3b90	todo			
-001f3c2c	e0	arm	FUN_001f3c2c	todo			
-001f3d0c	98	arm	FUN_001f3d0c	todo			
-001f3da4	158	arm	FUN_001f3da4	todo			
-001f3efc	17c	arm	FUN_001f3efc	todo			
-001f4078	55c	arm	FUN_001f4078	todo			
-001f45d4	53c	arm	FUN_001f45d4	todo			
-001f4b10	7c	arm	FUN_001f4b10	todo			
-001f4b8c	7c	arm	FUN_001f4b8c	todo			
-001f4c08	84	arm	FUN_001f4c08	todo			
-001f4c8c	7c	arm	FUN_001f4c8c	todo			
-001f4d08	7c	arm	FUN_001f4d08	todo			
-001f4d84	7c	arm	FUN_001f4d84	todo			
-001f4e00	7c	arm	FUN_001f4e00	todo			
-001f4e7c	13c	arm	FUN_001f4e7c	todo			
-001f4fb8	180	arm	FUN_001f4fb8	todo			
-001f5138	198	arm	cmp_read_int	todo			
-001f52d0	1ec	arm	FUN_001f52d0	todo			
-001f54bc	30	arm	FUN_001f54bc	todo			
-001f54ec	30	arm	FUN_001f54ec	todo			
-001f551c	7c	arm	FUN_001f551c	todo			
-001f5598	7c	arm	FUN_001f5598	todo			
-001f5614	7c	arm	FUN_001f5614	todo			
-001f5690	7c	arm	FUN_001f5690	todo			
-001f570c	84	arm	FUN_001f570c	todo			
-001f5790	a4	arm	FUN_001f5790	todo			
-001f5834	f4	arm	FUN_001f5834	todo			
-001f5928	120	arm	FUN_001f5928	todo			
-001f5a48	30	arm	FUN_001f5a48	todo			
-001f5a78	7c	arm	FUN_001f5a78	todo			
-001f5af4	7c	arm	FUN_001f5af4	todo			
-001f5b70	ac	arm	FUN_001f5b70	todo			
-001f5c1c	6c	arm	FUN_001f5c1c	todo			
-001f5c88	98	arm	FUN_001f5c88	todo			
-001f5d20	98	arm	FUN_001f5d20	todo			
-001f5db8	90	arm	FUN_001f5db8	todo			
-001f5e48	f4	arm	FUN_001f5e48	todo			
-001f5f3c	80	arm	FUN_001f5f3c	todo			
-001f5fbc	d0	arm	FUN_001f5fbc	todo			
-001f608c	90	arm	cmp_read_array	todo			
-001f611c	90	arm	cmp_read_map	todo			
-001f61ac	7c	arm	FUN_001f61ac	todo			
-001f6228	88	arm	FUN_001f6228	todo			
-001f62b0	7c	arm	FUN_001f62b0	todo			
-001f632c	88	arm	FUN_001f632c	todo			
-001f63b4	7c	arm	FUN_001f63b4	todo			
-001f6430	88	arm	FUN_001f6430	todo			
-001f64b8	7c	arm	FUN_001f64b8	todo			
-001f6534	88	arm	FUN_001f6534	todo			
-001f65bc	7c	arm	FUN_001f65bc	todo			
-001f6638	88	arm	FUN_001f6638	todo			
-001f66c0	90	arm	FUN_001f66c0	todo			
-001f6750	94	arm	FUN_001f6750	todo			
-001f67e4	94	arm	FUN_001f67e4	todo			
-001f6878	94	arm	FUN_001f6878	todo			
-001f690c	8c	arm	FUN_001f690c	todo			
-001f6998	94	arm	FUN_001f6998	todo			
-001f6a2c	dc	arm	FUN_001f6a2c	todo			
-001f6b08	94	arm	FUN_001f6b08	todo			
+001f18a0	60	arm	cmp_write_pfix	lib	lib:cmp:cmp.o	100	
+001f1900	64	arm	cmp_write_nfix	lib	lib:cmp:cmp.o	100	
+001f1964	88	arm	cmp_write_sfix	lib	lib:cmp:cmp.o	100	
+001f19ec	7c	arm	cmp_write_s8	lib	lib:cmp:cmp.o	100	
+001f1a68	a0	arm	cmp_write_s16	lib	lib:cmp:cmp.o	100	by object order
+001f1b08	8c	arm	cmp_write_s32	lib	lib:cmp:cmp.o	100	by object order
+001f1b94	94	arm	cmp_write_s64	lib	lib:cmp:cmp.o	100	by object order
+001f1c28	130	arm	cmp_write_integer	lib	lib:cmp:cmp.o	100	by object order
+001f1d58	38	arm	cmp_write_ufix	lib	lib:cmp:cmp.o	100	
+001f1d90	7c	arm	cmp_write_u8	lib	lib:cmp:cmp.o	100	
+001f1e0c	90	arm	cmp_write_u16	lib	lib:cmp:cmp.o	100	by object order
+001f1e9c	8c	arm	cmp_write_u32	lib	lib:cmp:cmp.o	100	by object order
+001f1f28	94	arm	cmp_write_u64	lib	lib:cmp:cmp.o	100	by object order
+001f1fbc	e4	arm	cmp_write_uinteger	lib	lib:cmp:cmp.o	100	by object order
+001f20a0	8c	arm	cmp_write_float	todo			
+001f212c	94	arm	cmp_write_double	todo			
+001f21c0	88	arm	cmp_write_decimal	lib	lib:cmp:cmp.o	100	
+001f2248	2c	arm	cmp_write_nil	lib	lib:cmp:cmp.o	100	
+001f2274	2c	arm	cmp_write_true	lib	lib:cmp:cmp.o	100	
+001f22a0	2c	arm	cmp_write_false	lib	lib:cmp:cmp.o	100	
+001f22cc	4c	arm	cmp_write_bool	lib	lib:cmp:cmp.o	100	by object order
+001f2318	4c	arm	cmp_write_u8_as_bool	lib	lib:cmp:cmp.o	100	by object order
+001f2364	68	arm	cmp_write_fixstr_marker	lib	lib:cmp:cmp.o	100	
+001f23cc	a4	arm	cmp_write_fixstr	lib	lib:cmp:cmp.o	100	by object order
+001f2470	8c	arm	cmp_write_str8_marker	lib	lib:cmp:cmp.o	100	
+001f24fc	a4	arm	cmp_write_str8	lib	lib:cmp:cmp.o	100	by object order
+001f25a0	a0	arm	cmp_write_str16_marker	lib	lib:cmp:cmp.o	100	by object order
+001f2640	a4	arm	cmp_write_str16	lib	lib:cmp:cmp.o	100	by object order
+001f26e4	9c	arm	cmp_write_str32_marker	lib	lib:cmp:cmp.o	100	by object order
+001f2780	9c	arm	cmp_write_str32	lib	lib:cmp:cmp.o	100	by object order
+001f281c	ac	arm	cmp_write_str_marker	lib	lib:cmp:cmp.o	100	by object order
+001f28c8	84	arm	cmp_write_str_marker_v4	lib	lib:cmp:cmp.o	100	by object order
+001f294c	c0	arm	cmp_write_str	lib	lib:cmp:cmp.o	100	
+001f2a0c	94	arm	cmp_write_str_v4	lib	lib:cmp:cmp.o	100	
+001f2aa0	8c	arm	cmp_write_bin8_marker	lib	lib:cmp:cmp.o	100	
+001f2b2c	a4	arm	cmp_write_bin8	lib	lib:cmp:cmp.o	100	by object order
+001f2bd0	a0	arm	cmp_write_bin16_marker	lib	lib:cmp:cmp.o	100	by object order
+001f2c70	a4	arm	cmp_write_bin16	lib	lib:cmp:cmp.o	100	by object order
+001f2d14	9c	arm	cmp_write_bin32_marker	lib	lib:cmp:cmp.o	100	by object order
+001f2db0	9c	arm	cmp_write_bin32	lib	lib:cmp:cmp.o	100	by object order
+001f2e4c	84	arm	cmp_write_bin_marker	lib	lib:cmp:cmp.o	100	by object order
+001f2ed0	94	arm	cmp_write_bin	lib	lib:cmp:cmp.o	100	
+001f2f64	68	arm	cmp_write_fixarray	lib	lib:cmp:cmp.o	100	
+001f2fcc	a0	arm	cmp_write_array16	lib	lib:cmp:cmp.o	100	by object order
+001f306c	9c	arm	cmp_write_array32	lib	lib:cmp:cmp.o	100	by object order
+001f3108	84	arm	cmp_write_array	lib	lib:cmp:cmp.o	100	by object order
+001f318c	64	arm	cmp_write_fixmap	lib	lib:cmp:cmp.o	100	
+001f31f0	a0	arm	cmp_write_map16	lib	lib:cmp:cmp.o	100	by object order
+001f3290	9c	arm	cmp_write_map32	lib	lib:cmp:cmp.o	100	by object order
+001f332c	84	arm	cmp_write_map	lib	lib:cmp:cmp.o	100	by object order
+001f33b0	8c	arm	cmp_write_fixext1_marker	lib	lib:cmp:cmp.o	100	
+001f343c	90	arm	cmp_write_fixext1	lib	lib:cmp:cmp.o	100	
+001f34cc	8c	arm	cmp_write_fixext2_marker	lib	lib:cmp:cmp.o	100	
+001f3558	90	arm	cmp_write_fixext2	lib	lib:cmp:cmp.o	100	
+001f35e8	8c	arm	cmp_write_fixext4_marker	lib	lib:cmp:cmp.o	100	
+001f3674	90	arm	cmp_write_fixext4	lib	lib:cmp:cmp.o	100	
+001f3704	8c	arm	cmp_write_fixext8_marker	lib	lib:cmp:cmp.o	100	
+001f3790	90	arm	cmp_write_fixext8	lib	lib:cmp:cmp.o	100	
+001f3820	8c	arm	cmp_write_fixext16_marker	lib	lib:cmp:cmp.o	100	
+001f38ac	90	arm	cmp_write_fixext16	lib	lib:cmp:cmp.o	100	
+001f393c	d0	arm	cmp_write_ext8_marker	lib	lib:cmp:cmp.o	100	
+001f3a0c	a0	arm	cmp_write_ext8	lib	lib:cmp:cmp.o	100	
+001f3aac	e4	arm	cmp_write_ext16_marker	lib	lib:cmp:cmp.o	100	by object order
+001f3b90	9c	arm	cmp_write_ext16	lib	lib:cmp:cmp.o	100	by object order
+001f3c2c	e0	arm	cmp_write_ext32_marker	lib	lib:cmp:cmp.o	100	by object order
+001f3d0c	98	arm	cmp_write_ext32	lib	lib:cmp:cmp.o	100	by object order
+001f3da4	158	arm	cmp_write_ext_marker	lib	lib:cmp:cmp.o	100	by object order
+001f3efc	17c	arm	cmp_write_ext	lib	lib:cmp:cmp.o	100	by object order
+001f4078	55c	arm	cmp_write_object	lib	lib:cmp:cmp.o	100	by object order
+001f45d4	53c	arm	cmp_write_object_v4	lib	lib:cmp:cmp.o	100	by object order
+001f4b10	7c	arm	cmp_read_pfix	lib	lib:cmp:cmp.o	100	
+001f4b8c	7c	arm	cmp_read_nfix	lib	lib:cmp:cmp.o	100	
+001f4c08	84	arm	cmp_read_sfix	lib	lib:cmp:cmp.o	100	
+001f4c8c	7c	arm	cmp_read_s8	lib	lib:cmp:cmp.o	100	
+001f4d08	7c	arm	cmp_read_s16	lib	lib:cmp:cmp.o	100	
+001f4d84	7c	arm	cmp_read_s32	lib	lib:cmp:cmp.o	100	
+001f4e00	7c	arm	cmp_read_s64	lib	lib:cmp:cmp.o	100	
+001f4e7c	13c	arm	cmp_read_char	lib	lib:cmp:cmp.o	100	
+001f4fb8	180	arm	cmp_read_short	lib	lib:cmp:cmp.o	100	
+001f5138	198	arm	cmp_read_int	lib	lib:cmp:cmp.o	100	
+001f52d0	1ec	arm	cmp_read_long	lib	lib:cmp:cmp.o	100	
+001f54bc	30	arm	cmp_read_integer	lib	lib:cmp:cmp.o	100	by object order
+001f54ec	30	arm	cmp_read_ufix	lib	lib:cmp:cmp.o	100	by object order
+001f551c	7c	arm	cmp_read_u8	lib	lib:cmp:cmp.o	100	
+001f5598	7c	arm	cmp_read_u16	lib	lib:cmp:cmp.o	100	
+001f5614	7c	arm	cmp_read_u32	lib	lib:cmp:cmp.o	100	
+001f5690	7c	arm	cmp_read_u64	lib	lib:cmp:cmp.o	100	
+001f570c	84	arm	cmp_read_uchar	lib	lib:cmp:cmp.o	100	
+001f5790	a4	arm	cmp_read_ushort	lib	lib:cmp:cmp.o	100	
+001f5834	f4	arm	cmp_read_uint	lib	lib:cmp:cmp.o	100	
+001f5928	120	arm	cmp_read_ulong	lib	lib:cmp:cmp.o	100	
+001f5a48	30	arm	cmp_read_uinteger	lib	lib:cmp:cmp.o	100	by object order
+001f5a78	7c	arm	cmp_read_float	lib	lib:cmp:cmp.o	100	
+001f5af4	7c	arm	cmp_read_double	lib	lib:cmp:cmp.o	100	
+001f5b70	ac	arm	cmp_read_decimal	lib	lib:cmp:cmp.o	100	
+001f5c1c	6c	arm	cmp_read_nil	lib	lib:cmp:cmp.o	100	
+001f5c88	98	arm	cmp_read_bool	lib	lib:cmp:cmp.o	100	by object order
+001f5d20	98	arm	cmp_read_bool_as_u8	lib	lib:cmp:cmp.o	100	by object order
+001f5db8	90	arm	cmp_read_str_size	lib	lib:cmp:cmp.o	100	
+001f5e48	f4	arm	cmp_read_str	lib	lib:cmp:cmp.o	100	
+001f5f3c	80	arm	cmp_read_bin_size	lib	lib:cmp:cmp.o	100	
+001f5fbc	d0	arm	cmp_read_bin	lib	lib:cmp:cmp.o	100	
+001f608c	90	arm	cmp_read_array	lib	lib:cmp:cmp.o	100	
+001f611c	90	arm	cmp_read_map	lib	lib:cmp:cmp.o	100	
+001f61ac	7c	arm	cmp_read_fixext1_marker	lib	lib:cmp:cmp.o	100	
+001f6228	88	arm	cmp_read_fixext1	lib	lib:cmp:cmp.o	100	
+001f62b0	7c	arm	cmp_read_fixext2_marker	lib	lib:cmp:cmp.o	100	
+001f632c	88	arm	cmp_read_fixext2	lib	lib:cmp:cmp.o	100	
+001f63b4	7c	arm	cmp_read_fixext4_marker	lib	lib:cmp:cmp.o	100	
+001f6430	88	arm	cmp_read_fixext4	lib	lib:cmp:cmp.o	100	
+001f64b8	7c	arm	cmp_read_fixext8_marker	lib	lib:cmp:cmp.o	100	
+001f6534	88	arm	cmp_read_fixext8	lib	lib:cmp:cmp.o	100	
+001f65bc	7c	arm	cmp_read_fixext16_marker	lib	lib:cmp:cmp.o	100	
+001f6638	88	arm	cmp_read_fixext16	lib	lib:cmp:cmp.o	100	
+001f66c0	90	arm	cmp_read_ext8_marker	lib	lib:cmp:cmp.o	100	
+001f6750	94	arm	cmp_read_ext8	lib	lib:cmp:cmp.o	100	
+001f67e4	94	arm	cmp_read_ext16_marker	lib	lib:cmp:cmp.o	100	
+001f6878	94	arm	cmp_read_ext16	lib	lib:cmp:cmp.o	100	
+001f690c	8c	arm	cmp_read_ext32_marker	lib	lib:cmp:cmp.o	100	
+001f6998	94	arm	cmp_read_ext32	lib	lib:cmp:cmp.o	100	by object order
+001f6a2c	dc	arm	cmp_read_ext_marker	lib	lib:cmp:cmp.o	100	
+001f6b08	94	arm	cmp_read_ext	lib	lib:cmp:cmp.o	100	by object order
 001f6b9c	103c	arm	cmp_read_object	todo			
-001f7bd8	44	arm	FUN_001f7bd8	todo			
-001f7c1c	4c	arm	FUN_001f7c1c	todo			
-001f7c68	4c	arm	FUN_001f7c68	todo			
-001f7cb4	4c	arm	FUN_001f7cb4	todo			
-001f7d00	28	arm	FUN_001f7d00	todo			
-001f7d28	44	arm	FUN_001f7d28	todo			
-001f7d6c	54	arm	FUN_001f7d6c	todo			
-001f7dc0	50	arm	FUN_001f7dc0	todo			
-001f7e10	50	arm	FUN_001f7e10	todo			
-001f7e60	28	arm	FUN_001f7e60	todo			
-001f7e88	3c	arm	FUN_001f7e88	todo			
-001f7ec4	3c	arm	FUN_001f7ec4	todo			
-001f7f00	3c	arm	FUN_001f7f00	todo			
-001f7f3c	3c	arm	FUN_001f7f3c	todo			
-001f7f78	50	arm	FUN_001f7f78	todo			
-001f7fc8	40	arm	FUN_001f7fc8	todo			
-001f8008	50	arm	FUN_001f8008	todo			
-001f8058	50	arm	FUN_001f8058	todo			
-001f80a8	8c	arm	FUN_001f80a8	todo			
-001f8134	114	arm	FUN_001f8134	todo			
-001f8248	164	arm	FUN_001f8248	todo			
-001f83ac	184	arm	FUN_001f83ac	todo			
-001f8530	1e0	arm	FUN_001f8530	todo			
-001f8710	30	arm	FUN_001f8710	todo			
-001f8740	58	arm	FUN_001f8740	todo			
-001f8798	7c	arm	FUN_001f8798	todo			
-001f8814	d0	arm	FUN_001f8814	todo			
-001f88e4	100	arm	FUN_001f88e4	todo			
-001f89e4	30	arm	FUN_001f89e4	todo			
-001f8a14	50	arm	FUN_001f8a14	todo			
-001f8a64	50	arm	FUN_001f8a64	todo			
-001f8ab4	6c	arm	FUN_001f8ab4	todo			
-001f8b20	64	arm	FUN_001f8b20	todo			
-001f8b84	54	arm	FUN_001f8b84	todo			
-001f8bd8	64	arm	FUN_001f8bd8	todo			
-001f8c3c	64	arm	FUN_001f8c3c	todo			
-001f8ca0	b4	arm	FUN_001f8ca0	todo			
-001f8d54	e8	arm	FUN_001f8d54	todo			
-001f8e3c	c0	arm	FUN_001f8e3c	todo			
+001f7bd8	44	arm	cmp_object_is_char	lib	lib:cmp:cmp.o	100	
+001f7c1c	4c	arm	cmp_object_is_short	lib	lib:cmp:cmp.o	100	
+001f7c68	4c	arm	cmp_object_is_int	lib	lib:cmp:cmp.o	100	
+001f7cb4	4c	arm	cmp_object_is_long	lib	lib:cmp:cmp.o	100	
+001f7d00	28	arm	cmp_object_is_sinteger	lib	lib:cmp:cmp.o	100	by object order
+001f7d28	44	arm	cmp_object_is_uchar	lib	lib:cmp:cmp.o	100	
+001f7d6c	54	arm	cmp_object_is_ushort	lib	lib:cmp:cmp.o	100	
+001f7dc0	50	arm	cmp_object_is_uint	lib	lib:cmp:cmp.o	100	
+001f7e10	50	arm	cmp_object_is_ulong	lib	lib:cmp:cmp.o	100	
+001f7e60	28	arm	cmp_object_is_uinteger	lib	lib:cmp:cmp.o	100	by object order
+001f7e88	3c	arm	cmp_object_is_float	lib	lib:cmp:cmp.o	100	
+001f7ec4	3c	arm	cmp_object_is_double	lib	lib:cmp:cmp.o	100	
+001f7f00	3c	arm	cmp_object_is_nil	lib	lib:cmp:cmp.o	100	
+001f7f3c	3c	arm	cmp_object_is_bool	lib	lib:cmp:cmp.o	100	
+001f7f78	50	arm	cmp_object_is_str	lib	lib:cmp:cmp.o	100	
+001f7fc8	40	arm	cmp_object_is_bin	lib	lib:cmp:cmp.o	100	
+001f8008	50	arm	cmp_object_is_array	lib	lib:cmp:cmp.o	100	
+001f8058	50	arm	cmp_object_is_map	lib	lib:cmp:cmp.o	100	
+001f80a8	8c	arm	cmp_object_is_ext	lib	lib:cmp:cmp.o	100	
+001f8134	114	arm	cmp_object_as_char	lib	lib:cmp:cmp.o	100	
+001f8248	164	arm	cmp_object_as_short	lib	lib:cmp:cmp.o	100	
+001f83ac	184	arm	cmp_object_as_int	lib	lib:cmp:cmp.o	100	
+001f8530	1e0	arm	cmp_object_as_long	lib	lib:cmp:cmp.o	100	
+001f8710	30	arm	cmp_object_as_sinteger	lib	lib:cmp:cmp.o	100	by object order
+001f8740	58	arm	cmp_object_as_uchar	lib	lib:cmp:cmp.o	100	
+001f8798	7c	arm	cmp_object_as_ushort	lib	lib:cmp:cmp.o	100	
+001f8814	d0	arm	cmp_object_as_uint	lib	lib:cmp:cmp.o	100	
+001f88e4	100	arm	cmp_object_as_ulong	lib	lib:cmp:cmp.o	100	
+001f89e4	30	arm	cmp_object_as_uinteger	lib	lib:cmp:cmp.o	100	by object order
+001f8a14	50	arm	cmp_object_as_float	lib	lib:cmp:cmp.o	100	
+001f8a64	50	arm	cmp_object_as_double	lib	lib:cmp:cmp.o	100	
+001f8ab4	6c	arm	cmp_object_as_bool	lib	lib:cmp:cmp.o	100	
+001f8b20	64	arm	cmp_object_as_str	lib	lib:cmp:cmp.o	100	
+001f8b84	54	arm	cmp_object_as_bin	lib	lib:cmp:cmp.o	100	
+001f8bd8	64	arm	cmp_object_as_array	lib	lib:cmp:cmp.o	100	
+001f8c3c	64	arm	cmp_object_as_map	lib	lib:cmp:cmp.o	100	
+001f8ca0	b4	arm	cmp_object_as_ext	lib	lib:cmp:cmp.o	100	
+001f8d54	e8	arm	cmp_object_to_str	lib	lib:cmp:cmp.o	100	
+001f8e3c	c0	arm	cmp_object_to_bin	lib	lib:cmp:cmp.o	100	
 001f8efc	28	arm	FUN_001f8efc	todo			
 001f8f24	80	arm	FUN_001f8f24	todo			
 001f8fa4	a4	arm	FUN_001f8fa4	todo			

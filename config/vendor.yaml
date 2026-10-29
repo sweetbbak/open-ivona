@@ -77,3 +77,12 @@ silk:
   src: external/silk-sdk-fix-1.0.8
   sources: silk
   flags: [-marm, -O3, -fstrict-aliasing, -funswitch-loops, -finline-limit=300]  # SDK Makefile: -O3
+cmp:
+  # cmp v16 (camgunz/cmp, MessagePack): the unoptimized block before Tremor (~0x1f1200). cmp_init
+  # (0x1f1798) matches v16 exactly and differs in v17/v18; the error strings ("No Error" ..
+  # "Error writing size", "Max Error") are v16's. Unoptimized ARM with a frame pointer, like Expat.
+  binaries: [libttsivonavoice]
+  src: external/cmp-16
+  sources: cmp
+  remove: [-fsigned-char, -DNDEBUG]
+  flags: [-marm, -O0, -fno-omit-frame-pointer, -std=gnu99]  # gnu99: for-loop declarations

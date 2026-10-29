@@ -147,9 +147,14 @@ def _sources_silk(tree: str) -> list[tuple]:
     return [(f"src/{f}", ["-I../interface", "-I."]) for f in files]
 
 
+def _sources_cmp(tree: str) -> list[tuple]:
+    """cmp.c, the whole library."""
+    return [("cmp.c", ["-I."])]
+
+
 PREPARE = {"openssl": _prepare_openssl, "autoconf": _prepare_autoconf}
 SOURCES = {"openssl-libcrypto": _sources_openssl_libcrypto, "curl-lib": _sources_curl_lib, "pcre": _sources_pcre,
-           "expat": _sources_expat, "silk": _sources_silk}
+           "expat": _sources_expat, "silk": _sources_silk, "cmp": _sources_cmp}
 
 
 def build(stem: str, lib: str) -> None:

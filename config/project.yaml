@@ -14,3 +14,4 @@ libraries:
   pcre: build/libobj/pcre.a
   expat: build/libobj/expat.a
   silk: build/libobj/silk.a
+  cmp: build/libobj/cmp.a

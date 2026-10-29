@@ -23,7 +23,7 @@ from dc.project import Binary, path, ROOT  # noqa: E402
 from dc import build  # noqa: E402
 
 OUT = "build/engine"
-VENDORED = ["openssl", "curl", "expat", "pcre", "silk"]
+VENDORED = ["openssl", "curl", "expat", "pcre", "silk", "cmp"]
 SYSLIBS = ["-ldl", "-llog", "-lstdc++", "-lm", "-lc"]
 # data-only TUs: no function row credits them, so name them here
 EXTRA_SRCS = ["src/libttsivonavoice/charset_tables.c"]

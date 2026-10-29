@@ -28,6 +28,10 @@ fetch https://sourceforge.net/projects/pcre/files/pcre/8.37/pcre-8.37.tar.bz2/do
 # Expat 2.2.0 (GitHub release asset; checksum as published)
 fetch https://github.com/libexpat/libexpat/releases/download/R_2_2_0/expat-2.2.0.tar.bz2 \
     d9e50ff2d19b3538bd2127902a89987474e1a4db8e43a66a4d1a712ab9a504ff expat-2.2.0
+# cmp v16 (camgunz/cmp MessagePack, ~0x1f1200-0x1f9000 in the engine; GitHub tag archive,
+# checksum pinned at first download)
+fetch https://github.com/camgunz/cmp/archive/refs/tags/v16.tar.gz \
+    2a2026b81c2db43eb27fb66155d1c5f90153e01c537ac0f30535cfb672e06144 cmp-16 cmp-v16.tar.gz
 # SILK SDK 1.0.8, fixed-point C (Skype never published it on a site of its own): a copy inside
 # fingi/csipsimple, pinned by commit and verified by the git tree hash of the SDK directory.
 silk() {  # commit path tree dir

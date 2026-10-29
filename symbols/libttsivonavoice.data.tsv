@@ -378,6 +378,7 @@ addr	size	name	note
 00275804	0	cst_relation_id_names	
 00275830	2c	item_traverse_names	cst_ffeature.c
 00275930	0	rand_ssleay_meth	named from library relocation
+00275e9c	0	cmp_error_messages	named from library relocation
 00275f24	10	g_modules	
 00275f34	0	pcre_malloc	named from library relocation
 00275f38	0	pcre_free	named from library relocation

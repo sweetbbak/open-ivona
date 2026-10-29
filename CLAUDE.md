@@ -49,6 +49,7 @@ Read README.md first. The rules below are what keeps the project deterministic.
   | libcurl 7.52.1 | ~0x1cb000–0x1f1000 (+ cold statics at 0x18924) | engine ARM `-O2`, unsigned char, symbol hiding, no SSL/IPv6/cookies/proxy/crypto-auth |
   | PCRE 8.37 | 0x72000–0xe0a00 | `-O0`, UTF + UCP, JIT (sljit), NO_RECURSE, NEWLINE=ANY; `real_pcre` is 8 bytes larger than upstream (local change) |
   | SILK SDK 1.0.8 (fixed point) | 0x202cac–0x20cb08 (complete) | engine ARM flags with `-O3` (the SDK Makefile's); vox codec 14 |
+  | cmp v16 (camgunz MessagePack) | 0x1f1200–~0x1f9000 (15 left: `be16/32/64`, `cmp_write_float/double`, `cmp_read_object`, a few statics) | `-O0` + frame pointer, `-std=gnu99`; `cmp_init` matches v16 exactly, not v17/v18 |
 
   Vendored archives are offered only to the binaries listed in their recipe.
 
@@ -58,7 +59,6 @@ Read README.md first. The rules below are what keeps the project deterministic.
     `codec_setup_info` is 0xcb0 bytes (master 0xca8) and `vorbis_comment_clear` has no NULL check.
     With master, 24 functions are byte-identical.
     Its MDCT code reaches 0x202c88, just before SILK.
-  - Unoptimized code before Tremor (~0x1f1000) is still unidentified.
   - Static functions are per object: a table row named `name@member` (e.g.
     `constant_time_is_zero@rsa_pk1`) is that object's copy. The matcher accepts `name` or `name@…`
     and records the address as a placement, so one object's callers must agree on the copy.
