@@ -67,6 +67,9 @@ void textstream_close(void *buf);
 void *ivona_dlsym(void *dl, const char *symbol);
 
 
+/* exported, zero, referenced by nothing in the engine (a marker for extension builds?) */
+int engine_rvd_extensions_marker;
+
 /* 0x3a188 */
 static void lang_cache_free(void *data)
 {

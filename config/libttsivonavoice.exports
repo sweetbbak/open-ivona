@@ -1,13 +1,51 @@
-/* Symbols the original libttsivonavoice.so exports (besides its statically linked runtime):
- * the public API, the CIvonaTTS wrapper and android_syslog. Used by tools/build_engine.py. */
+/* The symbols the original libttsivonavoice.so exports, besides its statically linked runtime
+ * (libgcc, gabi++): the public API, the CIvonaTTS wrapper, android_syslog and a marker. Used by
+ * tools/build_engine.py. */
 {
   global:
-    tts_*;
     engine_rvd_extensions_marker;
-    extern "C++" {
-      CIvonaTTS::*;
-      "android_syslog(int, char const*, ...)";
-    };
+    tts_certificate_get;
+    tts_certificate_get_single;
+    tts_create;
+    tts_destroy;
+    tts_dict_cleanup;
+    tts_dict_insert;
+    tts_dict_load;
+    tts_dict_num_entries;
+    tts_dict_remove;
+    tts_dict_save;
+    tts_errmsg;
+    tts_errno;
+    tts_get_input_warning;
+    tts_init;
+    tts_load_addon;
+    tts_load_addon_file;
+    tts_load_certificate;
+    tts_load_certificate_file;
+    tts_load_language;
+    tts_load_voice;
+    tts_metrics_get;
+    tts_metrics_get_all;
+    tts_metrics_get_size;
+    tts_pls_load;
+    tts_pls_unload;
+    tts_streamer_add_voice;
+    tts_streamer_get_metrics;
+    tts_streamer_jump;
+    tts_streamer_start;
+    tts_streamer_stop;
+    tts_streamer_synth;
+    tts_streamer_synth0;
+    tts_unload_addon;
+    tts_unload_language;
+    tts_unload_voice;
+    tts_vendor_tag;
+    tts_voice_param;
+    tts_voice_sample_rate;
+    tts_wave_delete;
+    _Z14android_syslogiPKcz;
+    _ZN9CIvonaTTSC1Ev;
+    _ZN9CIvonaTTSC2Ev;
   local:
     *;
 };

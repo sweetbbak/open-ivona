@@ -64,7 +64,7 @@ def main() -> int:
         if os.path.exists(path("build/libobj", l + ".a")):
             libs.append(os.path.join(OUT, l + ".a"))
             script.insert(0, f"cp build/libobj/{l}.a {libs[-1]} && arm-linux-androideabi-ranlib {libs[-1]}")
-    link = ["arm-linux-androideabi-g++", "-shared", "-fuse-ld=gold", "-o", so,
+    link = ["arm-linux-androideabi-g++", "-shared", "-fuse-ld=gold", "--sysroot=/opt/sysroot", "-o", so,
             "-Wl,--no-undefined", "-Wl,--unresolved-symbols=report-all", "-Wl,--gc-sections",
             "-Wl,--version-script=config/libttsivonavoice.exports",
             "-Wl,-soname,libttsivonavoice.so", *objs, *libs,

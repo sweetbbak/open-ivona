@@ -36,6 +36,7 @@ when the function is written:
 - `text_is_ssml` (0x49e74).
 - `lex_apply_ssml` (0x42598, lex_regex.c) and its vector free `FUN_00041edc`.
 
-PLS (`pls_lexicon_parse`, `pls_apply`) is not SSML-only: lang.dat can list PLS lexicons
-(`pls_lex_list`, loaded by `lang_data_load`), so the plain-text path needs it too.
+PLS (`pls_lexicon_parse`, `pls_apply`) is not SSML-only: Amy's lang.dat lists two PLS
+lexicons (`pls_lex_list`, loaded by `lang_data_load`), so plain text uses it too. It is stubbed
+for now (empty lexicons, no change to the text, see `runnable-engine.md`) and is next to do.
 - Expat (see above).

@@ -116,3 +116,31 @@ int text_is_ssml(const char *s, int len)
     ssml_unavailable("text_is_ssml");
     return 0;
 }
+
+/* PLS lexicons (pls.c): the parser (0x268e4, with its expat handlers 0x24c58..0x25c18) and the
+ * applier (0x23cd8, 0x24308, 0x23788, 0x239c4) are not decompiled yet. lang.dat's pls_lex_list
+ * lexicons still load, as empty ones, and text goes through unchanged: Amy's
+ * pls_lexicon1/pls_lexicon2 aliases (band names and the like) are not applied. */
+typedef struct tts_msg tts_msg;
+void *pls_lexicon_new(void);
+
+void *pls_lexicon_parse(const char *data, size_t size, void *ctx, tts_msg **msgs, int level)
+{
+    (void)data;
+    (void)size;
+    (void)ctx;
+    (void)level;
+    if (msgs)
+        *msgs = NULL;
+    return pls_lexicon_new();
+}
+
+void *pls_apply(void *lexicons, const void *text, int in_subdoc, const char *lang, int external)
+{
+    (void)lexicons;
+    (void)text;
+    (void)in_subdoc;
+    (void)lang;
+    (void)external;
+    return NULL;
+}

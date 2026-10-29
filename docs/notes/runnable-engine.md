@@ -31,12 +31,16 @@ separate from the matching build, so non-matching code is fine as long as it is 
 - **Report.** It lists the undefined symbols by table address. When that list is empty, the
   engine is linked.
 
+**Status (2026-10-28).** It links: `build/engine/libttsivonavoice.so`, 2.0 MB. The NEEDED
+libraries and the exported API are the same as the original's. It has not been run yet.
+
 ## Stubs (`src/libttsivonavoice/runnable_stubs.c`)
 
 | function | why it's stubbed | effect |
 |---|---|---|
 | `vorbis_unit_*`, `vorbis_ogg_unit_*` | Tremor deferred (vox codecs 8/12, Windows voices only) | opening such a voice fails; Android voices use SILK (14) |
 | `ssml_audio_apply_attrs`, `phoneme_alphabet_id`, `phoneme_convert`, `lex_apply_ssml`, `text_is_ssml` | SSML only, deferred (`ssml-deferred.md`) | unreachable with `IVONA_CERT_SSML=0`; they abort if reached |
+| `pls_lexicon_parse`, `pls_apply` | PLS not decompiled yet (parser 0x24c58..0x26cb4, applier 0x23788..0x248a0) | lang.dat PLS lexicons load empty and are never applied: Amy's alias lexicons (`pls_lexicon1`, `pls_lexicon2`) are ignored |
 
 Remove a stub when the real function is written.
 
