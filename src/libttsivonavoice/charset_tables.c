@@ -2,7 +2,7 @@
  * The 8-bit code page tables of the character set decoders (charset_dec.c): Unicode code point
  * of each byte (0x220254..0x223254, .rodata). Generated from the binary.
  *
- * No function lives in this TU, so the matching build does not compile it; tools/build_engine.py
+ * No function lives in this TU, so the matching build does not compile it; tools/build_runnable.py
  * links it into the runnable engine.
  */
 

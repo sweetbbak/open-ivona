@@ -1,0 +1,20 @@
+# Differential test corpus (tools/difftest.sh): one utterance per line, # starts a comment.
+# Chosen to exercise different parts of the voice: plain words, punctuation and phrasing,
+# numbers, dates, times, money, abbreviations, acronyms, symbols, foreign and unknown words.
+Hello world.
+The quick brown fox jumps over the lazy dog.
+Is this a question? Yes! It is, and this is an exclamation; then a pause.
+She sells sea shells by the sea shore, doesn't she?
+It was the 3rd of May, 2016, at 10:45 in the morning.
+The total came to $1,234.56, or about 1,100 pounds.
+Call 0800 123 4567 before 5pm on Fri. 12 Aug.
+Dr. Smith lives at 221B Baker St., London NW1 6XE.
+NASA, the BBC and the UN met with IBM in the USA.
+The temperature dropped to -5.3 degrees, a 40% fall.
+I read 1984 and Catch-22 in the 1990s.
+Supercalifragilisticexpialidocious is quite a word, and so is floccinaucinihilipilification.
+He visited Montreal, Zurich and Reykjavik last summer.
+A$AP Rocky and The Byrds played Wavves' songs.
+www.example.com and info@example.org are made up addresses.
+In 2020, 7 out of 10 people said "maybe".
+Once upon a time, in a land far, far away, there lived a king who had three daughters. The youngest was the most beautiful of all, and the sun itself, which has seen so many things, was astonished whenever it shone in her face.

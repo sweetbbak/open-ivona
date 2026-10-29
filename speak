@@ -9,6 +9,9 @@
 #   --volume F   volume, 0 .. 1.6
 #   --speed F    how fast audio is delivered (tts_streamer_start's speed): 1 real time,
 #                -1 as fast as possible (default). Does not change how it sounds.
+#   --voice-lib original|decomp|PATH
+#                which libvoice_en_gb_amy.so to load: the original (target/, default), the
+#                decompiled one (build/voice/, rebuilt when its sources change), or a file
 #
 # Does everything needed, only when needed:
 #   1. fetches the Android 4.4 system files qemu runs it on (once, 160 MB)
@@ -22,11 +25,13 @@ set -euo pipefail
 ROOT="$(cd "$(dirname "$0")" && pwd)"
 cd "$ROOT"
 
-usage() { sed -n '2,20p' "$0" | sed 's/^# \{0,1\}//'; exit 2; }
+usage() { sed -n '2,24p' "$0" | sed 's/^# \{0,1\}//'; exit 2; }
 OPTS=()
+VOICE_LIB=original
 while [ $# -gt 0 ] && [[ "$1" == --* ]]; do
     case "$1" in
         --rate|--pitch|--volume|--speed) [ $# -ge 2 ] || usage; OPTS+=("$1" "$2"); shift 2 ;;
+        --voice-lib) [ $# -ge 2 ] || usage; VOICE_LIB="$2"; shift 2 ;;
         *) usage ;;
     esac
 done
@@ -36,7 +41,6 @@ OUT="$(realpath -m "${2:-out.wav}")"
 VOICE_DIR="$(realpath "${IVONA_VOICE_DIR:-$ROOT/../eng.gbr.amy.1.6.101.3}")"
 ENGINE=build/engine/libttsivonavoice.so
 RUNNER=build/run/tts_run
-RUNDIR=build/run/amy
 
 step() { printf '\033[1m==> %s\033[0m\n' "$*" >&2; }
 
@@ -51,11 +55,26 @@ if [ ! -x toolchain/android-19/system/bin/linker ]; then
 fi
 
 # 2. the engine, rebuilt when any source, header or build setting is newer than it
-if [ ! -f "$ENGINE" ] || [ -n "$(find src include config tools/build_engine.py -newer "$ENGINE" \
+if [ ! -f "$ENGINE" ] || [ -n "$(find src include config tools/build_runnable.py -newer "$ENGINE" \
         -type f -print -quit)" ]; then
     step "building the engine ($ENGINE), takes a minute or two"
-    .venv/bin/python tools/build_engine.py >&2
+    .venv/bin/python tools/build_runnable.py >&2
 fi
+
+# 2b. the voice library: the original, the decompiled one (rebuilt like the engine), or a file
+case "$VOICE_LIB" in
+    original) VLIB=target/libvoice_en_gb_amy.so ;;
+    decomp)
+        VLIB=build/voice/libvoice_en_gb_amy.so
+        if [ ! -f "$VLIB" ] || [ -n "$(find src include config tools/build_runnable.py -newer "$VLIB" \
+                -type f -print -quit)" ]; then
+            step "building the decompiled voice library ($VLIB)"
+            .venv/bin/python tools/build_runnable.py -b libvoice_en_gb_amy >&2
+        fi ;;
+    *) VLIB="$VOICE_LIB" ;;
+esac
+[ -f "$VLIB" ] || { echo "no voice library $VLIB" >&2; exit 1; }
+RUNDIR=build/run/amy-$(basename "$(dirname "$(realpath "$VLIB")")")
 
 # 3. the test program
 if [ ! -f "$RUNNER" ] || [ tests/run/tts_run.c -nt "$RUNNER" ] || [ "$ENGINE" -nt "$RUNNER" ]; then
@@ -67,7 +86,7 @@ fi
 
 # 4. run: the voice library and data side by side, any certificate file will do
 mkdir -p "$RUNDIR"
-cp -u target/libvoice_en_gb_amy.so "$RUNDIR/"
+cp "$VLIB" "$RUNDIR/libvoice_en_gb_amy.so"
 ln -sfn "$VOICE_DIR/vox_en_gb_amy22i" "$RUNDIR/vox_en_gb_amy22i"
 ln -sfn "$VOICE_DIR/lang_en_gb.dat" "$RUNDIR/lang_en_gb.dat"
 [ -f "$RUNDIR/certificate.txt" ] || : > "$RUNDIR/certificate.txt"

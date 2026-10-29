@@ -1,6 +1,6 @@
 /* The symbols the original libttsivonavoice.so exports, besides its statically linked runtime
  * (libgcc, gabi++): the public API, the CIvonaTTS wrapper, android_syslog and a marker. Used by
- * tools/build_engine.py. */
+ * tools/build_runnable.py. */
 {
   global:
     engine_rvd_extensions_marker;

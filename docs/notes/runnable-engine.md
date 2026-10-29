@@ -1,11 +1,11 @@
 # Runnable engine build
 
-`tools/build_engine.py` links a working `libttsivonavoice.so` from the decompiled sources. It is
+`tools/build_runnable.py` links a working `libttsivonavoice.so` from the decompiled sources. It is
 separate from the matching build, so non-matching code is fine as long as it is correct.
 
 ```
-.venv/bin/python tools/build_engine.py            # -> build/engine/libttsivonavoice.so
-.venv/bin/python tools/build_engine.py -D IVONA_CERT_SSML=1   # with SSML input (ssml-deferred.md)
+.venv/bin/python tools/build_runnable.py            # -> build/engine/libttsivonavoice.so
+.venv/bin/python tools/build_runnable.py -D IVONA_CERT_SSML=1   # with SSML input (ssml-deferred.md)
 ```
 
 ## What it does
@@ -87,7 +87,7 @@ Remove a stub when the real function is written.
 
 ## Still undefined
 
-`tools/build_engine.py` prints the current list. On the plain-text path (`ssml-deferred.md`), the
+`tools/build_runnable.py` prints the current list. On the plain-text path (`ssml-deferred.md`), the
 SSML-only ones are `pls_*`, `phoneme_*`, `ssml_audio_apply_attrs`, `lex_apply_ssml` and
 `text_is_ssml`. They still need a definition to link.
 

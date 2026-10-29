@@ -1,5 +1,5 @@
 /*
- * Stand-ins for engine functions not decompiled yet, so tools/build_engine.py can link a runnable
+ * Stand-ins for engine functions not decompiled yet, so tools/build_runnable.py can link a runnable
  * engine. Not part of the matching build: no function row credits this file, and each stub goes
  * when the real function is written. The list is in docs/notes/runnable-engine.md.
  */
