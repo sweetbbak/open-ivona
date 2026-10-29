@@ -100,7 +100,7 @@
 #define	WORDZ	13	/* no	Match "" at nonwordchar, where prev is word */
 #define	OPEN	20	/* no	Mark this point in input as start of #n. */
 			/*	OPEN+1 is number 1, etc. */
-#define	CLOSE	30	/* no	Analogous to OPEN. */
+#define	CLOSE	40	/* no	Analogous to OPEN (IVONA: 19 groups, not 9). */
 
 /*
  * Opcode notes:
@@ -966,15 +966,7 @@ regmatch(cst_regstate *state, char *scan)
 			break;
 		case BACK:
 			break;
-		case OPEN+1:
-		case OPEN+2:
-		case OPEN+3:
-		case OPEN+4:
-		case OPEN+5:
-		case OPEN+6:
-		case OPEN+7:
-		case OPEN+8:
-		case OPEN+9: {
+		case OPEN+1 ... OPEN+19: {
 				int no;
 				const char *save;
 
@@ -994,15 +986,7 @@ regmatch(cst_regstate *state, char *scan)
 					return(0);
 			}
 			break;
-		case CLOSE+1:
-		case CLOSE+2:
-		case CLOSE+3:
-		case CLOSE+4:
-		case CLOSE+5:
-		case CLOSE+6:
-		case CLOSE+7:
-		case CLOSE+8:
-		case CLOSE+9: {
+		case CLOSE+1 ... CLOSE+19: {
 				int no;
 				const char *save;
 
@@ -1246,27 +1230,11 @@ regprop(char *op)
 	case END:
 		p = "END";
 		break;
-	case OPEN+1:
-	case OPEN+2:
-	case OPEN+3:
-	case OPEN+4:
-	case OPEN+5:
-	case OPEN+6:
-	case OPEN+7:
-	case OPEN+8:
-	case OPEN+9:
+	case OPEN+1 ... OPEN+19:
 	    cst_sprintf(buf+cst_strlen(buf), "OPEN%d", OP(op)-OPEN);
 		p = NULL;
 		break;
-	case CLOSE+1:
-	case CLOSE+2:
-	case CLOSE+3:
-	case CLOSE+4:
-	case CLOSE+5:
-	case CLOSE+6:
-	case CLOSE+7:
-	case CLOSE+8:
-	case CLOSE+9:
+	case CLOSE+1 ... CLOSE+19:
 	    cst_sprintf(buf+cst_strlen(buf), "CLOSE%d", OP(op)-CLOSE);
 		p = NULL;
 		break;

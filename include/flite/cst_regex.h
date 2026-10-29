@@ -99,7 +99,7 @@ typedef struct cst_regex_struct {
     char *program;
 } cst_regex;
 
-#define CST_NSUBEXP  10
+#define CST_NSUBEXP  20  /* IVONA: Flite has 10 */
 typedef struct cst_regstate_struct {
 	const char *startp[CST_NSUBEXP];
 	const char *endp[CST_NSUBEXP];

@@ -8,6 +8,8 @@
  *   --volume F   volume factor, 0 .. 1.6                                         "volume_factor"
  *   --speed F    tts_streamer_start's speed: how fast audio is delivered, not how it sounds
  *                (1 real time, higher faster, -1 as fast as possible, the default)
+ *   --marks FILE the marks (phonemes, words, sentences, ...) as text: type, name, text offsets,
+ *                sample offset; for comparing voice libraries (tools/difftest.sh)
  */
 #include <dlfcn.h>
 #include <signal.h>
@@ -42,6 +44,20 @@ static void where(const char *what, unsigned long a)
         fprintf(stderr, "  %s %#lx\n", what, a);
 }
 
+/* a rough backtrace: stack words from sp up that point into a loaded library */
+static void stack_scan(unsigned long *sp)
+{
+    Dl_info info;
+    int k, n = 0;
+
+    for (k = 0; k < 512 && n < 24; k++)
+        if (dladdr((void *)sp[k], &info) && info.dli_fname && strstr(info.dli_fname, ".so")
+            && !strstr(info.dli_fname, "libc.so")) {
+            where("stack", sp[k]);
+            n++;
+        }
+}
+
 /* a crash in the libraries (say a decompiled voice library) is reported instead of leaving the
  * other threads waiting forever */
 static void on_crash(int sig, siginfo_t *si, void *uc)
@@ -56,20 +72,17 @@ static void on_crash(int sig, siginfo_t *si, void *uc)
     fprintf(stderr, "signal %d at address %p\n", sig, si->si_addr);
     where("pc", sc->arm_pc);
     where("lr", sc->arm_lr);
-    /* a rough backtrace: stack words that point into a loaded library */
-    {
-        unsigned long *sp = (unsigned long *)sc->arm_sp;
-        Dl_info info;
-        int k, n = 0;
-
-        for (k = 0; k < 512 && n < 24; k++)
-            if (dladdr((void *)sp[k], &info) && info.dli_fname && strstr(info.dli_fname, ".so")
-                && !strstr(info.dli_fname, "libc.so")) {
-                where("stack", sp[k]);
-                n++;
-            }
-    }
+    stack_scan((unsigned long *)sc->arm_sp);
     _exit(128 + sig);
+}
+
+/* with IVONA_DEBUG_EXIT set, who called exit() (cst_error() is exit(-1)) */
+static void on_exit_scan(void)
+{
+    unsigned long here;
+
+    fprintf(stderr, "exit() called\n");
+    stack_scan(&here);
 }
 
 static void fail(const char *what)
@@ -106,18 +119,25 @@ int main(int argc, char **argv)
     sigaction(SIGSEGV, &sa, NULL);
     sigaction(SIGBUS, &sa, NULL);
     sigaction(SIGILL, &sa, NULL);
+    if (getenv("IVONA_DEBUG_EXIT"))
+        atexit(on_exit_scan);
     tts_instance *tts;
     tts_voice *voice;
     tts_streamer *st;
     tts_wave *w;
-    FILE *out;
-    unsigned int total = 0;
+    FILE *out, *marks = NULL;
+    unsigned int total = 0, k;
     int rate, chunk;
 
     while (argc > 2 && strncmp(argv[1], "--", 2) == 0) {
         if (strcmp(argv[1], "--speed") == 0)
             speed = (float)atof(argv[2]);
-        else {
+        else if (strcmp(argv[1], "--marks") == 0) {
+            if ((marks = fopen(argv[2], "w")) == NULL) {
+                perror(argv[2]);
+                return 1;
+            }
+        } else {
             for (i = 0; names[i] && strcmp(names[i], argv[1]) != 0; i += 2)
                 ;
             if (names[i] == NULL) {
@@ -131,7 +151,7 @@ int main(int argc, char **argv)
         argv += 2;
     }
     if (argc != 6) {
-        fprintf(stderr, "usage: tts_run [--rate F] [--pitch F] [--volume F] [--speed F] "
+        fprintf(stderr, "usage: tts_run [--rate F] [--pitch F] [--volume F] [--speed F] [--marks FILE] "
                         "CERT LIBVOICE VOXDB TEXT OUT.wav\n");
         return 2;
     }
@@ -159,6 +179,11 @@ int main(int argc, char **argv)
     chunk = (int)(rate * 0.1f);
     while ((w = tts_streamer_synth(st, chunk)) != NULL) {
         fwrite(w->samples, 2, w->num_samples, out);
+        if (marks)
+            for (k = 0; k < w->num_marks; k++)
+                fprintf(marks, "%d %s %u %u %u\n", (int)w->marks[k].type,
+                        w->marks[k].name ? w->marks[k].name : "-", w->marks[k].start_text_offset,
+                        w->marks[k].end_text_offset, total + w->marks[k].sample_offset);
         total += w->num_samples;
         tts_wave_delete(w);
     }
@@ -167,6 +192,8 @@ int main(int argc, char **argv)
     fseek(out, 4, SEEK_SET), put32(out, 36 + total * 2);
     fseek(out, 40, SEEK_SET), put32(out, total * 2);
     fclose(out);
+    if (marks)
+        fclose(marks);
     fprintf(stderr, "%u samples written to %s\n", total, argv[5]);
     tts_streamer_stop(st);
     tts_unload_voice(voice);

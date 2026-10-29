@@ -87,7 +87,7 @@ cst_val *lts_apply(const char *word, const char *feats, const cst_lts_rules *r)
         if (strcmp("epsilon", p) == 0)
             continue;
 
-        if (__builtin_expect((dash = (char *)cst_strchr(p, '-')) != NULL, 1))
+        if (__builtin_expect((dash = strchr(p, '-')) != NULL, 1))
         {
             char *left = cst_substr(p, 0, strlen(p) - strlen(dash));
             cst_val *v_left = string_val(left);

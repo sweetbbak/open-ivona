@@ -7,6 +7,7 @@
 #   --rate F     speaking rate, 1 normal, about 0.67 (slower) .. 4 (faster)
 #   --pitch F    pitch, 0.5 .. 2
 #   --volume F   volume, 0 .. 1.6
+#   --marks FILE the phoneme/word/sentence marks as text (see tests/run/tts_run.c)
 #   --speed F    how fast audio is delivered (tts_streamer_start's speed): 1 real time,
 #                -1 as fast as possible (default). Does not change how it sounds.
 #   --voice-lib original|decomp|PATH
@@ -30,7 +31,7 @@ OPTS=()
 VOICE_LIB=original
 while [ $# -gt 0 ] && [[ "$1" == --* ]]; do
     case "$1" in
-        --rate|--pitch|--volume|--speed) [ $# -ge 2 ] || usage; OPTS+=("$1" "$2"); shift 2 ;;
+        --rate|--pitch|--volume|--speed|--marks) [ $# -ge 2 ] || usage; OPTS+=("$1" "$2"); shift 2 ;;
         --voice-lib) [ $# -ge 2 ] || usage; VOICE_LIB="$2"; shift 2 ;;
         *) usage ;;
     esac

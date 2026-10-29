@@ -1526,7 +1526,7 @@ addr	size	mode	name	status	src	score	note
 0006cb98	350	arm	lex_word_pos_list	wip	src/libttsivonavoice/flite/cst_lexicon.c	45.6	
 0006cee8	54	arm	lex_select_pos	matched	src/libttsivonavoice/flite/cst_lexicon.c	100	
 0006cf3c	1fc	arm	lex_lookup	wip	src/libttsivonavoice/flite/cst_lexicon.c	43.0	
-0006d138	418	arm	lts_apply	wip	src/libttsivonavoice/flite/cst_lts.c	74.0	flite strings(3) 9%
+0006d138	418	arm	lts_apply	wip	src/libttsivonavoice/flite/cst_lts.c	76.6	flite strings(3) 9%
 0006d550	244	arm	str_ctx_match_repeat	wip	src/libttsivonavoice/syllabify.c	8.8	
 0006d794	f4	arm	str_ctx_match	matched	src/libttsivonavoice/syllabify.c	100	
 0006d888	2a4	arm	str_ctx_match_left_repeat	wip	src/libttsivonavoice/syllabify.c	3.1	
@@ -1542,13 +1542,13 @@ addr	size	mode	name	status	src	score	note
 0006e1d8	c	arm	cst_regex_match_return	matched	src/libttsivonavoice/flite/cst_regex.c	100	flite order 100%
 0006e1e4	2a4	arm	new_cst_regex	wip	src/libttsivonavoice/flite/cst_regex.c	19.2	flite strings(1) 19%
 0006e488	c	arm	delete_cst_regex	matched	src/libttsivonavoice/flite/cst_regex.c	100	flite order 67%
-0006e494	5b4	arm	regmatch	wip	src/libttsivonavoice/flite/regexp.c	10.5	flite strings(3) 11%
+0006e494	5b4	arm	regmatch	wip	src/libttsivonavoice/flite/regexp.c	10.1	flite strings(3) 11%
 0006ea48	10b8	arm	regbranch	wip	src/libttsivonavoice/flite/regexp.c	2.8	flite strings(3) 3%
 0006fb00	628	arm	FUN_0006fb00	todo			
 00070128	4b4	arm	reg	wip	src/libttsivonavoice/flite/regexp.c	11.2	flite strings(3) 11%
 000705dc	1c	arm	hs_regdelete	matched	src/libttsivonavoice/flite/regexp.c	100	
 000705f8	270	arm	hs_regcomp	wip	src/libttsivonavoice/flite/regexp.c	20.8	flite strings(2) 21%
-00070868	20c	arm	hs_regexec	wip	src/libttsivonavoice/flite/regexp.c	26.0	flite strings(2) 26%
+00070868	20c	arm	hs_regexec	wip	src/libttsivonavoice/flite/regexp.c	26.7	flite strings(2) 26%
 00070a74	58	arm	val_cart	matched	src/libttsivonavoice/flite/cst_cart.c	100	flite strings(1) 0%
 00070acc	18	arm	cart_val	matched	src/libttsivonavoice/flite/cst_cart.c	100	flite order 83%
 00070ae4	104	arm	cart_print_node	matched	src/libttsivonavoice/flite/cst_cart.c	100	
