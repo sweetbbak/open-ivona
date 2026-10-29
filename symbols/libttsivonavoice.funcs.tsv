@@ -352,12 +352,12 @@ addr	size	mode	name	status	src	score	note
 0002d798	e0	arm	lex_ctx_load_voice	matched	src/libttsivonavoice/synth_iter.c	100	
 0002d878	108	arm	ssml_apply_pls_attr	matched	src/libttsivonavoice/synth_iter.c	100	
 0002d980	18c	arm	ssml_check_voice_attr_list	wip	src/libttsivonavoice/synth_iter.c	73.0	
-0002db0c	1b4	arm	FUN_0002db0c	todo			
-0002dcc0	ec	arm	FUN_0002dcc0	todo			
-0002ddac	154	arm	FUN_0002ddac	todo			
-0002df00	ec	arm	FUN_0002df00	todo			
+0002db0c	1b4	arm	voices_by_lang.isra.2	matched	src/libttsivonavoice/synth_iter.c	100	
+0002dcc0	ec	arm	voices_by_name.isra.3	wip	src/libttsivonavoice/synth_iter.c	35.8	
+0002ddac	154	arm	voice_insert_by_age	wip	src/libttsivonavoice/synth_iter.c	79.1	
+0002df00	ec	arm	voices_by_age.isra.5	matched	src/libttsivonavoice/synth_iter.c	100	
 0002dfec	98	arm	synth_iter_lang	matched	src/libttsivonavoice/synth_iter.c	100	
-0002e084	ce0	arm	FUN_0002e084	todo			
+0002e084	ce0	arm	ssml_select_voice	wip	src/libttsivonavoice/synth_iter.c	8.4	
 0002ed64	16c	arm	synth_iter_new	wip	src/libttsivonavoice/synth_iter.c	96.7	
 0002eed0	48	arm	synth_iter_free	matched	src/libttsivonavoice/synth_iter.c	100	
 0002ef18	2434	arm	synth_iter_next	todo			merged FUN_00030110/FUN_000304a4/FUN_000304f4/FUN_000305f8/FUN_0003063c/FUN_00030b14 (cold tail past a literal pool)

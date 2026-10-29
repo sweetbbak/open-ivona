@@ -2,6 +2,7 @@
  * The synthesis state of an SSML document walk (..0x356d8): the context of the text being read
  * (flags, prosody, voice), the stacks they are saved on, and the utterance being built.
  */
+#include <ctype.h>
 #include <string.h>
 #include <strings.h>
 #include "cst_alloc.h"
@@ -129,6 +130,11 @@ audio_clip_chunk *audio_clip_chunk_new(const synth_ctx *ctx, const char *src, co
                                        const ustr_span *span, int flags, const char *mark);
 
 static const say_as_info no_say_as = { NULL, 0, 0 };
+
+const char *voice_age(tts_voice *v);
+int parse_uint_or_minus1(const char *s);
+int voice_age_class(const char *age);
+int voice_age_matches(tts_voice *v, int mask);
 
 #define TTS_MSG_ADD_AT(list, line, column, code, ...)                                 \
     do {                                                                              \
@@ -269,6 +275,272 @@ void ssml_check_voice_attr_list(synth_iter *it, dom_elem *e, const char *attr)
                        "Invalid value of attribute \"%s\"", attr);
     }
     strlist_free(l);
+}
+
+/* language match levels of a voice for a language (4: exact) */
+typedef int (*voice_lang_match_fn)(const char *codes, const char *lang);
+
+/* 0x2db0c arm: appends the voices whose languages match lang exactly, then (unless exact)
+ * the closer matches before the looser ones */
+static void voices_by_lang(const ivona_vector *voices, const char *lang, voice_lang_match_fn match,
+                           int exact, ivona_vector *out)
+{
+    ivona_vector *v3 = NULL, *v2 = NULL, *v1 = NULL;
+    tts_voice **p;
+    int m;
+
+    for (p = voices->data; p != (tts_voice **)voices->data + voices->count; p++) {
+        m = match((*p)->voice->lang_codes, lang);
+        if (m == 4)
+            vector_push(out, p);
+        else if (!exact) {
+            if (m == 3) {
+                if (v3 == NULL)
+                    v3 = vector_new(4, NULL, NULL);
+                vector_push(v3, p);
+            } else if (m == 2) {
+                if (v2 == NULL)
+                    v2 = vector_new(4, NULL, NULL);
+                vector_push(v2, p);
+            } else if (m == 1) {
+                if (v1 == NULL)
+                    v1 = vector_new(4, NULL, NULL);
+                vector_push(v1, p);
+            }
+        }
+    }
+    if (v3) {
+        vector_append_vector(out, v3);
+        vector_free(v3);
+    }
+    if (v2) {
+        vector_append_vector(out, v2);
+        vector_free(v2);
+    }
+    if (v1) {
+        vector_append_vector(out, v1);
+        vector_free(v1);
+    }
+}
+
+char *str_to_ascii(const char *s);
+
+/* 0x2dcc0 arm: appends the voices named in names (white space separated, in that order) */
+static void voices_by_name(const ivona_vector *voices, const char *names, ivona_vector *out)
+{
+    char *ascii = str_to_ascii(names);
+    strlist *l = strlist_split_ws(ascii);
+    char **w;
+    tts_voice **p;
+
+    for (w = l->items; w != l->items + l->count; w++)
+        for (p = voices->data; p != (tts_voice **)voices->data + voices->count; p++) {
+            const char *name = (*p)->voice->lector_ascii;
+
+            if (*w == NULL || **w == 0 || strcasecmp(*w, name) == 0)
+                vector_push(out, p);
+        }
+    strlist_free(l);
+    cst_free(ascii);
+}
+
+/* how far a voice's age is from age (0: the same) */
+static inline float voice_age_distance(tts_voice *v, int age)
+{
+    int a = parse_uint_or_minus1(voice_age(v));
+
+    return 1.0f - (age < a ? (float)age / a : (float)a / age);
+}
+
+/* 0x2ddac arm: inserts v into out, sorted by how close its age is to age (appended if age
+ * is not a number) */
+static void voice_insert_by_age(ivona_vector *out, tts_voice *v, int age)
+{
+    float d;
+    size_t i;
+
+    if (age > 0) {
+        d = voice_age_distance(v, age);
+        for (i = 0; i < vector_size(out); i++) {
+            if (d < voice_age_distance(*(tts_voice **)vector_at(out, i), age)) {
+                vector_insert(out, i, &v);
+                return;
+            }
+        }
+    }
+    vector_push(out, &v);
+}
+
+/* 0x2df00 arm: appends the voices of the age class of age, closest age first; the others only
+ * if none is */
+static void voices_by_age(const ivona_vector *voices, const char *age, ivona_vector *out)
+{
+    int mask = voice_age_class(age);
+    int n = parse_uint_or_minus1(age);
+    ivona_vector *others = NULL;
+    tts_voice **p;
+
+    for (p = voices->data; p != (tts_voice **)voices->data + voices->count; p++) {
+        if (voice_age_matches(*p, mask))
+            voice_insert_by_age(out, *p, n);
+        else {
+            if (others == NULL)
+                others = vector_new(4, NULL, NULL);
+            voice_insert_by_age(others, *p, n);
+        }
+    }
+    if (others == NULL)
+        return;
+    if (vector_size(out) == 0)
+        vector_append_vector(out, others);
+    vector_free(others);
+}
+
+#define XML_LANG "http://www.w3.org/XML/1998/namespace^lang"
+
+int lang_tag_match(const char *a, const char *b);
+int lang_tags_match(const char *a, const char *list);
+const char *dom_find_attr_up(const dom_elem *e, int type, const char *name);
+
+/* the attribute name (lowercased) of e or its nearest <voice> ancestor */
+static inline const char *voice_attr(const dom_elem *e, const char *name)
+{
+    char *n = cst_strdup(name), *p;
+    const char *v;
+
+    for (p = n; *p; p++)
+        *p = tolower(*p);
+    v = dom_find_attr_up(e, SSML_VOICE, n);
+    cst_free(n);
+    return v;
+}
+
+/* appends the voices of cur matching the <voice> attribute attr = value to out (with exact,
+ * only exact language matches) */
+#define VOICES_FILTER(cur, attr, value, exact, out)                                      \
+    do {                                                                                 \
+        tts_voice **p_;                                                                  \
+                                                                                         \
+        if (strcasecmp(attr, "name") == 0)                                               \
+            voices_by_name(cur, value, out);                                             \
+        else if (strcasecmp(attr, "gender") == 0) {                                      \
+            for (p_ = (cur)->data; p_ != (tts_voice **)(cur)->data + (cur)->count; p_++) \
+                if (*(value) == 0 || strcasecmp(value, (*p_)->voice->gender) == 0)       \
+                    vector_push(out, p_);                                                \
+        } else if (strcasecmp(attr, "age") == 0)                                         \
+            voices_by_age(cur, value, out);                                              \
+        else if (strcasecmp(attr, "languages") == 0)                                     \
+            voices_by_lang(cur, value, lang_tags_match, exact, out);                     \
+        else if (strcasecmp(attr, XML_LANG) == 0)                                        \
+            voices_by_lang(cur, value, lang_tag_match, exact, out);                      \
+    } while (0)
+
+/* the value of the <voice> attribute attr (xml:lang is inherited) */
+static inline const char *voice_attr_value(const dom_elem *e, const char *attr)
+{
+    if (strcmp(attr, XML_LANG) == 0)
+        return dom_inherited_attr(e, attr);
+    return voice_attr(e, attr);
+}
+
+/* 0x2e084 arm: the voice a <voice> element (or, with by_lang, a language change) selects:
+ * the voices meeting all of its required attributes (by onvoicefailure if none does),
+ * narrowed in its ordering of attributes, then its variant-th */
+tts_voice *ssml_select_voice(synth_iter *it, dom_elem *e, int by_lang)
+{
+    const char *required = voice_attr(e, "required"), *lang, *ordering, *value, *ovf,
+        *variant;
+    const char *order[5];
+    ivona_vector *cur = vector_copy(it->voices), *next;
+    unsigned long n = 1;
+    strlist *l;
+    char **w;
+    const char **o;
+    tts_voice *v, *top;
+
+    if (it->doc->ssml_version == 10 && voice_attr(e, "languages") == NULL)
+        lang = XML_LANG;
+    else
+        lang = "languages";
+    if (required == NULL)
+        required = lang;
+    if (by_lang)
+        required = XML_LANG;
+    if (*required) {
+        l = strlist_split_ws(required);
+        for (w = l->items; w != l->items + l->count; w++) {
+            value = voice_attr_value(e, *w);
+            if (value == NULL)
+                continue;
+            next = vector_new(4, NULL, NULL);
+            VOICES_FILTER(cur, *w, value, 1, next);
+            vector_free(cur);
+            cur = next;
+            if (vector_size(cur) == 0)
+                break;
+        }
+        strlist_free(l);
+    }
+    if (vector_size(cur) == 0) {
+        ovf = voice_attr(e, "onvoicefailure");
+        TTS_MSG_ADD_AT(it->doc->warnings, e->span.start, e->n.index, 14,
+                       "None of the voices match required criteria");
+        if (ovf == NULL || strcasecmp(ovf, "processorchoice") == 0)
+            ovf = "priorityselect";
+        if (strcasecmp(ovf, "keepexisting") == 0) {
+            top = ((voice_frame *)vector_at(it->voice_stack, vector_size(it->voice_stack) - 1))->voice;
+            vector_push(cur, &top);
+        } else if (strcasecmp(ovf, "priorityselect") != 0)
+            TTS_MSG_ADD_AT(it->doc->warnings, e->span.start, e->n.index, 6,
+                           "Invalid value of attribute \"%s\"", "onvoicefailure");
+        if (vector_size(cur) == 0)
+            vector_append_vector(cur, it->voices);
+    }
+    if (vector_size(cur) > 1) {
+        ordering = voice_attr(e, "ordering");
+        order[0] = lang;
+        order[1] = "gender";
+        order[2] = "name";
+        order[3] = "age";
+        order[4] = NULL;
+        l = strlist_split_ws(ordering ? ordering : lang);
+        for (o = order; *o; o++)
+            if (!strlist_contains_nocase(l, *o))
+                strlist_push(l, *o);
+        for (w = l->items; w != l->items + l->count; w++) {
+            value = voice_attr_value(e, *w);
+            if (value == NULL)
+                continue;
+            next = vector_new(4, NULL, NULL);
+            VOICES_FILTER(cur, *w, value, 0, next);
+            if (vector_size(next) == 0)
+                vector_free(next);
+            else {
+                vector_free(cur);
+                cur = next;
+            }
+        }
+        strlist_free(l);
+    }
+    variant = voice_attr(e, "variant");
+    if (variant && *variant && (!cst_parse_uint_n(variant, strlen(variant), &n) || (int)n <= 0)) {
+        TTS_MSG_ADD_AT(it->doc->warnings, e->span.start, e->n.index, 6,
+                       "Invalid value of attribute \"%s\"", "variant");
+        dom_set_attr(e, "variant", "1");
+        n = 1;
+    }
+    v = *(tts_voice **)vector_at(cur, (n - 1) % vector_size(cur));
+    vector_free(cur);
+    if (e->in_subdoc) {
+        top = ((voice_frame *)vector_at(it->voice_stack, vector_size(it->voice_stack) - 1))->voice;
+        if (top != v) {
+            top = ((voice_frame *)vector_at(it->voice_stack, vector_size(it->voice_stack) - 1))->voice;
+            TTS_MSG_ADD_AT(it->doc->warnings, e->span.start, e->n.index, 14,
+                           "It is not possible to change voice within SSML subdocument");
+            v = top;
+        }
+    }
+    return v;
 }
 
 /* 0x2dfec arm: the language part for lang, NULL if it is the voice's own */
