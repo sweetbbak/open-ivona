@@ -42,7 +42,7 @@ typedef struct tts_resource {     /* a loaded certificate */
 
 static int g_tts_instance_count;
 
-void *FUN_00022b2c(const char *path, void *arg);
+void *lang_data_load(const char *path, void *arg);
 void lang_data_free(void *data);
 void addon_attach(void *addon, void *module);
 void addon_detach(void *addon, void *module);
@@ -76,7 +76,7 @@ static void lang_cache_free(void *data)
 /* 0x3a18c */
 static void *lang_cache_load(const char *path, void *arg)
 {
-    return FUN_00022b2c(path, arg);
+    return lang_data_load(path, arg);
 }
 
 /* 0x3a190: attach an addon to the instance once and announce it to every module */

@@ -233,7 +233,7 @@ addr	size	mode	name	status	src	score	note
 000229d4	8	arm	lexicon_ptr_free	matched	src/libttsivonavoice/lang_tag.c	100	
 000229dc	12c	arm	lang_dat_check_version	matched	src/libttsivonavoice/lang_tag.c	100	
 00022b08	24	arm	vox_file_check	matched	src/libttsivonavoice/lang_tag.c	100	
-00022b2c	57c	arm	FUN_00022b2c	todo			
+00022b2c	57c	arm	lang_data_load	wip	src/libttsivonavoice/lang_tag.c	16.2	
 000230a8	24	arm	lang_data_new	matched	src/libttsivonavoice/lang_tag.c	100	
 000230cc	4c	arm	lang_data_free	matched	src/libttsivonavoice/lang_tag.c	100	
 00023118	8	arm	FUN_00023118	todo			

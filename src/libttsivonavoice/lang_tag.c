@@ -121,6 +121,8 @@ linereader *linereader_new(textstream *ts, const char *encoding);
 void linereader_free(linereader *lr);
 int linereader_next(linereader *lr);
 char *linereader_line(const linereader *lr);
+const char *isef_next(const isef_file *f, const char *p, size_t n, const char **data, size_t *size);
+int dict_load_mem(const char *source, const void *data, size_t len, tts_dict_entry ***dictp);
 
 typedef struct pls_lexicon pls_lexicon;
 void pls_lexicon_free(pls_lexicon *l);
@@ -230,9 +232,130 @@ typedef struct lang_data {
     ivona_vector *unk_8;
     ivona_vector *unk_c;
     lang_core core;             /* +0x10: handed to the language library */
-    ivona_vector *lexicons;     /* +0x2c */
+    ivona_vector *lexicons;     /* +0x2c: of lang_section, the sections not read at load */
     isef_file *file;            /* +0x30: lang.dat */
 } lang_data;
+
+/* a lang.dat section not read by lang_data_load (lang_data.lexicons) */
+typedef struct lang_section {
+    const char *name;
+    const char *data;
+    size_t size;
+} lang_section;
+
+/* whether name (n bytes) is a line of the newline-separated list */
+static inline int lang_dat_listed(const char *name, size_t n, const char *list)
+{
+    const char *p;
+
+    for (p = list; *p; ) {
+        if (strncmp(name, p, n) == 0 && (p[n] == '\n' || p[n] == 0))
+            return 1;
+        if ((p = strchr(p, '\n')) == NULL || ++p == NULL)
+            break;
+    }
+    return 0;
+}
+
+/* 0x22b2c arm: loads lang.dat at path: its user dictionaries (prm_lex_list), PLS lexicons
+ * (pls_lex_list, named_pls_list), lexicon data and the other sections. NULL if it is for another
+ * engine version or a list entry fails. */
+lang_data *lang_data_load(const char *path, void *ctx)
+{
+    static const char known[] =
+        "named_pls_list\npls_lex_list\nprm_lex_list\nlang_code\nlex_data\nlex_nopsa_data\n";
+    isef_file *f = isef_open(path);
+    tts_dict_entry **dict = NULL;
+    const char *data = NULL, *list = NULL, *lex = NULL, *nopsa = NULL, *name;
+    size_t size, list_len, lex_size = 0, nopsa_size = 0, n;
+    char *code = NULL, *line, *src;
+    ivona_vector *pls = NULL, *named = NULL;
+    textstream *ts;
+    linereader *lr;
+    const char *d;
+    size_t ds;
+    lang_section sec;
+    lang_data *l;
+    int r;
+
+    if (lang_dat_check_version(f) != 0)
+        goto make;
+    if (isef_find(f, "lex_data", &data, &size)) {
+        lex = data;
+        lex_size = size;
+    }
+    if (isef_find(f, "lex_nopsa_data", &data, &size)) {
+        nopsa = data;
+        nopsa_size = size;
+    }
+    if (isef_find(f, "lang_code", &data, &size))
+        code = cst_strndup(data, size);
+    if (!isef_find(f, "prm_lex_list", &data, &size)) {
+        data = "prm_lexicon\n";
+        size = 12;
+    }
+    dict = dict_new();
+    if ((ts = textstream_from_mem(data, size)) != NULL) {
+        r = 0;
+        lr = linereader_new(ts, "ASCII");
+        while (linereader_next(lr)) {
+            if (r < 0)
+                break;
+            line = linereader_line(lr);
+            src = cst_nsprintf(strlen(path) + strlen(line) + 2, "%s:%s", path, line);
+            if (isef_find(f, line, &d, &ds))
+                r = dict_load_mem(src, d, ds, &dict);
+            cst_free(src);
+            cst_free(line);
+        }
+        linereader_free(lr);
+        textstream_close(ts);
+        if (r < 0)
+            goto fail;
+    }
+    if (isef_find(f, "pls_lex_list", &list, &list_len)
+        && (pls = lang_dat_lexicons(f, list, list_len, ctx)) == NULL)
+        goto fail;
+    if (isef_find(f, "named_pls_list", &list, &list_len)
+        && (named = lang_dat_lexicons(f, list, list_len, ctx)) == NULL)
+        goto fail;
+    goto make;
+fail:
+    dict_free(dict);
+    dict = NULL;
+    vector_free(pls);
+    pls = named = NULL;
+    cst_free(code);
+    code = NULL;
+    lex = nopsa = NULL;
+make:
+    if (dict == NULL)
+        return NULL;
+    l = cst_safe_calloc(1, sizeof(lang_data));
+    l->dict = dict;
+    l->unk_8 = pls;
+    l->unk_c = named;
+    l->code = code;
+    l->file = f;
+    l->core.code = code;
+    lang_core_init(&l->core);
+    l->core.unk_4[0] = (int)lex;
+    l->core.unk_4[1] = lex_size;
+    l->core.unk_4[2] = (int)nopsa;
+    l->core.unk_4[3] = nopsa_size;
+    l->lexicons = vector_new(sizeof(lang_section), NULL, NULL);
+    for (name = isef_next(f, NULL, 0, &d, &ds); name; name = isef_next(f, d, ds, &d, &ds)) {
+        n = strlen(name);
+        if (lang_dat_listed(name, n, known) || (data && lang_dat_listed(name, n, data))
+            || (list && lang_dat_listed(name, n, list)))
+            continue;
+        sec.name = name;
+        sec.data = d;
+        sec.size = ds;
+        vector_push(l->lexicons, &sec);
+    }
+    return l;
+}
 
 /* 0x230a8 arm */
 lang_data *lang_data_new(void)
