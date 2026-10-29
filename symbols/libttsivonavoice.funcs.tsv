@@ -341,12 +341,12 @@ addr	size	mode	name	status	src	score	note
 0002bfb0	74	arm	qname_join	matched	src/libttsivonavoice/ssml_parse.c	100	
 0002c024	fc	arm	ssml_canonical_name	matched	src/libttsivonavoice/ssml_parse.c	100	
 0002c120	c88	arm	ssml_start_element	wip	src/libttsivonavoice/ssml_parse.c	26.2	
-0002cda8	1dc	arm	FUN_0002cda8	todo			
-0002cf84	70	arm	FUN_0002cf84	todo			
-0002cff4	32c	arm	FUN_0002cff4	todo			
-0002d320	1b8	arm	FUN_0002d320	todo			
-0002d4d8	9c	arm	FUN_0002d4d8	todo			
-0002d574	1a8	arm	FUN_0002d574	todo			
+0002cda8	1dc	arm	say_as_split	wip	src/libttsivonavoice/say_as.c	24.8	
+0002cf84	70	arm	say_as_ext_find	matched	src/libttsivonavoice/say_as.c	100	
+0002cff4	32c	arm	say_as_lookup	wip	src/libttsivonavoice/say_as.c	36.8	
+0002d320	1b8	arm	ssml_date_parse	wip	src/libttsivonavoice/say_as.c	33.3	
+0002d4d8	9c	arm	ssml_date_join	wip	src/libttsivonavoice/say_as.c	97.4	
+0002d574	1a8	arm	ssml_time_expand	matched	src/libttsivonavoice/say_as.c	100	
 0002d71c	18	arm	say_as_info_flag	matched	src/libttsivonavoice/synth_iter.c	100	
 0002d734	64	arm	say_as_is_speech	matched	src/libttsivonavoice/synth_iter.c	100	
 0002d798	e0	arm	lex_ctx_load_voice	matched	src/libttsivonavoice/synth_iter.c	100	
@@ -360,13 +360,7 @@ addr	size	mode	name	status	src	score	note
 0002e084	ce0	arm	FUN_0002e084	todo			
 0002ed64	16c	arm	synth_iter_new	wip	src/libttsivonavoice/synth_iter.c	96.7	
 0002eed0	48	arm	synth_iter_free	matched	src/libttsivonavoice/synth_iter.c	100	
-0002ef18	11f8	arm	synth_iter_next	todo			
-00030110	394	arm	FUN_00030110	todo			
-000304a4	50	arm	FUN_000304a4	todo			
-000304f4	104	arm	FUN_000304f4	todo			
-000305f8	44	arm	FUN_000305f8	todo			
-0003063c	4d8	arm	FUN_0003063c	todo			
-00030b14	838	arm	FUN_00030b14	todo			
+0002ef18	2434	arm	synth_iter_next	todo			merged FUN_00030110/FUN_000304a4/FUN_000304f4/FUN_000305f8/FUN_0003063c/FUN_00030b14 (cold tail past a literal pool)
 0003134c	8	arm	synth_iter_ctx	matched	src/libttsivonavoice/synth_iter.c	100	
 00031354	34	arm	parse_uint_or_minus1	matched	src/libttsivonavoice/synth_iter.c	100	
 00031388	50	arm	voice_age	wip	src/libttsivonavoice/synth_iter.c	90.0	

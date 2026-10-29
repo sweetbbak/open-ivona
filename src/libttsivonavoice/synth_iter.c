@@ -34,6 +34,7 @@ typedef struct synth_chunk synth_chunk;
 void synth_chunk_free(synth_chunk *c);
 void flag_reset(int *f);
 int cst_parse_uint_n(const char *s, size_t n, unsigned long *out);
+const char *cst_skip_space(const char *s);
 
 typedef struct prosody {
     float volume;
@@ -53,12 +54,7 @@ void utt_chunk_init_empty(utt_chunk *c, tts_instance **src, int phrasing_model,
                           int break_dur_model);
 void utt_chunk_free_utt(utt_chunk *c);
 
-/* a say-as interpretation */
-typedef struct say_as_info {
-    const char *name;
-    int unk_4;
-    int unk_8;
-} say_as_info;
+#include "ssml_say_as.h"
 
 int say_as_info_flag(const say_as_info *sa);
 
@@ -218,7 +214,7 @@ int say_as_info_flag(const say_as_info *sa)
 {
     if (sa == NULL)
         return 0;
-    return sa->unk_8 != 0;
+    return sa->whole != 0;
 }
 
 /* 0x2d734 arm: whether the say-as reads its text as speech */

@@ -55,4 +55,34 @@ typedef struct ssml_doc {
     cst_features *metrics;      /* +0x38: timing metrics or NULL */
 } ssml_doc;
 
+/* element types (dom_node.type) */
+enum {
+    SSML_UNKNOWN_SSML = 0,      /* in the SSML namespace but not known */
+    SSML_AUDIO = 2,
+    SSML_BREAK,
+    SSML_DESC,
+    SSML_EMPHASIS,
+    SSML_LANG,
+    SSML_LEXICON,
+    SSML_LOOKUP,
+    SSML_MARK,
+    SSML_META,
+    SSML_METADATA,
+    SSML_P,
+    SSML_PHONEME,
+    SSML_PROSODY,
+    SSML_S,
+    SSML_SAY_AS,
+    SSML_SPEAK,
+    SSML_SUB,
+    SSML_VOICE,
+    SSML_W,
+    AMAZON_BREATH,
+    AMAZON_DOMAIN,
+    AMAZON_EFFECT,
+    AMAZON_LEXICON,
+    AMAZON_LITERAL,
+    SSML_UNKNOWN                /* in another namespace */
+};
+
 #endif

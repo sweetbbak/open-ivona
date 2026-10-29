@@ -40,6 +40,9 @@ units:
   # -O3: utf8_encode's length loop over a constant table is completely unrolled into a compare
   # chain (only -O3's cunrolli does that)
   src/libttsivonavoice/utf8_enc.c: {add: [-O3], remove: [-O2]}
+  # -O3 -fno-inline-functions: ssml_time_expand's digit loop and ssml_date_join's field loop are
+  # completely unrolled (cunrolli), while say_as_split stays out of line in say_as_lookup
+  src/libttsivonavoice/say_as.c: {add: [-O3, -fno-inline-functions], remove: [-O2]}
   # -fno-inline: val_delete_wavesynth tail-calls delete_wavesynth. -fno-strict-aliasing: in
   # wavesynth_add_mark the load of s->marks stays below the stores to the new mark (int fields
   # too). utt_cache_key uses OpenSSL's HMAC (headers from `./dc vendor build openssl`, which
