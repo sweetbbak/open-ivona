@@ -141,16 +141,31 @@ def _add_pcrel_code_pointers(b: Binary, entries: dict[int, tuple[str, str]]) -> 
         print(f"added {added} functions referenced through PC-relative code pointers")
 
 
-def _looks_like_arm_entry(b: Binary, a: int) -> bool:
+def _looks_like_arm_entry(b: Binary, a: int, span_start: int | None = None) -> bool:
     """Heuristic for tail-call targets: ARM code that starts with a prologue or directly
-    follows an unconditional return/branch."""
+    follows an unconditional return/branch, or a literal pool after one (span_start: the start
+    of the span holding `a`; a 4-byte `bx lr` hides at the end of its neighbour's pool)."""
     if a & 3 or not (b.elf.text.addr < a < b.elf.text.end):
         return False
     w = b.elf.u32(a)
     if (w & 0xFFFF0000) == 0xE92D0000 or w == 0xE1A0C00D:  # push/stmfd sp!,{..} ; mov ip, sp
         return True
     prev = b.elf.u32(a - 4)
-    return prev in (0xE12FFF1E,) or (prev & 0xFFFF8000) == 0xE8BD8000 or (prev & 0xFF000000) == 0xEA000000
+    if prev in (0xE12FFF1E,) or (prev & 0xFFFF8000) == 0xE8BD8000 or (prev & 0xFF000000) == 0xEA000000:
+        return True
+    if span_start is None or span_start >= a:
+        return False
+    items = disassemble(b.elf.read(span_start, a - span_start), span_start, "arm")
+    if not items or items[-1].kind != "word":
+        return False
+    code = [it for it in items if it.kind == "insn"]
+    return bool(code) and code[-1].terminator
+
+
+def _span_of(starts: list[int], a: int) -> int | None:
+    """The start of the span (sorted `starts`) holding address a."""
+    i = bisect.bisect_right(starts, a) - 1
+    return starts[i] if i >= 0 else None
 
 
 def guess_mode(b: Binary, a: int) -> str:
@@ -222,7 +237,8 @@ def split(stem: str, ghidra_json: str | None = None) -> None:
             mode = entries[a][0]
             for it in disassemble(b.elf.read(a, end - a), a, mode):
                 tail_call = (mode == "arm" and it.mnem == "b" and it.branch is not None
-                             and not (a <= it.branch < end) and _looks_like_arm_entry(b, it.branch))
+                             and not (a <= it.branch < end)
+                             and _looks_like_arm_entry(b, it.branch, _span_of(starts, it.branch)))
                 if (it.mnem in ("bl", "blx") or tail_call) and it.branch is not None \
                         and text.addr <= it.branch < text.end \
                         and not (it.mnem == "bl" and mode == "arm" and it.branch & 3):

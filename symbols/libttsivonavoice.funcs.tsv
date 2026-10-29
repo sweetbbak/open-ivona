@@ -5179,7 +5179,8 @@ addr	size	mode	name	status	src	score	note
 001df984	f4	arm	Curl_speedcheck	lib	lib:curl:lib__speedcheck.o	100	
 001dfa78	60	arm	curl_version	lib	lib:curl:lib__version.o	100	
 001dfad8	28	arm	Curl_version_init	lib	lib:curl:lib__version.o	100	
-001dfb00	290	arm	FUN_001dfb00	todo			
+001dfb00	2c	arm	FUN_001dfb00	todo			
+001dfb2c	264	arm	FUN_001dfb2c	todo			
 001dfd90	10	arm	FUN_001dfd90	todo			
 001dfda0	188	arm	Curl_urldecode	todo			
 001dff28	90	arm	curl_easy_unescape	lib	lib:curl:lib__escape.o	100	
@@ -5334,7 +5335,8 @@ addr	size	mode	name	status	src	score	note
 001ebbd4	4c	arm	Curl_pp_init	lib	lib:curl:lib__pingpong.o	100	
 001ebc20	178	arm	Curl_pp_vsendf	lib	lib:curl:lib__pingpong.o	100	
 001ebd98	30	arm	Curl_pp_sendf	lib	lib:curl:lib__pingpong.o	100	
-001ebdc8	380	arm	Curl_pp_readresp	todo			
+001ebdc8	350	arm	Curl_pp_readresp	todo			
+001ec118	30	arm	FUN_001ec118	todo			
 001ec148	a8	arm	Curl_pp_flushsend	lib	lib:curl:lib__pingpong.o	100	
 001ec1f0	2c	arm	Curl_pp_disconnect	lib	lib:curl:lib__pingpong.o	100	
 001ec21c	40	arm	Curl_pp_moredata	lib	lib:curl:lib__pingpong.o	100	

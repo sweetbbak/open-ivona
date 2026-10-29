@@ -53,6 +53,8 @@ addr	size	name	note
 0010c634	100	uni_translit_index1	
 0010c734	2000	uni_translit_index2	
 0010e734	2460	uni_translit_index3	
+0038cce0	0	en_us_amazon_modifiers	
+0038ccfc	0	en_gb_amazon_modifiers	
 00390828	8	unit_cost_weights	
 00390c1c	30	default_stress_info	
 00393410	0	_pcre_OP_lengths	named from library relocation
@@ -176,9 +178,30 @@ addr	size	name	note
 003bb67c	2c	amy_lexicon	
 003bb6a8	c	amy_addenda	
 003bbec4	4	amy_voice_params	
+003c0be0	0	en_gb_phoneset	
+003ccdbc	0	en_us_syl_rules	
+003cd0b4	0	en_us_phoneset	
+003cd350	0	en_checked_vowels	
+003cd6dc	0	en_us_amazon_syllabics	
+003cd72c	0	en_us_amazon_vowels	
+003cd76c	0	en_us_amazon_xsampa_rules	
+003ce1a8	0	en_gb_amazon_syllabics	
+003ce1fc	0	en_gb_amazon_vowels	
+003ce24c	0	en_gb_amazon_xsampa_rules	
+003cebe8	0	en_us_xivona_to_xsampa_rules	
+003cef58	0	en_us_syllabics	
+003cefa8	0	en_us_vowels	
+003cefe8	0	en_us_modifiers	
+003cf008	0	en_us_xsampa_rules	
+003d145c	0	en_gb_xivona_to_xsampa_rules	
+003d181c	0	en_gb_syllabics	
+003d187c	0	en_gb_vowels	
+003d18cc	0	en_gb_modifiers	
+003d18e8	0	en_gb_xsampa_rules	
 003d6bf4	0	cst_regex_table	learned from src/libttsivonavoice/flite/cst_cart.c
 003d6d50	1e0	xsampa_modifiers	
 003d6f30	3c8	xsampa_symbols	
+003d7380	0	language_data	
 003d73a8	0	cst_val_defs	learned from src/libttsivonavoice/flite/cst_val.c
 003d7518	0	item_traverse_ops	learned from src/libttsivonavoice/flite/cst_ffeature.c
 003d767c	0	SKP_Silk_LTP_vq_ptrs_Q14	named from library relocation
@@ -188,6 +211,14 @@ addr	size	name	note
 003d77d0	0	SKP_Silk_NLSF_CB1_10	named from library relocation
 003d7848	0	SKP_Silk_NLSF_CB1_16	named from library relocation
 003d8030	0	cst_relation_id_names	learned from src/libttsivonavoice/flite/cst_utterance.c
+003d81a0	0	en_gb_stress	
+003d81d0	0	en_us_stress	
+003d8200	0	en_gb_amazon_stress	
+003d8230	0	en_us_amazon_stress	
+003d8260	0	en_gb_xsampa	
+003d8274	0	en_us_xsampa	
+003d8288	0	en_gb_amazon_xsampa	
+003d829c	0	en_us_amazon_xsampa	
 003d846c	0	pcre_malloc	named from library relocation
 003d8470	0	pcre_free	named from library relocation
 003d8474	0	pcre_stack_malloc	named from library relocation

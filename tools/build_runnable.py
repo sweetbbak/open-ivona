@@ -41,6 +41,8 @@ TARGETS = {
         "syslibs": ["-lm", "-ldl", "-llog", "-lc"],
         "defines": [],
         "extra": ["src/libvoice_en_gb_amy/runnable_stubs.c", "src/libvoice_en_gb_amy/amy_lexicon.c",
+                  "src/libvoice_en_gb_amy/en_gb_phoneset.c", "src/libvoice_en_gb_amy/en_us_phoneset.c",
+                  "src/libvoice_en_gb_amy/en_xsampa_rules.c",
                   "src/libttsivonavoice/runnable_stubs_vorbis.c"],
     },
 }

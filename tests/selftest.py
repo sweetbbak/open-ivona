@@ -142,6 +142,24 @@ def main() -> int:
     else:
         print("ok   splitter drops fragments inside verified functions only")
 
+    # Splitter: a tail-call target right after a terminator and its literal pool is an entry
+    # (a 4-byte `bx lr` at the end of en_gb_setup's pool, tail-called by en_lang_teardown).
+    import struct as _st
+    from types import SimpleNamespace
+    from dc.inventory import _looks_like_arm_entry
+    code = _st.pack("<5I", 0xE59F0000, 0xE8BD8010, 0x000C3900, 0xE12FFF1E, 0xE3A00000)
+    elf = SimpleNamespace(text=SimpleNamespace(addr=0x1000, end=0x2000),
+                          read=lambda a, n: code[a - 0x1000:a - 0x1000 + n],
+                          u32=lambda a: _st.unpack_from("<I", code, a - 0x1000)[0])
+    fake = SimpleNamespace(elf=elf)
+    got = [_looks_like_arm_entry(fake, 0x100c, 0x1000), _looks_like_arm_entry(fake, 0x100c),
+           _looks_like_arm_entry(fake, 0x1008, 0x1000)]
+    if got != [True, False, True]:
+        fails += 1
+        print(f"FAIL: entry after a literal pool gave {got}")
+    else:
+        print("ok   splitter finds tail-called functions hidden behind a literal pool")
+
     # libmatch: a failed proposal reverts its name, so callers verified against the tentative
     # name must be re-verified (fixed point); objects must agree on data placement.
     from dc.libmatch import verify_fixed_point, placement_outliers

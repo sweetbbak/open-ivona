@@ -171,7 +171,8 @@ addr	size	mode	name	status	src	score	note
 00028000	58	arm	FUN_00028000	todo			
 00028058	18	arm	FUN_00028058	todo			
 00028070	58	arm	FUN_00028070	todo			
-000280c8	1c	arm	FUN_000280c8	todo			
+000280c8	18	arm	FUN_000280c8	todo			
+000280e0	4	arm	FUN_000280e0	todo			
 000280e4	4	arm	val_delete_float_ptr	todo			
 000280e8	70	arm	acoustic_stream_type	matched	src/libttsivonavoice/acoustic.c	100	
 00028158	58	arm	acoustic_stream_type_name	matched	src/libttsivonavoice/acoustic.c	100	
@@ -450,7 +451,8 @@ addr	size	mode	name	status	src	score	note
 00031a20	198	arm	cst_parse_float	wip	src/libttsivonavoice/flite/cst_string.c	29.8	
 00031bb8	5c	arm	cst_parse_float_suffix	matched	src/libttsivonavoice/flite/cst_string.c	100	
 00031c14	48	arm	cst_parse_unsigned_suffix	matched	src/libttsivonavoice/flite/cst_string.c	100	
-00031c5c	54	arm	cst_parse_signed_suffix	wip	src/libttsivonavoice/flite/cst_string.c	71.4	
+00031c5c	40	arm	cst_parse_signed_suffix	matched	src/libttsivonavoice/flite/cst_string.c	100	
+00031c9c	14	arm	FUN_00031c9c	todo			
 00031cb0	38	arm	cst_parse_number	wip	src/libttsivonavoice/flite/cst_string.c	0.0	
 00031ce8	ec	arm	cst_parse_hex	matched	src/libttsivonavoice/flite/cst_string.c	100	
 00031dd4	e8	arm	cst_parse_hex_n	matched	src/libttsivonavoice/flite/cst_string.c	100	
@@ -622,13 +624,13 @@ addr	size	mode	name	status	src	score	note
 000396b8	114	arm	amy_voice_new	matched	src/libvoice_en_gb_amy/voice_init.c	100	
 000397cc	4	arm	FUN_000397cc	matched	src/libvoice_en_gb_amy/voice_init.c	100	
 000397d0	4	arm	FUN_000397d0	matched	src/libvoice_en_gb_amy/voice_init.c	100	
-000397d4	408	arm	FUN_000397d4	todo			
-00039bdc	18	arm	FUN_00039bdc	todo			
+000397d4	408	arm	en_lang_init	wip	src/libvoice_en_gb_amy/en_lang.c	19.9	
+00039bdc	18	arm	en_lang_fini	matched	src/libvoice_en_gb_amy/en_lang.c	100	
 00039bf4	c8	arm	FUN_00039bf4	todo			
 00039cbc	b8	arm	FUN_00039cbc	todo			
 00039d74	b4	arm	FUN_00039d74	todo			
 00039e28	7a8	arm	FUN_00039e28	todo			
-0003a5d0	4d4	arm	FUN_0003a5d0	todo			
+0003a5d0	4d4	arm	en_expand_phone_number	todo			
 0003aaa4	74	arm	FUN_0003aaa4	todo			
 0003ab18	74	arm	FUN_0003ab18	todo			
 0003ab8c	40	arm	FUN_0003ab8c	todo			
@@ -645,17 +647,20 @@ addr	size	mode	name	status	src	score	note
 0003af74	154	arm	FUN_0003af74	todo			
 0003b0c8	130	arm	FUN_0003b0c8	todo			
 0003b1f8	120	arm	FUN_0003b1f8	todo			
-0003b318	1d0	arm	FUN_0003b318	todo			
-0003b4e8	144	arm	FUN_0003b4e8	todo			
-0003b62c	110	arm	FUN_0003b62c	todo			
+0003b318	1d0	arm	en_ff_register	todo			
+0003b4e8	140	arm	en_gb_setup	todo			
+0003b628	4	arm	en_gb_teardown	todo			
+0003b62c	d8	arm	FUN_0003b62c	todo			
+0003b704	1c	arm	FUN_0003b704	todo			
+0003b720	1c	arm	FUN_0003b720	todo			
 0003b73c	2c	arm	FUN_0003b73c	todo			
 0003b768	e8	arm	FUN_0003b768	todo			
 0003b850	204	arm	FUN_0003b850	todo			
 0003ba54	264	arm	FUN_0003ba54	todo			
 0003bcb8	f4	arm	FUN_0003bcb8	todo			
-0003bdac	2bc	arm	FUN_0003bdac	todo			
-0003c068	38	arm	FUN_0003c068	todo			
-0003c0a0	30	arm	FUN_0003c0a0	todo			
+0003bdac	2bc	arm	en_phrase_syl_end_tone	todo			
+0003c068	38	arm	en_lang_setup	todo			
+0003c0a0	30	arm	en_lang_teardown	todo			
 0003c0d0	c4	arm	FUN_0003c0d0	todo			
 0003c194	c4	arm	FUN_0003c194	todo			
 0003c258	b8	arm	FUN_0003c258	todo			
@@ -663,20 +668,20 @@ addr	size	mode	name	status	src	score	note
 0003c3f0	168	arm	FUN_0003c3f0	todo			
 0003c558	118	arm	FUN_0003c558	todo			
 0003c670	117c	arm	FUN_0003c670	todo			
-0003d7ec	11c	arm	FUN_0003d7ec	todo			
+0003d7ec	11c	arm	en_word_to_segments	todo			
 0003d908	fc4	arm	FUN_0003d908	todo			
 0003e8cc	21a8	arm	FUN_0003e8cc	todo			
 00040a74	2348	arm	FUN_00040a74	todo			
 00042dbc	2388	arm	FUN_00042dbc	todo			
 00045144	2264	arm	FUN_00045144	todo			
 000473a8	f20	arm	FUN_000473a8	todo			
-000482c8	20	arm	en_gb_amy_postlex_apply_rules_1	todo			
-000482e8	20	arm	en_gb_amy_postlex_apply_rules_2	todo			
+000482c8	20	arm	en_us_syllabify	todo			
+000482e8	20	arm	en_gb_syllabify	todo			
 00048308	ac	arm	en_gb_amy_postlex_apply_rules	todo			
 000483b4	9d4	arm	en_gb_amy_postlex	todo			
 00048d88	210	arm	FUN_00048d88	todo			
-00048f98	4	arm	FUN_00048f98	todo			
-00048f9c	4	arm	FUN_00048f9c	todo			
+00048f98	4	arm	en_lang_global_init	todo			
+00048f9c	4	arm	en_lang_global_fini	todo			
 00048fa0	94	arm	FUN_00048fa0	todo			
 00049034	70	arm	FUN_00049034	todo			
 000490a4	70	arm	FUN_000490a4	todo			
@@ -685,29 +690,31 @@ addr	size	mode	name	status	src	score	note
 000492fc	100	arm	FUN_000492fc	todo			
 000493fc	5c	arm	FUN_000493fc	todo			
 00049458	d24	arm	FUN_00049458	todo			
-0004a17c	c18	arm	FUN_0004a17c	todo			
+0004a17c	c18	arm	en_token_to_words	todo			
 0004ad94	f0	arm	FUN_0004ad94	todo			
-0004ae84	19c	arm	FUN_0004ae84	todo			
+0004ae84	19c	arm	en_sentence_boundary	todo			
 0004b020	44	arm	FUN_0004b020	todo			
 0004b064	2c	arm	FUN_0004b064	todo			
 0004b090	c	arm	FUN_0004b090	todo			
 0004b09c	3c	arm	FUN_0004b09c	todo			
-0004b0d8	1d0	arm	FUN_0004b0d8	todo			
+0004b0d8	1cc	arm	en_us_setup	todo			
+0004b2a4	4	arm	en_us_teardown	todo			
 0004b2a8	60	arm	FUN_0004b2a8	todo			
 0004b308	2c	arm	FUN_0004b308	todo			
-0004b334	ac	arm	FUN_0004b334	todo			
+0004b334	90	arm	FUN_0004b334	todo			
+0004b3c4	1c	arm	FUN_0004b3c4	todo			
 0004b3e0	2c	arm	FUN_0004b3e0	todo			
-0004b40c	18c	arm	FUN_0004b40c	todo			
-0004b598	10	arm	FUN_0004b598	todo			
-0004b5a8	38	arm	FUN_0004b5a8	todo			
-0004b5e0	14	arm	FUN_0004b5e0	todo			
-0004b5f4	3c	arm	FUN_0004b5f4	todo			
-0004b630	14	arm	FUN_0004b630	todo			
-0004b644	3c	arm	FUN_0004b644	todo			
-0004b680	14	arm	FUN_0004b680	todo			
-0004b694	3c	arm	FUN_0004b694	todo			
-0004b6d0	60	arm	FUN_0004b6d0	todo			
-0004b730	60	arm	FUN_0004b730	todo			
+0004b40c	18c	arm	en_fix_checked_vowels	wip	src/libvoice_en_gb_amy/en_xsampa.c	62.4	
+0004b598	10	arm	en_gb_stress_info	matched	src/libvoice_en_gb_amy/en_xsampa.c	100	
+0004b5a8	38	arm	en_gb_xsampa_ctx	matched	src/libvoice_en_gb_amy/en_xsampa.c	100	
+0004b5e0	14	arm	en_us_stress_info	matched	src/libvoice_en_gb_amy/en_xsampa.c	100	
+0004b5f4	3c	arm	en_us_xsampa_ctx	matched	src/libvoice_en_gb_amy/en_xsampa.c	100	
+0004b630	14	arm	en_gb_amazon_stress_info	matched	src/libvoice_en_gb_amy/en_xsampa.c	100	
+0004b644	3c	arm	en_gb_amazon_xsampa_ctx	matched	src/libvoice_en_gb_amy/en_xsampa.c	100	
+0004b680	14	arm	en_us_amazon_stress_info	matched	src/libvoice_en_gb_amy/en_xsampa.c	100	
+0004b694	3c	arm	en_us_amazon_xsampa_ctx	matched	src/libvoice_en_gb_amy/en_xsampa.c	100	
+0004b6d0	60	arm	en_gb_xsampa_to_xivona	matched	src/libvoice_en_gb_amy/en_xsampa.c	100	
+0004b730	60	arm	en_us_xsampa_to_xivona	matched	src/libvoice_en_gb_amy/en_xsampa.c	100	
 0004b790	30c	arm	diphone_graph_build	wip	src/libvoice_en_gb_amy/diphone_graph.c	24.9	
 0004ba9c	1c	arm	FUN_0004ba9c	todo			
 0004bab8	f8	arm	FUN_0004bab8	todo			
