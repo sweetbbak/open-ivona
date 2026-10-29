@@ -160,6 +160,25 @@ def main() -> int:
     else:
         print("ok   splitter finds tail-called functions hidden behind a literal pool")
 
+    # dc check: placements come from matching functions only, and must agree per object.
+    from dc.cli import check_placements
+    from dc.match import Result, Row
+    def _res(name, at, ok=True):
+        r = Result(Func(0, 4, "arm", name))
+        r.rows = [Row(None, None, ok)]
+        r.placements = {".bss": at}
+        return r
+    pl = {}
+    seq = [_res("wip", 0x104, ok=False), _res("a", 0x100), _res("b", 0x100), _res("c", 0x108)]
+    for r in seq:
+        check_placements(pl, "x.c", r.func.name, r)
+    got = [bool(r.problems) for r in seq]
+    if got != [False, False, False, True] or pl != {("x.c", ".bss"): (0x100, "a")}:
+        fails += 1
+        print(f"FAIL: placement consistency gave {got} {pl}")
+    else:
+        print("ok   placement consistency ignores non-matching functions")
+
     # libmatch: a failed proposal reverts its name, so callers verified against the tentative
     # name must be re-verified (fixed point); objects must agree on data placement.
     from dc.libmatch import verify_fixed_point, placement_outliers

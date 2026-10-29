@@ -301,6 +301,19 @@ def cmd_learn(a):
     print(f"learned {n} names")
 
 
+def check_placements(placements: dict, src: str, name: str, res) -> None:
+    """Data placement must agree per object: a matching function's section placements are
+    recorded and checked against the earlier matching functions of the same object. A function
+    that does not match may pair its literals with the wrong instructions (a PC-relative
+    literal's anchor at another offset), so its placements are neither recorded nor checked."""
+    if not res.matched:
+        return
+    for sec, at in res.placements.items():
+        prev = placements.setdefault((src, sec), (at, name))
+        if prev[0] != at:
+            res.problems.append(f"{src} {sec} is at {at:#x} here but at {prev[0]:#x} for {prev[1]}")
+
+
 def cmd_check(a):
     """Rebuild every TU and re-verify every function that has a source (C/C++ or library member).
     Also requires all functions of a TU to agree on where each of its data sections landed."""
@@ -337,10 +350,7 @@ def cmd_check(a):
                     bad += 1
                 continue
             res = match.run(b, f, objs[f.src])
-            for sec, at in res.placements.items():
-                prev = placements.setdefault((f.src, sec), (at, f.name))
-                if prev[0] != at:
-                    res.problems.append(f"{f.src} {sec} is at {at:#x} here but at {prev[0]:#x} for {prev[1]}")
+            check_placements(placements, f.src, f.name, res)
             if f.status in ("matched", "lib"):
                 if res.matched:
                     counts[f.status] += 1
