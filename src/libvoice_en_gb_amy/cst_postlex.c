@@ -280,6 +280,153 @@ void postlex_resyllabify(cst_item *item, const void *ps)
     }
 }
 
+#include <string.h>
+#include "syl_cart.h"
+
+typedef struct cst_phoneset_struct cst_phoneset;
+int ph_is_syllabic(const cst_phoneset *ps, const cst_val *p);
+const char *phone_feature_string(const cst_phoneset *ps, const char *phonename,
+                                 const char *featname);
+
+#define PHONE(v) val_string(val_car(v))
+
+/* the phone at p, skipping "-" boundaries, then n further phones */
+static inline const cst_val *phone_skip(const cst_val *p, int n)
+{
+    while (p && strcmp(PHONE(p), "-") == 0)
+        p = val_cdr(p);
+    while (p && n > 0) {
+        p = val_cdr(p);
+        n--;
+        while (p && strcmp(PHONE(p), "-") == 0)
+            p = val_cdr(p);
+    }
+    return p;
+}
+
+/* 0x5540c: arm: inserts a "-" syllable boundary into every consonant cluster between two
+ * syllabic phones of the list (clusters that already hold a "-" or a "pau" are left alone),
+ * the size of the next syllable's onset given by the tree */
+cst_val *postlex_apply_rules(const syl_cart *cart, const cst_phoneset *ps, cst_val *phones)
+{
+    const cst_val *p, *q, *r;
+    const syl_cart_node *nd;
+    const syl_cart_feat *f;
+    const char *name, *value;
+    char buf[12];
+    int node, n, k, cnt, len;
+
+    for (p = phones; p; p = val_cdr(p))
+        if (ph_is_syllabic(ps, p))
+            break;
+    if (p == NULL)
+        return phones;
+    for (;;) {
+        /* the next boundary, pause or syllabic phone */
+        for (q = val_cdr(p); q; q = val_cdr(q)) {
+            name = PHONE(q);
+            if (strcmp(name, "-") == 0 || strcmp(name, "pau") == 0 || ph_is_syllabic(ps, q))
+                break;
+        }
+        if (q == NULL)
+            return phones;
+        name = PHONE(q);
+        if (strcmp(name, "-") == 0 || strcmp(name, "pau") == 0) {
+            for (p = val_cdr(q); p; p = val_cdr(p))
+                if (ph_is_syllabic(ps, p))
+                    break;
+            if (p == NULL)
+                return phones;
+            continue;
+        }
+        /* the phones of the cluster with its vowel */
+        n = 0;
+        k = 0;
+        r = q;
+        if (p != q) {
+            for (r = p; r; ) {
+                if (strcmp(PHONE(r), "-") != 0)
+                    n++;
+                r = val_cdr(r);
+                if (r == q)
+                    break;
+            }
+        }
+        if (r == q && n > 1) {
+            node = 0;
+            for (;;) {
+                nd = &cart->nodes[node];
+                if (nd->yes == 0 && nd->no == 0) {
+                    k = nd->val;
+                    if (k >= n)
+                        k = n - 1;
+                    break;
+                }
+                f = &cart->feats[nd->feat];
+                r = NULL;
+                if (f->offset != 0) {
+                    switch (f->kind) {
+                    case 0:
+                        if (phones != p) {
+                            cnt = 0;
+                            for (r = phones; r != p && r; r = val_cdr(r))
+                                if (strcmp(PHONE(r), "-") != 0)
+                                    cnt++;
+                            r = r && f->offset <= cnt ? phone_skip(phones, cnt - f->offset) : NULL;
+                        }
+                        break;
+                    case 1:
+                        cnt = 0;
+                        for (r = p; r != q && r; r = val_cdr(r))
+                            if (strcmp(PHONE(r), "-") != 0)
+                                cnt++;
+                        r = r && f->offset <= cnt ? phone_skip(p, cnt - f->offset) : NULL;
+                        break;
+                    case 2:
+                        r = phone_skip(q, f->offset);
+                        break;
+                    case 3:
+                        r = f->offset == 1 ? p : f->offset == 2 ? q : NULL;
+                        break;
+                    }
+                }
+                if (r) {
+                    name = PHONE(r);
+                    len = strlen(name);
+                } else {
+                    name = "pau";
+                    len = 3;
+                }
+                if (len == 0)
+                    value = "";
+                else if (strcmp(f->feat, "stress") == 0) {
+                    if (strchr("0123", (unsigned char)name[len - 1]))
+                        value = &name[len - 1];
+                    else
+                        value = strcmp(phone_feature_string(ps, name, "vc"), "+") == 0 ? "0" : "-";
+                } else {
+                    if (len >= 10)
+                        len = 10;
+                    len--;
+                    if (strchr("0123", (unsigned char)name[len])) {
+                        memcpy(buf, name, len);
+                        buf[len] = '\0';
+                        name = buf;
+                    }
+                    value = phone_feature_string(ps, name, f->feat);
+                }
+                node = strcmp(value, cart->vals[nd->val]) == 0 ? nd->yes : nd->no;
+            }
+        }
+        /* the boundary goes k phones before q */
+        r = p;
+        for (len = val_length(p) - val_length(q) - 1 - k; len > 0; len--)
+            r = val_cdr(r);
+        set_cdr((cst_val *)r, cons_val(string_val("-"), val_cdr(r)));
+        p = q;
+    }
+}
+
 /* 0x55b84: arm */
 void postlex_noop(void)
 {

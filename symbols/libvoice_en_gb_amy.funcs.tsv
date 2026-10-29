@@ -648,19 +648,19 @@ addr	size	mode	name	status	src	score	note
 0003b0c8	130	arm	FUN_0003b0c8	todo			
 0003b1f8	120	arm	FUN_0003b1f8	todo			
 0003b318	1d0	arm	en_ff_register	todo			
-0003b4e8	140	arm	en_gb_setup	todo			
-0003b628	4	arm	en_gb_teardown	todo			
-0003b62c	d8	arm	FUN_0003b62c	todo			
-0003b704	1c	arm	FUN_0003b704	todo			
-0003b720	1c	arm	FUN_0003b720	todo			
-0003b73c	2c	arm	FUN_0003b73c	todo			
+0003b4e8	140	arm	en_gb_setup	wip	src/libvoice_en_gb_amy/en_gb_lex.c	14.4	
+0003b628	4	arm	en_gb_teardown	matched	src/libvoice_en_gb_amy/en_gb_lex.c	100	
+0003b62c	d8	arm	en_gb_lex_lookup	wip	src/libvoice_en_gb_amy/en_gb_lex.c	72.2	
+0003b704	1c	arm	en_gb_in_lex	matched	src/libvoice_en_gb_amy/en_gb_lex.c	100	
+0003b720	1c	arm	en_gb_lex_select_pos	matched	src/libvoice_en_gb_amy/en_gb_lex.c	100	
+0003b73c	2c	arm	en_gb_lex_pos_list	matched	src/libvoice_en_gb_amy/en_gb_lex.c	100	
 0003b768	e8	arm	FUN_0003b768	todo			
 0003b850	204	arm	FUN_0003b850	todo			
 0003ba54	264	arm	FUN_0003ba54	todo			
 0003bcb8	f4	arm	FUN_0003bcb8	todo			
 0003bdac	2bc	arm	en_phrase_syl_end_tone	todo			
-0003c068	38	arm	en_lang_setup	todo			
-0003c0a0	30	arm	en_lang_teardown	todo			
+0003c068	38	arm	en_lang_setup	matched	src/libvoice_en_gb_amy/en_setup.c	100	
+0003c0a0	30	arm	en_lang_teardown	matched	src/libvoice_en_gb_amy/en_setup.c	100	
 0003c0d0	c4	arm	FUN_0003c0d0	todo			
 0003c194	c4	arm	FUN_0003c194	todo			
 0003c258	b8	arm	FUN_0003c258	todo			
@@ -675,13 +675,13 @@ addr	size	mode	name	status	src	score	note
 00042dbc	2388	arm	FUN_00042dbc	todo			
 00045144	2264	arm	FUN_00045144	todo			
 000473a8	f20	arm	FUN_000473a8	todo			
-000482c8	20	arm	en_us_syllabify	todo			
-000482e8	20	arm	en_gb_syllabify	todo			
-00048308	ac	arm	en_gb_amy_postlex_apply_rules	todo			
+000482c8	20	arm	en_us_syllabify	matched	src/libvoice_en_gb_amy/en_postlex.c	100	
+000482e8	20	arm	en_gb_syllabify	matched	src/libvoice_en_gb_amy/en_postlex.c	100	
+00048308	ac	arm	en_syllabify	matched	src/libvoice_en_gb_amy/en_postlex.c	100	
 000483b4	9d4	arm	en_gb_amy_postlex	todo			
 00048d88	210	arm	FUN_00048d88	todo			
-00048f98	4	arm	en_lang_global_init	todo			
-00048f9c	4	arm	en_lang_global_fini	todo			
+00048f98	4	arm	en_lang_global_init	matched	src/libvoice_en_gb_amy/en_postlex.c	100	
+00048f9c	4	arm	en_lang_global_fini	matched	src/libvoice_en_gb_amy/en_postlex.c	100	
 00048fa0	94	arm	FUN_00048fa0	todo			
 00049034	70	arm	FUN_00049034	todo			
 000490a4	70	arm	FUN_000490a4	todo			
@@ -693,17 +693,17 @@ addr	size	mode	name	status	src	score	note
 0004a17c	c18	arm	en_token_to_words	todo			
 0004ad94	f0	arm	FUN_0004ad94	todo			
 0004ae84	19c	arm	en_sentence_boundary	todo			
-0004b020	44	arm	FUN_0004b020	todo			
+0004b020	44	arm	en_strip_apostrophes	wip	src/libvoice_en_gb_amy/en_us_lex.c	50.0	
 0004b064	2c	arm	FUN_0004b064	todo			
 0004b090	c	arm	FUN_0004b090	todo			
 0004b09c	3c	arm	FUN_0004b09c	todo			
-0004b0d8	1cc	arm	en_us_setup	todo			
-0004b2a4	4	arm	en_us_teardown	todo			
-0004b2a8	60	arm	FUN_0004b2a8	todo			
-0004b308	2c	arm	FUN_0004b308	todo			
-0004b334	90	arm	FUN_0004b334	todo			
-0004b3c4	1c	arm	FUN_0004b3c4	todo			
-0004b3e0	2c	arm	FUN_0004b3e0	todo			
+0004b0d8	1cc	arm	en_us_setup	wip	src/libvoice_en_gb_amy/en_us_lex.c	17.3	
+0004b2a4	4	arm	en_us_teardown	matched	src/libvoice_en_gb_amy/en_us_lex.c	100	
+0004b2a8	60	arm	en_us_in_lex	matched	src/libvoice_en_gb_amy/en_us_lex.c	100	
+0004b308	2c	arm	en_us_lts	matched	src/libvoice_en_gb_amy/en_us_lex.c	100	
+0004b334	90	arm	en_us_lex_lookup	wip	src/libvoice_en_gb_amy/en_us_lex.c	63.9	
+0004b3c4	1c	arm	en_us_lex_select_pos	matched	src/libvoice_en_gb_amy/en_us_lex.c	100	
+0004b3e0	2c	arm	en_us_lex_pos_list	matched	src/libvoice_en_gb_amy/en_us_lex.c	100	
 0004b40c	18c	arm	en_fix_checked_vowels	wip	src/libvoice_en_gb_amy/en_xsampa.c	62.4	
 0004b598	10	arm	en_gb_stress_info	matched	src/libvoice_en_gb_amy/en_xsampa.c	100	
 0004b5a8	38	arm	en_gb_xsampa_ctx	matched	src/libvoice_en_gb_amy/en_xsampa.c	100	
@@ -769,8 +769,8 @@ addr	size	mode	name	status	src	score	note
 00054008	c	arm	new_lexicon	matched	src/libvoice_en_gb_amy/cst_lexicon.c	100	
 00054014	c	arm	delete_lexicon	matched	src/libvoice_en_gb_amy/cst_lexicon.c	100	
 00054020	180	arm	in_lex	wip	src/libvoice_en_gb_amy/cst_lexicon.c	94.8	
-000541a0	350	arm	FUN_000541a0	wip	src/libvoice_en_gb_amy/cst_lexicon.c	45.6	
-000544f0	54	arm	FUN_000544f0	matched	src/libvoice_en_gb_amy/cst_lexicon.c	100	
+000541a0	350	arm	lex_word_pos_list	wip	src/libvoice_en_gb_amy/cst_lexicon.c	45.6	
+000544f0	54	arm	lex_select_pos	matched	src/libvoice_en_gb_amy/cst_lexicon.c	100	
 00054544	1fc	arm	lex_lookup	wip	src/libvoice_en_gb_amy/cst_lexicon.c	43.0	
 00054740	418	arm	lts_apply	wip	src/libvoice_en_gb_amy/cst_lts.c	74.3	flite strings(3) 9%
 00054b58	1e4	arm	postlex_rewrite_phones	wip	src/libvoice_en_gb_amy/cst_postlex.c	81.0	

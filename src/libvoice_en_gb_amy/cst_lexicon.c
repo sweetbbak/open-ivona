@@ -168,7 +168,7 @@ int in_lex(const cst_lexicon *l, const char *word, const char *pos)
 int FUN_00063d70(void *addenda, const char *word, char *buf, size_t max_len);
 
 /* 0x541a0: arm */
-int FUN_000541a0(const cst_lexicon *l, const char *word, char *buf, size_t max_len)
+int lex_word_pos_list(const cst_lexicon *l, const char *word, char *buf, size_t max_len)
 {
     size_t count;
     int index;
@@ -221,12 +221,12 @@ int FUN_000541a0(const cst_lexicon *l, const char *word, char *buf, size_t max_l
 }
 
 /* 0x544f0: arm */
-int FUN_000544f0(const cst_lexicon *l, const char *word, const char *s)
+int lex_select_pos(const cst_lexicon *l, const char *word, const char *s)
 {
     char buf[33];
     int n;
 
-    n = FUN_000541a0(l, word, buf, 33);
+    n = lex_word_pos_list(l, word, buf, 33);
     if (n == 0)
         return -1;
     buf[n] = '\0';

@@ -42,8 +42,10 @@ TARGETS = {
         "defines": [],
         "extra": ["src/libvoice_en_gb_amy/runnable_stubs.c", "src/libvoice_en_gb_amy/amy_lexicon.c",
                   "src/libvoice_en_gb_amy/en_gb_phoneset.c", "src/libvoice_en_gb_amy/en_us_phoneset.c",
-                  "src/libvoice_en_gb_amy/en_xsampa_rules.c",
+                  "src/libvoice_en_gb_amy/en_xsampa_rules.c", "src/libvoice_en_gb_amy/en_syl_cart.c", "src/libvoice_en_gb_amy/en_lex_tables.c",
                   "src/libttsivonavoice/runnable_stubs_vorbis.c"],
+        # opaque byte tables extracted from target/ (tools/gen_assets.py)
+        "assets": True,
     },
 }
 OUT = ""
@@ -92,6 +94,9 @@ def main() -> int:
     # the TUs the function table credits (some are shared between the binaries; a TU no row names,
     # like the superseded src/libttsivonavoice/flite/cst_phoneset.c, would clash)
     srcs = {f.src for f in b.funcs if f.src.startswith("src/")} | set(t["extra"])
+    if t.get("assets"):
+        subprocess.run([sys.executable, path("tools", "gen_assets.py"), args.bin], check=True)
+        srcs.add(f"build/gen/{args.bin}/assets.c")
     srcs = sorted(s for s in srcs if os.path.exists(path(s)))
     defines = t["defines"] + ["-D" + d for d in args.D]
     script = []

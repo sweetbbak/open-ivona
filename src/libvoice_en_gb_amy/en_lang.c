@@ -10,16 +10,10 @@
 #include "cst_phoneset.h"
 #include "cst_utterance.h"
 #include "cst_val.h"
+#include "en_lang.h"
 #include "str_rewrite.h"
 #include "tts_instance.h"
 
-/* what a language's init/fini receive */
-typedef struct en_lang_core {
-    const char *code;           /* the language code, e.g. "en-GB" */
-    char pad_04[0x10];
-    cst_features *features;     /* +0x14 */
-    cst_features *params;       /* +0x18: feature functions */
-} en_lang_core;
 
 void en_lang_global_init(void);
 void en_lang_global_fini(void);

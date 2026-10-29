@@ -1,0 +1,7 @@
+# Opaque byte tables extracted from target/libvoice_en_gb_amy.so at build time by
+# tools/gen_assets.py (into build/gen/, never committed): the letter-to-sound trees (6-byte
+# nodes; the 2 bytes after each are alignment padding) and the en-US part-of-speech lexicon
+# (en_us_lex_pos_num_bytes). Everything structured is generated C under src/.
+- {name: en_gb_lts_model, addr: 0x110b98, size: 0x2024a}
+- {name: en_us_lts_model, addr: 0x368604, size: 0x22a3a}
+- {name: en_us_lex_pos_data, addr: 0x1315e0, size: 0x237018}

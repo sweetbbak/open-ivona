@@ -5,27 +5,7 @@
 #include <stddef.h>
 #include "cst_lexicon.h"
 
-/* the addenda format (phones.c): sorted entries, each a word, a part of speech ('0': any) and
- * phone indices ending in 0xff */
-typedef struct lex_entry {
-    const char *name;
-    char pos;
-    unsigned char phones[1];
-} lex_entry;
-
-typedef struct lex_table {
-    int n;
-    const lex_entry *const *entries;
-    const char *const *phone_names;
-} lex_table;
-
-/* an entry with its own phone count */
-#define LEX_ENTRY(id, word, p, ...)                                                    \
-    static const struct {                                                              \
-        const char *name;                                                              \
-        char pos;                                                                      \
-        unsigned char phones[sizeof((unsigned char[]){ __VA_ARGS__ })];               \
-    } id = { word, p, { __VA_ARGS__ } }
+#include "lex_table.h"
 
 /* amy_addenda: generated from libvoice_en_gb_amy 0x3bb6a8 by tools/gen_lex_table.py */
 static const char *const amy_addenda_phones[56] = {  /* 0x3bbde4 */

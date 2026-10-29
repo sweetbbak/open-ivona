@@ -53,6 +53,15 @@ addr	size	name	note
 0010c634	100	uni_translit_index1	
 0010c734	2000	uni_translit_index2	
 0010e734	2460	uni_translit_index3	
+00110b94	0	en_gb_lex_num_entries	
+00110b98	0	en_gb_lts_model	
+00130de4	0	en_gb_lts_letter_index	
+001315e0	0	en_us_lex_pos_data	
+003685f8	0	en_us_lex_pos_num_bytes	
+003685fc	0	en_us_lex_pos_num_entries	
+00368600	0	en_us_lex_num_entries	
+00368604	0	en_us_lts_model	
+0038b040	0	en_us_lts_letter_index	
 0038cce0	0	en_us_amazon_modifiers	
 0038ccfc	0	en_gb_amazon_modifiers	
 00390828	8	unit_cost_weights	
@@ -178,8 +187,21 @@ addr	size	name	note
 003bb67c	2c	amy_lexicon	
 003bb6a8	c	amy_addenda	
 003bbec4	4	amy_voice_params	
+003bbf54	0	en_gb_lex_addenda	
+003c006c	0	en_gb_lex_entry_hufftable	
+003c0470	0	en_gb_lex_phone_hufftable	
+003c0874	0	en_gb_lex_phone_table	
+003c0a50	0	en_gb_lts_phone_table	
 003c0be0	0	en_gb_phoneset	
-003ccdbc	0	en_us_syl_rules	
+003c2738	0	en_us_lex_addenda	
+003cb970	0	en_us_lex_pos_entry_hufftable	
+003cbd74	0	en_us_lex_pos_phone_hufftable	
+003cc178	0	en_us_lex_pos_phone_table	
+003cc2a8	0	en_us_lex_entry_hufftable	
+003cc6ac	0	en_us_lex_phone_hufftable	
+003ccab0	0	en_us_lex_phone_table	
+003ccc58	0	en_us_lts_phone_table	
+003ccdbc	0	en_us_syl_cart	
 003cd0b4	0	en_us_phoneset	
 003cd350	0	en_checked_vowels	
 003cd6dc	0	en_us_amazon_syllabics	
@@ -198,6 +220,7 @@ addr	size	name	note
 003d187c	0	en_gb_vowels	
 003d18cc	0	en_gb_modifiers	
 003d18e8	0	en_gb_xsampa_rules	
+003d6908	0	en_gb_syl_cart	
 003d6bf4	0	cst_regex_table	learned from src/libttsivonavoice/flite/cst_cart.c
 003d6d50	1e0	xsampa_modifiers	
 003d6f30	3c8	xsampa_symbols	
@@ -224,5 +247,11 @@ addr	size	name	note
 003d8474	0	pcre_stack_malloc	named from library relocation
 003d8478	0	pcre_stack_free	named from library relocation
 003d8504	0	cmp_error_messages	named from library relocation
+003d85e4	0	en_gb_lts_rules	
+003d8604	0	en_gb_lex	
+003d8630	0	en_us_lts_rules	
+003d8650	0	en_us_lex	
+003d867c	0	en_us_lex_pos	
+003d86a8	0	en_us_lex_pos_addenda	
 003d86c8	0	pcre_callout	named from library relocation
 003d86cc	0	pcre_stack_guard	named from library relocation
