@@ -193,6 +193,10 @@ addr	size	name	note
 003c0874	0	en_gb_lex_phone_table	
 003c0a50	0	en_gb_lts_phone_table	
 003c0be0	0	en_gb_phoneset	
+003c0e9c	0	en_so_well	
+003c0ea8	0	en_neither	
+003c0eb0	0	en_do_forms	
+003c0ed4	0	en_alt_question_feat	
 003c0ed8	0	en_rx_n_conj_rx	
 003c0eec	0	en_clitics	
 003c0f0c	0	en_street_suffixes	

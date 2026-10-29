@@ -272,13 +272,13 @@ int lang_is_amazon(const char *lang)
     return lang[8] == '\0' || lang[8] == '-';
 }
 
-char *xsampa_word_convert(const char *word, const void *a, const void *b);
+cst_val *xsampa_word_convert(const char *word, const void *tag, const void *c);
 
 /* 0x5cbd4 arm: converts a word; for "x-amazon" languages spaces become dashes first. */
-char *xsampa_word(const char *word, const char *lang, const void *a, const void *b)
+cst_val *xsampa_word(const char *word, const char *lang, const void *a, const void *b)
 {
     char *w = NULL;
-    char *r;
+    cst_val *r;
 
     if (lang_is_amazon(lang))
         word = w = str_dashes(word);
@@ -354,6 +354,163 @@ found:
     }
     t->next = p;
     return 1;
+}
+
+#include "str_rewrite.h"
+
+cst_val *phones_from_string(const char *s);
+void str_rewrite(const char *s, const str_rewrite_rule *rules, const char *tag, char *out);
+
+/* how an alphabet converts (en_xsampa.c's tables) */
+typedef struct xsampa_ctx {
+    const str_rewrite_rule *rules;      /* X-SAMPA to IVONA phones */
+    const char *const *modifiers;       /* modifiers kept as they are */
+    const char *const *vowels;          /* where stress digits go */
+    const char *const *syllabics;       /* one per syllable */
+    const stress_info *stress;
+} xsampa_ctx;
+
+/* s without its character at i */
+static inline void str_delete(char *s, int i)
+{
+    memmove(s + i, s + i + 1, strlen(s + i + 1) + 1);
+}
+
+/* the length of the run of lowercase letters at s[i] (at least 1) */
+static inline int lower_run(const char *s, int i)
+{
+    int n = 1;
+
+    while ((unsigned char)(s[i + n] - 'a') <= 25)
+        n++;
+    return n;
+}
+
+/* whether s[i..i+n) is one of the words of list */
+static inline int run_in(const char *const *list, const char *s, int i, int n)
+{
+    const char *const *w;
+    int k;
+
+    for (w = list; *w; w++) {
+        for (k = 0; k < n && (*w)[k] && (*w)[k] == s[i + k]; k++)
+            ;
+        if (k == n && (*w)[n] == '\0')
+            return 1;
+    }
+    return 0;
+}
+
+/* 0x5bc30 arm: the IVONA phones of an X-SAMPA word: its symbols (and the modifiers the alphabet
+ * keeps, and tone marks) bracketed and rewritten by ctx's rules; then each stress digit moves
+ * behind the vowel after it ("*" leaves the next one in place, "@" merges with a previous
+ * digit), and only one "-" separates syllabic phones */
+cst_val *xsampa_word_convert(const char *word, const void *tag, const void *c)
+{
+    const xsampa_ctx *ctx = c;
+    const stress_info *si = ctx->stress ? ctx->stress : default_stress_info;
+    const stress_info *e;
+    strbuf b;
+    xs_tok t;
+    cst_val *phones;
+    char *s, m;
+    int k, i, n, mark, star, sep;
+
+    strbuf_init(&b);
+    strbuf_append_str(&b, "[$]");
+    xs_tok_init(&t, word);
+    while (xs_tok_next(&t)) {
+        strbuf_append_str(&b, "[");
+        strbuf_append(&b, word + t.pos, t.len);
+        strbuf_append_str(&b, "]");
+        for (k = 0; k < XSAMPA_NMODS; k++)
+            if (t.mods[k] && cst_member_string(xsampa_modifiers[k].s, ctx->modifiers))
+                strbuf_append_str(&b, xsampa_modifiers[k].s);
+        for (k = 0; k < XSAMPA_NMODS; k++)
+            if (t.mods[k] && xsampa_mod_flag(xsampa_modifiers[k].s) && si->stress) {
+                strbuf_append_str(&b, "[");
+                strbuf_append_str(&b, xsampa_modifiers[k].s);
+                strbuf_append_str(&b, "]");
+            }
+    }
+    xs_tok_done(&t);
+    strbuf_append_str(&b, "[$]");
+    s = cst_safe_alloc(b.len * 10 + 7, 1);
+    str_rewrite(b.data, ctx->rules, tag, s);
+    strbuf_release(&b);
+
+    /* stress digits go behind the following vowel */
+    mark = -1;
+    star = 0;
+    for (i = 0; s[i]; i++) {
+        for (e = si; e->stress; e++)
+            if (s[i] - '0' == e->stress)
+                break;
+        if (e->stress) {
+            if (mark >= 0) {
+                str_delete(s, mark);
+                i--;
+            }
+            mark = i;
+        } else if (s[i] == '-') {
+            if (mark >= 0) {
+                str_delete(s, mark);
+                i--;
+                mark = -1;
+            }
+        } else if ((unsigned char)(s[i] - 'a') <= 25) {
+            if (mark < 0)
+                continue;
+            n = lower_run(s, i);
+            if (run_in(ctx->vowels, s, i, n) && !star) {
+                m = s[mark];
+                memmove(s + mark, s + mark + 1, i + n - mark - 1);
+                s[i + n - 1] = m;
+                mark = -1;
+            }
+            i += n - 1;
+            star = 0;
+        } else if (s[i] == '@') {
+            str_delete(s, i);
+            k = i - 2;
+            if (s[i]) {
+                if ((unsigned char)(s[i] - '0') <= 9 && k >= 0 && (unsigned char)(s[k] - '0') <= 9)
+                    s[k] = s[i];
+                str_delete(s, i);
+            }
+            i--;
+        } else if (s[i] == '*') {
+            str_delete(s, i);
+            i--;
+            star = 1;
+        }
+    }
+    if (mark >= 0)
+        str_delete(s, mark);
+
+    /* one boundary between syllabic phones */
+    sep = -1;
+    for (i = 0; s[i]; i++) {
+        if (s[i] == '-') {
+            if (i != 0 && sep < 0)
+                sep = i;
+            else {
+                str_delete(s, i);
+                i--;
+            }
+        } else if ((unsigned char)(s[i] - 'a') <= 25) {
+            n = lower_run(s, i);
+            if (run_in(ctx->syllabics, s, i, n)) {
+                i += n - 1;
+                sep = -1;
+            }
+        }
+    }
+    if (sep >= 0)
+        str_delete(s, sep);
+    phones = phones_from_string(s);
+    cst_free(s);
+    return phones;
 }
 
 /* 0x5cd7c arm: qsort order of ints */
@@ -872,6 +1029,7 @@ none:
 }
 
 cst_val *phones_from_string(const char *s);
+void str_rewrite(const char *s, const str_rewrite_rule *rules, const char *tag, char *out);
 
 /* 0x5fc40 arm */
 cst_utterance *phones_textanalysis(cst_utterance *u)

@@ -42,7 +42,7 @@ TARGETS = {
         "defines": [],
         "extra": ["src/libvoice_en_gb_amy/runnable_stubs.c", "src/libvoice_en_gb_amy/amy_lexicon.c",
                   "src/libvoice_en_gb_amy/en_gb_phoneset.c", "src/libvoice_en_gb_amy/en_us_phoneset.c",
-                  "src/libvoice_en_gb_amy/en_xsampa_rules.c", "src/libvoice_en_gb_amy/en_syl_cart.c", "src/libvoice_en_gb_amy/en_lex_tables.c", "src/libvoice_en_gb_amy/en_regex.c", "src/libvoice_en_gb_amy/en_gpos.c",
+                  "src/libvoice_en_gb_amy/en_xsampa_rules.c", "src/libvoice_en_gb_amy/en_syl_cart.c", "src/libvoice_en_gb_amy/en_lex_tables.c", "src/libvoice_en_gb_amy/en_regex.c", "src/libvoice_en_gb_amy/en_gpos.c", "src/libvoice_en_gb_amy/xsampa_tables.c",
                   "src/libttsivonavoice/runnable_stubs_vorbis.c"],
         # opaque byte tables extracted from target/ (tools/gen_assets.py)
         "assets": True,

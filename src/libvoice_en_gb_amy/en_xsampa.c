@@ -7,7 +7,7 @@
 #include "str_rewrite.h"
 
 const char *phone_name(const cst_val *p);
-char *xsampa_word(const char *word, const char *lang, const void *a, const void *b);
+cst_val *xsampa_word(const char *word, const char *lang, const void *a, const void *b);
 cst_val *en_gb_syllabify(cst_val *phones);
 cst_val *en_us_syllabify(cst_val *phones);
 
@@ -170,7 +170,7 @@ cst_val *en_gb_xsampa_to_xivona(const char *xsampa, const char *alphabet, const 
     else
         ctx = en_gb_xsampa_ctx();
     return en_gb_syllabify(en_fix_checked_vowels(
-        (cst_val *)xsampa_word(xsampa, alphabet, lang, ctx)));
+        xsampa_word(xsampa, alphabet, lang, ctx)));
 }
 
 /* 0x4b730 arm: the en-US xsampa_to_xivona_func */
@@ -183,5 +183,5 @@ cst_val *en_us_xsampa_to_xivona(const char *xsampa, const char *alphabet, const 
     else
         ctx = en_us_xsampa_ctx();
     return en_us_syllabify(en_fix_checked_vowels(
-        (cst_val *)xsampa_word(xsampa, alphabet, lang, ctx)));
+        xsampa_word(xsampa, alphabet, lang, ctx)));
 }

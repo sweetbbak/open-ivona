@@ -654,11 +654,11 @@ addr	size	mode	name	status	src	score	note
 0003b704	1c	arm	en_gb_in_lex	matched	src/libvoice_en_gb_amy/en_gb_lex.c	100	
 0003b720	1c	arm	en_gb_lex_select_pos	matched	src/libvoice_en_gb_amy/en_gb_lex.c	100	
 0003b73c	2c	arm	en_gb_lex_pos_list	matched	src/libvoice_en_gb_amy/en_gb_lex.c	100	
-0003b768	e8	arm	FUN_0003b768	todo			
-0003b850	204	arm	FUN_0003b850	todo			
-0003ba54	264	arm	FUN_0003ba54	todo			
-0003bcb8	f4	arm	FUN_0003bcb8	todo			
-0003bdac	2bc	arm	en_phrase_syl_end_tone	todo			
+0003b768	e8	arm	en_has_or_question	wip	src/libvoice_en_gb_amy/en_tone.c	37.9	
+0003b850	204	arm	en_is_wh_question	matched	src/libvoice_en_gb_amy/en_tone.c	100	
+0003ba54	264	arm	en_question_polarity	wip	src/libvoice_en_gb_amy/en_tone.c	25.3	
+0003bcb8	f4	arm	en_is_alt_question	wip	src/libvoice_en_gb_amy/en_tone.c	32.4	
+0003bdac	2bc	arm	en_phrase_syl_end_tone	wip	src/libvoice_en_gb_amy/en_tone.c	69.1	
 0003c068	38	arm	en_lang_setup	matched	src/libvoice_en_gb_amy/en_setup.c	100	
 0003c0a0	30	arm	en_lang_teardown	matched	src/libvoice_en_gb_amy/en_setup.c	100	
 0003c0d0	c4	arm	en_in_lex	wip	src/libvoice_en_gb_amy/en_word.c	63.3	
@@ -677,7 +677,7 @@ addr	size	mode	name	status	src	score	note
 000482c8	20	arm	en_us_syllabify	matched	src/libvoice_en_gb_amy/en_postlex.c	100	
 000482e8	20	arm	en_gb_syllabify	matched	src/libvoice_en_gb_amy/en_postlex.c	100	
 00048308	ac	arm	en_syllabify	matched	src/libvoice_en_gb_amy/en_postlex.c	100	
-000483b4	9d4	arm	en_gb_amy_postlex	todo			
+000483b4	9d4	arm	en_gb_amy_postlex	wip	src/libvoice_en_gb_amy/en_postlex.c	47.2	
 00048d88	210	arm	en_is_initial	wip	src/libvoice_en_gb_amy/en_postlex.c	46.7	
 00048f98	4	arm	en_lang_global_init	matched	src/libvoice_en_gb_amy/en_postlex.c	100	
 00048f9c	4	arm	en_lang_global_fini	matched	src/libvoice_en_gb_amy/en_postlex.c	100	
@@ -899,11 +899,11 @@ addr	size	mode	name	status	src	score	note
 0005b474	8	arm	phones_keep_first_stress	matched	src/libvoice_en_gb_amy/phones.c	100	
 0005b47c	1ac	arm	seg_append_phone	wip	src/libvoice_en_gb_amy/phones.c	72.0	
 0005b628	84	arm	word_phone_string	matched	src/libvoice_en_gb_amy/phones.c	100	
-0005b6ac	288	arm	apply_phone_rules	todo			
+0005b6ac	288	arm	apply_phone_rules	wip	src/libvoice_en_gb_amy/phones.c	19.9	
 0005b934	58	arm	val_xsampafunc	matched	src/libvoice_en_gb_amy/cst_synth.c	100	
 0005b98c	18	arm	xsampafunc_val	matched	src/libvoice_en_gb_amy/cst_synth.c	100	
 0005b9a4	28c	arm	xsampa_mod_flag	matched	src/libvoice_en_gb_amy/cst_synth.c	100	
-0005bc30	720	arm	xsampa_word_convert	todo			
+0005bc30	720	arm	xsampa_word_convert	wip	src/libvoice_en_gb_amy/cst_synth.c	14.0	
 0005c350	1d0	arm	xsampa_mod_name	matched	src/libvoice_en_gb_amy/cst_synth.c	100	
 0005c520	4f4	arm	xivona_to_xsampa	matched	src/libvoice_en_gb_amy/cst_synth.c	100	
 0005ca14	88	arm	item_xsampa	matched	src/libvoice_en_gb_amy/cst_synth.c	100	
@@ -1034,11 +1034,11 @@ addr	size	mode	name	status	src	score	note
 00063d70	fc	arm	lex_lookup_pos_all	wip	src/libttsivonavoice/phones.c	59.4	
 00063e6c	20	arm	lex_lookup_data	matched	src/libttsivonavoice/phones.c	100	
 00063e8c	54	arm	lex_lookup_phones	matched	src/libttsivonavoice/phones.c	100	
-00063ee0	244	arm	FUN_00063ee0	todo			
-00064124	f4	arm	FUN_00064124	todo			
-00064218	2a4	arm	FUN_00064218	todo			
-000644bc	168	arm	FUN_000644bc	todo			
-00064624	188	arm	str_rewrite_span	todo			
+00063ee0	244	arm	str_ctx_match_repeat	wip	src/libttsivonavoice/syllabify.c	17.6	
+00064124	f4	arm	str_ctx_match	matched	src/libttsivonavoice/syllabify.c	100	
+00064218	2a4	arm	str_ctx_match_left_repeat	wip	src/libttsivonavoice/syllabify.c	4.1	
+000644bc	168	arm	str_ctx_match_left	wip	src/libttsivonavoice/syllabify.c	22.3	
+00064624	188	arm	str_rewrite_span	wip	src/libttsivonavoice/syllabify.c	52.1	
 000647ac	3c	arm	str_rewrite	matched	src/libttsivonavoice/syllabify.c	100	
 000647e8	c8	arm	syl_cons_sonority	matched	src/libttsivonavoice/syllabify.c	100	
 000648b0	6c	arm	syl_has_syllabic	matched	src/libttsivonavoice/syllabify.c	100	

@@ -352,3 +352,51 @@ char *word_phone_string(const cst_item *word)
             seg_append_phone(seg, &sb, 1, 0);
     return strbuf_data(&sb);
 }
+
+#include "cst_relation.h"
+#include "phone_rule.h"
+
+/* 0x5b6ac arm: applies the first matching rule to each pair of adjacent segments */
+void apply_phone_rules(cst_utterance *u, const phone_rule *rules)
+{
+    cst_item *s, *n, *sy1, *sy2;
+    const phone_rule *r;
+
+    for (s = relation_head(utt_relation(u, 6)); s && item_next(s); s = item_next(s)) {
+        n = item_next(s);
+        sy1 = item_parent(item_as(s, 4));
+        sy2 = item_parent(item_as(n, 4));
+        for (r = rules; r->from1; r++) {
+            if (r->syllables == 1 ? sy1 != sy2 : r->syllables == 2 ? sy1 == sy2 : r->syllables != 0)
+                continue;
+            if ((r->stress1 >= 0 && !(sy1 && item_feat_int(sy1, "stress") == r->stress1))
+                || (r->stress2 >= 0 && !(sy2 && item_feat_int(sy2, "stress") == r->stress2))
+                || strcmp(item_feat_string(s, "name"), r->from1) != 0
+                || strcmp(item_feat_string(n, "name"), r->from2) != 0)
+                continue;
+            if (r->new_stress1 >= 0)
+                item_set_int(sy1, "stress", r->new_stress1);
+            if (r->new_stress2 >= 0)
+                item_set_int(sy2, "stress", r->new_stress2);
+            if (r->to1) {
+                if (*r->to1)
+                    item_set_string(s, "name", r->to1);
+                else {
+                    delete_item(item_as(s, 4));
+                    delete_item(s);
+                    s = item_prev(n);
+                }
+            }
+            if (r->to2) {
+                if (*r->to2)
+                    item_set_string(n, "name", r->to2);
+                else {
+                    delete_item(item_as(n, 4));
+                    delete_item(n);
+                    item_next(s);
+                }
+            }
+            break;
+        }
+    }
+}
