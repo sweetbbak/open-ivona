@@ -144,8 +144,8 @@ int voice_age_matches(tts_voice *v, int mask);
 /* a voice in effect */
 typedef struct voice_frame {
     tts_voice *voice;
-    int unk_4;
-    int unk_8;
+    dom_elem *elem;             /* +0x04: the element it ends with, NULL for the first */
+    int by_lang;                /* +0x08: chosen for an xml:lang (onlangfailure="changevoice") */
 } voice_frame;
 
 /* a node still to visit, or an element to leave */
@@ -164,10 +164,10 @@ typedef struct synth_iter {
     ivona_vector *unk_14;       /* of 12 bytes */
     ivona_vector *stack;        /* +0x18: of iter_frame, nodes to visit */
     lex_ctx *lex;               /* +0x1c */
-    int unk_20;
-    int unk_24;
+    int punc_pending;           /* +0x20: the last text did not end in a space */
+    int abort;                  /* +0x24: stop with -1 at the next check */
     ivona_vector *voice_stack;  /* +0x28: of voice_frame */
-    strlist *unk_2c;
+    strlist *features;          /* +0x2c: amazon:feature <meta> contents */
 } synth_iter;
 
 void synth_state_set_voice(synth_state *s, tts_voice *v);
@@ -568,7 +568,7 @@ synth_iter *synth_iter_new(ssml_doc *doc, ivona_vector *voices, ivona_vector *ch
     it->doc = doc;
     it->voices = voices;
     it->chunks = chunks;
-    it->unk_20 = 0;
+    it->punc_pending = 0;
     it->state = synth_state_new(chunks, b, v);
     it->unk_14 = vector_new(12, NULL, NULL);
     it->stack = vector_new(sizeof(iter_frame), NULL, NULL);
@@ -580,14 +580,14 @@ synth_iter *synth_iter_new(ssml_doc *doc, ivona_vector *voices, ivona_vector *ch
         vector_push(it->stack, &f);
     }
     it->lex = lex_ctx_new(v);
-    it->unk_24 = 0;
+    it->abort = 0;
     it->voice_stack = vector_new(sizeof(voice_frame), NULL, NULL);
     {
         voice_frame fr;
 
         fr.voice = v;
-        fr.unk_4 = 0;
-        fr.unk_8 = 0;
+        fr.elem = NULL;
+        fr.by_lang = 0;
         vector_push(it->voice_stack, &fr);
     }
     synth_state_set_voice(it->state, v);
@@ -597,7 +597,7 @@ synth_iter *synth_iter_new(ssml_doc *doc, ivona_vector *voices, ivona_vector *ch
         it->max_break = f;
     else
         it->max_break = 120.000397f;
-    it->unk_2c = strlist_new();
+    it->features = strlist_new();
     return it;
 }
 
@@ -611,14 +611,753 @@ void synth_iter_free(synth_iter *it)
     synth_state_free(it->state);
     vector_free(it->unk_14);
     vector_free(it->voice_stack);
-    strlist_free(it->unk_2c);
+    strlist_free(it->features);
     cst_free(it);
+}
+
+void synth_state_add_audio(synth_state *s, const ustr_span *span, const char *src, int flags,
+                           const char *mark, const char *alt);
+void synth_state_add_break(synth_state *s, const ustr_span *span, const char *strength, float time);
+void synth_state_add_breath(synth_state *s, const ustr_span *span, float dur, int has_dur,
+                            float volume, float has_volume);
+void synth_state_add_text(synth_state *s, const ivona_ustr *text, int offset);
+void synth_state_add_wave(synth_state *s, const ustr_span *span, cst_wave *w);
+size_t synth_state_attach_punc(synth_state *s, const ivona_ustr *text);
+void synth_state_break_paragraph(synth_state *s);
+void synth_state_enter_block(synth_state *s);
+void synth_state_enter_p(synth_state *s, int phrasing_model, int break_dur_model);
+void synth_state_enter_s(synth_state *s);
+int *synth_state_flags(synth_state *s);
+int synth_state_last_end(synth_state *s);
+void synth_state_leave_block(synth_state *s);
+void synth_state_leave_p(synth_state *s);
+void synth_state_leave_s(synth_state *s);
+void synth_state_pop_block(synth_state *s);
+void synth_state_pop_flags(synth_state *s);
+void synth_state_pop_lang(synth_state *s);
+void synth_state_pop_no_say_as(synth_state *s, int keep);
+void synth_state_pop_prosody(synth_state *s);
+void synth_state_pop_say_as(synth_state *s);
+void synth_state_pop_unk_1c(synth_state *s);
+prosody *synth_state_prosody(synth_state *s);
+void synth_state_push_block(synth_state *s);
+void synth_state_push_flags(synth_state *s, const int *flags);
+void synth_state_push_lang(synth_state *s, const char *lang);
+void synth_state_push_no_say_as(synth_state *s, int keep);
+void synth_state_push_prosody(synth_state *s, const prosody *p);
+void synth_state_push_say_as(synth_state *s, const say_as_info *sa, const char *detail);
+void synth_state_push_unk_1c(synth_state *s, int x);
+int synth_state_say_as_flag(synth_state *s);
+void synth_state_set_lang(synth_state *s, lang_core *l);
+void synth_state_set_unk_14(synth_state *s, int x);
+void synth_state_set_voice(synth_state *s, tts_voice *v);
+int synth_state_unk_c_zero(synth_state *s);
+/* ssml_doc.c */
+void ssml_text_decode(ssml_doc *d, dom_text *t);
+void ssml_text_expand(ssml_doc *d, dom_text *t);
+void ssml_apply_external_pls(void *lexicons, dom_text *t, ssml_doc *d);
+void ssml_apply_internal_pls(void *lexicons, dom_text *t, ssml_doc *d);
+void ssml_apply_dict(ssml_doc *d, tts_voice *v, dom_text *t);
+void ssml_apply_prm(ssml_doc *d, tts_voice *v, dom_text *t);
+ssml_lexicon *ssml_add_inline_lexicon(ssml_doc *d, dom_elem *e, const char *data, size_t size);
+int ssml_sub_alias(ssml_doc *d, dom_elem *e);
+int ssml_lexicon_load(ssml_doc *d, ssml_lexicon *lex);
+float ssml_time_attr(ssml_doc *d, dom_elem *e, const char *name);
+ssml_lexicon *ssml_add_lexicon(ssml_doc *d, dom_elem *e);
+int ssml_audio_fetch(ssml_doc *d, dom_elem *e);
+void ssml_audio_apply_attrs(ssml_doc *d, dom_elem *e, cst_wave *w);
+cst_wave *wavedict_get(cst_features *d, const char *name);
+ivona_ustr *ustr_to_charset(const ivona_ustr *u, const char *charset);
+void tts_set_errorf(int code, const char *fmt, ...);
+void dom_text_free(dom_text *t);
+void lex_ctx_push_names(lex_ctx *c, const char *names);
+void lex_ctx_pop_names(lex_ctx *c);
+void lex_ctx_push_lang(lex_ctx *c, pls_lexicon *lex);
+void lex_ctx_pop_lang(lex_ctx *c);
+int speaking_style_id(const char *name);
+void flag_set(int *f);
+int feats_have_breath_units(const cst_features *f);
+int prosody_parse_pitch(prosody *p, const char *s, int version, const char **warn);
+int prosody_parse_rate(prosody *p, const char *s, int version, const char **warn);
+int prosody_parse_volume(float *volume, const char *s);
+int prosody_volume(prosody *p, const char *s, int version, const char **warn);
+int phoneme_alphabet_id(const char *alphabet, const char *lang);
+strlist *phoneme_split_words(const char *ph);
+strlist *phoneme_convert(int alphabet, const char *ph);
+
+#define SSML_WS " \t\n\v\f\r\x85\xa0"
+#define AMAZON_NS "https://amazon.com/ssml/2017-01-01/^"
+#define ITER_WARN(it, e, code, ...) \
+    TTS_MSG_ADD_AT((it)->doc->warnings, (e)->span.start, (e)->n.index, code, __VA_ARGS__)
+
+static inline voice_frame *voice_top(synth_iter *it)
+{
+    return vector_at(it->voice_stack, vector_size(it->voice_stack) - 1);
+}
+
+static inline void voice_push(synth_iter *it, tts_voice *v, dom_elem *e, int by_lang)
+{
+    voice_frame fr;
+
+    fr.voice = v;
+    fr.elem = e;
+    fr.by_lang = by_lang;
+    vector_push(it->voice_stack, &fr);
+    synth_state_set_voice(it->state, v);
+    lex_ctx_load_voice(&it->lex, v);
+}
+
+/* a lexicon was fetched (or failed): enter it, or warn and forget the reference */
+static inline __attribute__((always_inline)) void lexicon_loaded(synth_iter *it, dom_elem *e, ssml_lexicon *lex)
+{
+    if (lex->lexicon == NULL) {
+        ITER_WARN(it, e, 12, "Lexicon \"%s\" has failed to load", lex->id ? lex->id : lex->uri);
+        dom_set_attr(e, "ref", NULL);
+    } else
+        lex_ctx_push_lang(it->lex, lex->lexicon);
+}
+
+/* the alphabet-specific pronunciations of a <phoneme>, as audio chunks */
+static inline void phoneme_add(synth_iter *it, dom_elem *e, strlist *l, int flags,
+                               const char *mark, const char *text)
+{
+    char **w;
+
+    for (w = l->items; w != l->items + l->count; w++) {
+        synth_state_add_audio(it->state, &e->span, *w, flags, mark, text);
+        if (*text)
+            text = "";
+        it->punc_pending = 1;
+    }
+}
+
+/* 0x2ef18 arm: walks the document until chunks are produced. Returns how many were added (0 at
+ * the end), or -1 if aborted. */
+int synth_iter_next(synth_iter *it)
+{
+    size_t n0 = vector_size(it->chunks), n, nc;
+    iter_frame f, fr;
+    void *top;
+    dom_elem *e;
+    dom_node *next;
+    int descend;
+
+    for (;;) {
+        n = vector_size(it->stack);
+        if (n == 0 || (top = vector_at(it->stack, n - 1)) == NULL)
+            goto check;
+        memcpy(&f, top, sizeof f);
+        if (vector_size(it->stack))
+            vector_pop(it->stack);
+        e = (dom_elem *)f.node;
+
+        if (f.entered) {
+            /* leaving */
+            if (e->n.type != DOM_TEXT) {
+                while (e == voice_top(it)->elem) {
+                    tts_voice *v;
+
+                    if (vector_size(it->voice_stack))
+                        vector_pop(it->voice_stack);
+                    v = voice_top(it)->voice;
+                    synth_state_set_voice(it->state, v);
+                    lex_ctx_load_voice(&it->lex, v);
+                }
+                switch (e->n.type) {
+                case SSML_EMPHASIS:
+                case SSML_PROSODY:
+                    synth_state_pop_prosody(it->state);
+                    break;
+                case SSML_LOOKUP:
+                    if (dom_get_attr(e, "ref"))
+                        lex_ctx_pop_lang(it->lex);
+                    break;
+                case SSML_P:
+                    synth_state_leave_p(it->state);
+                    it->punc_pending = 0;
+                    break;
+                case SSML_S:
+                    synth_state_leave_s(it->state);
+                    it->punc_pending = 0;
+                    break;
+                case SSML_SAY_AS: {
+                    const say_as_info *sa = say_as_lookup(e);
+                    const char *const *name;
+
+                    for (name = say_as_ext_find(sa)->names; *name; name++)
+                        lex_ctx_pop_names(it->lex);
+                    synth_state_pop_say_as(it->state);
+                    if (!say_as_is_speech(sa))
+                        synth_state_leave_block(it->state);
+                    if (sa && sa->name && strcmp("interjection", sa->name) == 0)
+                        synth_state_pop_unk_1c(it->state);
+                    break;
+                }
+                case SSML_W:
+                    if (dom_get_attr(e, "role")) {
+                        lex_ctx_pop_names(it->lex);
+                        synth_state_pop_lang(it->state);
+                    }
+                    synth_state_pop_block(it->state);
+                    break;
+                case AMAZON_DOMAIN:
+                    synth_state_pop_unk_1c(it->state);
+                    break;
+                case AMAZON_EFFECT:
+                    synth_state_pop_flags(it->state);
+                    break;
+                case AMAZON_LITERAL:
+                    synth_state_pop_no_say_as(it->state, ssml_apply_pls_attr(&it->doc, e));
+                    break;
+                }
+            }
+            next = f.node->next;
+            if (e == it->doc->dom->root)
+                it->doc->dom->root = NULL;
+            dom_node_free(f.node);
+            goto push;
+        }
+
+        /* entering */
+        fr.node = f.node;
+        fr.entered = 1;
+        vector_push(it->stack, &fr);
+
+        if (f.node->type == DOM_TEXT) {
+            dom_text *t = (dom_text *)f.node;
+            tts_voice *v = voice_top(it)->voice;
+            lang_core *lang = synth_iter_lang(it, dom_inherited_attr(t->n.parent, XML_LANG));
+            const char *enc;
+            ivona_ustr *u;
+            size_t punc = 0, k;
+
+            synth_state_set_lang(it->state, lang);
+            if (lang)
+                enc = get_param_string(lang->features, "encoding",
+                                       get_param_string(VOICE_FEATURES(v), "encoding",
+                                                        "ISO-8859-2"));
+            else
+                enc = get_param_string(VOICE_FEATURES(v), "encoding", "ISO-8859-2");
+            ssml_text_decode(it->doc, t);
+            ssml_text_expand(it->doc, t);
+            if (synth_state_unk_c_zero(it->state))
+                ssml_apply_external_pls(it->lex, t, it->doc);
+            if (synth_state_unk_c_zero(it->state))
+                ssml_apply_internal_pls(it->lex, t, it->doc);
+            if (synth_state_say_as_flag(it->state)) {
+                ssml_apply_dict(it->doc, v, t);
+                ssml_apply_prm(it->doc, v, t);
+            }
+            u = ustr_to_charset(t->text, enc);
+            if (u == NULL) {
+                tts_set_errorf(10, "Voice encoding %s is not supported", enc);
+                it->abort = 1;
+                goto check;
+            }
+            /* punctuation starting the text belongs to the previous word */
+            if (it->punc_pending && u->len && (k = strspn(u->data, ".,:;!?")) != 0
+                && (u->data[k] == 0 || strspn(u->data + k, SSML_WS) != 0))
+                punc = synth_state_attach_punc(it->state, t->text);
+            synth_state_set_unk_14(it->state, it->doc->version);
+            synth_state_add_text(it->state, u, punc);
+            if (u->len)
+                it->punc_pending = !strchr(SSML_WS, u->data[u->len - 1]);
+            ivona_ustr_free(u);
+            goto check;
+        }
+
+        switch (e->n.type) {
+        case SSML_AUDIO: {
+            int r = ssml_audio_fetch(it->doc, e);
+            cst_wave *w;
+
+            if (r > 0) {
+                w = copy_wave(wavedict_get(it->doc->waves, dom_get_attr(e, "src")));
+                ssml_audio_apply_attrs(it->doc, e, w);
+                synth_state_add_wave(it->state, &e->span, w);
+                descend = 0;
+            } else if (r == 0)
+                descend = 1;    /* the fallback content */
+            else {
+                it->abort = 1;
+                descend = 0;
+            }
+            break;
+        }
+        case SSML_BREAK: {
+            const char *strength = dom_get_attr(e, "strength");
+            float time = -1.0f;
+
+            if (dom_get_attr(e, "time")) {
+                time = ssml_time_attr(it->doc, e, "time");
+                if (time > it->max_break)
+                    time = it->max_break;
+            }
+            synth_state_add_break(it->state, &e->span, strength, time);
+            it->punc_pending = 1;
+            descend = 1;
+            break;
+        }
+        case SSML_DESC:
+        case SSML_METADATA:
+            descend = 0;
+            break;
+        case SSML_EMPHASIS: {
+            const char *level = dom_get_attr(e, "level");
+            prosody p = *synth_state_prosody(it->state);
+
+            if (level && strcasecmp(level, "reduced") == 0) {
+                p.volume *= 0.9;
+                p.rate *= 1.1;
+            } else if (level && strcasecmp(level, "none") == 0) {
+            } else if (level && strcasecmp(level, "strong") == 0) {
+                p.volume *= 1.3;
+                p.rate *= 0.6;
+            } else {
+                if (level && strcasecmp(level, "moderate") != 0)
+                    ITER_WARN(it, e, 6, "Invalid value of attribute \"%s\"", "level");
+                p.volume *= 1.15;
+                p.rate *= 0.8;
+            }
+            synth_state_push_prosody(it->state, &p);
+            descend = 1;
+            break;
+        }
+        case SSML_LEXICON: {
+            ssml_lexicon *lex = ssml_add_lexicon(it->doc, e);
+
+            /* SSML 1.0: a lexicon applies from where it is declared */
+            if (lex && it->doc->ssml_version == 10) {
+                if (!ssml_lexicon_load(it->doc, lex)) {
+                    dom_set_attr(e, "ref", NULL);
+                    it->abort = 1;
+                    goto check;
+                }
+                lexicon_loaded(it, e, lex);
+            }
+            descend = 0;
+            break;
+        }
+        case SSML_LOOKUP: {
+            const char *ref = dom_get_attr(e, "ref");
+            ssml_lexicon *lex, *end;
+
+            descend = 1;
+            if (ref == NULL) {
+                ITER_WARN(it, e, 5, "Missing attribute \"%s\" in element \"%s\"", "ref", e->name);
+                break;
+            }
+            lex = it->doc->lexicons->data;
+            end = lex + it->doc->lexicons->count;
+            for (; lex != end; lex++)
+                if (strcmp(lex->id, ref) == 0)
+                    break;
+            if (lex == end) {
+                ITER_WARN(it, e, 6, "Invalid value of attribute \"%s\"", "ref");
+                dom_set_attr(e, "ref", NULL);
+                break;
+            }
+            if (!ssml_lexicon_load(it->doc, lex)) {
+                dom_set_attr(e, "ref", NULL);
+                it->abort = 1;
+                goto check;
+            }
+            lexicon_loaded(it, e, lex);
+            break;
+        }
+        case SSML_MARK: {
+            const char *name = dom_get_attr(e, "name");
+            ssml_audio m;
+
+            if (name == NULL) {
+                ITER_WARN(it, e, 5, "Missing attribute \"%s\" in element \"%s\"", "name",
+                          e->name);
+                name = "";
+            }
+            m.src = cst_strdup(name);
+            descend = 1;
+            m.pos = synth_state_last_end(it->state);
+            m.unk_4[0] = e->span.start;
+            m.unk_4[1] = e->span.end;
+            vector_push(it->doc->audio, &m);
+            break;
+        }
+        case SSML_META: {
+            const char *name = dom_get_attr(e, "name"), *content;
+
+            descend = 0;
+            if (name == NULL || strcmp(name, AMAZON_NS "feature") != 0)
+                break;
+            if ((content = dom_get_attr(e, "content")) == NULL)
+                ITER_WARN(it, e, 5, "Missing attribute \"%s\" in element \"%s\"", "content",
+                          e->name);
+            else
+                strlist_push(it->features, content);
+            break;
+        }
+        case SSML_P: {
+            const char *phrasing = dom_get_attr(e, "phrasing");
+
+            synth_state_enter_p(it->state, phrasing ? strcmp(phrasing, "predict") == 0 : 0, 0);
+            descend = 1;
+            break;
+        }
+        case SSML_PHONEME: {
+            const char *ph = dom_get_attr(e, "ph");
+            const char *alphabet = dom_get_attr(e, "alphabet");
+            const char *lang = dom_inherited_attr(e, XML_LANG);
+            int alpha = phoneme_alphabet_id(alphabet, lang);
+            dom_node *c;
+            strbuf sb;
+            char *text;
+
+            /* the content, kept as the text of the pronunciation */
+            strbuf_init(&sb);
+            strbuf_resize(&sb, 0);
+            for (c = e->first; c; c = c->next)
+                if (c->type == DOM_TEXT)
+                    strbuf_append(&sb, ((dom_text *)c)->text->data, ((dom_text *)c)->text->len);
+            text = strbuf_data(&sb);
+            if (alpha == 0)
+                ITER_WARN(it, e, 1, "Phoneme alphabet not supported: \"%s\"", alphabet);
+            else if (ph && *ph) {
+                synth_state_set_lang(it->state, synth_iter_lang(it, lang));
+                if (alpha == 1 || alpha == 6) {
+                    synth_state_add_audio(it->state, &e->span, ph, alpha, NULL, text);
+                    it->punc_pending = 1;
+                } else if (alpha == 5) {
+                    strlist *l = phoneme_split_words(ph);
+                    char *a = cst_ascii_downcase(alphabet);
+
+                    phoneme_add(it, e, l, 5, a, text);
+                    strlist_free(l);
+                    cst_free(a);
+                } else {
+                    strlist *l = phoneme_convert(alpha, ph);
+
+                    phoneme_add(it, e, l, 2, NULL, text);
+                    strlist_free(l);
+                }
+            }
+            cst_free(text);
+            descend = 0;
+            break;
+        }
+        case SSML_PROSODY: {
+            prosody p = *synth_state_prosody(it->state);
+            const char *pitch = dom_get_attr(e, "pitch");
+            const char *rate = dom_get_attr(e, "rate");
+            const char *volume = dom_get_attr(e, "volume");
+            const char *warn;
+            cst_features *vf;
+            float m;
+
+            if (pitch || rate || volume) {
+                warn = NULL;
+                if (pitch) {
+                    if (!prosody_parse_pitch(&p, pitch, it->doc->ssml_version, &warn) || warn) {
+                        if (warn)
+                            ITER_WARN(it, e, 6, "%s", warn);
+                        else
+                            ITER_WARN(it, e, 6, "Invalid value of attribute \"%s\"", "pitch");
+                    }
+                }
+                if (rate) {
+                    if (!prosody_parse_rate(&p, rate, it->doc->ssml_version, &warn) || warn) {
+                        if (warn)
+                            ITER_WARN(it, e, 6, "%s", warn);
+                        else
+                            ITER_WARN(it, e, 6, "Invalid value of attribute \"%s\"", "rate");
+                    }
+                }
+                warn = NULL;
+                if (volume) {
+                    if (!prosody_volume(&p, volume, it->doc->ssml_version, &warn) || warn) {
+                        if (warn)
+                            ITER_WARN(it, e, 6, "%s", warn);
+                        else
+                            ITER_WARN(it, e, 6, "Invalid value of attribute \"%s\"", "volume");
+                    }
+                }
+            } else if (!dom_get_attr(e, "contour") && !dom_get_attr(e, "duration")
+                       && !dom_get_attr(e, "range"))
+                ITER_WARN(it, e, 5,
+                          "It is an error if no attributes are specified for <prosody> element");
+            /* clamped to what the voice allows */
+            vf = VOICE_FEATURES(voice_top(it)->voice);
+            if (feat_present(vf, "eng_min_ssml_rate")
+                && (m = val_float(feat_val(vf, "eng_min_ssml_rate"))) > p.rate)
+                p.rate = m;
+            if (feat_present(vf, "eng_max_ssml_rate")
+                && (m = val_float(feat_val(vf, "eng_max_ssml_rate"))) < p.rate)
+                p.rate = m;
+            if (feat_present(vf, "eng_min_ssml_pitch")
+                && (m = val_float(feat_val(vf, "eng_min_ssml_pitch"))) > p.pitch)
+                p.pitch = m;
+            if (feat_present(vf, "eng_max_ssml_pitch")
+                && (m = val_float(feat_val(vf, "eng_max_ssml_pitch"))) < p.pitch)
+                p.pitch = m;
+            synth_state_push_prosody(it->state, &p);
+            descend = 1;
+            break;
+        }
+        case SSML_S:
+            synth_state_enter_s(it->state);
+            it->punc_pending = 0;
+            descend = 1;
+            break;
+        case SSML_SAY_AS: {
+            const say_as_info *sa = say_as_lookup(e);
+            const char *const *name;
+
+            synth_state_push_say_as(it->state, sa, dom_get_attr(e, "detail"));
+            for (name = say_as_ext_find(sa)->names; *name; name++)
+                lex_ctx_push_names(it->lex, *name);
+            if (!say_as_is_speech(sa))
+                synth_state_enter_block(it->state);
+            if (sa && sa->name && strcmp("interjection", sa->name) == 0)
+                synth_state_push_unk_1c(it->state, 3);
+            descend = 1;
+            break;
+        }
+        case SSML_SUB:
+            ssml_sub_alias(it->doc, e);
+            descend = 1;
+            break;
+        case SSML_VOICE: {
+            const char *age = dom_get_attr(e, "age");
+            const char *gender = dom_get_attr(e, "gender");
+            const char *ovf = dom_get_attr(e, "onvoicefailure");
+
+            if (age && *age && parse_uint_or_minus1(age) < 1)
+                ITER_WARN(it, e, 6, "Invalid value of attribute \"%s\"", "age");
+            if (gender && *gender && strcasecmp(gender, "neutral") != 0
+                && strcasecmp(gender, "male") != 0 && strcasecmp(gender, "female") != 0) {
+                ITER_WARN(it, e, 6, "Invalid value of attribute \"%s\"", "gender");
+                dom_set_attr(e, "gender", "");
+            }
+            if (ovf && strcasecmp(ovf, "processorchoice") != 0
+                && strcasecmp(ovf, "keepexisting") != 0
+                && strcasecmp(ovf, "priorityselect") != 0) {
+                ITER_WARN(it, e, 6, "Invalid value of attribute \"%s\"", "onvoicefailure");
+                dom_set_attr(e, "onvoicefailure", "processorchoice");
+            }
+            if (!dom_get_attr(e, "gender") && !dom_get_attr(e, "age")
+                && !dom_get_attr(e, "variant") && !dom_get_attr(e, "name")
+                && !dom_get_attr(e, "languages") && !dom_get_attr(e, "ordering")
+                && !dom_get_attr(e, "required"))
+                ITER_WARN(it, e, 5,
+                          "It is an error if no attributes are specified for <voice> element");
+            ssml_check_voice_attr_list(&it->doc, e, "required");
+            ssml_check_voice_attr_list(&it->doc, e, "ordering");
+            voice_push(it, ssml_select_voice(it, e, 0), e, 0);
+            descend = 1;
+            break;
+        }
+        case SSML_W: {
+            const char *role = dom_get_attr(e, "role");
+
+            if (role) {
+                /* the amazon roles (e.g. amazon:VB), as the word's language-specific part */
+                const char *s = role + strspn(role, SSML_WS);
+                strbuf sb;
+                size_t len;
+
+                strbuf_init(&sb);
+                for (; *s; s += len, s += strspn(s, SSML_WS)) {
+                    len = strcspn(s, SSML_WS);
+                    if (len > 0x24 && strncmp(s, AMAZON_NS, 0x24) == 0) {
+                        if (sb.len)
+                            strbuf_append(&sb, " ", 1);
+                        strbuf_append(&sb, s + 0x24, len - 0x24);
+                    }
+                }
+                synth_state_push_lang(it->state, sb.data);
+                strbuf_release(&sb);
+                lex_ctx_push_names(it->lex, role);
+            }
+            synth_state_push_block(it->state);
+            descend = 1;
+            break;
+        }
+        case AMAZON_BREATH: {
+            float volume = 1.0f, dur;
+            const char *vol, *time;
+
+            if (feats_have_breath_units(VOICE_FEATURES(voice_top(it)->voice))) {
+                vol = dom_get_attr(e, "volume");
+                time = dom_get_attr(e, "time");
+                dur = time ? ssml_time_attr(it->doc, e, "time") : 1.0f;
+                synth_state_add_breath(it->state, &e->span, dur, time != NULL, volume,
+                                       vol ? (float)(prosody_parse_volume(&volume, vol) != 0)
+                                           : 0);
+            }
+            descend = 0;
+            break;
+        }
+        case AMAZON_DOMAIN:
+            synth_state_push_unk_1c(it->state, speaking_style_id(dom_get_attr(e, "name")));
+            descend = 1;
+            break;
+        case AMAZON_EFFECT: {
+            const char *name = dom_get_attr(e, "name");
+            int flags = *synth_state_flags(it->state);
+
+            if (name == NULL)
+                ITER_WARN(it, e, 5, "Missing attribute \"%s\" in element \"%s\"", "name",
+                          e->name);
+            else if (strcasecmp(name, "whispered") == 0)
+                flag_set(&flags);
+            synth_state_push_flags(it->state, &flags);
+            descend = 1;
+            break;
+        }
+        case AMAZON_LEXICON: {
+            const char *content = dom_get_attr(e, "lexicon-content");
+            ssml_lexicon *lex = ssml_add_inline_lexicon(it->doc, e, content, strlen(content));
+
+            descend = 1;
+            if (lex && it->doc->ssml_version == 10) {
+                if (!ssml_lexicon_load(it->doc, lex)) {
+                    dom_set_attr(e, "ref", NULL);
+                    it->abort = 1;
+                } else
+                    lexicon_loaded(it, e, lex);
+            }
+            break;
+        }
+        case AMAZON_LITERAL:
+            synth_state_push_no_say_as(it->state, ssml_apply_pls_attr(&it->doc, e));
+            descend = 1;
+            break;
+        default:
+            descend = 1;
+            break;
+        }
+
+        /* the voice for xml:lang */
+        {
+            const char *lang = dom_inherited_attr(e, XML_LANG);
+            const char *olf = dom_get_attr(e, "onlangfailure");
+            const char *polf = dom_inherited_attr(e->n.parent, "onlangfailure");
+            tts_voice *cur, *base, *best, *v;
+            voice_frame *bf;
+            size_t i, nv;
+
+            if (olf && (polf == NULL || strcasecmp(olf, polf) != 0)
+                && strcasecmp(olf, "changevoice") != 0
+                && strcasecmp(olf, "processorchoice") != 0
+                && strcasecmp(olf, "ignoretext") != 0 && strcasecmp(olf, "ignorelang") != 0) {
+                ITER_WARN(it, e, 6, "Invalid value of attribute \"%s\"", "onlangfailure");
+                dom_set_attr(e, "onlangfailure", "processorchoice");
+            }
+            cur = voice_top(it)->voice;
+            if (lang_tag_match(cur->voice->lang_codes, lang) == 4)
+                goto lang_done;
+            /* the innermost voice not chosen for a language */
+            nv = vector_size(it->voice_stack);
+            bf = NULL;
+            for (i = 0; i < nv; i++) {
+                bf = vector_at(it->voice_stack, vector_size(it->voice_stack) - 1 - i);
+                if (bf->by_lang == 0)
+                    break;
+                bf = NULL;
+            }
+            base = bf->voice;
+            if (cur != base && lang_tag_match(base->voice->lang_codes, lang) == 4) {
+                voice_push(it, base, e, 0);
+                goto lang_done;
+            }
+            /* the same speaker in the best matching language */
+            {
+                tts_voice **p = it->voices->data;
+                const char *name = cur->voice->lector_ascii;
+                unsigned int score = 0, s;
+
+                best = NULL;
+                for (i = 0; i < it->voices->count; i++, p++) {
+                    if (strcmp((*p)->voice->lector_ascii, name) != 0)
+                        continue;
+                    s = lang_tag_match((*p)->voice->lang_codes, lang);
+                    if (s > score) {
+                        score = s;
+                        best = *p;
+                    }
+                }
+                if (best != cur && best != NULL) {
+                    voice_push(it, best, e, 0);
+                    goto lang_done;
+                }
+            }
+            {
+                const char *xl = dom_get_attr(e, XML_LANG);
+                const char *pl = dom_inherited_attr(e->n.parent, XML_LANG);
+                int warn = 0;
+
+                if (xl && (pl == NULL || strcasecmp(xl, pl) != 0))
+                    warn = 1;
+                else if (vector_size(it->voice_stack) > 1) {
+                    tts_voice *a = voice_top(it)->voice;
+                    tts_voice *b = ((voice_frame *)vector_at(it->voice_stack,
+                                                             vector_size(it->voice_stack) - 2))->voice;
+
+                    if (e == voice_top(it)->elem && a != b)
+                        warn = 1;
+                }
+                if (warn)
+                    ITER_WARN(it, e, 2, "Voice \"%s\" does not speak \"%s\" language",
+                              base->voice->lector, lang);
+            }
+            olf = dom_inherited_attr(e, "onlangfailure");
+            if (olf == NULL || strcasecmp(olf, "processorchoice") == 0)
+                olf = "ignorelang";
+            if (strcasecmp(olf, "changevoice") == 0) {
+                const char *l = dom_inherited_attr(e, XML_LANG);
+
+                v = ssml_select_voice(it, e, 1);
+                if (lang_tag_match(v->voice->lang_codes, l) != 0)
+                    voice_push(it, v, e, 1);
+            }
+            if (strcasecmp(olf, "ignoretext") == 0) {
+                dom_node *c = e->first, *cn;
+
+                for (; c; c = cn) {
+                    cn = c->next;
+                    if (c->type == DOM_TEXT)
+                        dom_text_free((dom_text *)c);
+                }
+            }
+        }
+    lang_done:
+        if (!descend)
+            goto check;
+        next = e->first;
+    push:
+        if (next) {
+            fr.node = next;
+            fr.entered = 0;
+            vector_push(it->stack, &fr);
+        }
+    check:
+        n = vector_size(it->stack);
+        nc = vector_size(it->chunks);
+        if (it->abort) {
+            it->abort = 0;
+            return -1;
+        }
+        if (n == 0) {
+            synth_state_break_paragraph(it->state);
+            return nc - n0;
+        }
+        if (nc != n0)
+            return nc - n0;
+    }
 }
 
 /* 0x3134c arm */
 strlist *synth_iter_ctx(synth_iter *it)
 {
-    return it->unk_2c;
+    return it->features;
 }
 
 /* 0x31354 arm: the decimal number s, or -1 */

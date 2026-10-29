@@ -201,11 +201,6 @@ static const say_as_info *say_as_split(const char *s)
 }
 
 /* an Amazon extension namespace for a say-as interpretation */
-struct say_as_ext {
-    const char *ns;
-    const char *unk_4;
-};
-
 static say_as_ext say_as_ext_speechcon = { "https://amazon.com/ssml/2017-01-01/^speechcon", NULL };
 static say_as_ext say_as_ext_social = { "https://amazon.com/ssml/2017-01-01/^socialSpeech", NULL };
 static say_as_ext say_as_ext_none;

@@ -297,7 +297,7 @@ addr	size	mode	name	status	src	score	note
 00027834	2c	arm	token_list_remove	matched	src/libttsivonavoice/utt_chunk.c	100	
 00027860	30	arm	audio_chunk_free	matched	src/libttsivonavoice/utt_chunk.c	100	
 00027890	90	arm	chunk_utterance	matched	src/libttsivonavoice/utt_chunk.c	100	
-00027920	b0c	arm	FUN_00027920	todo			
+00027920	b0c	arm	ssml_audio_apply_attrs	todo			
 0002842c	8	arm	ssml_audio_free	matched	src/libttsivonavoice/ssml_doc.c	100	
 00028434	2c	arm	ssml_lexicon_free	matched	src/libttsivonavoice/ssml_doc.c	100	
 00028460	1b4	arm	dom_mark_subdoc.isra.0	wip	src/libttsivonavoice/ssml_doc.c	1.8	
@@ -352,15 +352,15 @@ addr	size	mode	name	status	src	score	note
 0002d798	e0	arm	lex_ctx_load_voice	matched	src/libttsivonavoice/synth_iter.c	100	
 0002d878	108	arm	ssml_apply_pls_attr	matched	src/libttsivonavoice/synth_iter.c	100	
 0002d980	18c	arm	ssml_check_voice_attr_list	wip	src/libttsivonavoice/synth_iter.c	73.0	
-0002db0c	1b4	arm	voices_by_lang.isra.2	matched	src/libttsivonavoice/synth_iter.c	100	
-0002dcc0	ec	arm	voices_by_name.isra.3	wip	src/libttsivonavoice/synth_iter.c	35.8	
+0002db0c	1b4	arm	voices_by_lang.isra.4	matched	src/libttsivonavoice/synth_iter.c	100	
+0002dcc0	ec	arm	voices_by_name.isra.5	wip	src/libttsivonavoice/synth_iter.c	35.8	
 0002ddac	154	arm	voice_insert_by_age	wip	src/libttsivonavoice/synth_iter.c	79.1	
-0002df00	ec	arm	voices_by_age.isra.6	matched	src/libttsivonavoice/synth_iter.c	100	
+0002df00	ec	arm	voices_by_age.isra.10	matched	src/libttsivonavoice/synth_iter.c	100	
 0002dfec	98	arm	synth_iter_lang	matched	src/libttsivonavoice/synth_iter.c	100	
 0002e084	ce0	arm	ssml_select_voice	wip	src/libttsivonavoice/synth_iter.c	8.4	
 0002ed64	16c	arm	synth_iter_new	matched	src/libttsivonavoice/synth_iter.c	100	
 0002eed0	48	arm	synth_iter_free	matched	src/libttsivonavoice/synth_iter.c	100	
-0002ef18	2434	arm	synth_iter_next	todo			merged FUN_00030110/FUN_000304a4/FUN_000304f4/FUN_000305f8/FUN_0003063c/FUN_00030b14 (cold tail past a literal pool)
+0002ef18	2434	arm	synth_iter_next	wip	src/libttsivonavoice/synth_iter.c	8.9	merged FUN_00030110/FUN_000304a4/FUN_000304f4/FUN_000305f8/FUN_0003063c/FUN_00030b14 (cold tail past a literal pool)
 0003134c	8	arm	synth_iter_ctx	matched	src/libttsivonavoice/synth_iter.c	100	
 00031354	34	arm	parse_uint_or_minus1	matched	src/libttsivonavoice/synth_iter.c	100	
 00031388	50	arm	voice_age	wip	src/libttsivonavoice/synth_iter.c	90.0	
@@ -572,9 +572,9 @@ addr	size	mode	name	status	src	score	note
 000416cc	b8	arm	FUN_000416cc	todo			
 00041784	5c	arm	FUN_00041784	todo			
 000417e0	308	arm	FUN_000417e0	todo			
-00041ae8	1fc	arm	FUN_00041ae8	todo			
-00041ce4	10	arm	FUN_00041ce4	todo			
-00041cf4	c0	arm	FUN_00041cf4	todo			
+00041ae8	1fc	arm	phoneme_alphabet_id	todo			
+00041ce4	10	arm	phoneme_split_words	todo			
+00041cf4	c0	arm	phoneme_convert	todo			
 00041db4	128	arm	phone_viseme	todo			
 00041edc	8	arm	FUN_00041edc	todo			
 00041ee4	9c	arm	FUN_00041ee4	todo			

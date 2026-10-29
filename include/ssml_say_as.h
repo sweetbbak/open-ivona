@@ -12,7 +12,10 @@ typedef struct say_as_info {
     int whole;                  /* replaces the whole text (expletive, interjection, ...) */
 } say_as_info;
 
-typedef struct say_as_ext say_as_ext;
+/* extra lexicon scopes entered by an interpretation (NULL terminated) */
+typedef struct say_as_ext {
+    const char *names[2];
+} say_as_ext;
 
 say_as_ext *say_as_ext_find(const say_as_info *sa);
 const say_as_info *say_as_lookup(dom_elem *e);
