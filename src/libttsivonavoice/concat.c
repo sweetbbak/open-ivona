@@ -34,7 +34,7 @@ void *val_userdata(const cst_val *v);
 const unsigned char *val_binary_key(const cst_val *v);
 unsigned char *utt_cache_key(const cst_utterance *u);
 int blacklists_contain(const cst_val *l, int id);
-void basic_ff_register(const cst_item *seg, vox_unit *u);
+void vox_unit_from_segment(const cst_item *seg, vox_unit *u);
 unsigned char *cache_graph_key(const diphonedb *db, const vox_unit *units, int n,
                                unsigned int *len, const unsigned char *hkey, cst_features *m,
                                int tb_min_distance);
@@ -148,9 +148,9 @@ cst_utterance *concat_select(cst_utterance *utt)
             i = 0;
             d = first;
             do {
-                basic_ff_register(item_as(item_daughter(d), 6), &units[i]);
+                vox_unit_from_segment(item_as(item_daughter(d), 6), &units[i]);
                 if (item_next(d) == NULL) {
-                    basic_ff_register(item_as(item_last_daughter(d), 6), &units[i + 1]);
+                    vox_unit_from_segment(item_as(item_last_daughter(d), 6), &units[i + 1]);
                     i += 2;
                 } else
                     i++;

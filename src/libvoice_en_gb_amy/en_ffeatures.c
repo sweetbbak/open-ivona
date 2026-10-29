@@ -141,6 +141,19 @@ static const cst_val *gpos(const cst_item *word)
     return &en_val_content;
 }
 
+/* 0x3b1f8 arm: the gpos of the word w, else of its last apostrophe's part */
+const cst_val *gpos_string(const char *w)
+{
+    const char *a;
+    const cst_val *p;
+
+    if ((p = gpos_of(w)) != NULL)
+        return p;
+    if ((a = strrchr(w, '\'')) != NULL && (p = gpos_of(a)) != NULL)
+        return p;
+    return &en_val_content;
+}
+
 /* 0x3b318 arm */
 void en_ff_register(cst_features *ffunctions)
 {

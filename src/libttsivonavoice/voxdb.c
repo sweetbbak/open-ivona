@@ -1296,7 +1296,7 @@ cst_item *item_traverse(const cst_item *item, ...);
 /* 0x616f4 arm: the wanted unit for a segment: its quinphone, duration, acoustic data and
  * the positional and prosodic features of its syllable, word and phrase (from the
  * neighbouring syllables and words for a pause). */
-vox_unit *basic_ff_register(const cst_item *seg, vox_unit *u)
+vox_unit *vox_unit_from_segment(const cst_item *seg, vox_unit *u)
 {
     const cst_item *syl = item_traverse(seg, 4, TRAVERSE_PARENT, 0);
     const cst_item *phrase = item_traverse(syl, TRAVERSE_PARENT, 3, TRAVERSE_PARENT, 0);

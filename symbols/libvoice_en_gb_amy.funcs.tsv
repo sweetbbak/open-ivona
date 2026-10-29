@@ -483,8 +483,8 @@ addr	size	mode	name	status	src	score	note
 00032c0c	58	arm	ts_close	matched	src/libttsivonavoice/flite/cst_tokenstream.c	100	
 00032c64	14	arm	ts_eof	matched	src/libttsivonavoice/flite/cst_tokenstream.c	100	
 00032c78	470	arm	ts_get	wip	src/libttsivonavoice/flite/cst_tokenstream.c	72.2	
-000330e8	2c	arm	val_string_n	wip	src/libttsivonavoice/flite/cst_val_const.c	81.8	
-00033114	30	arm	val_int_n	wip	src/libttsivonavoice/flite/cst_val_const.c	83.3	
+000330e8	2c	arm	val_int_n	wip	src/libttsivonavoice/flite/cst_val_const.c	41.7	
+00033114	30	arm	val_string_n	wip	src/libttsivonavoice/flite/cst_val_const.c	41.7	
 00033144	6c	arm	cst_bsearch	matched	src/libttsivonavoice/uni.c	100	
 000331b0	54	arm	mp_mem_read	matched	src/libvoice_en_gb_amy/mpack_io.c	100	
 00033204	4	arm	mp_free_elem	matched	src/libvoice_en_gb_amy/mpack_io.c	100	
@@ -646,7 +646,7 @@ addr	size	mode	name	status	src	score	note
 0003af08	6c	arm	gpos_name	wip	src/libvoice_en_gb_amy/en_ffeatures.c	55.6	
 0003af74	154	arm	gpos_left	wip	src/libvoice_en_gb_amy/en_ffeatures.c	8.3	
 0003b0c8	130	arm	gpos	wip	src/libvoice_en_gb_amy/en_ffeatures.c	35.2	
-0003b1f8	120	arm	gpos_string	todo			
+0003b1f8	120	arm	gpos_string	wip	src/libvoice_en_gb_amy/en_ffeatures.c	34.5	
 0003b318	1d0	arm	en_ff_register	wip	src/libvoice_en_gb_amy/en_ffeatures.c	98.3	
 0003b4e8	140	arm	en_gb_setup	wip	src/libvoice_en_gb_amy/en_gb_lex.c	14.4	
 0003b628	4	arm	en_gb_teardown	matched	src/libvoice_en_gb_amy/en_gb_lex.c	100	
@@ -681,21 +681,21 @@ addr	size	mode	name	status	src	score	note
 00048d88	210	arm	en_is_initial	wip	src/libvoice_en_gb_amy/en_postlex.c	46.7	
 00048f98	4	arm	en_lang_global_init	matched	src/libvoice_en_gb_amy/en_postlex.c	100	
 00048f9c	4	arm	en_lang_global_fini	matched	src/libvoice_en_gb_amy/en_postlex.c	100	
-00048fa0	94	arm	FUN_00048fa0	todo			
-00049034	70	arm	FUN_00049034	todo			
-000490a4	70	arm	FUN_000490a4	todo			
-00049114	124	arm	FUN_00049114	todo			
-00049238	c4	arm	FUN_00049238	todo			
+00048fa0	94	arm	en_is_dotted_abbrev	matched	src/libvoice_en_gb_amy/en_token.c	100	
+00049034	70	arm	en_take_abbrev_stop	wip	src/libvoice_en_gb_amy/en_token.c	92.9	
+000490a4	70	arm	en_lowercase	wip	src/libvoice_en_gb_amy/en_token.c	10.3	
+00049114	124	arm	en_fold	wip	src/libvoice_en_gb_amy/en_token.c	23.8	
+00049238	c4	arm	en_spell_dotted	matched	src/libvoice_en_gb_amy/en_token.c	100	
 000492fc	100	arm	FUN_000492fc	todo			
 000493fc	5c	arm	FUN_000493fc	todo			
-00049458	d24	arm	FUN_00049458	todo			
-0004a17c	c18	arm	en_token_to_words	todo			
-0004ad94	f0	arm	FUN_0004ad94	todo			
+00049458	d24	arm	en_token_word	wip	src/libvoice_en_gb_amy/en_token.c	29.1	
+0004a17c	c18	arm	en_token_to_words	wip	src/libvoice_en_gb_amy/en_token.c	53.0	
+0004ad94	f0	arm	en_split_hyphens	wip	src/libvoice_en_gb_amy/en_token.c	35.9	
 0004ae84	19c	arm	en_sentence_boundary	wip	src/libvoice_en_gb_amy/en_token.c	38.1	
 0004b020	44	arm	en_strip_apostrophes	wip	src/libvoice_en_gb_amy/en_us_lex.c	50.0	
 0004b064	2c	arm	FUN_0004b064	todo			
 0004b090	c	arm	FUN_0004b090	todo			
-0004b09c	3c	arm	FUN_0004b09c	todo			
+0004b09c	3c	arm	en_token_say_as	todo			
 0004b0d8	1cc	arm	en_us_setup	wip	src/libvoice_en_gb_amy/en_us_lex.c	17.3	
 0004b2a4	4	arm	en_us_teardown	matched	src/libvoice_en_gb_amy/en_us_lex.c	100	
 0004b2a8	60	arm	en_us_in_lex	matched	src/libvoice_en_gb_amy/en_us_lex.c	100	
@@ -721,33 +721,33 @@ addr	size	mode	name	status	src	score	note
 0004bca0	4a4	arm	FUN_0004bca0	todo			
 0004c144	130	arm	FUN_0004c144	todo			
 0004c274	e44	arm	FUN_0004c274	todo			
-0004d0b8	180	arm	FUN_0004d0b8	todo			
+0004d0b8	180	arm	en_exp_chars	wip	src/libvoice_en_gb_amy/en_number.c	8.0	
 0004d238	8	arm	FUN_0004d238	todo			
-0004d240	8	arm	FUN_0004d240	todo			
+0004d240	8	arm	en_exp_letters	matched	src/libvoice_en_gb_amy/en_number.c	100	
 0004d248	168	arm	FUN_0004d248	todo			
 0004d3b0	540	arm	FUN_0004d3b0	todo			
 0004d8f0	608	arm	FUN_0004d8f0	todo			
-0004def8	53c	arm	FUN_0004def8	todo			
-0004e434	13c	arm	FUN_0004e434	todo			
-0004e570	258	arm	FUN_0004e570	todo			
-0004e7c8	e4	arm	FUN_0004e7c8	todo			
-0004e8ac	40	arm	FUN_0004e8ac	todo			
-0004e8ec	78	arm	FUN_0004e8ec	todo			
-0004e964	314	arm	FUN_0004e964	todo			
-0004ec78	9c	arm	FUN_0004ec78	todo			
-0004ed14	508	arm	FUN_0004ed14	todo			
+0004def8	53c	arm	en_exp_currency	wip	src/libvoice_en_gb_amy/en_number.c	10.8	
+0004e434	13c	arm	en_parse_money	wip	src/libvoice_en_gb_amy/en_number.c	42.4	
+0004e570	258	arm	en_exp_money	wip	src/libvoice_en_gb_amy/en_number.c	56.0	
+0004e7c8	e4	arm	en_exp_2digits	wip	src/libvoice_en_gb_amy/en_number.c	49.1	
+0004e8ac	40	arm	en_strip_commas	wip	src/libvoice_en_gb_amy/en_number.c	87.5	
+0004e8ec	78	arm	en_exp_digits	wip	src/libvoice_en_gb_amy/en_number.c	93.3	
+0004e964	314	arm	en_exp_number_r	wip	src/libvoice_en_gb_amy/en_number.c	23.6	
+0004ec78	9c	arm	en_exp_number	wip	src/libvoice_en_gb_amy/en_number.c	30.6	
+0004ed14	508	arm	en_exp_ordinal	wip	src/libvoice_en_gb_amy/en_number.c	63.8	
 0004f21c	30	arm	FUN_0004f21c	todo			
-0004f24c	27c	arm	FUN_0004f24c	todo			
-0004f4c8	84	arm	FUN_0004f4c8	todo			
-0004f54c	194	arm	FUN_0004f54c	todo			
+0004f24c	27c	arm	en_exp_id	wip	src/libvoice_en_gb_amy/en_number.c	30.1	
+0004f4c8	84	arm	en_exp_sign	matched	src/libvoice_en_gb_amy/en_number.c	100	
+0004f54c	194	arm	en_exp_real	matched	src/libvoice_en_gb_amy/en_number.c	100	
 0004f6e0	2ac	arm	FUN_0004f6e0	todo			
-0004f98c	2b8	arm	FUN_0004f98c	todo			
+0004f98c	2b8	arm	en_exp_time	wip	src/libvoice_en_gb_amy/en_number.c	15.7	
 0004fc44	624	arm	FUN_0004fc44	todo			
-00050268	114	arm	FUN_00050268	todo			
-0005037c	6c	arm	FUN_0005037c	todo			
-000503e8	a8	arm	FUN_000503e8	todo			
-00050490	6c0	arm	FUN_00050490	todo			
-00050b50	44	arm	FUN_00050b50	todo			
+00050268	114	arm	en_exp_utc_offset	matched	src/libvoice_en_gb_amy/en_number.c	100	
+0005037c	6c	arm	en_era_before	wip	src/libvoice_en_gb_amy/en_number.c	63.3	
+000503e8	a8	arm	en_era_after	wip	src/libvoice_en_gb_amy/en_number.c	43.5	
+00050490	6c0	arm	en_exp_date	wip	src/libvoice_en_gb_amy/en_number.c	16.1	
+00050b50	44	arm	en_is_era	wip	src/libvoice_en_gb_amy/en_number.c	61.1	
 00050b94	74	arm	FUN_00050b94	todo			
 00050c08	148	arm	FUN_00050c08	todo			
 00050d50	d4	arm	FUN_00050d50	todo			
@@ -820,18 +820,18 @@ addr	size	mode	name	status	src	score	note
 00058a4c	3c	arm	FUN_00058a4c	wip	src/libvoice_en_gb_amy/cst_ffeatures.c	70.6	
 00058a88	68	arm	FUN_00058a88	wip	src/libvoice_en_gb_amy/cst_ffeatures.c	66.7	
 00058af0	88	arm	FUN_00058af0	matched	src/libvoice_en_gb_amy/cst_ffeatures.c	100	
-00058b78	3c	arm	FUN_00058b78	todo			
-00058bb4	60	arm	FUN_00058bb4	todo			
-00058c14	38	arm	FUN_00058c14	todo			
-00058c4c	b4	arm	FUN_00058c4c	todo			
-00058d00	54	arm	FUN_00058d00	todo			
-00058d54	8c	arm	FUN_00058d54	todo			
+00058b78	3c	arm	pos_in_syl	wip	src/libvoice_en_gb_amy/cst_ffeatures.c	68.8	
+00058bb4	60	arm	pos_in_word	wip	src/libvoice_en_gb_amy/cst_ffeatures.c	91.7	
+00058c14	38	arm	syl_num_phones	wip	src/libvoice_en_gb_amy/cst_ffeatures.c	81.2	
+00058c4c	b4	arm	segment_duration	wip	src/libvoice_en_gb_amy/cst_ffeatures.c	95.6	
+00058d00	54	arm	sub_phrases	wip	src/libvoice_en_gb_amy/cst_ffeatures.c	78.3	
+00058d54	8c	arm	syl_vowel	wip	src/libvoice_en_gb_amy/cst_ffeatures.c	88.6	
 00058de0	b8	arm	FUN_00058de0	matched	src/libvoice_en_gb_amy/cst_ffeatures.c	100	
 00058e98	f4	arm	seg_onset_ctype	matched	src/libvoice_en_gb_amy/cst_ffeatures.c	100	flite calls(9) 60%
 00058f8c	10	arm	seg_onset_nasal	matched	src/libvoice_en_gb_amy/cst_ffeatures.c	100	flite order 75%
 00058f9c	10	arm	seg_onset_stop	matched	src/libvoice_en_gb_amy/cst_ffeatures.c	100	flite order 75%
 00058fac	10	arm	seg_onset_fric	matched	src/libvoice_en_gb_amy/cst_ffeatures.c	100	flite order 75%
-00058fbc	f4	arm	FUN_00058fbc	matched	src/libvoice_en_gb_amy/cst_ffeatures.c	100	
+00058fbc	f4	arm	seg_coda_ctype	matched	src/libvoice_en_gb_amy/cst_ffeatures.c	100	
 000590b0	10	arm	seg_coda_nasal	matched	src/libvoice_en_gb_amy/cst_ffeatures.c	100	flite order 75%
 000590c0	10	arm	seg_coda_stop	matched	src/libvoice_en_gb_amy/cst_ffeatures.c	100	flite order 75%
 000590d0	10	arm	seg_coda_fric	matched	src/libvoice_en_gb_amy/cst_ffeatures.c	100	flite order 75%
@@ -844,31 +844,31 @@ addr	size	mode	name	status	src	score	note
 00059278	40	arm	ph_vheight	matched	src/libvoice_en_gb_amy/cst_ffeatures.c	100	flite strings(1) 81%
 000592b8	40	arm	ph_vlng	matched	src/libvoice_en_gb_amy/cst_ffeatures.c	100	
 000592f8	40	arm	ph_vc	matched	src/libvoice_en_gb_amy/cst_ffeatures.c	100	
-00059338	c8	arm	FUN_00059338	todo			
-00059400	54	arm	seg_onset_glide	todo			flite calls(2) 90%
-00059454	54	arm	FUN_00059454	todo			
-000594a8	64	arm	FUN_000594a8	todo			
-0005950c	9c	arm	FUN_0005950c	todo			
-000595a8	d0	arm	FUN_000595a8	todo			
-00059678	ac	arm	FUN_00059678	todo			
-00059724	ac	arm	FUN_00059724	todo			
-000597d0	64	arm	FUN_000597d0	todo			
-00059834	b8	arm	FUN_00059834	todo			
-000598ec	b8	arm	FUN_000598ec	todo			
-000599a4	d0	arm	FUN_000599a4	todo			
-00059a74	5c	arm	FUN_00059a74	todo			
-00059ad0	5c	arm	FUN_00059ad0	todo			
-00059b2c	64	arm	FUN_00059b2c	todo			
-00059b90	64	arm	FUN_00059b90	todo			
-00059bf4	9c	arm	FUN_00059bf4	todo			
-00059c90	9c	arm	FUN_00059c90	todo			
-00059d2c	9c	arm	FUN_00059d2c	todo			
-00059dc8	f8	arm	FUN_00059dc8	todo			
-00059ec0	130	arm	FUN_00059ec0	todo			
-00059ff0	130	arm	FUN_00059ff0	todo			
-0005a120	190	arm	FUN_0005a120	todo			
-0005a2b0	194	arm	FUN_0005a2b0	todo			
-0005a444	734	arm	basic_ff_register	todo			flite strings(25) 16%
+00059338	c8	arm	accented	matched	src/libvoice_en_gb_amy/cst_ffeatures.c	100	
+00059400	54	arm	seg_onset_glide	matched	src/libvoice_en_gb_amy/cst_ffeatures.c	100	flite calls(2) 90%
+00059454	54	arm	seg_coda_glide	matched	src/libvoice_en_gb_amy/cst_ffeatures.c	100	
+000594a8	64	arm	punc_phrase_num_syls	wip	src/libvoice_en_gb_amy/cst_ffeatures.c	92.0	
+0005950c	9c	arm	syl_out_punc	wip	src/libvoice_en_gb_amy/cst_ffeatures.c	94.9	
+000595a8	d0	arm	ssyl_out_punc	wip	src/libvoice_en_gb_amy/cst_ffeatures.c	62.3	
+00059678	ac	arm	syl_codasize	wip	src/libvoice_en_gb_amy/cst_ffeatures.c	95.3	
+00059724	ac	arm	syl_onsetsize	wip	src/libvoice_en_gb_amy/cst_ffeatures.c	95.3	
+000597d0	64	arm	phrase_num_syls	wip	src/libvoice_en_gb_amy/cst_ffeatures.c	92.0	
+00059834	b8	arm	ssyl_in	wip	src/libvoice_en_gb_amy/cst_ffeatures.c	91.3	
+000598ec	b8	arm	ssyl_in_punc	wip	src/libvoice_en_gb_amy/cst_ffeatures.c	91.3	
+000599a4	d0	arm	ssyl_out	wip	src/libvoice_en_gb_amy/cst_ffeatures.c	62.3	
+00059a74	5c	arm	phrase_num_words	wip	src/libvoice_en_gb_amy/cst_ffeatures.c	91.3	
+00059ad0	5c	arm	punc_phrase_num_words	wip	src/libvoice_en_gb_amy/cst_ffeatures.c	91.3	
+00059b2c	64	arm	pos_in_phrase	wip	src/libvoice_en_gb_amy/cst_ffeatures.c	92.0	
+00059b90	64	arm	punc_pos_in_phrase	wip	src/libvoice_en_gb_amy/cst_ffeatures.c	92.0	
+00059bf4	9c	arm	syl_in	wip	src/libvoice_en_gb_amy/cst_ffeatures.c	94.9	
+00059c90	9c	arm	syl_in_punc	wip	src/libvoice_en_gb_amy/cst_ffeatures.c	94.9	
+00059d2c	9c	arm	syl_out	wip	src/libvoice_en_gb_amy/cst_ffeatures.c	94.9	
+00059dc8	f8	arm	syl_break	matched	src/libvoice_en_gb_amy/cst_ffeatures.c	100	
+00059ec0	130	arm	last_accent	wip	src/libvoice_en_gb_amy/cst_ffeatures.c	72.4	
+00059ff0	130	arm	next_accent	wip	src/libvoice_en_gb_amy/cst_ffeatures.c	72.4	
+0005a120	190	arm	asyl_out	wip	src/libvoice_en_gb_amy/cst_ffeatures.c	68.0	
+0005a2b0	194	arm	asyl_in	wip	src/libvoice_en_gb_amy/cst_ffeatures.c	67.3	
+0005a444	734	arm	basic_ff_register	wip	src/libvoice_en_gb_amy/cst_ffeatures.c	15.2	flite strings(25) 16%
 0005ab78	58	arm	val_phonefunc	matched	src/libvoice_en_gb_amy/phones.c	100	
 0005abd0	18	arm	phonefunc_val	matched	src/libvoice_en_gb_amy/phones.c	100	
 0005abe8	94	arm	phones_from_string	matched	src/libvoice_en_gb_amy/phones.c	100	
@@ -937,7 +937,7 @@ addr	size	mode	name	status	src	score	note
 0005f5a0	548	arm	cart_duration	matched	src/libvoice_en_gb_amy/cst_synth.c	100	
 0005fae8	158	arm	duration_select	matched	src/libvoice_en_gb_amy/cst_synth.c	100	
 0005fc40	b0	arm	phones_textanalysis	matched	src/libvoice_en_gb_amy/cst_synth.c	100	
-0005fcf0	1c	arm	FUN_0005fcf0	todo			
+0005fcf0	1c	arm	en_money_free	todo			
 0005fd0c	58	arm	val_tokenizer_expand_str_func	matched	src/libvoice_en_gb_amy/tokenizer.c	100	
 0005fd64	18	arm	tokenizer_expand_str_func_val	matched	src/libvoice_en_gb_amy/tokenizer.c	100	
 0005fd7c	14	arm	segment_key_cmp	matched	src/libvoice_en_gb_amy/tokenizer.c	100	
@@ -1046,7 +1046,7 @@ addr	size	mode	name	status	src	score	note
 00064b30	8	arm	FUN_00064b30	todo			
 00064b38	24	arm	FUN_00064b38	todo			
 00064b5c	28	arm	FUN_00064b5c	todo			
-00064b84	4c	arm	FUN_00064b84	todo			
+00064b84	4c	arm	pcre_match	matched	src/libvoice_en_gb_amy/pcre_util.c	100	
 00064bd0	58	arm	FUN_00064bd0	todo			
 00064c28	14c	arm	FUN_00064c28	todo			
 00064d74	1c	arm	FUN_00064d74	todo			

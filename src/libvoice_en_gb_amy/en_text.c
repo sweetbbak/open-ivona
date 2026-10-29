@@ -8,7 +8,7 @@
 #include "cst_regex.h"
 
 cst_val *cst_split_val(const char *s, const char *delims);
-int FUN_00064b84(const void *table, const char *str);
+int pcre_match(const void *table, const char *str);
 
 /* 0x603dc arm */
 void en_text_init(void)
@@ -173,7 +173,7 @@ void date_parse(cst_date *d, const char *str, const char *format,
         if (format[i] == 'm' &&
             (numeric_month ||
              (atoi(s) > 0 && atoi(s) <= 12) ||
-             (month_regex != NULL ? cst_regex_match(month_regex, s) : FUN_00064b84(month_table, s))))
+             (month_regex != NULL ? cst_regex_match(month_regex, s) : pcre_match(month_table, s))))
         {
             target = &d->month;
             goto set_field;

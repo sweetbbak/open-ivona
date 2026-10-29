@@ -68,7 +68,7 @@ typedef struct lang_data_ff {
 } lang_data_ff;
 
 /* 0x638e0 */
-static cst_item *item_first_sibling(const cst_item *i)
+cst_item *item_first_sibling(const cst_item *i)
 {
     return item_daughter(item_parent(i));
 }

@@ -845,3 +845,15 @@ static const cst_regex en_rx_word_rx = {  /* 0x3d3380 */
 };
 const cst_regex * const en_rx_word = &en_rx_word_rx;  /* 0x3d337c */
 
+/* BRANCH BOL ANYOF(123456789) STAR ANYOF(0123456789) EOL END */
+static const unsigned char en_rx_nonzero_int_rxprog[] = {  /* 0x390b1c */
+    156, 6, 0, 39, 1, 0, 3, 4, 0, 13, 49, 50, 51, 52, 53, 54,
+    55, 56, 57, 0, 10, 0, 17, 4, 0, 0, 48, 49, 50, 51, 52, 53,
+    54, 55, 56, 57, 0, 2, 0, 3, 0, 0, 0,
+};
+static const cst_regex en_rx_nonzero_int_rx = {  /* 0x3d6cc8 */
+   0, 1, NULL, 0, 43,
+   (char *)en_rx_nonzero_int_rxprog
+};
+const cst_regex * const en_rx_nonzero_int = &en_rx_nonzero_int_rx;  /* 0x3d6c18 */
+

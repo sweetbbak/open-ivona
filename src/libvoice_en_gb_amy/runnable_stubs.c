@@ -12,3 +12,14 @@ const char *en_word_pos(const void *word)
     (void)word;
     return "0";
 }
+
+/* en_token_say_as (0x4b09c): SSML <say-as interpret-as=...> tokens, dispatched through tables of
+ * handlers (characters, cardinal, ordinal, digits, date, time, fraction, unit, telephone,
+ * address, radiostation, flight-code). Only SSML sets "interpret-as", and SSML input is off
+ * (docs/notes/ssml-deferred.md), so the original returns 0 here too; done with SSML. */
+void *en_token_say_as(void *tok, const char *name)
+{
+    (void)tok;
+    (void)name;
+    return 0;
+}

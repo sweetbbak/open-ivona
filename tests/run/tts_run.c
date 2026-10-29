@@ -9,9 +9,13 @@
  *   --speed F    tts_streamer_start's speed: how fast audio is delivered, not how it sounds
  *                (1 real time, higher faster, -1 as fast as possible, the default)
  */
+#include <dlfcn.h>
+#include <signal.h>
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+#include <unistd.h>
+#include <asm/sigcontext.h>
 
 #include "ivona_tts.h"
 
@@ -23,6 +27,49 @@ static void put32(FILE *f, unsigned int v)
 static void put16(FILE *f, unsigned int v)
 {
     fputc(v & 0xff, f), fputc(v >> 8 & 0xff, f);
+}
+
+/* where an address is: module+offset and the nearest exported symbol */
+static void where(const char *what, unsigned long a)
+{
+    Dl_info info;
+
+    if (dladdr((void *)a, &info) && info.dli_fname)
+        fprintf(stderr, "  %s %#lx = %s+%#lx (%s+%#lx)\n", what, a, info.dli_fname,
+                a - (unsigned long)info.dli_fbase, info.dli_sname ? info.dli_sname : "?",
+                info.dli_saddr ? a - (unsigned long)info.dli_saddr : 0);
+    else
+        fprintf(stderr, "  %s %#lx\n", what, a);
+}
+
+/* a crash in the libraries (say a decompiled voice library) is reported instead of leaving the
+ * other threads waiting forever */
+static void on_crash(int sig, siginfo_t *si, void *uc)
+{
+    struct sigcontext *sc = &((struct ucontext_arm {
+        unsigned long flags;
+        void *link;
+        stack_t stack;
+        struct sigcontext mc;
+    } *)uc)->mc;
+
+    fprintf(stderr, "signal %d at address %p\n", sig, si->si_addr);
+    where("pc", sc->arm_pc);
+    where("lr", sc->arm_lr);
+    /* a rough backtrace: stack words that point into a loaded library */
+    {
+        unsigned long *sp = (unsigned long *)sc->arm_sp;
+        Dl_info info;
+        int k, n = 0;
+
+        for (k = 0; k < 512 && n < 24; k++)
+            if (dladdr((void *)sp[k], &info) && info.dli_fname && strstr(info.dli_fname, ".so")
+                && !strstr(info.dli_fname, "libc.so")) {
+                where("stack", sp[k]);
+                n++;
+            }
+    }
+    _exit(128 + sig);
 }
 
 static void fail(const char *what)
@@ -51,6 +98,14 @@ int main(int argc, char **argv)
     const char *params[8];
     float values[8], speed = -1.0f;
     int nparams = 0, i;
+    struct sigaction sa;
+
+    memset(&sa, 0, sizeof sa);
+    sa.sa_sigaction = on_crash;
+    sa.sa_flags = SA_SIGINFO;
+    sigaction(SIGSEGV, &sa, NULL);
+    sigaction(SIGBUS, &sa, NULL);
+    sigaction(SIGILL, &sa, NULL);
     tts_instance *tts;
     tts_voice *voice;
     tts_streamer *st;
