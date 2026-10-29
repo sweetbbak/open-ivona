@@ -630,7 +630,7 @@ addr	size	mode	name	status	src	score	note
 00039cbc	b8	arm	FUN_00039cbc	todo			
 00039d74	b4	arm	FUN_00039d74	todo			
 00039e28	7a8	arm	FUN_00039e28	todo			
-0003a5d0	4d4	arm	en_expand_phone_number	todo			
+0003a5d0	4d4	arm	en_expand_phone_number	wip	src/libvoice_en_gb_amy/en_lang.c	27.6	
 0003aaa4	74	arm	next_word_punc	wip	src/libvoice_en_gb_amy/en_ffeatures.c	82.8	
 0003ab18	74	arm	lex_all_pos	matched	src/libvoice_en_gb_amy/en_ffeatures.c	100	
 0003ab8c	40	arm	lex_pos_v	matched	src/libvoice_en_gb_amy/en_ffeatures.c	100	

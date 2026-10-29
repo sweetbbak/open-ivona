@@ -35,12 +35,14 @@ cst_val *en_word_to_segments(cst_item *word);
 cst_utterance *en_gb_amy_postlex(cst_utterance *u);
 cst_val *en_sentence_boundary(cst_item *token);
 cst_val *en_token_to_words(cst_item *token);
-cst_val *en_expand_phone_number(const char *s);
 cst_val *en_phrase_syl_end_tone(cst_item *syl);
+void en_expand_phone_number(const char *s, size_t n,
+                            void (*cb)(int, int, const char *, const char *, int, const char *, void *),
+                            void *d);
 
 typedef cst_val *(*phonefunc)(cst_val *phones);
 typedef cst_val *(*xsampafunc)(const char *xsampa, const char *alphabet, const char *lang);
-typedef cst_val *(*tokenizer_expand_str_func)(const char *s);
+typedef void (*tokenizer_expand_str_func)(const char *s, size_t n, void (*cb)(int, int, const char *, const char *, int, const char *, void *), void *d);
 cst_val *phonefunc_val(phonefunc f);
 cst_val *xsampafunc_val(xsampafunc f);
 cst_val *tokenizer_expand_str_func_val(tokenizer_expand_str_func f);
@@ -93,6 +95,83 @@ void en_lang_fini(en_lang_core *core)
 {
     en_lang_global_fini();
     en_lang_teardown(core);
+}
+
+size_t cst_strnspn(const char *s, size_t n, const char *accept);
+size_t cst_strncspn(const char *s, size_t n, const char *reject);
+
+/* a word of an expansion: n bytes at pos, followed by punc (as the engine's word_cb_fn) */
+typedef void (*en_word_cb)(int pos, int n, const char *prepunc, const char *punc, int len_punc,
+                           const char *extra, void *d);
+
+#define PHONE_SEPS "-.,/() "
+#define PHONE_DIGITS "*#0123456789"
+
+/* 0x3a5d0 arm: the tokenizer_expand_phone_number_func: the groups of a telephone number as
+ * words, the first marked "first"; groups of 7, 10 and 11 digits (1-800 numbers aside) are split
+ * the North American way, each part followed by a comma */
+void en_expand_phone_number(const char *s, size_t n, en_word_cb cb, void *d)
+{
+    size_t i, j, k, e, glen;
+    const char *punc, *p2, *extra;
+    int first = 1, first_word;
+
+    i = cst_strnspn(s, n, PHONE_SEPS);
+    if (i < n && s[i] == '+') {
+        cb(i, 1, NULL, "", 0, "first", d);
+        i++;
+        first = 0;
+    }
+    first_word = 1;
+    for (;;) {
+        if (i >= n)
+            return;
+        j = i + cst_strnspn(s + i, n - i, PHONE_SEPS);
+        if (j >= n)
+            return;
+        extra = first ? "first" : NULL;
+        if (strchr(PHONE_DIGITS, (unsigned char)s[j]))
+            glen = cst_strnspn(s + j, n - j, PHONE_DIGITS);
+        else
+            glen = cst_strncspn(s + j, n - j, PHONE_SEPS PHONE_DIGITS);
+        k = j + glen;
+        e = k + cst_strnspn(s + k, n - j - glen, PHONE_SEPS);
+        if (e == n)
+            punc = "";
+        else
+            punc = strchr(PHONE_SEPS, s[k]) ? "," : "";
+        if (!(j < k && s[j] == '0') && cst_strnspn(s + j, glen, "0123456789") == glen) {
+            if (glen == 7) {
+                cb(j, 3, NULL, ",", 0, extra, d);
+                cb(j + 3, 4, NULL, "", 0, NULL, d);
+                goto next;
+            }
+            if (glen == 10) {
+                cb(j, 3, NULL, ",", 0, extra, d);
+                cb(j + 3, 3, NULL, ",", 0, NULL, d);
+                cb(j + 6, 4, NULL, "", 0, NULL, d);
+                goto next;
+            }
+            if (glen == 11 && s[j] == '1') {
+                p2 = ",";
+                if ((unsigned char)(s[j + 1] - '8') <= 1 && s[j + 2] == '0' && s[j + 3] == '0')
+                    p2 = "";
+                cb(j, 1, NULL, p2, 0, extra, d);
+                cb(j + 1, 3, NULL, ",", 0, NULL, d);
+                cb(j + 4, 3, NULL, ",", 0, NULL, d);
+                cb(j + 7, 4, NULL, "", 0, NULL, d);
+                goto next;
+            }
+        }
+        if (first_word && e + 3 < n && glen == 1 && s[j] == '1'
+            && (unsigned char)(s[e] - '8') <= 1 && s[e + 1] == '0' && s[e + 2] == '0')
+            punc = "";
+        cb(j, glen, NULL, punc, 0, extra, d);
+        first_word = 0;
+    next:
+        first = 0;
+        i = k;
+    }
 }
 
 /* 0x3ba81c */
