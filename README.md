@@ -10,7 +10,12 @@ string contents as in the original.
 
 ```
 ./speak "Hello world" hello.wav
+./speak --rate 1.5 --pitch 0.9 --volume 1.2 "Hello world" hello.wav
 ```
+
+`--rate` (about 0.67 slow .. 4 fast), `--pitch` (0.5 .. 2) and `--volume` (0 .. 1.6) are the
+engine's voice parameters; 1 is normal. `--speed` is `tts_streamer_start`'s speed, which only
+paces delivery (1 real time, -1 as fast as possible) and does not change the sound.
 
 That's all. The first run downloads what it needs and builds everything; later runs rebuild
 the engine only if a source changed. Details: `docs/notes/runnable-engine.md`.

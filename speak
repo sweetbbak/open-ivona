@@ -1,7 +1,14 @@
 #!/usr/bin/env bash
 # Speak text with the decompiled IVONA engine:
 #
-#   ./speak "Hello world" [out.wav]
+#   ./speak [OPTIONS] "Hello world" [out.wav]
+#
+# Options:
+#   --rate F     speaking rate, 1 normal, about 0.67 (slower) .. 4 (faster)
+#   --pitch F    pitch, 0.5 .. 2
+#   --volume F   volume, 0 .. 1.6
+#   --speed F    how fast audio is delivered (tts_streamer_start's speed): 1 real time,
+#                -1 as fast as possible (default). Does not change how it sounds.
 #
 # Does everything needed, only when needed:
 #   1. fetches the Android 4.4 system files qemu runs it on (once, 160 MB)
@@ -15,10 +22,15 @@ set -euo pipefail
 ROOT="$(cd "$(dirname "$0")" && pwd)"
 cd "$ROOT"
 
-if [ $# -lt 1 ] || [ $# -gt 2 ]; then
-    sed -n '2,15p' "$0" | sed 's/^# \{0,1\}//'
-    exit 2
-fi
+usage() { sed -n '2,20p' "$0" | sed 's/^# \{0,1\}//'; exit 2; }
+OPTS=()
+while [ $# -gt 0 ] && [[ "$1" == --* ]]; do
+    case "$1" in
+        --rate|--pitch|--volume|--speed) [ $# -ge 2 ] || usage; OPTS+=("$1" "$2"); shift 2 ;;
+        *) usage ;;
+    esac
+done
+if [ $# -lt 1 ] || [ $# -gt 2 ]; then usage; fi
 TEXT="$1"
 OUT="$(realpath -m "${2:-out.wav}")"
 VOICE_DIR="$(realpath "${IVONA_VOICE_DIR:-$ROOT/../eng.gbr.amy.1.6.101.3}")"
@@ -61,6 +73,6 @@ ln -sfn "$VOICE_DIR/lang_en_gb.dat" "$RUNDIR/lang_en_gb.dat"
 [ -f "$RUNDIR/certificate.txt" ] || : > "$RUNDIR/certificate.txt"
 step "speaking"
 cd "$RUNDIR"
-"$ROOT/tools/run_android.sh" -l "$ROOT/build/engine" -l . "$ROOT/$RUNNER" certificate.txt \
+"$ROOT/tools/run_android.sh" -l "$ROOT/build/engine" -l . "$ROOT/$RUNNER" "${OPTS[@]}" certificate.txt \
     libvoice_en_gb_amy.so vox_en_gb_amy22i "$TEXT" "$OUT"
 step "done: $OUT"
