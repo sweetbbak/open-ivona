@@ -393,14 +393,14 @@ addr	size	mode	name	status	src	score	note
 00034104	14	arm	synth_state_enter_block	matched	src/libttsivonavoice/synth_iter.c	100	
 00034118	14	arm	synth_state_leave_block	matched	src/libttsivonavoice/synth_iter.c	100	
 0003412c	18	arm	synth_state_last_end	matched	src/libttsivonavoice/synth_iter.c	100	
-00034144	2d0	arm	FUN_00034144	todo			
+00034144	2d0	arm	synth_state_attach_punc	wip	src/libttsivonavoice/synth_iter.c	59.0	
 00034414	20	arm	synth_state_check_size	matched	src/libttsivonavoice/synth_iter.c	100	
 00034434	30	arm	synth_state_push_block	matched	src/libttsivonavoice/synth_iter.c	100	
 00034464	40	arm	synth_state_pop_block	matched	src/libttsivonavoice/synth_iter.c	100	
-000344a4	158	arm	FUN_000344a4	todo			
-000345fc	514	arm	FUN_000345fc	todo			
+000344a4	158	arm	synth_state_add_text	wip	src/libttsivonavoice/synth_iter.c	59.1	
+000345fc	514	arm	synth_state_add_break	wip	src/libttsivonavoice/synth_iter.c	38.1	
 00034b10	48	arm	synth_state_add_audio	matched	src/libttsivonavoice/synth_iter.c	100	
-00034b58	318	arm	FUN_00034b58	todo			
+00034b58	318	arm	synth_state_add_breath	wip	src/libttsivonavoice/synth_iter.c	95.5	
 00034e70	100	arm	synth_state_add_wave	wip	src/libttsivonavoice/synth_iter.c	59.7	
 00034f70	44	arm	synth_state_pop_flags	matched	src/libttsivonavoice/synth_iter.c	100	
 00034fb4	24	arm	synth_state_push_flags	matched	src/libttsivonavoice/synth_iter.c	100	

@@ -1538,6 +1538,70 @@ int synth_state_last_end(synth_state *s)
     return s->builder->last_end;
 }
 
+size_t utf8_strspn(const char *s, const char *set, int n);
+size_t cst_strnspn(const char *s, size_t n, const char *set);
+int text_ends_with_breaks(const char *s, size_t len, int n, int utf8);
+text_chunk *text_chunk_new(const synth_ctx *ctx, const ivona_ustr *text, int flags);
+
+/* 0x34144 arm: attaches the postpunctuation text starts with to the last token; returns its
+ * length */
+size_t synth_state_attach_punc(synth_state *s, const ivona_ustr *text)
+{
+    synth_ctx *c;
+    char *sub, *buf;
+    const char *punc;
+    size_t n = 0, len;
+
+    synth_state_flush(s);
+    if (s->builder->last_item == NULL)
+        return n;
+    c = s->ctx;
+    sub = cst_substr(text->data, 0, text->len);
+    if (strcmp(get_param_string(ctx_lang(c)->features, "encoding", ""), "UTF-8") == 0)
+        n = utf8_strspn(sub, get_param_string(ctx_lang(c)->features, "text_postpunctuation", ".,:;!?"), 0);
+    else
+        n = cst_strnspn(sub, text->len,
+                        get_param_string(ctx_lang(c)->features, "text_postpunctuation", ".,:;!?"));
+    cst_free(sub);
+    if (s->builder->unk_10[4] == 0) {
+        punc = item_feat_string(s->builder->last_item, "punc");
+        len = strlen(punc);
+        buf = cst_safe_alloc(len + n + 1, 1);
+        memcpy(buf, punc, len);
+        memcpy(buf + len, text->data, n);
+        buf[len + n] = 0;
+        item_set_string(s->builder->last_item, "punc", buf);
+        c = s->ctx;
+        if (!c->unk_0[1] && !c->unk_0[2]
+            && ends_in(c, buf, get_param_string(ctx_lang(c)->features, "hard_punc", ".!?")))
+            s->builder->unk_c = 1;
+        cst_free(buf);
+    }
+    return n;
+}
+
+/* 0x344a4 arm: queues text (from offset) for the tokenizer, flushing the queue when it is
+ * long or the text ends a paragraph */
+void synth_state_add_text(synth_state *s, const ivona_ustr *text, int offset)
+{
+    int max = get_param_int(ctx_lang(s->ctx)->features, "tokenizer_max_queue_size", 0);
+    text_chunk *c = text_chunk_new(s->ctx, text, offset);
+    synth_ctx *x;
+
+    vector_push(s->chunks, &c);
+    s->unk_34 += text->len;
+    if ((max >= 0 && vector_size(s->chunks) > (unsigned int)max) || (unsigned int)s->unk_34 > 7463)
+        goto flush;
+    x = s->ctx;
+    if (x->unk_0[1] || x->unk_0[2])
+        return;
+    if (!text_ends_with_breaks(text->data, text->len, x->unk_0[5],
+                               strcmp(get_param_string(ctx_lang(x)->features, "encoding", ""), "UTF-8") == 0))
+        return;
+flush:
+    synth_state_flush(s);
+}
+
 /* 0x34414 arm */
 void synth_state_check_size(synth_state *s, int n)
 {
@@ -1560,6 +1624,140 @@ void synth_state_pop_block(synth_state *s)
     synth_state_leave_block(s);
     vector_pop(s->unk_24);
     s->ctx->block_id = *(int *)vector_last(s->unk_24);
+}
+
+/* appends a ',' to the punctuation of token t */
+static inline void punc_append_comma(cst_item *t)
+{
+    const char *punc = item_feat_string(t, "punc");
+    size_t len = strlen(punc);
+    char *buf = cst_safe_alloc(len + 2, 1);
+
+    memcpy(buf, punc, len);
+    buf[len] = ',';
+    buf[len + 1] = 0;
+    item_set_string(t, "punc", buf);
+    cst_free(buf);
+}
+
+/* 0x345fc arm: a <break> of strength (NULL: implicit) and time (seconds, < 0 for none):
+ * strengthens or weakens the punctuation of the last token, then adds the pause */
+void synth_state_add_break(synth_state *s, const ustr_span *span, const char *strength, float time)
+{
+    utt_builder *b;
+    cst_item *t;
+    synth_ctx *c;
+    const char *punc;
+
+    synth_state_flush(s);
+    if (strength == NULL) {
+        strength = "";
+        if (time < 0) {
+            t = s->builder->last_item;
+            if (t == NULL)
+                return;
+            c = s->ctx;
+            punc = item_feat_string(t, "punc");
+            if (ends_in(c, punc, get_param_string(ctx_lang(c)->features, "soft_punc", ",:;")))
+                item_set_string(t, "punc", ".");
+            else if (ends_in(c, punc, get_param_string(ctx_lang(c)->features, "hard_punc", ".!?"))) {
+                if (utt_is_sentence_end(c, t)) {
+                    utt_builder_add_pause(s->ctx, s->builder, span, 0.2f);
+                    return;
+                }
+                punc_append_comma(t);
+            } else
+                item_set_string(t, "punc", ",");
+            s->builder->unk_8 = 1;
+            return;
+        }
+    }
+    b = s->builder;
+    t = b->last_item;
+    if (t) {
+        if (strcmp(strength, "none") == 0 || strcmp(strength, "x-weak") == 0) {
+            item_set_string(t, "punc", "");
+            b = s->builder;
+            b->unk_10[4] = 1;
+            b->unk_c = 0;
+            b->unk_10[2] = 0;
+        } else if (strcmp(strength, "strong") == 0 || strcmp(strength, "x-strong") == 0) {
+            utt_builder_end_sentence(s->ctx, t);
+            b = s->builder;
+            b->unk_8 = 1;
+            b->unk_10[4] = 1;
+        } else if (strcmp(strength, "weak") == 0 || strcmp(strength, "medium") == 0 || time < 0) {
+            punc_append_comma(t);
+            b = s->builder;
+            b->unk_10[2] = 0;
+            b->unk_c = 0;
+            b->unk_8 = 1;
+            b->unk_10[4] = 1;
+        }
+        if (s->ctx->voice != (tts_voice *)b->chunk.src)
+            b->unk_c = 1;
+    }
+    if (time > 0)
+        utt_builder_add_pause(s->ctx, b, span, time);
+}
+
+/* 0x34b58 arm: an amazon:breath: a short pause and a breath token (of duration dur if
+ * has_dur, volume volume if has_volume) */
+void synth_state_add_breath(synth_state *s, const ustr_span *span, float dur, int has_dur,
+                            float volume, float has_volume)
+{
+    synth_ctx *c;
+    utt_builder *b;
+    cst_item *t;
+    int saved;
+    float v, pitch, rate;
+
+    synth_state_flush(s);
+    utt_builder_add_pause(s->ctx, s->builder, span, 0.01f);
+    b = s->builder;
+    saved = b->unk_c;
+    b->unk_c = 0;
+    t = utt_builder_add_item(s->ctx, b, 1);
+    c = s->ctx;
+    if (c->unk_38) {
+        item_set_int(t, "domain", c->unk_38);
+        if (c->unk_0[4])
+            item_set_int(t, "tts_apply_dnn", 1);
+    }
+    item_set_string(t, "name", "");
+    item_set_string(t, "phones", "brth");
+    item_set_int(t, "start_pos", span->start);
+    item_set_int(t, "end_pos", span->end);
+    item_set_string(t, "punc", ",");
+    if (has_dur)
+        item_set_float(t, "breath_dur", dur);
+    if (has_volume != 0) {
+        if (volume > 2.0f)
+            volume = 2.0f;
+        else if (volume < 0.5f)
+            volume = 0.5f;
+        item_set_float(t, "breath_volume", volume);
+    }
+    c = s->ctx;
+    pitch = c->prosody.pitch;
+    rate = c->prosody.rate;
+    if ((v = c->prosody.volume * 0.5f) != 1.0f)
+        item_set_float(t, "amplify", v);
+    if (rate != 1.0f)
+        item_set_float(t, "duration_stretch", rate < 0.05f ? 20.0f : 1.0f / rate);
+    if (pitch != 1.0f)
+        item_set_float(t, "pitch_stretch", pitch < 0.5f ? 2.0f : pitch > 2.0f ? 0.5f : 1.0f / pitch);
+    b = s->builder;
+    b->unk_10[4] = 0;
+    b->last_end = span->end;
+    b->last_item = t;
+    b->unk_10[5]++;
+    if (saved) {
+        b->unk_c = 1;
+        b->unk_10[0] = 1;
+        b->unk_10[1] = 1;
+    }
+    utt_chunk_add_span(&b->chunk, span);
 }
 
 /* 0x34b10 arm */
