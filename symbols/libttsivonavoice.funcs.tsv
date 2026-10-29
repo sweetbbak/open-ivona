@@ -520,18 +520,18 @@ addr	size	mode	name	status	src	score	note
 0003bf9c	144	arm	voice_param_bool	wip	src/libttsivonavoice/voice_param.c	39.5	
 0003c0e0	2d0	arm	voice_param_time	wip	src/libttsivonavoice/voice_param.c	53.8	
 0003c3b0	280	arm	voice_param_int	wip	src/libttsivonavoice/voice_param.c	62.5	
-0003c630	2c0	arm	FUN_0003c630	todo			
-0003c8f0	1f4	arm	FUN_0003c8f0	todo			
-0003cae4	250	arm	FUN_0003cae4	todo			
+0003c630	2c0	arm	voice_param_quality	wip	src/libttsivonavoice/voice_param.c	50.5	
+0003c8f0	1f4	arm	voice_param_responsiveness	wip	src/libttsivonavoice/voice_param.c	36.2	
+0003cae4	250	arm	voice_param_traverse_break	wip	src/libttsivonavoice/voice_param.c	34.2	
 0003cd34	21c	arm	voice_param_string	wip	src/libttsivonavoice/voice_param.c	86.7	
 0003cf50	a0	arm	voice_param_encoding	matched	src/libttsivonavoice/voice_param.c	100	
 0003cff0	ec	arm	voice_param_base_uri	wip	src/libttsivonavoice/voice_param.c	22.2	
 0003d0dc	110	arm	voice_param_input_type	wip	src/libttsivonavoice/voice_param.c	29.9	
 0003d1ec	124	arm	voice_param_pointer	matched	src/libttsivonavoice/voice_param.c	100	
-0003d310	148	arm	FUN_0003d310	todo			
-0003d458	148	arm	FUN_0003d458	todo			
-0003d5a0	a8	arm	voice_quality_init	wip	src/libttsivonavoice/voice_param.c	15.8	
-0003d648	224	arm	FUN_0003d648	todo			
+0003d310	148	arm	voice_param_hash_key	wip	src/libttsivonavoice/voice_param.c	47.3	
+0003d458	148	arm	voice_param_encrypt_key	wip	src/libttsivonavoice/voice_param.c	47.3	
+0003d5a0	a8	arm	voice_quality_init	wip	src/libttsivonavoice/voice_param.c	34.6	
+0003d648	224	arm	voice_param_contrast	wip	src/libttsivonavoice/voice_param.c	10.7	
 0003d86c	134	arm	tts_voice_param	wip	src/libttsivonavoice/voice_param_api.c	51.8	
 0003d9a0	f8	arm	voice_params_init	wip	src/libttsivonavoice/voice_param_api.c	68.3	
 0003da98	124	arm	streamer_plain_text	matched	src/libttsivonavoice/streamer.c	100	

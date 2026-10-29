@@ -2,6 +2,7 @@
  * Voice parameters (0x3b4b0..0x3d9a0): tts_voice_param("op.name[.which]", io_val) dispatches
  * through voice_params[] to typed handlers that read/write the voice's feature set.
  */
+#include <limits.h>
 #include <math.h>
 #include <string.h>
 #include "cst_features.h"
@@ -11,6 +12,10 @@
 #include "ivona_util.h"
 #include "tts_voice.h"
 #include "voice_param.h"
+
+void *val_binary_key(const cst_val *v);
+cst_val *binary_key_val(const void *k);
+void *cst_memdup(const void *p, size_t n);
 
 /* the voice's default feature values (consulted for "def") */
 #define VOICE_DEFAULTS(v) (((cst_features **)(v)->voice_feats)[5])
@@ -388,6 +393,137 @@ int voice_param_int(tts_voice *v, const char *op, const char *feat, const char *
     return ret;
 }
 
+/* the beam limit a voice library allows: voice_data.unk_10 (voice_quality_init) */
+#define VOICE_MAX_BEAM(v) ((int)VOICE_DATA(v)->unk_10)
+
+/* 0x3c630: "quality" 1..10 over the unit selection beam: 1 is half the voice's beam, 10 no
+ * limit (-1). */
+int voice_param_quality(tts_voice *v, const char *op, const char *feat, const char *which,
+                        int *val)
+{
+    const cst_val *dv;
+    int beam, half, n;
+
+    feat_present(VOICE_DEFAULTS(v), feat);
+    if (strcmp(op, "set") == 0) {
+        if (which == NULL) {
+            if ((unsigned int)(*val - 1) >= 10) {
+                tts_set_error(TTS_STATUS_RANGE_ERROR);
+                return 0;
+            }
+            beam = VOICE_MAX_BEAM(v);
+            if (*val == 10)
+                n = -1;
+            else {
+                half = beam / 2;
+                n = half + (beam - half) * (*val - 1) / 8;
+            }
+            feat_set_int(VOICE_FEATURES(v), feat, n);
+        } else if (strcmp(which, "min") == 0)
+            feat_set_int(VOICE_FEATURES(v), feat, VOICE_MAX_BEAM(v) / 2);
+        else if (strcmp(which, "max") == 0)
+            feat_set_int(VOICE_FEATURES(v), feat, -1);
+        else {
+            dv = feat_val(VOICE_DEFAULTS(v), feat);
+            feat_set(VOICE_FEATURES(v), feat, dv ? dv : int_val(VOICE_MAX_BEAM(v) / 2));
+        }
+        return 1;
+    }
+    if (strcmp(op, "get") != 0)
+        return 1;
+    if (which == NULL)
+        n = get_param_int(VOICE_FEATURES(v), feat, 0);
+    else if (strcmp(which, "min") == 0) {
+        *val = 1;
+        return 1;
+    } else if (strcmp(which, "max") == 0) {
+        *val = 10;
+        return 1;
+    } else if ((dv = feat_val(VOICE_DEFAULTS(v), feat)) == NULL) {
+        *val = VOICE_MAX_BEAM(v) / 2;
+        return 1;
+    } else
+        n = val_int(dv);
+    beam = VOICE_MAX_BEAM(v);
+    half = beam / 2;
+    if (n > beam || n == -1)
+        *val = 10;
+    else if (n > half)
+        *val = (n + 1 - half) * 8 / (beam - half) + 1;
+    else
+        *val = 1;
+    return 1;
+}
+
+/* traverse break state shared by "responsiveness" and "traverse_break" */
+static int tb_enabled = 1;
+static int tb_distance = 6;
+
+/* 0x3c8f0: "responsiveness" 0/1: whether long utterances are broken up (tb_min_distance). */
+int voice_param_responsiveness(tts_voice *v, const char *op, const char *feat, const char *which,
+                               int *val)
+{
+    (void)feat;
+    if (strcmp(op, "set") == 0) {
+        if (which == NULL) {
+            if ((unsigned int)*val >= 2) {
+                tts_set_error(TTS_STATUS_RANGE_ERROR);
+                return 0;
+            }
+            tb_enabled = *val;
+            feat_set_int(VOICE_FEATURES(v), "tb_min_distance", *val ? tb_distance : -1);
+        } else if (strcmp(which, "min") == 0) {
+            tb_enabled = 0;
+            feat_set_int(VOICE_FEATURES(v), "tb_min_distance", -1);
+        } else {
+            tb_enabled = 1;
+            feat_set_int(VOICE_FEATURES(v), "tb_min_distance", tb_distance);
+        }
+    } else if (strcmp(op, "get") == 0) {
+        if (which == NULL)
+            *val = tb_enabled;
+        else
+            *val = strcmp(which, "min") == 0 ? 0 : 1;
+    }
+    return 1;
+}
+
+/* 0x3cae4: "traverse_break": the break distance used while responsiveness is on. */
+int voice_param_traverse_break(tts_voice *v, const char *op, const char *feat, const char *which,
+                               int *val)
+{
+    int n;
+
+    (void)feat;
+    if (strcmp(op, "set") == 0) {
+        if (which == NULL) {
+            if (*val < 1) {
+                tts_set_error(TTS_STATUS_RANGE_ERROR);
+                return 0;
+            }
+            n = *val;
+        } else if (strcmp(which, "min") == 0)
+            n = 1;
+        else if (strcmp(which, "max") == 0)
+            n = INT_MAX;
+        else
+            n = 6;
+        tb_distance = n;
+        if (tb_enabled)
+            feat_set_int(VOICE_FEATURES(v), "tb_min_distance", n);
+    } else if (strcmp(op, "get") == 0) {
+        if (which == NULL)
+            *val = tb_distance;
+        else if (strcmp(which, "min") == 0)
+            *val = 1;
+        else if (strcmp(which, "max") == 0)
+            *val = INT_MAX;
+        else
+            *val = 6;
+    }
+    return 1;
+}
+
 /* defaults of the string parameters ("def") */
 typedef struct string_param_def {
     const char *feat;
@@ -540,6 +676,50 @@ int voice_param_pointer(tts_voice *v, const char *op, const char *feat, const ch
     return ret;
 }
 
+/* a binary key parameter: a copy of size bytes, NULL to clear */
+static inline int voice_param_key(tts_voice *v, const char *op, const char *feat,
+                                  const char *which, const void **val, size_t size)
+{
+    void *key = NULL;
+
+    if (strcmp(op, "set") == 0) {
+        if (which == NULL) {
+            if (val && *val)
+                key = cst_memdup(*val, size);
+        } else if (strcmp(which, "def") != 0)
+            goto bad;
+        feat_set(VOICE_FEATURES(v), feat, binary_key_val(key));
+        return 1;
+    }
+    if (strcmp(op, "get") != 0)
+        return 1;
+    if (which == NULL) {
+        *val = val_binary_key(get_param_val(VOICE_FEATURES(v), feat, NULL));
+        return 1;
+    }
+    if (strcmp(which, "def") == 0) {
+        *val = NULL;
+        return 1;
+    }
+bad:
+    tts_set_error(TTS_STATUS_INVALID_ARGUMENT);
+    return 0;
+}
+
+/* 0x3d310: "cache_hash_key", 64 bytes (HMAC key of the cache names) */
+int voice_param_hash_key(tts_voice *v, const char *op, const char *feat, const char *which,
+                         const void **val)
+{
+    return voice_param_key(v, op, feat, which, val, 0x40);
+}
+
+/* 0x3d458: "cache_encrypt_key", 32 bytes (AES-256 key of cached audio) */
+int voice_param_encrypt_key(tts_voice *v, const char *op, const char *feat, const char *which,
+                            const void **val)
+{
+    return voice_param_key(v, op, feat, which, val, 0x20);
+}
+
 /* features copied from the voice library's registration into the voice's own */
 static const char *const voice_copied_feats[] = { "text_maxwordlength", NULL };
 
@@ -565,4 +745,49 @@ void voice_quality_init(tts_voice *v)
     for (f = voice_copied_feats; *f; f++)
         if ((val = feat_val(VOICE_FEATURES(v), *f)) != NULL)
             feat_set(VOICE_DATA(v)->features, *f, val);
+}
+
+/* 0x3d648: "contrast" 0/1: dynamic range compression ("compress" 1.0 or 4.0) */
+int voice_param_contrast(tts_voice *v, const char *op, const char *feat, const char *which,
+                         int *val)
+{
+    int n;
+
+    if (strcmp(feat, "eng_contrast") != 0) {
+        tts_set_errorf(TTS_STATUS_INTERNAL_ERROR, "Invalid param");
+        return 0;
+    }
+    if (which == NULL || *which == 0) {
+        if (strcmp(op, "set") == 0)
+            n = *val;
+        else if (strcmp(op, "get") == 0) {
+            *val = get_param_float(VOICE_FEATURES(v), "compress", 1.0f) == 4.0f;
+            return 1;
+        } else
+            return 1;
+    } else {
+        if (strcmp(which, "min") == 0 || strcmp(which, "def") == 0)
+            n = 0;
+        else if (strcmp(which, "max") == 0)
+            n = 1;
+        else {
+            tts_set_error(TTS_STATUS_INVALID_ARGUMENT);
+            return 0;
+        }
+        if (strcmp(op, "get") == 0) {
+            *val = n;
+            return 1;
+        }
+        if (strcmp(op, "set") != 0)
+            return 1;
+    }
+    if (n == 1)
+        feat_set_float(VOICE_FEATURES(v), "compress", 4.0f);
+    else if (n == 0)
+        feat_set_float(VOICE_FEATURES(v), "compress", 1.0f);
+    else {
+        tts_set_error(TTS_STATUS_RANGE_ERROR);
+        return 0;
+    }
+    return 1;
 }
