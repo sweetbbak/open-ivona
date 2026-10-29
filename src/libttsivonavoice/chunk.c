@@ -5,34 +5,11 @@
 #include "cst_alloc.h"
 #include "cst_string.h"
 #include "ivona_ustr.h"
+#include "synth_chunk.h"
 
-typedef struct synth_ctx synth_ctx;
 synth_ctx *synth_ctx_copy(const synth_ctx *c);
 void synth_ctx_free(synth_ctx *c);
 
-enum { CHUNK_TEXT, CHUNK_AUDIO };
-
-typedef struct synth_chunk synth_chunk;
-struct synth_chunk {
-    int type;
-    synth_ctx *ctx;
-    void (*free_data)(synth_chunk *c);
-};
-
-typedef struct text_chunk {
-    synth_chunk c;
-    ivona_ustr *text;           /* +0x0c */
-    int flags;                  /* +0x10 */
-} text_chunk;
-
-typedef struct audio_clip_chunk {
-    synth_chunk c;
-    char *src;                  /* +0x0c */
-    char *alt;                  /* +0x10 */
-    ustr_span span;             /* +0x14 */
-    int flags;                  /* +0x1c */
-    char *mark;                 /* +0x20 */
-} audio_clip_chunk;
 
 /* 0x21bb8 arm */
 static void text_chunk_free_data(text_chunk *c)

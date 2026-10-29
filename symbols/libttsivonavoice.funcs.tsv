@@ -375,10 +375,10 @@ addr	size	mode	name	status	src	score	note
 00031be8	234	arm	utt_is_sentence_end	wip	src/libttsivonavoice/synth_iter.c	37.1	
 00031e1c	51c	arm	utt_builder_add_pause	wip	src/libttsivonavoice/synth_iter.c	26.9	
 00032338	494	arm	utt_builder_add_item	wip	src/libttsivonavoice/synth_iter.c	27.3	
-000327cc	3c0	arm	FUN_000327cc	todo			
-00032b8c	1d0	arm	FUN_00032b8c	todo			
-00032d5c	bc	arm	FUN_00032d5c	todo			
-00032e18	980	arm	synth_state_flush	todo			
+000327cc	3c0	arm	utt_builder_add_word	wip	src/libttsivonavoice/synth_iter.c	70.5	
+00032b8c	1d0	arm	utt_builder_add_tokens	wip	src/libttsivonavoice/synth_iter.c	88.8	
+00032d5c	bc	arm	utt_builder_add_word_cb	wip	src/libttsivonavoice/synth_iter.c	97.9	
+00032e18	980	arm	synth_state_flush	wip	src/libttsivonavoice/synth_iter.c	11.2	
 00033798	4c	arm	synth_ctx_new	matched	src/libttsivonavoice/synth_iter.c	100	
 000337e4	54	arm	synth_ctx_copy	matched	src/libttsivonavoice/synth_iter.c	100	
 00033838	24	arm	synth_ctx_free	matched	src/libttsivonavoice/synth_iter.c	100	

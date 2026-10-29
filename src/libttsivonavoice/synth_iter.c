@@ -31,7 +31,7 @@ tts_lang_desc *lang_desc_find(tts_lang_desc *table, const char *code);
 void *lang_part_data(tts_lang_desc *lang, const char *name);
 const char *dom_get_attr(const dom_elem *e, const char *name);
 
-typedef struct synth_chunk synth_chunk;
+#include "synth_chunk.h"
 void synth_chunk_free(synth_chunk *c);
 void flag_reset(int *f);
 int cst_parse_uint_n(const char *s, size_t n, unsigned long *out);
@@ -124,7 +124,6 @@ void synth_state_flush(synth_state *s);
 cst_item *utt_builder_add_item(synth_ctx *ctx, utt_builder *b, int kind);
 void utt_builder_item_added(synth_ctx *ctx, cst_item *prev);
 void utt_chunk_add_span(utt_chunk *c, const ustr_span *s);
-typedef struct audio_clip_chunk audio_clip_chunk;
 audio_clip_chunk *audio_clip_chunk_new(const synth_ctx *ctx, const char *src, const char *alt,
                                        const ustr_span *span, int flags, const char *mark);
 
@@ -985,7 +984,349 @@ cst_item *utt_builder_add_item(synth_ctx *c, utt_builder *b, int n)
     return utt_builder_append(c, b);
 }
 
+cst_val *lang_dat_core_data_val(const void *v);
 
+/* 0x327cc arm: adds a word token with its punctuation and the context's prosody, domain,
+ * say-as and role */
+void utt_builder_add_word(synth_ctx *c, utt_builder *b, const char *name, const char *prepunc,
+                          const char *punc, int start, int end, const char *extra)
+{
+    int n, domain;
+    const say_as_info *sa;
+    const char *role;
+    cst_item *t;
+    float f;
+
+    if (strcmp(get_param_string(ctx_lang(c)->features, "encoding", ""), "UTF-8") == 0)
+        n = utf8_strlen(name) + 1;
+    else
+        n = strlen(name) + 1;
+    t = utt_builder_add_item(c, b, n);
+    domain = c->unk_38;
+    sa = c->say_as;
+    role = c->unk_34;
+    item_set_string(t, "name", name);
+    if (prepunc)
+        item_set_string(t, "prepunctuation", prepunc);
+    item_set_string(t, "punc", punc);
+    item_set_int(t, "start_pos", start);
+    item_set_int(t, "end_pos", end);
+    if (c->lang)
+        item_set(t, "lang_dat_core_data", lang_dat_core_data_val(c->lang));
+    else if (item_feat_present(t, "lang_dat_core_data"))
+        item_feat_remove(t, "lang_dat_core_data");
+    if (extra)
+        item_set_string(t, "extra", extra);
+    if (domain) {
+        item_set_int(t, "domain", c->unk_38);
+        if (c->unk_0[4])
+            item_set_int(t, "tts_apply_dnn", 1);
+    }
+    if (c->flags)
+        item_set_int(t, "effect_whisper", c->flags);
+    if (c->prosody.volume != 1.0f)
+        item_set_float(t, "amplify", c->prosody.volume);
+    if ((f = c->prosody.rate) != 1.0f)
+        item_set_float(t, "duration_stretch", f < 0.05f ? 20.0f : 1.0f / f);
+    if ((f = c->prosody.pitch) != 1.0f)
+        item_set_float(t, "pitch_stretch", f < 0.5f ? 2.0f : f > 2.0f ? 0.5f : 1.0f / f);
+    if (sa) {
+        if (sa->name)
+            item_set_string(t, "interpret-as", sa->name);
+        if (sa->format)
+            item_set_string(t, "interpret-as-format", sa->format);
+    }
+    if (role)
+        item_set_string(t, "role", role);
+    if (!c->unk_0[1] && !c->unk_0[2] && utt_is_sentence_end(c, t) == 1)
+        b->unk_c = 1;
+    b->last_item = t;
+    b->last_end = end;
+    b->unk_10[5] += n;
+}
+
+/* a token and what surrounded it (tokenizer.c) */
+typedef struct token {
+    const char *name;
+    const char *whitespace;
+    const char *prepunctuation;
+    const char *postpunctuation;
+    int start;                  /* +0x10: input position */
+    int end;                    /* +0x14 */
+    const char *extra;          /* +0x18 */
+} token;
+typedef struct tokenizer tokenizer;
+token *tokenizer_next(tokenizer *t, const void *segment);
+int text_has_breaks(const char *s, int n);
+
+/* adds the word of n bytes at pos of text (n + len_punc with its punctuation) */
+static inline void utt_builder_add_text_word(synth_ctx *c, utt_builder *b, const ivona_ustr *text,
+                                             int pos, int n, const char *prepunc, const char *punc,
+                                             int len_punc, const char *extra)
+{
+    ustr_span span;
+    char *w;
+
+    if (n) {
+        w = cst_strndup(text->data + pos, n);
+        ustr_span_of(text, pos, n, &span);
+        utt_builder_add_word(c, b, w, prepunc, punc, span.start, span.end, extra);
+        ustr_span_of(text, pos, n + len_punc, &span);
+        utt_chunk_add_span(&b->chunk, &span);
+        cst_free(w);
+    }
+    b->unk_10[4] = 0;
+}
+
+/* 0x32b8c arm: adds the tokens of segment of text (at offset), keeping their white space and
+ * ending a sentence at line breaks */
+void utt_builder_add_tokens(synth_ctx *c, utt_builder *b, tokenizer *tz, const void *segment,
+                            const ivona_ustr *text, int offset)
+{
+    token *t;
+
+    while ((t = tokenizer_next(tz, segment)) != NULL) {
+        if (!c->unk_0[1] && !c->unk_0[2] && t->whitespace && !b->unk_10[4] && b->last_item
+            && text_has_breaks(t->whitespace, c->unk_0[5])) {
+            utt_builder_end_sentence(c, b->last_item);
+            b->unk_c = 1;
+            if (c->unk_0[0] == 0)
+                b->unk_10[2] = 1;
+        }
+        if (t->whitespace)
+            strbuf_append_str(&b->text, t->whitespace);
+        if (*t->name)
+            utt_builder_add_text_word(c, b, text, offset + t->start + strlen(t->prepunctuation),
+                                      strlen(t->name), t->prepunctuation, t->postpunctuation,
+                                      strlen(t->postpunctuation), t->extra);
+    }
+}
+
+/* where utt_builder_add_word_cb adds its words */
+typedef struct add_word_data {
+    synth_ctx *ctx;
+    utt_builder *builder;
+    const ivona_ustr *text;
+    int offset;
+} add_word_data;
+
+/* 0x32d5c arm: a word callback: adds the word of n bytes at pos */
+void utt_builder_add_word_cb(int pos, int n, const char *prepunc, const char *punc, int len_punc,
+                             const char *extra, add_word_data *d)
+{
+    utt_builder_add_text_word(d->ctx, d->builder, d->text, pos + d->offset, n, prepunc, punc,
+                              len_punc, extra);
+}
+
+
+
+
+/* a tokenizer text segment (tokenizer.c) */
+typedef struct text_segment {
+    char *text;
+    char *alt;
+    int unk_8;
+} text_segment;
+tokenizer *string_tokenizer_new(ivona_vector *segments, cst_features *feats, cst_features *params);
+void tokenizer_free(tokenizer *t);
+typedef void (*word_cb_fn)(int pos, int n, const char *prepunc, const char *punc, int len_punc,
+                           const char *extra, add_word_data *d);
+typedef void (*tokenizer_expand_str_fn)(const char *s, int n, word_cb_fn cb, add_word_data *d);
+tokenizer_expand_str_fn val_tokenizer_expand_str_func(const cst_val *v);
+
+/* adds the n bytes at pos of text as one word (with punctuation punc) */
+#define ADD_WORD(c, b, text, pos, n, punc)                                                \
+    do {                                                                                  \
+        ustr_span span_;                                                                  \
+        char *w_;                                                                         \
+                                                                                          \
+        if (n) {                                                                          \
+            w_ = cst_strndup((text)->data + (pos), n);                                    \
+            ustr_span_of(text, pos, n, &span_);                                           \
+            utt_builder_add_word(c, b, w_, NULL, punc, span_.start, span_.end, NULL);     \
+            ustr_span_of(text, pos, n, &span_);                                           \
+            utt_chunk_add_span(&(b)->chunk, &span_);                                      \
+            cst_free(w_);                                                                 \
+        }                                                                                 \
+        (b)->unk_10[4] = 0;                                                               \
+    } while (0)
+
+/* 0x32e18 arm: turns the pending chunks into tokens of the utterance: text through the
+ * tokenizer (or as characters/serial digit groups, a date, a time or a phone number for
+ * their say-as), phonemes as one token */
+void synth_state_flush(synth_state *s)
+{
+    int count = vector_size(s->chunks), i;
+    lang_core *lang;
+    cst_features *params;
+    ivona_vector *segs;
+    text_segment seg;
+    tokenizer *tz;
+    synth_chunk **p;
+    synth_ctx *c;
+    utt_builder *b;
+    text_chunk *tc;
+    audio_clip_chunk *ac;
+    const ivona_ustr *text;
+    unsigned int off, n, g;
+    const char *name, *ptype;
+    char *str, *ymd[3];
+    char date[12], order[4], buf[16];
+    const say_as_info *sa;
+    say_as_info local;
+    const cst_val *f;
+    add_word_data d;
+    cst_item *t;
+    int domain;
+    size_t len;
+    float v;
+
+    if (count == 0)
+        return;
+    lang = ctx_lang(s->ctx);
+    params = VOICE_DATA(s->ctx->voice)->reg->features;
+    segs = vector_new(sizeof(text_segment), NULL, (ivona_vector_destroy_fn)str_pair_free);
+    for (p = s->chunks->data; p != (synth_chunk **)s->chunks->data + s->chunks->count; p++) {
+        if ((*p)->type == CHUNK_TEXT) {
+            tc = (text_chunk *)*p;
+            seg.text = cst_strndup(tc->text->data + tc->flags, tc->text->len - tc->flags);
+            seg.alt = NULL;
+        } else if ((*p)->type == CHUNK_AUDIO) {
+            ac = (audio_clip_chunk *)*p;
+            seg.alt = cst_strdup(ac->src);
+            seg.text = cst_strdup(ac->alt);
+        } else
+            cst_error();
+        seg.unk_8 = (*p)->ctx->unk_0[2];
+        vector_push(segs, &seg);
+    }
+    tz = string_tokenizer_new(segs, lang->features, params);
+    vector_size(segs);
+    for (i = 0; i != count; i++) {
+        synth_chunk *ch = *(synth_chunk **)vector_at(s->chunks, i);
+
+        if (ch->type == CHUNK_TEXT) {
+            const text_segment *sg = vector_at(segs, i);
+
+            tc = (text_chunk *)ch;
+            c = ch->ctx;
+            text = tc->text;
+            b = s->builder;
+            off = tc->flags;
+            sa = c->say_as;
+            if (sa == NULL || (name = sa->name) == NULL)
+                goto tokens;
+            if (strcmp(name, "characters") == 0 || strcmp(name, "serial") == 0) {
+                if (c->digit_groups) {
+                    while (off < text->len) {
+                        if (vector_size(c->digit_groups) < 2)
+                            goto whole;
+                        g = *(unsigned int *)vector_get(c->digit_groups, 0);
+                        n = text->len - off;
+                        if (g < n)
+                            n = g;
+                        ADD_WORD(c, b, text, off, n, ",");
+                        off += n;
+                        if (g <= n)
+                            vector_pop_front(c->digit_groups);
+                        else {
+                            g -= n;
+                            vector_set(c->digit_groups, 0, &g);
+                        }
+                    }
+                    continue;
+                }
+            whole:
+                if (off < text->len) {
+                    n = text->len - off;
+                    ADD_WORD(c, b, text, off, n, "");
+                }
+            } else if (strcmp(name, "date") == 0) {
+                if (text->len != off) {
+                    str = cst_substr(text->data, off, text->len - off);
+                    if (!ssml_date_parse(str, ymd)) {
+                        cst_free(str);
+                        goto tokens;
+                    }
+                    ssml_date_join(ymd[0], ymd[1], ymd[2], date, order);
+                    cst_free(ymd[0]);
+                    cst_free(ymd[1]);
+                    cst_free(ymd[2]);
+                    local.name = sa->name;
+                    local.format = order;
+                    local.whole = sa->whole;
+                    c->say_as = &local;
+                    utt_builder_add_word(c, b, date, NULL, "", off, text->len, NULL);
+                    c->say_as = sa;
+                    cst_free(str);
+                }
+            } else if (strcmp(name, "time") == 0) {
+                if (!ssml_time_expand(text->data + off, text->len - off, buf))
+                    goto tokens;
+                utt_builder_add_word(c, b, buf, NULL, "", off, text->len, NULL);
+            } else if (strcmp(name, "telephone") == 0
+                       && (f = get_param_val(ctx_lang(c)->features, "tokenizer_expand_phone_number_func",
+                                             NULL)) != NULL) {
+                d.ctx = c;
+                d.builder = b;
+                d.text = text;
+                d.offset = off;
+                val_tokenizer_expand_str_func(f)(text->data + off, text->len - off,
+                                                 utt_builder_add_word_cb, &d);
+            } else
+            tokens:
+                utt_builder_add_tokens(c, b, tz, sg, text, off);
+        } else if (ch->type == CHUNK_AUDIO) {
+            ac = (audio_clip_chunk *)ch;
+            str = ac->src;
+            c = ch->ctx;
+            len = strlen(str);
+            ptype = ac->mark;
+            b = s->builder;
+            t = utt_builder_add_item(c, b, len + 1);
+            domain = c->unk_38;
+            if (c->lang)
+                item_set(t, "lang_dat_core_data", lang_dat_core_data_val(c->lang));
+            else if (item_feat_present(t, "lang_dat_core_data"))
+                item_feat_remove(t, "lang_dat_core_data");
+            if (domain) {
+                item_set_int(t, "domain", c->unk_38);
+                if (c->unk_0[4])
+                    item_set_int(t, "tts_apply_dnn", 1);
+            }
+            item_set_string(t, "name", "");
+            if (ac->flags == 6) {
+                item_set_string(t, "ruby", str);
+                item_set_string(t, "alphabet", "x-ivona-katakana");
+            } else if (ac->flags == 5) {
+                item_set_string(t, "alphabet", ptype);
+                item_set_string(t, "xsampa", str);
+            } else
+                item_set_string(t, ac->flags == 1 ? "phones" : "xsampa", str);
+            item_set_int(t, "start_pos", ac->span.start);
+            item_set_int(t, "end_pos", ac->span.end);
+            item_set_string(t, "punc", "");
+            if (c->flags)
+                item_set_int(t, "effect_whisper", c->flags);
+            if (c->prosody.volume != 1.0f)
+                item_set_float(t, "amplify", c->prosody.volume);
+            if ((v = c->prosody.rate) != 1.0f)
+                item_set_float(t, "duration_stretch", v < 0.05f ? 20.0f : 1.0f / v);
+            if ((v = c->prosody.pitch) != 1.0f)
+                item_set_float(t, "pitch_stretch", v < 0.5f ? 2.0f : v > 2.0f ? 0.5f : 1.0f / v);
+            b->last_end = ac->span.end;
+            b->last_item = t;
+            b->unk_10[5] += len + 1;
+            b->unk_10[4] = 0;
+            utt_chunk_add_span(&b->chunk, &ac->span);
+        } else
+            cst_error();
+    }
+    vector_clear(s->chunks);
+    s->unk_34 = 0;
+    vector_free(segs);
+    tokenizer_free(tz);
+}
 
 /* 0x33798 arm */
 synth_ctx *synth_ctx_new(tts_voice *v)
