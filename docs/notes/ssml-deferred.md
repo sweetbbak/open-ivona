@@ -29,11 +29,13 @@ Written and functional, not matching yet:
 
 Not written. The runnable build has aborting stubs for these (`runnable_stubs.c`); remove each stub
 when the function is written:
-- `phoneme_alphabet_id` (0x41ae8), `phoneme_split_words` (0x41ce4, `strlist_split(ph, "#")`),
-  `phoneme_convert` (0x41cf4) and its helpers `FUN_000417e0` / `FUN_00041540`.
+- `phoneme_alphabet_id` (0x41ae8), `phoneme_convert` (0x41cf4) and its helpers `FUN_000417e0` /
+  `FUN_00041540` (phoneme.c).
 - `ssml_audio_apply_attrs` (0x27920): clipBegin / clipEnd / soundLevel / speed / repeatCount
   on an `<audio>` wave.
 - `text_is_ssml` (0x49e74).
-- PLS: `pls_lexicon_parse` (0x268e4), `pls_apply` (0x23cd8) and the functions they call
-  (0x22b2c–0x268e4), `lex_apply_ssml` (0x42598).
+- `lex_apply_ssml` (0x42598, lex_regex.c) and its vector free `FUN_00041edc`.
+
+PLS (`pls_lexicon_parse`, `pls_apply`) is not SSML-only: lang.dat can list PLS lexicons
+(`pls_lex_list`, loaded by `lang_data_load`), so the plain-text path needs it too.
 - Expat (see above).

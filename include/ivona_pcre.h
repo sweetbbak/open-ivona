@@ -8,6 +8,7 @@ typedef struct pcre_extra pcre_extra;
 #define PCRE_CASELESS 0x00000001
 #define PCRE_UTF8 0x00000800
 #define PCRE_NO_UTF8_CHECK 0x00002000
+#define PCRE_ERROR_NOMATCH (-1)
 #define PCRE_UCP 0x20000000
 #define PCRE_STUDY_JIT_COMPILE 0x0001
 

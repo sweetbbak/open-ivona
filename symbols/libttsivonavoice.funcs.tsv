@@ -577,10 +577,10 @@ addr	size	mode	name	status	src	score	note
 00041cf4	c0	arm	phoneme_convert	todo			
 00041db4	128	arm	phone_viseme	wip	src/libttsivonavoice/phoneme.c	68.9	
 00041edc	8	arm	FUN_00041edc	todo			
-00041ee4	9c	arm	FUN_00041ee4	todo			
-00041f80	200	arm	FUN_00041f80	todo			
-00042180	204	arm	FUN_00042180	todo			
-00042384	214	arm	lex_apply_text	todo			
+00041ee4	9c	arm	lex_find_close	todo			
+00041f80	200	arm	lex_group_template	todo			
+00042180	204	arm	lex_expand	wip	src/libttsivonavoice/lex_regex.c	5.0	
+00042384	214	arm	lex_apply_text	wip	src/libttsivonavoice/lex_regex.c	35.9	
 00042598	4b8	arm	lex_apply_ssml	todo			
 00042a50	60	arm	cert_free	matched	src/libttsivonavoice/cert.c	100	
 00042ab0	efc	arm	cert_parse	todo			
