@@ -69,7 +69,14 @@ case "$VOICE_LIB" in
         if [ ! -f "$VLIB" ] || [ -n "$(find src include config tools/build_runnable.py -newer "$VLIB" \
                 -type f -print -quit)" ]; then
             step "building the decompiled voice library ($VLIB)"
-            .venv/bin/python tools/build_runnable.py -b libvoice_en_gb_amy >&2
+            if ! .venv/bin/python tools/build_runnable.py -b libvoice_en_gb_amy > build/voice.log 2>&1; then
+                rm -f "$VLIB"
+                echo "The decompiled voice library is not complete yet, so it cannot be built:" >&2
+                sed -n '1,12p' build/voice.log | sed 's/^/    /' >&2
+                echo "(full report: build/voice.log; progress: docs/notes/runnable-voice.md)" >&2
+                echo "Run without --voice-lib decomp to use the original voice library." >&2
+                exit 1
+            fi
         fi ;;
     *) VLIB="$VOICE_LIB" ;;
 esac

@@ -1,11 +1,14 @@
 addr	size	name	note
+0010c32c	0	cst_val_type_dynamic_voxdbs	learned from src/libttsivonavoice/voxdb.c
 0010c33c	0	cst_val_type_dnn_models	learned from src/libvoice_en_gb_amy/dnn_models.c
+0010c340	0	cst_val_type_ffunc2	learned from src/libttsivonavoice/flite/cst_ffeature.c
 0010c344	4	cst_val_type_word_embeddings	
 0010c348	0	cst_val_type_vector	learned from src/libvoice_en_gb_amy/vector.c
 0010c358	0	cst_val_type_metric	learned from src/libvoice_en_gb_amy/metrics.c
 0010c35c	4	cst_val_type_lang_dat_core_data	
 0010c360	4	cst_val_type_tokenizer_expand_str_func	
 0010c364	0	cst_val_type_blacklist	learned from src/libvoice_en_gb_amy/blacklist.c
+0010c368	0	cst_val_type_join_cost_func	learned from src/libttsivonavoice/voxdb.c
 0010c36c	4	cst_val_type_string_tokenizer_new_func	
 0010c370	4	cst_val_type_valfunc	
 0010c374	4	cst_val_type_zdur_cart	
@@ -15,6 +18,7 @@ addr	size	name	note
 0010c384	0	cst_val_type_features	learned from src/libttsivonavoice/flite/cst_features.c
 0010c388	0	cst_val_type_itemfunc	learned from src/libttsivonavoice/flite/cst_item.c
 0010c390	4	cst_val_type_audiotag	
+0010c398	0	cst_val_type_diphonedb	learned from src/libttsivonavoice/voxdb.c
 0010c3a0	0	cst_val_type_lexicon	learned from src/libvoice_en_gb_amy/cst_lexicon.c
 0010c3a4	0	cst_val_type_phoneset	learned from src/libvoice_en_gb_amy/cst_phoneset.c
 0010c3a8	4	cst_val_type_cart	
@@ -22,6 +26,7 @@ addr	size	name	note
 0010c3b0	4	cst_val_type_relation	
 0010c3b4	0	cst_val_type_ffunc	learned from src/libttsivonavoice/flite/cst_ffeature.c
 0010c3b8	0	cst_val_type_uttfunc	learned from src/libttsivonavoice/flite/cst_utterance.c
+0010c3bc	0	cst_val_type_track	learned from src/libttsivonavoice/track.c
 0010c3c0	4	cst_val_type_wave	
 0010c3c4	0	cst_val_type_utterance	learned from src/libttsivonavoice/flite/cst_item.c
 0010c4ac	8	val_int_19	
@@ -172,12 +177,14 @@ addr	size	name	note
 003d6d50	1e0	xsampa_modifiers	
 003d6f30	3c8	xsampa_symbols	
 003d73a8	0	cst_val_defs	learned from src/libttsivonavoice/flite/cst_val.c
+003d7518	0	item_traverse_ops	learned from src/libttsivonavoice/flite/cst_ffeature.c
 003d767c	0	SKP_Silk_LTP_vq_ptrs_Q14	named from library relocation
 003d7694	0	SKP_Silk_LTP_gain_CDF_ptrs	named from library relocation
 003d76a0	0	SKP_Silk_NLSF_CB0_10	named from library relocation
 003d7718	0	SKP_Silk_NLSF_CB0_16	named from library relocation
 003d77d0	0	SKP_Silk_NLSF_CB1_10	named from library relocation
 003d7848	0	SKP_Silk_NLSF_CB1_16	named from library relocation
+003d8030	0	cst_relation_id_names	learned from src/libttsivonavoice/flite/cst_utterance.c
 003d846c	0	pcre_malloc	named from library relocation
 003d8470	0	pcre_free	named from library relocation
 003d8474	0	pcre_stack_malloc	named from library relocation
