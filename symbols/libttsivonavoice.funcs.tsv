@@ -320,11 +320,11 @@ addr	size	mode	name	status	src	score	note
 000299f8	1cc	arm	ssml_apply_dict	wip	src/libttsivonavoice/ssml_doc.c	71.1	
 00029bc4	398	arm	ssml_apply_prm	wip	src/libttsivonavoice/ssml_doc.c	56.9	
 00029f5c	210	arm	ssml_add_inline_lexicon	matched	src/libttsivonavoice/ssml_doc.c	100	
-0002a16c	f8	arm	FUN_0002a16c	todo			
-0002a264	1c8	arm	FUN_0002a264	todo			
-0002a42c	1ec	arm	FUN_0002a42c	todo			
-0002a618	2fc	arm	FUN_0002a618	todo			
-0002a914	2d0	arm	FUN_0002a914	todo			
+0002a16c	f8	arm	ssml_sub_alias	matched	src/libttsivonavoice/ssml_doc.c	100	
+0002a264	1c8	arm	ssml_lexicon_load	matched	src/libttsivonavoice/ssml_doc.c	100	
+0002a42c	1ec	arm	ssml_time_attr	matched	src/libttsivonavoice/ssml_doc.c	100	
+0002a618	2fc	arm	ssml_add_lexicon	wip	src/libttsivonavoice/ssml_doc.c	76.8	
+0002a914	2d0	arm	ssml_audio_fetch	wip	src/libttsivonavoice/ssml_doc.c	53.1	
 0002abe4	c	arm	mark_queue_init	matched	src/libttsivonavoice/ssml_doc.c	100	
 0002abf0	54	arm	mark_queue_pop	matched	src/libttsivonavoice/ssml_doc.c	100	
 0002ac44	4	arm	ssml_default	matched	src/libttsivonavoice/ssml_parse.c	100	
@@ -358,7 +358,7 @@ addr	size	mode	name	status	src	score	note
 0002df00	ec	arm	voices_by_age.isra.6	matched	src/libttsivonavoice/synth_iter.c	100	
 0002dfec	98	arm	synth_iter_lang	matched	src/libttsivonavoice/synth_iter.c	100	
 0002e084	ce0	arm	ssml_select_voice	wip	src/libttsivonavoice/synth_iter.c	8.4	
-0002ed64	16c	arm	synth_iter_new	wip	src/libttsivonavoice/synth_iter.c	96.7	
+0002ed64	16c	arm	synth_iter_new	matched	src/libttsivonavoice/synth_iter.c	100	
 0002eed0	48	arm	synth_iter_free	matched	src/libttsivonavoice/synth_iter.c	100	
 0002ef18	2434	arm	synth_iter_next	todo			merged FUN_00030110/FUN_000304a4/FUN_000304f4/FUN_000305f8/FUN_0003063c/FUN_00030b14 (cold tail past a literal pool)
 0003134c	8	arm	synth_iter_ctx	matched	src/libttsivonavoice/synth_iter.c	100	

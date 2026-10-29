@@ -148,20 +148,21 @@ typedef struct voice_frame {
     int unk_8;
 } voice_frame;
 
-typedef struct synth_iter_src {
-    int unk_0;
-    void **unk_4;
-} synth_iter_src;
+/* a node still to visit, or an element to leave */
+typedef struct iter_frame {
+    dom_node *node;
+    int entered;
+} iter_frame;
 
 /* walks a document's DOM, producing synthesis chunks */
 typedef struct synth_iter {
-    ssml_doc *doc;
-    synth_iter_src *unk_4;      /* +0x04 */
+    ivona_vector *chunks;       /* of synth_chunk *, the output */
+    ssml_doc *doc;              /* +0x04 */
     float max_break;            /* +0x08: eng_max_ssml_break_time, seconds */
     ivona_vector *voices;       /* +0x0c: of tts_voice * */
     synth_state *state;         /* +0x10 */
     ivona_vector *unk_14;       /* of 12 bytes */
-    ivona_vector *unk_18;       /* of 8 bytes */
+    ivona_vector *stack;        /* +0x18: of iter_frame, nodes to visit */
     lex_ctx *lex;               /* +0x1c */
     int unk_20;
     int unk_24;
@@ -237,7 +238,7 @@ int say_as_is_speech(const say_as_info *sa)
 }
 
 /* 0x2d878 arm: the element's apply-pls attribute (default 1) */
-int ssml_apply_pls_attr(synth_iter *it, dom_elem *e)
+int ssml_apply_pls_attr(ssml_doc **doc, dom_elem *e)
 {
     const char *v = dom_get_attr(e, "apply-pls");
     int ret = 1;
@@ -246,7 +247,7 @@ int ssml_apply_pls_attr(synth_iter *it, dom_elem *e)
         goto out;
     if ((ret = strcmp("0", v)) == 0 || (ret = strcmp("false", v)) == 0)
         goto out;
-    TTS_MSG_ADD_AT(it->doc->warnings, e->span.start, e->n.index, 6,
+    TTS_MSG_ADD_AT((*doc)->warnings, e->span.start, e->n.index, 6,
                    "Invalid value of attribute \"%s\"", "apply-pls");
     ret = 1;
 out:
@@ -255,7 +256,7 @@ out:
 
 /* 0x2d980 arm: warns about unknown tokens in the attribute attr of a <voice> (e.g.
  * "required") */
-void ssml_check_voice_attr_list(synth_iter *it, dom_elem *e, const char *attr)
+void ssml_check_voice_attr_list(ssml_doc **doc, dom_elem *e, const char *attr)
 {
     const char *v = dom_get_attr(e, attr);
     strlist *l;
@@ -269,7 +270,7 @@ void ssml_check_voice_attr_list(synth_iter *it, dom_elem *e, const char *attr)
             || strcasecmp(*w, "variant") == 0 || strcasecmp(*w, "name") == 0
             || strcasecmp(*w, "languages") == 0)
             continue;
-        TTS_MSG_ADD_AT(it->doc->warnings, e->span.start, e->n.index, 6,
+        TTS_MSG_ADD_AT((*doc)->warnings, e->span.start, e->n.index, 6,
                        "Invalid value of attribute \"%s\"", attr);
     }
     strlist_free(l);
@@ -558,28 +559,25 @@ void *synth_iter_lang(synth_iter *it, const char *lang)
 }
 
 /* 0x2ed64 arm */
-synth_iter *synth_iter_new(synth_iter_src *a, ivona_vector *voices, ssml_doc *doc, void *b)
+synth_iter *synth_iter_new(ssml_doc *doc, ivona_vector *voices, ivona_vector *chunks, void *b)
 {
     tts_voice *v = *(tts_voice **)vector_at(voices, 0);
     synth_iter *it = cst_safe_calloc(1, sizeof(synth_iter));
     float f;
 
-    it->unk_4 = a;
-    it->voices = voices;
     it->doc = doc;
+    it->voices = voices;
+    it->chunks = chunks;
     it->unk_20 = 0;
-    it->state = synth_state_new(doc, b, v);
+    it->state = synth_state_new(chunks, b, v);
     it->unk_14 = vector_new(12, NULL, NULL);
-    it->unk_18 = vector_new(8, NULL, NULL);
-    if (a->unk_4[0]) {
-        struct {
-            void *p;
-            int n;
-        } e;
+    it->stack = vector_new(sizeof(iter_frame), NULL, NULL);
+    if (doc->dom->root) {
+        iter_frame f;
 
-        e.p = a->unk_4[0];
-        e.n = 0;
-        vector_push(it->unk_18, &e);
+        f.node = &doc->dom->root->n;
+        f.entered = 0;
+        vector_push(it->stack, &f);
     }
     it->lex = lex_ctx_new(v);
     it->unk_24 = 0;
@@ -609,7 +607,7 @@ void synth_iter_free(synth_iter *it)
     if (it == NULL)
         return;
     lex_ctx_free(it->lex);
-    vector_free(it->unk_18);
+    vector_free(it->stack);
     synth_state_free(it->state);
     vector_free(it->unk_14);
     vector_free(it->voice_stack);

@@ -25,8 +25,10 @@ typedef struct ssml_lexicon {
     int line;                   /* +0x0c: of the element */
     int unk_10;
     int column;                 /* +0x14 */
-    int unk_18[3];
-    int is_inline;              /* +0x24 */
+    float timeout;              /* +0x18: fetchtimeout in seconds */
+    int maxage;                 /* +0x1c: -1 if unset */
+    int maxstale;               /* +0x20: -1 if unset */
+    int loaded;                 /* +0x24: fetched (or inline) */
     pls_lexicon *lexicon;       /* +0x28 */
 } ssml_lexicon;
 

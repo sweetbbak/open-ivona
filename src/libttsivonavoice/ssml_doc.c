@@ -2,15 +2,20 @@
  * The state of one SSML document being read (0x2842c..0x28fcc).
  */
 #include <limits.h>
+#include <stdio.h>
+#include <stdlib.h>
+#include <strings.h>
 #include <string.h>
 #include "cst_alloc.h"
 #include "cst_features.h"
 #include "cst_string.h"
+#include "cst_wave.h"
 #include "ivona_util.h"
 #include "ivona_ustr.h"
 #include "dom.h"
 #include "ivona_vector.h"
 #include "tts_cert.h"
+#include "tts_internal.h"
 #include "tts_voice.h"
 #include "ssml_doc.h"
 
@@ -625,7 +630,7 @@ ssml_lexicon *ssml_add_inline_lexicon(ssml_doc *d, dom_elem *e, const char *data
     lex.line = e->span.start;
     lex.unk_10 = e->end_span.end;
     lex.column = e->n.index;
-    lex.is_inline = 1;
+    lex.loaded = 1;
     lex.lexicon = pls_lexicon_parse(data, size, lex.lang, &msgs, 0);
     for (w = msgs; w; w = w->next) {
         tail = d->warnings ? &tts_msg_last(d->warnings)->next : &d->warnings;
@@ -635,6 +640,211 @@ ssml_lexicon *ssml_add_inline_lexicon(ssml_doc *d, dom_elem *e, const char *data
     tts_msg_free(msgs);
     vector_push(d->lexicons, &lex);
     return d->lexicons->count ? vector_at(d->lexicons, d->lexicons->count - 1) : NULL;
+}
+
+typedef struct fetch_result {
+    void *data;
+    size_t size;
+} fetch_result;
+int fetcher_fetch(fetcher *f, const char *uri, float timeout, int maxage, int maxstale,
+                  cst_features *metrics);
+fetch_result *fetcher_result(fetcher *f);
+tts_msg *fetcher_messages(fetcher *f);
+void dom_element_clear(dom_elem *e);
+int wavedict_has(cst_features *d, const char *name);
+int wavedict_set(cst_features *d, const char *name, cst_wave *w);
+int wave_parse_riff(cst_wave *w, const char *buf, int len);
+
+#define FETCH_ABORTED 1
+#define FETCH_OK 3
+
+/* adds a warning about element e to the document */
+#define SSML_WARN(d, e, code, ...) do {                                                   \
+        tts_msg **tail_ = (d)->warnings ? &tts_msg_last((d)->warnings)->next : &(d)->warnings; \
+        *tail_ = tts_msg_new((e)->span.start, (e)->n.index, (code), __VA_ARGS__);          \
+    } while (0)
+
+/* 0x2a16c arm: <sub>: replaces the content of e by its alias */
+int ssml_sub_alias(ssml_doc *d, dom_elem *e)
+{
+    const char *alias = dom_get_attr(e, "alias");
+    dom_text *t;
+    ustr_span span;
+
+    if (alias == NULL) {
+        SSML_WARN(d, e, 5, "Missing attribute \"%s\" in element \"%s\"", "alias", e->name);
+        return 0;
+    }
+    t = dom_text_new();
+    span.start = e->span.end;
+    span.end = e->end_span.start;
+    if (span.start > span.end) {
+        span.start = e->end_span.start;
+        span.end = e->span.end;
+    }
+    t->text = ustr_from(alias, strlen(alias), &span);
+    t->state = 2;
+    dom_element_clear(e);
+    dom_append_child(e, &t->n);
+    return 1;
+}
+
+/* 0x2a264 arm: fetches and parses an external lexicon the first time it is used. Returns 0 if
+ * the fetch was aborted. */
+int ssml_lexicon_load(ssml_doc *d, ssml_lexicon *lex)
+{
+    tts_msg *msgs, *m;
+    fetch_result *r;
+    int status;
+
+    if (lex->loaded)
+        return 1;
+    lex->loaded = 1;
+    status = fetcher_fetch(d->fetch, lex->uri, lex->timeout, lex->maxage, lex->maxstale,
+                           d->metrics);
+    if (status == FETCH_OK) {
+        r = fetcher_result(d->fetch);
+        lex->lexicon = pls_lexicon_parse(r->data, r->size, lex->lang, &msgs, 0);
+        for (m = msgs; m; m = m->next) {
+            tts_msg **tail = d->warnings ? &tts_msg_last(d->warnings)->next : &d->warnings;
+            *tail = tts_msg_new(lex->line, lex->column, m->code,
+                                "Warning in lexicon \"%s\" in line %d: %s", lex->uri, m->column,
+                                m->text);
+        }
+        tts_msg_free(msgs);
+    } else if (status == FETCH_ABORTED) {
+        tts_set_error(TTS_STATUS_USER_ABORTED);
+        return 0;
+    } else if ((m = fetcher_messages(d->fetch)) != NULL) {
+        do {
+            tts_msg **tail = d->warnings ? &tts_msg_last(d->warnings)->next : &d->warnings;
+            *tail = tts_msg_new(lex->line, lex->column, m->code,
+                                "Failed fetching lexicon file \"%s\": %s", lex->uri, m->text);
+        } while ((m = m->next) != NULL);
+    } else {
+        tts_msg **tail = d->warnings ? &tts_msg_last(d->warnings)->next : &d->warnings;
+        *tail = tts_msg_new(lex->line, lex->column, 10, "Failed fetching lexicon file \"%s\"",
+                            lex->uri);
+    }
+    return 1;
+}
+
+/* 0x2a42c arm: a time attribute ("1.5s", "300ms") in seconds, -1 if invalid */
+float ssml_time_attr(ssml_doc *d, dom_elem *e, const char *name)
+{
+    const char *value = dom_get_attr(e, name);
+    float t;
+    char unit[4];
+    int n = sscanf(value, "%f%3s", &t, unit);
+
+    if (n < 1) {
+        SSML_WARN(d, e, 6, "Invalid value of attribute \"%s\"", name);
+        return -1.0f;
+    }
+    if (t < 0) {
+        SSML_WARN(d, e, 6, "Negative value not allowed for attribute \"%s\"", name);
+        return -1.0f;
+    }
+    if (n == 1) {
+        SSML_WARN(d, e, 6,
+                  "Missing unit \"s\" or \"ms\" in value of attribute \"%s\". Assuming seconds.",
+                  name);
+        return t;
+    }
+    if (strcasecmp("s", unit) == 0)
+        return t;
+    if (strcasecmp("ms", unit) == 0)
+        return t * 0.001f;
+    SSML_WARN(d, e, 6, "Invalid unit in value of attribute \"%s\". Assuming seconds.", name);
+    return t;
+}
+
+/* 0x2a618 arm: <lexicon>: adds the external lexicon e refers to (fetched on first use) */
+ssml_lexicon *ssml_add_lexicon(ssml_doc *d, dom_elem *e)
+{
+    const char *uri = dom_get_attr(e, "uri");
+    const char *id = dom_get_attr(e, "http://www.w3.org/XML/1998/namespace^id");
+    const char *type = dom_get_attr(e, "type");
+    const char *maxage, *maxstale;
+    ssml_lexicon lex, *ret = NULL;
+    float timeout;
+
+    if (uri == NULL) {
+        SSML_WARN(d, e, 5, "Missing attribute \"%s\" in element \"%s\"", "uri", e->name);
+    } else if (d->ssml_version != 10 && id == NULL) {
+        SSML_WARN(d, e, 5, "Missing attribute \"%s\" in element \"%s\"", "xml:id", e->name);
+    } else if (type != NULL && strcasecmp(type, "application/pls+xml") != 0) {
+        SSML_WARN(d, e, 3, "Unsupported lexicon type: \"%s\"", type);
+    } else {
+        maxage = dom_get_attr(e, "maxage");
+        maxstale = dom_get_attr(e, "maxstale");
+        if (dom_get_attr(e, "fetchtimeout") == NULL
+            || !((timeout = ssml_time_attr(d, e, "fetchtimeout")) >= 0))
+            timeout = 120.0f;
+        memset(&lex, 0, sizeof lex);
+        lex.uri = cst_strdup(uri);
+        lex.id = cst_strdup(id);
+        lex.lang = cst_strdup(dom_inherited_attr(e, "http://www.w3.org/XML/1998/namespace^lang"));
+        lex.timeout = timeout;
+        lex.maxage = maxage ? atoi(maxage) : -1;
+        lex.maxstale = maxstale ? atoi(maxstale) : -1;
+        lex.line = e->span.start;
+        lex.unk_10 = e->span.end;
+        lex.column = e->n.index;
+        vector_push(d->lexicons, &lex);
+        ret = d->lexicons->count ? vector_at(d->lexicons, d->lexicons->count - 1) : NULL;
+    }
+    return ret;
+}
+
+/* 0x2a914 arm: <audio>: fetches src into the document's waves, dropping the fallback content.
+ * Returns 1, 0 if it failed (the content is kept), -1 if aborted. */
+int ssml_audio_fetch(ssml_doc *d, dom_elem *e)
+{
+    const char *src = dom_get_attr(e, "src");
+    const char *s_maxage, *s_maxstale;
+    int maxage, maxstale, status;
+    float timeout;
+    tts_msg *m;
+    fetch_result *r;
+    cst_wave *w;
+
+    if (src == NULL) {
+        SSML_WARN(d, e, 5, "Missing attribute \"%s\" in element \"%s\"", "src", e->name);
+        return 0;
+    }
+    if (!wavedict_has(d->waves, src)) {
+        s_maxage = dom_get_attr(e, "maxage");
+        s_maxstale = dom_get_attr(e, "maxstale");
+        maxage = s_maxage ? atoi(s_maxage) : -1;
+        maxstale = s_maxstale ? atoi(s_maxstale) : -1;
+        if (dom_get_attr(e, "fetchtimeout") == NULL
+            || !((timeout = ssml_time_attr(d, e, "fetchtimeout")) >= 0))
+            timeout = 120.0f;
+        status = fetcher_fetch(d->fetch, src, timeout, maxage, maxstale, d->metrics);
+        if (status != FETCH_OK) {
+            if (status == FETCH_ABORTED)
+                return -1;
+            if ((m = fetcher_messages(d->fetch)) == NULL) {
+                SSML_WARN(d, e, 10, "Failed fetching audio file \"%s\"", src);
+                return 0;
+            }
+            do
+                SSML_WARN(d, e, m->code, "Failed fetching audio file \"%s\": %s", src, m->text);
+            while ((m = m->next) != NULL);
+            return 0;
+        }
+        r = fetcher_result(d->fetch);
+        w = new_wave();
+        if (wave_parse_riff(w, r->data, r->size) != 0) {
+            delete_wave(w);
+            SSML_WARN(d, e, 13, "Unsupported format of audio file \"%s\"", src);
+            return 0;
+        }
+        wavedict_set(d->waves, src, w);
+    }
+    dom_element_clear(e);
+    return 1;
 }
 
 /* the marks of a document in text order, consumed as synthesis passes them */
