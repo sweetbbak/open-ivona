@@ -160,11 +160,14 @@ def main() -> int:
         missing = [w for w in want if w not in have]
         for w in missing:
             print(f"  export not defined: {w}")
-    if os.path.exists(path(so)) and not undef and not multi and not missing:
+    if os.path.exists(path(so)) and not undef and not multi and not missing and not failed:
         print(f"linked {so}")
         return 0
-    if not undef and not multi and not failed:
+    if not undef and not multi and not failed and not missing:
         print(out[-3000:])
+    # never leave an incomplete library behind: ./speak would take it for an up-to-date build
+    if os.path.exists(path(so)):
+        os.remove(path(so))
     return 1
 
 
