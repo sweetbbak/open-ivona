@@ -47,8 +47,14 @@ TARGETS = {
         # opaque byte tables extracted from target/ (tools/gen_assets.py)
         "assets": True,
         # functions not decompiled yet, lifted from target/ as functional stand-ins
-        # (tools/asm2c.py): the homograph part-of-speech rules
-        "lifted": ["en_word_pos"],
+        # (tools/asm2c.py); none at the moment
+        "lifted": [],
+        # check builds (-D NAME): the original's code lifted under another name, and a TU that
+        # compares the decompiled function with it on every call
+        "checks": {
+            "IVONA_CHECK_WORD_POS": {"lift": {"en_word_pos": "en_word_pos_lifted"},
+                                     "src": ["tests/run/check_word_pos.c"]},
+        },
     },
 }
 OUT = ""
@@ -103,6 +109,15 @@ def main() -> int:
     for fn in t.get("lifted", []):
         subprocess.run([sys.executable, path("tools", "asm2c.py"), args.bin, fn], check=True)
         srcs.add(f"build/gen/{args.bin}/lifted_{fn}.c")
+    for define, chk in t.get("checks", {}).items():
+        if define not in args.D:
+            continue
+        for fn, name in chk["lift"].items():
+            subprocess.run([sys.executable, path("tools", "asm2c.py"), args.bin, fn,
+                            f"build/gen/{args.bin}/{name}.c", "--name", name, "--coverage"],
+                           check=True)
+            srcs.add(f"build/gen/{args.bin}/{name}.c")
+        srcs.update(chk["src"])
     srcs = sorted(s for s in srcs if os.path.exists(path(s)))
     defines = t["defines"] + ["-D" + d for d in args.D]
     script = []

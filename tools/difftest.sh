@@ -22,9 +22,9 @@ while IFS= read -r line; do
     case "$line" in ''|'#'*) continue ;; esac
     total=$((total + 1))
     n=$(printf '%02d' $total)
-    ./speak --voice-lib original "$line" "$OUT/$n-orig.wav" > "$OUT/$n-orig.log" 2>&1
+    ./speak --voice-lib original "$line" "$OUT/$n-orig.wav" > "$OUT/$n-orig.log" 2>&1 </dev/null
     ro=$?
-    ./speak --voice-lib "$CANDIDATE" "$line" "$OUT/$n-cand.wav" > "$OUT/$n-cand.log" 2>&1
+    ./speak --voice-lib "$CANDIDATE" "$line" "$OUT/$n-cand.wav" > "$OUT/$n-cand.log" 2>&1 </dev/null
     rc=$?
     short=$(printf '%.60s' "$line")
     if [ $ro -ne 0 ]; then

@@ -383,8 +383,14 @@ addr	size	name	note
 003d3394	0	en_gpos	
 003d6908	0	en_gb_syl_cart	
 003d6bf4	0	cst_regex_table	learned from src/libttsivonavoice/flite/cst_cart.c
+003d6c00	0	cst_rx_double	
+003d6c04	0	cst_rx_int	
+003d6c08	0	cst_rx_uppercase	
+003d6c0c	0	cst_rx_alphanum	
 003d6c10	0	cst_rx_alpha	
+003d6c14	0	cst_rx_lowercase	
 003d6c18	0	en_rx_nonzero_int	
+003d6c1c	0	cst_rx_digits	
 003d6d50	1e0	xsampa_modifiers	
 003d6f30	3c8	xsampa_symbols	
 003d72f8	0	en_role_pos	
